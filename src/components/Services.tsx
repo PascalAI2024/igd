@@ -21,7 +21,7 @@ const Services = () => {
       id: 'media',
       name: 'Media Production',
       icon: <Layers className="w-5 h-5" />,
-      description: 'Capture your brand's essence with professional photography and videography services',
+      description: 'Capture your brand\'s essence with professional photography and videography services',
       services: services.filter(service =>
         ['Photography', 'Videography'].includes(service.title)
       )
