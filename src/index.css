@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Neural network animation effects */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Particle effects */
+.particle {
+  position: absolute;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
+
+.particle-connection {
+  position: absolute;
+  height: 1px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.2), transparent);
+  pointer-events: none;
+}
+
+/* Loading animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    filter: blur(8px);
+    opacity: 0.4;
+  }
+  50% {
+    filter: blur(12px);
+    opacity: 0.6;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Consistent overlay styles */
+.overlay-blur {
+  @apply bg-black/80 backdrop-blur-lg;
+}
+
+.overlay-gradient {
+  @apply bg-gradient-to-t from-black/80 to-transparent backdrop-blur-sm;
+}
+
+.overlay-solid {
+  @apply bg-black/90;
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+  @apply bg-black/90 backdrop-blur-lg ring-1 ring-white/10 shadow-xl;
+}
+
+/* Gradient text */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-purple-500;
+}
+
+/* Smooth transitions */
+.page-transition {
+  @apply transition-opacity duration-300;
+}
+
+/* Prevent FOUC */
+.invisible-until-loaded {
+  visibility: hidden;
+}
+
+.loaded {
+  visibility: visible;
+}
+
+/* Smooth page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Prevent layout shifts */
+.min-h-dynamic {
+  min-height: calc(100vh - var(--vh-offset, 0px));
+}
+
+/* Ensure content is visible during hydration */
+#root:empty + #initial-loader {
+  display: flex !important;
+}
+
+/* Optimize animations for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Glass effect */
+.glass {
+  @apply bg-white/5 backdrop-blur-sm border border-white/10;
+}
+
+/* Consistent shadows */
+.shadow-overlay {
+  @apply shadow-lg shadow-black/20;
+}

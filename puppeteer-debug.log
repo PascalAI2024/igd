@@ -1,0 +1,9 @@
+2025-04-28T06:10:08.028Z: Server starting
+2025-04-28T06:10:08.029Z: Log file initialized
+2025-04-28T06:10:08.029Z: Testing Puppeteer installation...
+2025-04-28T06:10:08.029Z: Server file loaded, preparing to start
+2025-04-28T06:10:08.030Z: Starting MCP server
+2025-04-28T06:10:08.030Z: Connecting to transport
+2025-04-28T06:10:08.030Z: Server connected and ready
+2025-04-28T06:10:08.099Z: Listing tools request received
+2025-04-28T06:10:08.981Z: Puppeteer installation test successful
