@@ -22,7 +22,7 @@ const ContactFormEnhanced = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       const response = await fetch('/', {
         method: 'POST',
@@ -91,7 +91,7 @@ const ContactFormEnhanced = () => {
     <section id="contact" className="py-24 bg-black scroll-mt-20 relative">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.03),transparent_70%)]" />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-12">
           <motion.div
@@ -103,8 +103,8 @@ const ContactFormEnhanced = () => {
             <MessageSquare className="w-5 h-5 text-red-500 mr-2" />
             <span className="text-red-500 font-semibold">Let's Work Together</span>
           </motion.div>
-          
-          <motion.h2 
+
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -113,8 +113,8 @@ const ContactFormEnhanced = () => {
           >
             Start Your Project
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -124,7 +124,7 @@ const ContactFormEnhanced = () => {
             Tell us about your project and let's create something amazing together
           </motion.p>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* Contact Info */}
           <motion.div
@@ -135,7 +135,7 @@ const ContactFormEnhanced = () => {
             className="bg-black/60 backdrop-blur-sm rounded-xl p-8 border border-white/10 hover:border-white/20 transition-all duration-300"
           >
             <h3 className="text-xl font-bold text-white mb-6">Contact Information</h3>
-            
+
             <div className="space-y-6">
               <div className="flex items-start">
                 <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center mr-4">
@@ -143,24 +143,24 @@ const ContactFormEnhanced = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold text-gray-300 mb-1">Email</h4>
-                  <a href="mailto:contact@example.com" className="text-white hover:text-red-500 transition-colors">
-                    contact@example.com
+                  <a href="mailto:pascal@ingeniousdigital.com" className="text-white hover:text-red-500 transition-colors">
+                    pascal@ingeniousdigital.com
                   </a>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center mr-4">
                   <Phone className="w-5 h-5 text-red-500" />
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold text-gray-300 mb-1">Phone</h4>
-                  <a href="tel:+1234567890" className="text-white hover:text-red-500 transition-colors">
-                    (123) 456-7890
+                  <a href="tel:+19545158586" className="text-white hover:text-red-500 transition-colors">
+                    (954) 515-8586
                   </a>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center mr-4">
                   <MapPin className="w-5 h-5 text-red-500" />
@@ -168,12 +168,12 @@ const ContactFormEnhanced = () => {
                 <div>
                   <h4 className="text-sm font-semibold text-gray-300 mb-1">Location</h4>
                   <p className="text-white">
-                    123 Business Ave<br />
-                    City, State 12345
+                    Fort Lauderdale<br />
+                    FL 33304
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center mr-4">
                   <Clock className="w-5 h-5 text-red-500" />
@@ -188,7 +188,7 @@ const ContactFormEnhanced = () => {
               </div>
             </div>
           </motion.div>
-          
+
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -207,13 +207,13 @@ const ContactFormEnhanced = () => {
               >
                 Contact Form
                 {activeTab === 'form' && (
-                  <motion.div 
+                  <motion.div
                     layoutId="activeContactTab"
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-500"
                   />
                 )}
               </button>
-              
+
               <button
                 onClick={() => setActiveTab('schedule')}
                 className={`pb-3 px-4 font-medium transition-colors relative ${
@@ -222,14 +222,14 @@ const ContactFormEnhanced = () => {
               >
                 Schedule a Call
                 {activeTab === 'schedule' && (
-                  <motion.div 
+                  <motion.div
                     layoutId="activeContactTab"
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-500"
                   />
                 )}
               </button>
             </div>
-            
+
             <AnimatePresence mode="wait">
               {activeTab === 'form' ? (
                 <motion.form
@@ -245,7 +245,7 @@ const ContactFormEnhanced = () => {
                   className="space-y-6"
                 >
                   <input type="hidden" name="form-name" value="contact" />
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="relative">
                       <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -267,7 +267,7 @@ const ContactFormEnhanced = () => {
                         />
                       </div>
                     </div>
-                    
+
                     <div className="relative">
                       <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                         Email *
@@ -289,7 +289,7 @@ const ContactFormEnhanced = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="relative">
                       <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
@@ -310,7 +310,7 @@ const ContactFormEnhanced = () => {
                         />
                       </div>
                     </div>
-                    
+
                     <div className="relative">
                       <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-2">
                         Company
@@ -331,7 +331,7 @@ const ContactFormEnhanced = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="projectType" className="block text-sm font-medium text-gray-300 mb-2">
@@ -352,7 +352,7 @@ const ContactFormEnhanced = () => {
                         <option value="other" className="bg-gray-900">Other</option>
                       </select>
                     </div>
-                    
+
                     <div>
                       <label htmlFor="budget" className="block text-sm font-medium text-gray-300 mb-2">
                         Budget Range
@@ -373,7 +373,7 @@ const ContactFormEnhanced = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div>
                     <label htmlFor="timeframe" className="block text-sm font-medium text-gray-300 mb-2">
                       Timeframe
@@ -393,7 +393,7 @@ const ContactFormEnhanced = () => {
                       <option value="flexible" className="bg-gray-900">Flexible</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                       Message *
@@ -409,7 +409,7 @@ const ContactFormEnhanced = () => {
                       placeholder="Tell us about your project"
                     />
                   </div>
-                  
+
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
@@ -422,7 +422,7 @@ const ContactFormEnhanced = () => {
                     <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                     <Send className={`w-5 h-5 ml-2 ${isSubmitting ? 'animate-pulse' : ''}`} />
                   </motion.button>
-                  
+
                   <AnimatePresence>
                     {submitStatus === 'success' && (
                       <motion.div
@@ -435,7 +435,7 @@ const ContactFormEnhanced = () => {
                         <span>Thank you! We'll get back to you soon.</span>
                       </motion.div>
                     )}
-                    
+
                     {submitStatus === 'error' && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
@@ -463,11 +463,11 @@ const ContactFormEnhanced = () => {
                       <Calendar className="w-6 h-6 text-red-500 mr-3" />
                       <h3 className="text-lg font-semibold text-white">Schedule a Consultation</h3>
                     </div>
-                    
+
                     <p className="text-gray-400 mb-6">
                       Book a free 30-minute consultation with one of our experts to discuss your project in detail.
                     </p>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                       <div className="bg-black/60 p-4 rounded-lg border border-white/5 hover:border-white/10 transition-all duration-300">
                         <h4 className="font-medium text-white mb-2">Discovery Call</h4>
@@ -479,7 +479,7 @@ const ContactFormEnhanced = () => {
                           <span>30 minutes</span>
                         </div>
                       </div>
-                      
+
                       <div className="bg-black/60 p-4 rounded-lg border border-white/5 hover:border-white/10 transition-all duration-300">
                         <h4 className="font-medium text-white mb-2">Technical Consultation</h4>
                         <p className="text-sm text-gray-400 mb-3">
@@ -491,9 +491,9 @@ const ContactFormEnhanced = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <a
-                      href="https://calendly.com"
+                      href="https://calendly.com/ingeniousdigital/consultation"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 group"
@@ -502,10 +502,10 @@ const ContactFormEnhanced = () => {
                       <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                     </a>
                   </div>
-                  
+
                   <div className="bg-black/40 rounded-lg p-6 border border-white/10">
                     <h4 className="font-medium text-white mb-4">What to Expect</h4>
-                    
+
                     <div className="space-y-4">
                       <div className="flex">
                         <div className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center mr-3 flex-shrink-0">
@@ -515,7 +515,7 @@ const ContactFormEnhanced = () => {
                           Select a convenient time slot from our calendar
                         </p>
                       </div>
-                      
+
                       <div className="flex">
                         <div className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center mr-3 flex-shrink-0">
                           <span className="text-red-500 text-sm font-bold">2</span>
@@ -524,7 +524,7 @@ const ContactFormEnhanced = () => {
                           Receive a confirmation email with meeting details
                         </p>
                       </div>
-                      
+
                       <div className="flex">
                         <div className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center mr-3 flex-shrink-0">
                           <span className="text-red-500 text-sm font-bold">3</span>
@@ -533,7 +533,7 @@ const ContactFormEnhanced = () => {
                           Join the video call at the scheduled time
                         </p>
                       </div>
-                      
+
                       <div className="flex">
                         <div className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center mr-3 flex-shrink-0">
                           <span className="text-red-500 text-sm font-bold">4</span>
@@ -549,7 +549,7 @@ const ContactFormEnhanced = () => {
             </AnimatePresence>
           </motion.div>
         </div>
-        
+
         {/* FAQ Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -559,7 +559,7 @@ const ContactFormEnhanced = () => {
           className="max-w-3xl mx-auto"
         >
           <h3 className="text-xl font-bold text-white text-center mb-8">Frequently Asked Questions</h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-black/40 rounded-lg p-5 border border-white/10">
               <h4 className="font-medium text-white mb-2">What is your typical process?</h4>
@@ -567,21 +567,21 @@ const ContactFormEnhanced = () => {
                 Our process typically includes discovery, planning, design, development, testing, and launch phases, with ongoing support available.
               </p>
             </div>
-            
+
             <div className="bg-black/40 rounded-lg p-5 border border-white/10">
               <h4 className="font-medium text-white mb-2">How long does a project take?</h4>
               <p className="text-sm text-gray-400">
                 Project timelines vary based on complexity. Simple websites may take 2-4 weeks, while complex applications can take 3-6 months.
               </p>
             </div>
-            
+
             <div className="bg-black/40 rounded-lg p-5 border border-white/10">
               <h4 className="font-medium text-white mb-2">Do you offer ongoing support?</h4>
               <p className="text-sm text-gray-400">
                 Yes, we offer various maintenance and support packages to ensure your project continues to run smoothly after launch.
               </p>
             </div>
-            
+
             <div className="bg-black/40 rounded-lg p-5 border border-white/10">
               <h4 className="font-medium text-white mb-2">What payment terms do you offer?</h4>
               <p className="text-sm text-gray-400">
