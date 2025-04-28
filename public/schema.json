@@ -1,0 +1,90 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Ingenious Digital",
+  "url": "https://ingeniousdigital.com",
+  "logo": "https://ingeniousdigital.com/logo.png",
+  "description": "AI-powered digital marketing, web development, and business automation solutions for local businesses.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Fort Lauderdale",
+    "addressRegion": "FL",
+    "postalCode": "33304",
+    "addressCountry": "US"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+19545158586",
+    "contactType": "customer service",
+    "email": "pascal@ingeniousdigital.com"
+  },
+  "sameAs": [
+    "https://www.facebook.com/ingeniousdigital",
+    "https://www.linkedin.com/company/ingenious-digital",
+    "https://twitter.com/ingeniousdigital",
+    "https://www.instagram.com/ingeniousdigital"
+  ],
+  "founder": {
+    "@type": "Person",
+    "name": "Pascal Ledesma"
+  },
+  "foundingDate": "2023",
+  "knowsAbout": [
+    "Digital Marketing",
+    "SEO",
+    "Web Development",
+    "AI",
+    "Machine Learning",
+    "Business Automation",
+    "Lead Generation",
+    "CRM",
+    "Photography",
+    "Videography"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Digital Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Digital Marketing",
+          "description": "Comprehensive digital marketing services including SEO, content marketing, and social media management."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AI & Machine Learning",
+          "description": "Custom AI and machine learning solutions to automate processes and gain insights from your data."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Web Development",
+          "description": "Custom website development with responsive design, e-commerce capabilities, and content management systems."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Lead Generation",
+          "description": "Strategies and systems to attract and convert potential customers into qualified leads."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Business Automation",
+          "description": "Streamline operations and boost efficiency with smart automation solutions."
+        }
+      }
+    ]
+  }
+}
