@@ -8,13 +8,10 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
   const particlesRef = useRef<Particle[]>([]);
   const [showSkip, setShowSkip] = useState(false);
 
-  // Show skip button after a short delay
+  // Show skip button immediately
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSkip(true);
-    }, 1500);
-
-    return () => clearTimeout(timer);
+    // Show skip button immediately
+    setShowSkip(true);
   }, []);
 
   useEffect(() => {
@@ -266,14 +263,14 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
                 <motion.button
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(239, 68, 68, 0.8)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onComplete}
-                  className="mt-8 px-4 py-2 bg-red-500/10 border border-red-500/30 rounded-md text-red-500 text-sm flex items-center justify-center mx-auto hover:bg-red-500/20 transition-colors duration-300"
+                  className="mt-8 px-6 py-3 bg-red-500 text-white font-medium rounded-lg text-base flex items-center justify-center mx-auto transition-all duration-300 shadow-lg shadow-red-500/30"
                   aria-label="Skip loading animation"
                 >
-                  <span>Skip</span>
-                  <SkipForward className="ml-2 w-4 h-4" />
+                  <span>Skip Intro</span>
+                  <SkipForward className="ml-2 w-5 h-5" />
                 </motion.button>
               )}
             </div>

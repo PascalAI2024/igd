@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  TrendingUp, Target, Users, 
+import {
+  TrendingUp, Target, Users,
   CheckCircle, Star,
   BarChart2, Zap, Globe
 } from 'lucide-react';
@@ -36,20 +36,20 @@ const Landing = () => {
   const testimonials = [
     {
       quote: "Our business has grown 3x since working with them. Best investment we've made.",
-      author: "John Smith",
-      role: "Auto Service Owner",
+      author: "Robert",
+      role: "Owner, Wellness Medical Center",
       rating: 5
     },
     {
       quote: "They helped us dominate local search and now we're booked months in advance.",
-      author: "Sarah Johnson",
-      role: "Healthcare Provider",
+      author: "Maria",
+      role: "Director, Family Treasures Retail",
       rating: 5
     },
     {
       quote: "Professional, responsive, and they deliver results. Highly recommended.",
-      author: "Mike Brown",
-      role: "Restaurant Owner",
+      author: "David",
+      role: "Owner, Premier Properties",
       rating: 5
     }
   ];
@@ -65,7 +65,7 @@ const Landing = () => {
 
   return (
     <>
-      <MetaTags 
+      <MetaTags
         title="Grow Your Local Business | Digital Marketing That Works"
         description="Get more customers, increase revenue, and save time with our proven digital marketing solutions. Book your free strategy call today."
         type="website"
@@ -75,7 +75,7 @@ const Landing = () => {
         {/* Hero Section */}
         <section className="relative py-20 lg:py-32 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="text-center max-w-4xl mx-auto">
               <motion.h1
@@ -85,7 +85,7 @@ const Landing = () => {
               >
                 Grow Your Local Business with Digital Marketing That Works
               </motion.h1>
-              
+
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

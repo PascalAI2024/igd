@@ -1,4 +1,4 @@
-import { 
+import {
   Search,
   Target,
   Users,
@@ -8,6 +8,7 @@ import {
   Play,
   Megaphone,
   Zap,
+  Cpu,
   LucideIcon
 } from 'lucide-react';
 
@@ -201,5 +202,25 @@ export const services: Service[] = [
     ],
     path: '/services/business-automation',
     color: 'from-teal-500 to-cyan-500'
+  },
+  {
+    icon: Cpu,
+    title: 'AI & Machine Learning',
+    description: 'Harness the power of artificial intelligence to transform your business.',
+    features: [
+      'Predictive Analytics',
+      'Natural Language Processing',
+      'Computer Vision',
+      'Intelligent Automation',
+      'Data Analysis',
+      'Custom AI Solutions'
+    ],
+    metrics: [
+      { value: '90%', label: 'Accuracy' },
+      { value: '75%', label: 'Time Saved' },
+      { value: '3X', label: 'Insights' }
+    ],
+    path: '/services/ai-machine-learning',
+    color: 'from-blue-500 to-indigo-500'
   }
 ];

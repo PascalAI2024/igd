@@ -88,7 +88,7 @@ const LeadCaptureForm = () => {
               value={formData.name}
               onChange={handleChange}
               className="w-full bg-white/5 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-400 focus:outline-none focus:border-red-500/50"
-              placeholder="John Smith"
+              placeholder="Your Name"
             />
           </div>
         </div>
@@ -106,7 +106,7 @@ const LeadCaptureForm = () => {
               value={formData.email}
               onChange={handleChange}
               className="w-full bg-white/5 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-400 focus:outline-none focus:border-red-500/50"
-              placeholder="john@example.com"
+              placeholder="your.email@company.com"
             />
           </div>
         </div>
@@ -124,7 +124,7 @@ const LeadCaptureForm = () => {
               value={formData.phone}
               onChange={handleChange}
               className="w-full bg-white/5 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-400 focus:outline-none focus:border-red-500/50"
-              placeholder="(555) 123-4567"
+              placeholder="Your Phone Number"
             />
           </div>
         </div>
