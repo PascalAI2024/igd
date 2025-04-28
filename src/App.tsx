@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import FloatingContactIcons from './components/FloatingContactIcons';
 import LoadingSequence from './components/LoadingSequence';
+import BreadcrumbSchema from './components/BreadcrumbSchema';
 import { initializeAnalytics, trackPageView } from './utils/analytics';
 import { measurePerformance, trackError } from './utils/performance';
 
@@ -134,6 +135,9 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-black">
+      {/* Add breadcrumb schema for SEO */}
+      <BreadcrumbSchema />
+
       {showNavigation && (
         <>
           <ScrollProgress />
