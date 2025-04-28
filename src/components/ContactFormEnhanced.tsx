@@ -492,15 +492,13 @@ const ContactFormEnhanced = () => {
                       </div>
                     </div>
 
-                    <a
-                      href="https://calendly.com/ingeniousdigital/consultation"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 group"
+                    <button
+                      className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 group cursor-not-allowed opacity-70"
+                      disabled
                     >
-                      <span>Book a Time Slot</span>
-                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </a>
+                      <span>Booking Coming Soon</span>
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </button>
                   </div>
 
                   <div className="bg-black/40 rounded-lg p-6 border border-white/10">
