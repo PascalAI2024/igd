@@ -74,14 +74,15 @@ const Landing = () => {
       <div className="min-h-screen bg-black">
         {/* Hero Section */}
         <section className="relative py-20 lg:py-32 overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.15),transparent_70%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(0,0,0,0.3))]" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="text-center max-w-4xl mx-auto">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-6xl font-bold text-gradient mb-6"
+                className="text-4xl md:text-6xl font-bold text-gradient mb-6 text-premium tracking-tight"
               >
                 Grow Your Local Business with Digital Marketing That Works
               </motion.h1>
@@ -103,13 +104,13 @@ const Landing = () => {
               >
                 <a
                   href="#get-started"
-                  className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-red-500/25 text-lg font-semibold"
+                  className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-red-500/25 text-lg font-semibold btn-premium"
                 >
                   Get Your Free Strategy Call
                 </a>
                 <a
                   href="#learn-more"
-                  className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 text-white rounded-lg transition-all duration-300 text-lg font-semibold"
+                  className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 text-white rounded-lg transition-all duration-300 text-lg font-semibold border border-white/10 hover:border-white/20 glass-hover"
                 >
                   Learn More
                 </a>
@@ -125,10 +126,10 @@ const Landing = () => {
                     transition={{ delay: 0.3 + (index * 0.1) }}
                     className="text-center"
                   >
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-red-500/10 rounded-lg mb-3">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-red-500/10 rounded-lg mb-3 border border-red-500/20 border-glow">
                       <stat.icon className="w-6 h-6 text-red-500" />
                     </div>
-                    <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
+                    <div className="text-3xl font-bold text-white mb-1 text-premium">{stat.value}</div>
                     <div className="text-gray-400">{stat.label}</div>
                   </motion.div>
                 ))}
@@ -141,7 +142,7 @@ const Landing = () => {
         <section className="py-20 bg-black/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gradient mb-4">
+              <h2 className="text-3xl font-bold text-gradient mb-4 text-premium">
                 Why Choose Us?
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
@@ -157,7 +158,7 @@ const Landing = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="group bg-white/5 rounded-xl p-6 backdrop-blur-sm border border-white/10 hover:border-red-500/20 transition-all duration-300"
+                  className="group bg-white/5 rounded-xl p-6 backdrop-blur-sm border border-white/10 hover:border-red-500/20 transition-all duration-300 glass-hover"
                 >
                   <benefit.icon className="w-12 h-12 text-red-500 mb-4 group-hover:scale-110 transition-transform duration-300" />
                   <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-gradient">{benefit.title}</h3>
@@ -172,7 +173,7 @@ const Landing = () => {
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gradient mb-4">
+              <h2 className="text-3xl font-bold text-gradient mb-4 text-premium">
                 What Our Clients Say
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
@@ -188,7 +189,7 @@ const Landing = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white/5 rounded-xl p-6 backdrop-blur-sm border border-white/10"
+                  className="bg-white/5 rounded-xl p-6 backdrop-blur-sm border border-white/10 glass-premium hover:border-white/20 transition-all duration-300"
                 >
                   <div className="flex mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
@@ -208,7 +209,7 @@ const Landing = () => {
         <section className="py-20 bg-black/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gradient mb-4">
+              <h2 className="text-3xl font-bold text-gradient mb-4 text-premium">
                 Everything You Need to Succeed
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
@@ -239,7 +240,7 @@ const Landing = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-gradient mb-4">
+                <h2 className="text-3xl font-bold text-gradient mb-4 text-premium">
                   Ready to Grow Your Business?
                 </h2>
                 <p className="text-xl text-gray-300">

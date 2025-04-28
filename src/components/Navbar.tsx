@@ -82,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10 shadow-md shadow-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -105,7 +105,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-0 mt-2 w-64 rounded-xl shadow-xl bg-black/90 backdrop-blur-lg border border-white/10"
+                      className="absolute left-0 mt-2 w-64 rounded-xl shadow-xl bg-black/90 backdrop-blur-lg border border-white/10 glass-premium"
                       onMouseEnter={() => handleMouseEnter('industries')}
                       onMouseLeave={handleMouseLeave}
                     >
@@ -140,7 +140,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-0 mt-2 w-56 rounded-xl shadow-xl bg-black/90 backdrop-blur-lg border border-white/10"
+                      className="absolute left-0 mt-2 w-56 rounded-xl shadow-xl bg-black/90 backdrop-blur-lg border border-white/10 glass-premium"
                       onMouseEnter={() => handleMouseEnter('services')}
                       onMouseLeave={handleMouseLeave}
                     >
@@ -204,7 +204,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="fixed top-20 inset-x-0 z-40 bg-black/90 backdrop-blur-lg border-t border-white/10 md:hidden"
+            className="fixed top-20 inset-x-0 z-40 bg-black/90 backdrop-blur-lg border-t border-white/10 md:hidden glass-premium"
           >
             <div className="mobile-menu-container">
               <div className="px-2 pt-2 pb-3 space-y-1">
