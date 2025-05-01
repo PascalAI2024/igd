@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Search, Filter, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Search, Filter, CheckCircle2, Briefcase, Building, Code, Database, Globe, Layout, Lightbulb, Megaphone, ShoppingCart, Smartphone, Users, Stethoscope } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { CaseStudy } from '../data/case-studies/types';
 import { caseStudies } from '../data/case-studies';
@@ -59,6 +59,21 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
 
   // Get unique industries
   const industries = Array.from(new Set(validProjects.map(project => project.industry)));
+  
+  const industryToIcon: Record<string, React.ComponentType<{ className?: string }>> = {
+    'Healthcare': Stethoscope,
+    'E-commerce': ShoppingCart,
+    'Technology': Code,
+    'Finance': Database,
+    'Marketing': Megaphone,
+    'Education': Lightbulb,
+    'Real Estate': Building,
+    'Travel': Globe,
+    'Design': Layout,
+    'Social Media': Users,
+    'Mobile': Smartphone,
+    'Consulting': Briefcase
+  };
 
   // Filter projects based on search and industry
   const filteredProjects = validProjects.filter(project => {
@@ -147,12 +162,13 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
                 <button
                   key={industry}
                   onClick={() => setSelectedIndustry(industry === selectedIndustry ? null : industry)}
-                  className={`px-4 py-2 rounded-lg transition-all ${
+                  className={`flex items-center px-4 py-2 rounded-lg transition-all ${
                     selectedIndustry === industry
                       ? 'bg-gradient-to-r from-red-500/20 to-red-500/5 text-white border border-red-500/20'
                       : 'bg-black/60 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
                   }`}
                 >
+                  {React.createElement(industryToIcon[industry as keyof typeof industryToIcon] || Briefcase, { className: "w-4 h-4 mr-2" })}
                   {industry}
                 </button>
               ))}

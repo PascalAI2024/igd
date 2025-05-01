@@ -452,75 +452,83 @@ const Hero = () => {
             className="hidden lg:flex flex-col justify-center items-center"
           >
             <div className="relative w-full max-w-md aspect-square">
-              {/* 3D rotating feature cards */}
-              <div className="absolute inset-0 flex items-center justify-center perspective-1000">
+              {/* Floating feature showcase */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute w-full h-full rounded-full border border-red-500/10 animate-pulse"></div>
+                <div className="absolute w-3/4 h-3/4 rounded-full border border-red-500/5 animate-pulse" style={{ animationDelay: '2s' }}></div>
+                
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeFeature}
-                    initial={{ opacity: 0, rotateY: -90 }}
-                    animate={{ opacity: 1, rotateY: 0 }}
-                    exit={{ opacity: 0, rotateY: 90 }}
+                    initial={{ opacity: 0, scale: 0.8, rotateY: -10 }}
+                    animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, rotateY: 10 }}
                     transition={{
                       type: "spring",
-                      stiffness: 100,
+                      stiffness: 200,
                       damping: 20,
-                      duration: 0.5
+                      duration: 0.6
                     }}
-                    className="bg-gradient-to-br from-black to-gray-900/80 backdrop-blur-md border border-red-500/10 rounded-2xl p-8 w-full max-w-md shadow-2xl"
-                    style={{
-                      transformStyle: "preserve-3d",
-                      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 25px -5px rgba(255, 0, 0, 0.1)"
-                    }}
+                    className="relative w-full max-w-md"
                   >
-                    <div className="flex flex-col items-center text-center">
-                      {/* Glowing icon */}
-                      <div className="relative w-20 h-20 mb-6">
-                        <div className="absolute inset-0 bg-red-500/5 rounded-full blur-xl"></div>
-                        <div className="relative w-full h-full rounded-full bg-gradient-to-br from-red-500/20 to-red-800/5 flex items-center justify-center border border-red-500/10">
-                          <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center">
-                            {features[activeFeature].icon}
+                    {/* Feature card with floating effect */}
+                    <div className="relative group">
+                      <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-red-700 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                      <div className="relative bg-gradient-to-br from-black to-gray-900/80 backdrop-blur-md border border-red-500/20 rounded-xl p-6 shadow-2xl">
+                        <div className="flex flex-col items-center text-center">
+                          {/* Floating icon container */}
+                          <div className="relative w-24 h-24 mb-6 transform transition-transform duration-500 group-hover:scale-110">
+                            <div className="absolute inset-0 bg-red-500/10 rounded-full blur-xl"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-800/10 rounded-full animate-pulse"></div>
+                            <div className="relative w-full h-full rounded-full bg-gradient-to-br from-red-500/20 to-red-800/5 flex items-center justify-center border border-red-500/20 shadow-lg shadow-red-500/10">
+                              <div className="w-14 h-14 rounded-full bg-black flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
+                                {features[activeFeature].icon}
+                              </div>
+                            </div>
                           </div>
+
+                          <h3 className="text-3xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600">{features[activeFeature].title}</h3>
+                          <p className="text-gray-300 mb-8 group-hover:text-gray-100 transition-colors duration-300">{features[activeFeature].description}</p>
+
+                          {/* Feature image with parallax effect */}
+                          <div className="relative w-full h-48 rounded-lg overflow-hidden mb-8 group-hover:h-52 transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10"></div>
+                            <OptimizedImage
+                              src={features[activeFeature].image}
+                              alt={features[activeFeature].title}
+                              className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+                          </div>
+
+                          {/* Enhanced CTA button */}
+                          <a
+                            href={`/services/${features[activeFeature].title.toLowerCase().replace(/\s+/g, '-')}`}
+                            className="group relative inline-flex items-center px-6 py-3 overflow-hidden rounded-lg bg-gradient-to-r from-red-900/50 to-black border border-red-500/30 text-white font-medium shadow-lg hover:shadow-red-500/20 transition-all duration-300"
+                          >
+                            <span className="relative z-10 flex items-center">
+                              Learn more
+                              <ArrowRight className="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
+                            </span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-700/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                          </a>
                         </div>
                       </div>
-
-                      <h3 className="text-2xl font-bold mb-3 text-gradient">{features[activeFeature].title}</h3>
-                      <p className="text-gray-400 mb-6">{features[activeFeature].description}</p>
-
-                      <div className="relative w-full h-40 rounded-lg overflow-hidden mb-6 border border-white/5 shadow-lg">
-                        <OptimizedImage
-                          src={features[activeFeature].image}
-                          alt={features[activeFeature].title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-
-                        {/* Animated overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-                      </div>
-
-                      <a
-                        href={`/services/${features[activeFeature].title.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="group relative inline-flex items-center px-4 py-2 overflow-hidden rounded-lg bg-black border border-red-500/20 text-white transition-all duration-300"
-                      >
-                        <span className="relative z-10 flex items-center">
-                          Learn more
-                          <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                        </span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-500/0 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-                      </a>
                     </div>
                   </motion.div>
                 </AnimatePresence>
               </div>
 
-              {/* Feature indicators */}
-              <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              {/* Feature indicators with enhanced design */}
+              <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-3">
                 {features.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setActiveFeature(index)}
-                    className={`w-3 h-3 rounded-full transition-colors ${
-                      activeFeature === index ? 'bg-red-500' : 'bg-gray-700 hover:bg-gray-600'
+                    className={`w-4 h-4 rounded-full transition-all duration-300 transform hover:scale-125 ${
+                      activeFeature === index
+                        ? 'bg-red-500 shadow-lg shadow-red-500/50'
+                        : 'bg-gray-700 hover:bg-gray-600 hover:shadow-lg hover:shadow-gray-800/30'
                     }`}
                     aria-label={`View ${features[index].title}`}
                   />

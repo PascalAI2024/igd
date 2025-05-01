@@ -105,17 +105,13 @@ const App = () => {
   // Hide navigation on landing page
   const showNavigation = !location.pathname.includes('/landing');
 
-  // Only show loading screen on the first visit to the home page
+  // Show loading screen every time the home page is visited
   useEffect(() => {
-    // Check if this is the first visit to the site
-    const hasVisitedBefore = sessionStorage.getItem('hasVisitedBefore');
-
-    // If not on the home page or has visited before, skip loading
-    if (location.pathname !== '/' || hasVisitedBefore) {
-      setIsLoading(false);
+    // Always show loading screen when visiting home page
+    if (location.pathname === '/') {
+      setIsLoading(true);
     } else {
-      // Mark that the user has visited the site
-      sessionStorage.setItem('hasVisitedBefore', 'true');
+      setIsLoading(false);
     }
   }, [location.pathname]);
 
