@@ -256,7 +256,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
                   <NavLink
                     key={link.path}
                     to={link.path}
-                    className="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium"
+                    className="text-gray-200 hover:text-white block px-3 py-2 text-base font-medium"
                   >
                     {link.name}
                   </NavLink>

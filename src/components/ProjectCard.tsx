@@ -30,20 +30,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute -inset-1 rounded-xl bg-red-500/10 opacity-20 blur-lg z-0"
+            className="absolute -inset-3 rounded-xl bg-gradient-to-br from-red-500/30 to-red-800/20 opacity-40 blur-2xl z-0"
           />
         )}
       </AnimatePresence>
 
       <motion.div
-        className="relative z-10 bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 h-full flex flex-col"
+        className="relative z-10 bg-black/70 backdrop-blur-md rounded-xl overflow-hidden border border-white/10 hover:border-red-500/30 transition-all duration-300 h-full flex flex-col"
         animate={{
           y: isHovered ? -5 : 0,
-          boxShadow: isHovered ? '0 20px 25px -5px rgba(0, 0, 0, 0.5)' : '0 0 0 0 rgba(0, 0, 0, 0)'
+          boxShadow: isHovered ? '0 25px 30px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(239, 68, 68, 0.15)' : '0 0 0 0 rgba(0, 0, 0, 0)'
         }}
       >
         {/* Project Image */}
-        <div className="relative h-48 bg-gray-900 overflow-hidden">
+        <div className="relative h-64 bg-gray-900 overflow-hidden">
           <motion.img
             src={project.image || project.imageUrl}
             alt={project.title}
@@ -51,24 +51,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             animate={{ scale: isHovered ? 1.05 : 1 }}
             transition={{ duration: 0.3 }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30" />
 
           <div className="absolute bottom-4 left-4 flex flex-wrap gap-2">
-            <span className="inline-block px-2 py-1 text-xs font-semibold bg-red-500 text-white rounded">
+            <span className="inline-block px-4 py-1.5 text-xs font-semibold bg-gradient-to-r from-red-600 to-red-500 text-white rounded shadow-md">
               {project.industry}
             </span>
 
             {project.technologies.slice(0, 1).map((tech: string, techIndex: number) => (
               <span
                 key={`${project.id}-featured-tech-${techIndex}`}
-                className="px-2 py-1 text-xs bg-white/10 text-gray-300 rounded backdrop-blur-sm"
+                className="px-4 py-1.5 text-xs bg-black/50 text-gray-200 rounded backdrop-blur-md shadow-md border border-white/10"
               >
                 {tech}
               </span>
             ))}
 
             {project.technologies.length > 1 && (
-              <span className="px-2 py-1 text-xs bg-white/10 text-gray-300 rounded backdrop-blur-sm">
+              <span className="px-4 py-1.5 text-xs bg-black/50 text-gray-200 rounded backdrop-blur-md shadow-md border border-white/10">
                 +{project.technologies.length - 1}
               </span>
             )}
@@ -76,11 +76,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
         </div>
 
         {/* Project Info */}
-        <div className="p-6 flex-grow flex flex-col">
-          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-gradient transition-colors">
+        <div className="p-8 flex-grow flex flex-col">
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-gradient transition-colors duration-300">
             {project.title}
           </h3>
-          <p className="text-gray-400 text-sm mb-4">
+          <p className="text-gray-300 text-lg mb-6">
             {project.description}
           </p>
 
@@ -89,24 +89,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             {project.results.slice(0, isExpanded ? project.results.length : 2).map((result: string, resultIndex: number) => (
               <motion.div
                 key={`${project.id}-result-${resultIndex}`}
-                className="flex items-center text-sm"
+                className="flex items-center text-base"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 + (resultIndex * 0.05) }}
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-red-500 mr-2" />
-                <span className="text-gray-300">{result}</span>
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500 mr-3.5" />
+                <span className="text-gray-100">{result}</span>
               </motion.div>
             ))}
 
             {project.results.length > 2 && (
               <motion.button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="flex items-center text-sm text-gray-400 hover:text-white mt-2 transition-colors"
+                className="flex items-center text-sm text-gray-400 hover:text-red-400 mt-4 transition-colors"
                 whileHover={{ x: 5 }}
               >
                 <ChevronDown
-                  className={`w-4 h-4 mr-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                  className={`w-4 h-4 mr-2 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                 />
                 {isExpanded ? 'Show less' : `${project.results.length - 2} more results`}
               </motion.button>
@@ -114,13 +114,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+          <div className="flex items-center justify-between mt-auto pt-6 border-t border-white/10">
             <Link
               to={`/case-studies/${project.id}`}
-              className="inline-flex items-center text-red-500 hover:text-red-400 transition-colors"
+              className="inline-flex items-center font-medium text-lg text-red-500 hover:text-red-400 transition-colors group"
             >
               View Details
-              <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
             </Link>
 
             {project.videoDemo && (
@@ -128,10 +128,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                 href={project.videoDemo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-gray-400 hover:text-white transition-colors"
+                className="inline-flex items-center text-base text-gray-400 hover:text-white transition-colors group"
               >
                 Demo
-                <ExternalLink className="w-3 h-3 ml-1" />
+                <ExternalLink className="w-4 h-4 ml-1.5 group-hover:translate-y-[-2px] transition-transform" />
               </a>
             )}
           </div>

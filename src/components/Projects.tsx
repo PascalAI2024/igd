@@ -90,7 +90,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
   return (
     <section id="projects" className="py-24 bg-black scroll-mt-20 relative">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.03),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.08),transparent_75%)]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-12">
@@ -98,7 +98,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center bg-gradient-to-r from-red-500/10 to-red-500/5 rounded-full px-4 py-2 mb-4 border border-red-500/10"
+            className="inline-flex items-center bg-gradient-to-r from-red-500/15 to-red-500/5 rounded-full px-5 py-2 mb-6 border border-red-500/20 shadow-md shadow-red-500/5"
           >
             <CheckCircle2 className="w-5 h-5 text-red-500 mr-2" />
             <span className="text-red-500 font-semibold">Real Results for Local Businesses</span>
@@ -109,7 +109,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl font-bold text-gradient mb-4"
+            className="text-5xl font-bold text-gradient mb-5 drop-shadow-sm"
           >
             Success Stories
           </motion.h2>
@@ -119,7 +119,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto"
+            className="text-gray-300 text-lg max-w-2xl mx-auto"
           >
             See how we've helped local businesses grow and succeed in the digital age
           </motion.p>
@@ -141,17 +141,17 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
                 placeholder="Search case studies..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-black/60 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400"
+                className="w-full pl-10 pr-4 py-3 bg-black/60 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 text-white placeholder-gray-400 transition-all duration-300"
               />
             </div>
 
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedIndustry(null)}
-                className={`flex items-center px-4 py-2 rounded-lg transition-all ${
+                className={`flex items-center px-5 py-2.5 rounded-lg transition-all duration-300 ${
                   selectedIndustry === null
-                    ? 'bg-gradient-to-r from-red-500/20 to-red-500/5 text-white border border-red-500/20'
-                    : 'bg-black/60 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
+                    ? 'bg-gradient-to-r from-red-500/30 to-red-500/10 text-white border border-red-500/30 shadow-md shadow-red-500/10'
+                    : 'bg-black/60 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10 hover:border-red-500/10'
                 }`}
               >
                 <Filter className="w-4 h-4 mr-2" />
@@ -162,13 +162,13 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
                 <button
                   key={industry}
                   onClick={() => setSelectedIndustry(industry === selectedIndustry ? null : industry)}
-                  className={`flex items-center px-4 py-2 rounded-lg transition-all ${
+                  className={`flex items-center px-5 py-2.5 rounded-lg transition-all duration-300 ${
                     selectedIndustry === industry
-                      ? 'bg-gradient-to-r from-red-500/20 to-red-500/5 text-white border border-red-500/20'
-                      : 'bg-black/60 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
+                      ? 'bg-gradient-to-r from-red-500/30 to-red-500/10 text-white border border-red-500/30 shadow-md shadow-red-500/10'
+                      : 'bg-black/60 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10 hover:border-red-500/10'
                   }`}
                 >
-                  {React.createElement(industryToIcon[industry as keyof typeof industryToIcon] || Briefcase, { className: "w-4 h-4 mr-2" })}
+                  {React.createElement(industryToIcon[industry as keyof typeof industryToIcon] || Briefcase, { className: "w-5 h-5 mr-2.5" })}
                   {industry}
                 </button>
               ))}
@@ -179,7 +179,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
         {/* Projects Grid */}
         <AnimatePresence>
           {filteredProjects.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
               {filteredProjects.map((project, index) => (
                 <ProjectCard key={project.id} project={project} index={index} />
               ))}
@@ -205,10 +205,10 @@ const Projects: React.FC<ProjectsProps> = ({ projects = caseStudies }) => {
         >
           <Link
             to="/case-studies"
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 group"
+            className="inline-flex items-center px-10 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white text-lg font-medium rounded-lg transition-all duration-300 hover:shadow-xl hover:shadow-red-500/30 hover:-translate-y-0.5 group"
           >
             <span>View All Case Studies</span>
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-6 h-6 ml-2.5 group-hover:translate-x-1.5 transition-transform" />
           </Link>
         </motion.div>
       </div>

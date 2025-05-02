@@ -7,7 +7,9 @@ import { caseStudies } from '../data/case-studies';
 
 const CaseStudyDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  console.log('Case Study ID from URL:', id); // Log the ID
   const study = caseStudies.find(s => s.id === id) as RequiredCaseStudy;
+  console.log('Found Case Study:', JSON.stringify(study, null, 2)); // Log the full study object
 
   if (!study) {
     return (

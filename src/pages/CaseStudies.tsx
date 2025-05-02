@@ -63,7 +63,7 @@ const CaseStudies = () => {
         {/* Case Studies Grid */}
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ pointerEvents: 'auto' }}>
               {filteredStudies.map((study, index) => (
                 <motion.div
                   key={study.id}
@@ -82,7 +82,7 @@ const CaseStudies = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
                     
-                    <div className="absolute inset-0 p-8 flex flex-col justify-between">
+                    <div className="absolute inset-0 p-8 flex flex-col justify-between z-10">
                       <div>
                         <span className="inline-block px-3 py-1 bg-red-500/90 text-white text-sm rounded-full mb-4">
                           {study.industry}

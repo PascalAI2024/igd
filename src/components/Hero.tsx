@@ -57,9 +57,9 @@ const Hero = () => {
 
     const particles: Particle[] = [];
     const connections: Connection[] = [];
-    const maxParticles = 100;
-    const connectionDistance = 150;
-    const mouseRadius = 200;
+    const maxParticles = 120; // Increased for more visual density
+    const connectionDistance = 180; // Extended for wider connection network
+    const mouseRadius = 250; // Increased for stronger mouse interaction
     const mousePos = { x: 0, y: 0 };
     let mouseActive = false;
 
@@ -68,10 +68,10 @@ const Hero = () => {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 1,
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: (Math.random() - 0.5) * 0.5,
-        color: `rgba(${Math.floor(Math.random() * 50) + 200}, ${Math.floor(Math.random() * 30)}, ${Math.floor(Math.random() * 30)}, `,
+        size: Math.random() * 3 + 1, // Larger particle variation
+        speedX: (Math.random() - 0.5) * 0.7, // Faster movement
+        speedY: (Math.random() - 0.5) * 0.7,
+        color: `rgba(${Math.floor(Math.random() * 50) + 200}, ${Math.floor(Math.random() * 30)}, ${Math.floor(Math.random() * 30)}, `, // Keeping the red theme
         alpha: 0.1 + Math.random() * 0.4,
         connections: []
       });
@@ -120,8 +120,8 @@ const Hero = () => {
     };
 
     const animate = () => {
-      // Clear with fade effect for trail
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      // Enhanced trail effect with slower fade
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Update particles
@@ -135,14 +135,14 @@ const Hero = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < mouseRadius) {
-            const force = (1 - distance / mouseRadius) * 0.03;
+            const force = (1 - distance / mouseRadius) * 0.05; // Stronger force for more dynamic interaction
             p.speedX += dx * force;
             p.speedY += dy * force;
           }
         }
 
-        // Apply speed limits
-        const maxSpeed = 2;
+        // Apply speed limits - faster for more dynamic movement
+        const maxSpeed = 2.5;
         const speed = Math.sqrt(p.speedX * p.speedX + p.speedY * p.speedY);
         if (speed > maxSpeed) {
           p.speedX = (p.speedX / speed) * maxSpeed;
@@ -172,7 +172,7 @@ const Hero = () => {
         // Add glow effect
         const gradient = ctx.createRadialGradient(
           p.x, p.y, 0,
-          p.x, p.y, p.size * 3
+          p.x, p.y, p.size * 4 // Larger glow radius
         );
         gradient.addColorStop(0, p.color + p.alpha * 0.5 + ')');
         gradient.addColorStop(1, p.color + '0)');
@@ -202,7 +202,7 @@ const Hero = () => {
         gradient.addColorStop(1, p2.color + conn.alpha + ')');
 
         ctx.strokeStyle = gradient;
-        ctx.lineWidth = Math.min(p1.size, p2.size) * 0.5;
+        ctx.lineWidth = Math.min(p1.size, p2.size) * 0.7; // Thicker connections
         ctx.stroke();
       }
 
@@ -338,8 +338,8 @@ const Hero = () => {
         </AnimatePresence>
       </div>
 
-      {/* Radial gradient overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.08),transparent_70%)]"></div>
+      {/* Enhanced radial gradient overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.18),transparent_80%)]"></div>
 
       {/* Vignette effect */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_30%,rgba(0,0,0,0.4)_100%)]"></div>
@@ -381,13 +381,13 @@ const Hero = () => {
               className="mb-8"
             >
               <div className="relative">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4 relative z-10">
-                  <span className="text-gradient">Building Digital Excellence</span>
+                <h1 className="text-5xl md:text-8xl font-bold mb-5 relative z-10">
+                  <span className="text-gradient drop-shadow-lg">Building Digital Excellence</span>
                 </h1>
-                {/* Subtle glow effect */}
-                <div className="absolute -inset-1 bg-red-500/5 blur-2xl rounded-full z-0 opacity-50"></div>
+                {/* Enhanced glow effect */}
+                <div className="absolute -inset-1 bg-red-500/20 blur-3xl rounded-full z-0 opacity-80"></div>
               </div>
-              <h2 className="text-2xl md:text-3xl text-gray-400 font-light">
+              <h2 className="text-2xl md:text-4xl text-gray-200 font-light tracking-wide">
                 Where Innovation Meets Results
               </h2>
             </motion.div>
@@ -396,7 +396,7 @@ const Hero = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="inline-flex items-center px-4 py-2 rounded-full border border-red-500/20 bg-gradient-to-r from-black/80 to-black/40 backdrop-blur-sm mb-8 shadow-inner"
+              className="inline-flex items-center px-6 py-3 rounded-full border border-red-500/30 bg-gradient-to-r from-black/80 to-black/40 backdrop-blur-sm mb-10 shadow-inner"
             >
               <span className="animate-pulse mr-2 text-red-500">●</span>
               <TypeWriter
@@ -421,13 +421,13 @@ const Hero = () => {
                 onClick={handleStartProjectClick}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-lg text-white font-medium overflow-hidden shadow-lg hover:shadow-red-500/25 transition-all duration-300"
+                className="group relative inline-flex items-center px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 rounded-lg text-white text-lg font-medium overflow-hidden shadow-xl hover:shadow-red-500/40 transition-all duration-300"
               >
                 {/* Button glow effect */}
-                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300"></div>
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-300"></div>
                 <span className="relative z-10 flex items-center">
                   Start Your Project
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform" />
                 </span>
               </motion.a>
 
@@ -436,7 +436,7 @@ const Hero = () => {
                 onClick={handleExploreSolutionsClick}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative inline-flex items-center px-8 py-4 border border-red-500/20 rounded-lg text-white font-medium overflow-hidden bg-black/50"
+                className="group relative inline-flex items-center px-10 py-5 border border-red-500/30 rounded-lg text-white text-lg font-medium overflow-hidden bg-black/60 backdrop-blur-sm shadow-lg"
               >
                 <span className="relative z-10">Explore Solutions</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -454,8 +454,9 @@ const Hero = () => {
             <div className="relative w-full max-w-md aspect-square">
               {/* Floating feature showcase */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="absolute w-full h-full rounded-full border border-red-500/10 animate-pulse"></div>
-                <div className="absolute w-3/4 h-3/4 rounded-full border border-red-500/5 animate-pulse" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute w-full h-full rounded-full border-2 border-red-500/30 animate-pulse"></div>
+                <div className="absolute w-4/5 h-4/5 rounded-full border-2 border-red-500/20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute w-3/5 h-3/5 rounded-full border-2 border-red-500/10 animate-pulse" style={{ animationDelay: '2s' }}></div>
                 
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -473,25 +474,25 @@ const Hero = () => {
                   >
                     {/* Feature card with floating effect */}
                     <div className="relative group">
-                      <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-red-700 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
-                      <div className="relative bg-gradient-to-br from-black to-gray-900/80 backdrop-blur-md border border-red-500/20 rounded-xl p-6 shadow-2xl">
+                      <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-red-700 rounded-xl blur-xl opacity-40 group-hover:opacity-60 group-hover:blur-2xl transition-all duration-500"></div>
+                      <div className="relative bg-gradient-to-br from-black to-gray-900/80 backdrop-blur-md border-2 border-red-500/30 rounded-xl p-8 shadow-2xl">
                         <div className="flex flex-col items-center text-center">
-                          {/* Floating icon container */}
-                          <div className="relative w-24 h-24 mb-6 transform transition-transform duration-500 group-hover:scale-110">
-                            <div className="absolute inset-0 bg-red-500/10 rounded-full blur-xl"></div>
-                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-800/10 rounded-full animate-pulse"></div>
-                            <div className="relative w-full h-full rounded-full bg-gradient-to-br from-red-500/20 to-red-800/5 flex items-center justify-center border border-red-500/20 shadow-lg shadow-red-500/10">
-                              <div className="w-14 h-14 rounded-full bg-black flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
+                          {/* Enhanced floating icon container */}
+                          <div className="relative w-36 h-36 mb-10 transform transition-transform duration-500 group-hover:scale-110">
+                            <div className="absolute inset-0 bg-red-500/30 rounded-full blur-3xl"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/40 to-red-800/20 rounded-full animate-pulse"></div>
+                            <div className="relative w-full h-full rounded-full bg-gradient-to-br from-red-500/40 to-red-800/20 flex items-center justify-center border-2 border-red-500/40 shadow-xl shadow-red-500/30">
+                              <div className="w-20 h-20 rounded-full bg-black flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
                                 {features[activeFeature].icon}
                               </div>
                             </div>
                           </div>
 
-                          <h3 className="text-3xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600">{features[activeFeature].title}</h3>
-                          <p className="text-gray-300 mb-8 group-hover:text-gray-100 transition-colors duration-300">{features[activeFeature].description}</p>
+                          <h3 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600 drop-shadow-lg">{features[activeFeature].title}</h3>
+                          <p className="text-gray-200 text-xl mb-10 group-hover:text-white transition-colors duration-300">{features[activeFeature].description}</p>
 
-                          {/* Feature image with parallax effect */}
-                          <div className="relative w-full h-48 rounded-lg overflow-hidden mb-8 group-hover:h-52 transition-all duration-300">
+                          {/* Enhanced feature image with stronger parallax effect */}
+                          <div className="relative w-full h-64 rounded-lg overflow-hidden mb-8 group-hover:h-68 transition-all duration-300 shadow-2xl shadow-red-900/30">
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10"></div>
                             <OptimizedImage
                               src={features[activeFeature].image}

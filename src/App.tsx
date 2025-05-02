@@ -7,8 +7,8 @@ import ScrollProgress from './components/ScrollProgress';
 import FloatingContactIcons from './components/FloatingContactIcons';
 import LoadingSequence from './components/LoadingSequence';
 import BreadcrumbSchema from './components/BreadcrumbSchema';
-import { initializeAnalytics, trackPageView } from './utils/analytics';
-import { measurePerformance, trackError } from './utils/performance';
+import { initializeAnalytics, trackPageView, trackError } from './utils/analytics';
+import { measurePerformance } from './utils/performance';
 
 // Lazy load pages
 const Home = React.lazy(() => import('./pages/Home'));
@@ -44,7 +44,12 @@ const Manufacturing = React.lazy(() => import('./pages/industries/Manufacturing'
 
 const App = () => {
   const location = useLocation();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    // Check sessionStorage for a flag
+    const hasLoadedBefore = sessionStorage.getItem('has_loaded_before');
+    // Only show loading on initial load of the home page
+    return !hasLoadedBefore && location.pathname === '/';
+  });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Initialize analytics and performance tracking
@@ -60,7 +65,7 @@ const App = () => {
 
     // Setup unhandled promise rejection tracking
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      trackError(new Error(`Unhandled Promise Rejection: ${event.reason}`));
+      trackError(`Unhandled Promise Rejection: ${event.reason}`);
     };
     window.addEventListener('unhandledrejection', handleUnhandledRejection);
 
@@ -100,20 +105,23 @@ const App = () => {
   const handleLoadingComplete = () => {
     document.body.style.overflow = 'visible';
     setIsLoading(false);
+    // Set flag in sessionStorage after initial load completes
+    sessionStorage.setItem('has_loaded_before', 'true');
   };
 
   // Hide navigation on landing page
   const showNavigation = !location.pathname.includes('/landing');
 
-  // Show loading screen every time the home page is visited
+  // Effect to handle loading state based on location and session storage
   useEffect(() => {
-    // Always show loading screen when visiting home page
-    if (location.pathname === '/') {
+    const hasLoadedBefore = sessionStorage.getItem('has_loaded_before');
+    if (!hasLoadedBefore && location.pathname === '/') {
       setIsLoading(true);
     } else {
       setIsLoading(false);
     }
-  }, [location.pathname]);
+  }, [location.pathname]); // Dependency on location.pathname
+
 
   // Prevent scrolling during loading
   useEffect(() => {

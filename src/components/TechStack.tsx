@@ -157,7 +157,7 @@ const TechStack = () => {
 
   return (
     <section className="py-24 bg-black relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.03),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.08),transparent_75%)]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-16">
@@ -165,7 +165,7 @@ const TechStack = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center bg-gradient-to-r from-red-500/10 to-red-500/5 rounded-full px-4 py-2 mb-4 border border-red-500/10"
+            className="inline-flex items-center bg-gradient-to-r from-red-500/20 to-red-500/10 rounded-full px-5 py-2.5 mb-5 border border-red-500/20 shadow-md shadow-red-500/5"
           >
             <Cpu className="w-5 h-5 text-red-500 mr-2" />
             <span className="text-red-500 font-semibold">Cutting-Edge Technology Stack</span>
@@ -176,7 +176,7 @@ const TechStack = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl font-bold text-gradient mb-4"
+            className="text-5xl font-bold text-gradient mb-5 drop-shadow-sm"
           >
             Powered by Innovation
           </motion.h2>
@@ -186,7 +186,7 @@ const TechStack = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto"
+            className="text-gray-300 text-lg max-w-2xl mx-auto"
           >
             We leverage cutting-edge technologies to deliver powerful, scalable solutions
             that drive business growth and efficiency
@@ -201,8 +201,8 @@ const TechStack = () => {
           transition={{ delay: 0.3 }}
           className="relative mb-20"
         >
-          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-black to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-black to-transparent pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-black to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-black to-transparent pointer-events-none" />
 
           <div className="flex space-x-12 animate-scroll">
             {[...technologies, ...technologies].map((tech, index) => (
@@ -215,20 +215,20 @@ const TechStack = () => {
                 }}
               >
                 <div
-                  className="w-24 h-24 bg-black/60 rounded-xl p-4 backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:border-white/20 group-hover:bg-black/80 cursor-pointer"
+                  className="w-28 h-28 bg-black/60 rounded-xl p-5 backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:border-red-500/30 group-hover:bg-black/80 cursor-pointer"
                   style={{
-                    boxShadow: `0 0 20px 0 ${tech.color}10`
+                    boxShadow: `0 0 25px 0 ${tech.color}20`
                   }}
                 >
                   <img
                     src={tech.logo}
                     alt={tech.name}
-                    className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                    className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                   />
                 </div>
 
                 {/* Tooltip */}
-                <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-black/90 text-white px-3 py-1 rounded text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-white/10 backdrop-blur-sm z-20">
+                <div className="absolute -bottom-14 left-1/2 transform -translate-x-1/2 bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-red-500/20 backdrop-blur-sm z-20 shadow-lg">
                   <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black/90 border-t border-l border-white/10 rotate-45" />
                   {tech.name}
                 </div>
@@ -251,15 +251,16 @@ const TechStack = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 + (index * 0.1) }}
-                className={`relative flex items-center px-6 py-3 rounded-lg transition-all duration-300 ${
+                className={`relative flex items-center px-7 py-3.5 rounded-lg transition-all duration-300 ${
                   activeCategory === category.id
-                    ? 'bg-gradient-to-r from-red-500/20 to-red-500/5 text-white'
-                    : 'bg-black/60 text-gray-400 hover:bg-black/80 hover:text-white'
+                    ? 'bg-gradient-to-r from-red-500/30 to-red-500/10 text-white'
+                    : 'bg-black/60 text-gray-400 hover:bg-black/80 hover:text-gray-200'
                 }`}
                 style={{
                   border: activeCategory === category.id
-                    ? `1px solid ${category.color}40`
-                    : '1px solid rgba(255, 255, 255, 0.1)'
+                    ? `1px solid ${category.color}60`
+                    : '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: activeCategory === category.id ? `0 0 15px 0 ${category.color}30` : 'none'
                 }}
               >
                 <div className={`mr-2 ${activeCategory === category.id ? 'text-red-500' : ''}`}>
@@ -272,7 +273,7 @@ const TechStack = () => {
                     layoutId="activeTechTab"
                     className="absolute inset-0 rounded-lg z-0"
                     style={{
-                      boxShadow: `0 0 20px 0 ${category.color}20`
+                      boxShadow: `0 0 30px 0 ${category.color}30`
                     }}
                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   />
@@ -293,18 +294,18 @@ const TechStack = () => {
                 exit={{ opacity: 0, scale: 0.9 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                className={`p-6 bg-black/60 rounded-xl border backdrop-blur-sm transition-all duration-300 cursor-pointer ${
+                className={`p-7 bg-black/60 rounded-xl border backdrop-blur-sm transition-all duration-300 cursor-pointer ${
                   activeTech?.name === tech.name
-                    ? 'border-white/20 shadow-lg'
-                    : 'border-white/10 hover:border-white/20'
+                    ? 'border-red-500/30 shadow-xl'
+                    : 'border-white/10 hover:border-red-500/20'
                 }`}
                 style={{
-                  boxShadow: activeTech?.name === tech.name ? `0 0 30px 0 ${tech.color}20` : 'none'
+                  boxShadow: activeTech?.name === tech.name ? `0 0 35px 0 ${tech.color}30` : 'none'
                 }}
                 onClick={() => setActiveTech(activeTech?.name === tech.name ? null : tech)}
               >
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-black/80 rounded-lg p-2 mr-4 border border-white/5">
+                  <div className="w-14 h-14 bg-black/80 rounded-lg p-2.5 mr-5 border border-white/10">
                     <img
                       src={tech.logo}
                       alt={tech.name}
@@ -312,7 +313,7 @@ const TechStack = () => {
                     />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">
+                    <h3 className="text-xl font-semibold text-white">
                       {tech.name}
                     </h3>
                     <p className="text-xs text-gray-400">{tech.category}</p>
@@ -322,7 +323,7 @@ const TechStack = () => {
                   }`} />
                 </div>
 
-                <p className="text-gray-400 text-sm mb-4">
+                <p className="text-gray-300 mb-4">
                   {tech.description}
                 </p>
 
@@ -334,8 +335,8 @@ const TechStack = () => {
                       exit={{ opacity: 0, height: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="pt-4 border-t border-white/10">
-                        <h4 className="text-sm font-semibold text-white mb-2">Key Features:</h4>
+                      <div className="pt-5 border-t border-white/10">
+                        <h4 className="text-base font-semibold text-white mb-3">Key Features:</h4>
                         <ul className="space-y-1">
                           {tech.features.map((feature, i) => (
                             <motion.li
@@ -343,10 +344,10 @@ const TechStack = () => {
                               initial={{ opacity: 0, x: -10 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: i * 0.1 }}
-                              className="flex items-start text-sm"
+                              className="flex items-start"
                             >
-                              <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 mr-2" />
-                              <span className="text-gray-300">{feature}</span>
+                              <div className="w-2 h-2 rounded-full bg-red-500 mt-1.5 mr-3" />
+                              <span className="text-gray-200">{feature}</span>
                             </motion.li>
                           ))}
                         </ul>
@@ -364,16 +365,16 @@ const TechStack = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-r from-black to-black/80 rounded-2xl p-8 backdrop-blur-sm border border-white/10 relative overflow-hidden"
+          className="bg-gradient-to-r from-black to-black/80 rounded-2xl p-10 backdrop-blur-sm border border-red-500/10 relative overflow-hidden"
         >
           {/* Background glow */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-red-500/10 to-purple-500/10 blur-xl opacity-50 z-0" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-red-500/20 to-purple-500/10 blur-2xl opacity-60 z-0" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <h3 className="text-2xl font-bold text-gradient mb-4">
+            <h3 className="text-3xl font-bold text-gradient mb-5">
               Technology Expertise That Delivers Results
             </h3>
-            <p className="text-gray-300 mb-6">
+            <p className="text-gray-200 text-lg mb-8">
               Our team stays at the forefront of technology to ensure your business benefits from the latest innovations and best practices.
             </p>
 
@@ -382,15 +383,15 @@ const TechStack = () => {
                 <motion.div
                   key={category.id}
                   whileHover={{ y: -5 }}
-                  className="bg-black/60 rounded-lg p-4 border border-white/10 hover:border-white/20 transition-all duration-300"
+                  className="bg-black/60 rounded-lg p-5 border border-white/10 hover:border-red-500/20 transition-all duration-300 shadow-lg"
                 >
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-red-500/20 to-red-500/5 mx-auto flex items-center justify-center mb-3 border border-red-500/10">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-500/30 to-red-500/10 mx-auto flex items-center justify-center mb-4 border border-red-500/20 shadow-md">
                     <div className="text-red-500">
                       {category.icon}
                     </div>
                   </div>
-                  <h4 className="text-white font-medium">{category.name}</h4>
-                  <p className="text-gray-400 text-xs">
+                  <h4 className="text-white font-semibold text-lg mb-1">{category.name}</h4>
+                  <p className="text-gray-300">
                     {category.id === "Frontend" && "Modern, responsive UIs"}
                     {category.id === "Backend" && "Scalable server solutions"}
                     {category.id === "AI/ML" && "Intelligent automation"}
