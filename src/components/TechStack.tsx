@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code, Server, Cpu, Cloud, ChevronRight } from "lucide-react";
+import "./TechStack.css";
 
 interface Technology {
   name: string;
@@ -14,7 +15,7 @@ interface Technology {
 const technologies: Technology[] = [
   {
     name: "React",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
+    logo: "/images/tech/react.svg",
     category: "Frontend",
     description: "A JavaScript library for building user interfaces with reusable components",
     features: ["Component-based architecture", "Virtual DOM for performance", "Declarative UI development", "Rich ecosystem"],
@@ -22,7 +23,7 @@ const technologies: Technology[] = [
   },
   {
     name: "Next.js",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    logo: "/images/tech/nextjs.svg",
     category: "Frontend",
     description: "React framework that enables server-side rendering and static site generation",
     features: ["Server-side rendering", "Static site generation", "API routes", "Optimized performance"],
@@ -30,7 +31,7 @@ const technologies: Technology[] = [
   },
   {
     name: "TypeScript",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg",
+    logo: "/images/tech/typescript.svg",
     category: "Frontend",
     description: "Strongly typed programming language that builds on JavaScript",
     features: ["Static type checking", "Enhanced IDE support", "Early error detection", "Better code organization"],
@@ -38,7 +39,7 @@ const technologies: Technology[] = [
   },
   {
     name: "Tailwind CSS",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
+    logo: "/images/tech/tailwindcss.svg",
     category: "Frontend",
     description: "Utility-first CSS framework for rapidly building custom designs",
     features: ["Utility-first approach", "Responsive design", "Component-friendly", "Customizable"],
@@ -46,7 +47,7 @@ const technologies: Technology[] = [
   },
   {
     name: "Node.js",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg",
+    logo: "/images/tech/nodejs.svg",
     category: "Backend",
     description: "JavaScript runtime built on Chrome's V8 JavaScript engine",
     features: ["Event-driven architecture", "Non-blocking I/O", "Vast package ecosystem", "Scalable applications"],
@@ -54,7 +55,7 @@ const technologies: Technology[] = [
   },
   {
     name: "Express",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg",
+    logo: "/images/tech/express.svg",
     category: "Backend",
     description: "Fast, unopinionated, minimalist web framework for Node.js",
     features: ["Middleware support", "Routing system", "Template engine integration", "HTTP utility methods"],
@@ -62,7 +63,7 @@ const technologies: Technology[] = [
   },
   {
     name: "MongoDB",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg",
+    logo: "/images/tech/mongodb.svg",
     category: "Backend",
     description: "Document-oriented NoSQL database for modern applications",
     features: ["Document-based storage", "Flexible schema", "Horizontal scaling", "High availability"],
@@ -70,7 +71,7 @@ const technologies: Technology[] = [
   },
   {
     name: "PostgreSQL",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg",
+    logo: "/images/tech/postgresql.svg",
     category: "Backend",
     description: "Powerful, open source object-relational database system",
     features: ["ACID compliance", "JSON support", "Extensible", "Robust feature set"],
@@ -78,7 +79,7 @@ const technologies: Technology[] = [
   },
   {
     name: "Python",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
+    logo: "/images/tech/python.svg",
     category: "AI/ML",
     description: "Versatile programming language with powerful libraries for AI/ML",
     features: ["Easy to learn and use", "Extensive libraries", "Cross-platform", "Large community"],
@@ -86,7 +87,7 @@ const technologies: Technology[] = [
   },
   {
     name: "TensorFlow",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/tensorflow/tensorflow-original.svg",
+    logo: "/images/tech/tensorflow.svg",
     category: "AI/ML",
     description: "Open-source platform for machine learning and artificial intelligence",
     features: ["End-to-end ML platform", "Model deployment", "Distributed training", "Visualization tools"],
@@ -94,7 +95,7 @@ const technologies: Technology[] = [
   },
   {
     name: "PyTorch",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
+    logo: "/images/tech/pytorch.svg",
     category: "AI/ML",
     description: "Open source machine learning framework for research and production",
     features: ["Dynamic computation graph", "GPU acceleration", "Pythonic interface", "Research-friendly"],
@@ -102,7 +103,7 @@ const technologies: Technology[] = [
   },
   {
     name: "scikit-learn",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg",
+    logo: "/images/tech/scikit-learn.svg",
     category: "AI/ML",
     description: "Machine learning library for Python with simple and efficient tools",
     features: ["Classification algorithms", "Regression methods", "Clustering techniques", "Model selection"],
@@ -110,7 +111,7 @@ const technologies: Technology[] = [
   },
   {
     name: "AWS",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+    logo: "/images/tech/aws.svg",
     category: "Cloud",
     description: "Comprehensive cloud computing platform with over 200 services",
     features: ["Global infrastructure", "Security compliance", "Pay-as-you-go pricing", "Scalable services"],
@@ -118,7 +119,7 @@ const technologies: Technology[] = [
   },
   {
     name: "Google Cloud",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
+    logo: "/images/tech/googlecloud.svg",
     category: "Cloud",
     description: "Suite of cloud computing services running on Google infrastructure",
     features: ["AI and ML tools", "Data analytics", "Serverless computing", "Global network"],
@@ -126,7 +127,7 @@ const technologies: Technology[] = [
   },
   {
     name: "Docker",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg",
+    logo: "/images/tech/docker.svg",
     category: "Cloud",
     description: "Platform for developing, shipping, and running applications in containers",
     features: ["Containerization", "Consistent environments", "Isolation", "Efficient resource usage"],
@@ -134,7 +135,7 @@ const technologies: Technology[] = [
   },
   {
     name: "Kubernetes",
-    logo: "https://raw.githubusercontent.com/devicons/devicon/master/icons/kubernetes/kubernetes-plain.svg",
+    logo: "/images/tech/kubernetes.svg",
     category: "Cloud",
     description: "Open-source system for automating deployment and scaling of containerized applications",
     features: ["Container orchestration", "Auto-scaling", "Self-healing", "Service discovery"],
@@ -204,36 +205,140 @@ const TechStack = () => {
           <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-black to-transparent pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-black to-transparent pointer-events-none" />
 
-          <div className="flex space-x-12 animate-scroll">
-            {[...technologies, ...technologies].map((tech, index) => (
-              <div
-                key={`${tech.name}-${index}`}
-                className="flex-none group relative"
-                onClick={() => {
-                  setActiveCategory(tech.category);
-                  setActiveTech(tech);
-                }}
-              >
-                <div
-                  className="w-28 h-28 bg-black/60 rounded-xl p-5 backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:border-red-500/30 group-hover:bg-black/80 cursor-pointer"
-                  style={{
-                    boxShadow: `0 0 25px 0 ${tech.color}20`
-                  }}
-                >
-                  <img
-                    src={tech.logo}
-                    alt={tech.name}
-                    className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                  />
-                </div>
+          {/* First row - scrolling left */}
+          <div className="tech-scroll-container mb-8">
+            <div className="tech-scroll">
+              <div className="tech-scroll-content">
+                {technologies.map((tech, index) => (
+                  <div
+                    key={`left-${tech.name}-${index}`}
+                    className="tech-item group"
+                    onClick={() => {
+                      setActiveCategory(tech.category);
+                      setActiveTech(tech);
+                    }}
+                  >
+                    <div
+                      className="w-28 h-28 bg-black/60 rounded-xl p-5 backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:border-red-500/30 group-hover:bg-black/80 cursor-pointer"
+                      style={{
+                        boxShadow: `0 0 25px 0 ${tech.color}20`
+                      }}
+                    >
+                      <img
+                        src={tech.logo}
+                        alt={tech.name}
+                        className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                      />
+                    </div>
 
-                {/* Tooltip */}
-                <div className="absolute -bottom-14 left-1/2 transform -translate-x-1/2 bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-red-500/20 backdrop-blur-sm z-20 shadow-lg">
-                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black/90 border-t border-l border-white/10 rotate-45" />
-                  {tech.name}
-                </div>
+                    {/* Tooltip */}
+                    <div className="absolute -bottom-14 left-1/2 transform -translate-x-1/2 bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-red-500/20 backdrop-blur-sm z-20 shadow-lg">
+                      <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black/90 border-t border-l border-white/10 rotate-45" />
+                      {tech.name}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+              <div className="tech-scroll-content">
+                {technologies.map((tech, index) => (
+                  <div
+                    key={`left-dup-${tech.name}-${index}`}
+                    className="tech-item group"
+                    onClick={() => {
+                      setActiveCategory(tech.category);
+                      setActiveTech(tech);
+                    }}
+                  >
+                    <div
+                      className="w-28 h-28 bg-black/60 rounded-xl p-5 backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:border-red-500/30 group-hover:bg-black/80 cursor-pointer"
+                      style={{
+                        boxShadow: `0 0 25px 0 ${tech.color}20`
+                      }}
+                    >
+                      <img
+                        src={tech.logo}
+                        alt={tech.name}
+                        className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                      />
+                    </div>
+
+                    {/* Tooltip */}
+                    <div className="absolute -bottom-14 left-1/2 transform -translate-x-1/2 bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-red-500/20 backdrop-blur-sm z-20 shadow-lg">
+                      <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black/90 border-t border-l border-white/10 rotate-45" />
+                      {tech.name}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Second row - scrolling right */}
+          <div className="tech-scroll-container">
+            <div className="tech-scroll-reverse">
+              <div className="tech-scroll-content">
+                {technologies.map((tech, index) => (
+                  <div
+                    key={`right-${tech.name}-${index}`}
+                    className="tech-item group"
+                    onClick={() => {
+                      setActiveCategory(tech.category);
+                      setActiveTech(tech);
+                    }}
+                  >
+                    <div
+                      className="w-28 h-28 bg-black/60 rounded-xl p-5 backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:border-red-500/30 group-hover:bg-black/80 cursor-pointer"
+                      style={{
+                        boxShadow: `0 0 25px 0 ${tech.color}20`
+                      }}
+                    >
+                      <img
+                        src={tech.logo}
+                        alt={tech.name}
+                        className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                      />
+                    </div>
+
+                    {/* Tooltip */}
+                    <div className="absolute -bottom-14 left-1/2 transform -translate-x-1/2 bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-red-500/20 backdrop-blur-sm z-20 shadow-lg">
+                      <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black/90 border-t border-l border-white/10 rotate-45" />
+                      {tech.name}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="tech-scroll-content">
+                {technologies.map((tech, index) => (
+                  <div
+                    key={`right-dup-${tech.name}-${index}`}
+                    className="tech-item group"
+                    onClick={() => {
+                      setActiveCategory(tech.category);
+                      setActiveTech(tech);
+                    }}
+                  >
+                    <div
+                      className="w-28 h-28 bg-black/60 rounded-xl p-5 backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:border-red-500/30 group-hover:bg-black/80 cursor-pointer"
+                      style={{
+                        boxShadow: `0 0 25px 0 ${tech.color}20`
+                      }}
+                    >
+                      <img
+                        src={tech.logo}
+                        alt={tech.name}
+                        className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                      />
+                    </div>
+
+                    {/* Tooltip */}
+                    <div className="absolute -bottom-14 left-1/2 transform -translate-x-1/2 bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-red-500/20 backdrop-blur-sm z-20 shadow-lg">
+                      <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black/90 border-t border-l border-white/10 rotate-45" />
+                      {tech.name}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </motion.div>
 

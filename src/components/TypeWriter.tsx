@@ -15,7 +15,7 @@ const TypeWriter: React.FC<TypeWriterProps> = ({ words, delay = 100, infinite = 
 
   const type = useCallback(() => {
     const currentWord = words[wordIndex];
-    
+
     if (isPaused) {
       setTimeout(() => setIsPaused(false), 1500);
       return;

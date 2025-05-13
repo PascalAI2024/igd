@@ -1,20 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Code2, Zap, Brain, Globe, BarChart2, Layers } from 'lucide-react';
+import { ArrowRight, Code2, Zap, Brain, Globe, BarChart2 } from 'lucide-react';
 import TypeWriter from './TypeWriter';
 import { trackInteraction, trackEngagement } from '../utils/analytics';
 import OptimizedImage from './OptimizedImage';
-
-interface Line {
-  x: number;
-  y: number;
-  angle: number;
-  length: number;
-  progress: number;
-  width: number;
-  speed: number;
-  alpha: number;
-}
 
 const Hero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -414,125 +403,191 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-6 mt-2"
             >
-              <motion.a
-                href="#contact"
-                onClick={handleStartProjectClick}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative inline-flex items-center px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 rounded-lg text-white text-lg font-medium overflow-hidden shadow-xl hover:shadow-red-500/40 transition-all duration-300"
-              >
-                {/* Button glow effect */}
-                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-300"></div>
-                <span className="relative z-10 flex items-center">
-                  Start Your Project
-                  <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform" />
-                </span>
-              </motion.a>
+              {/* Primary CTA - Start Project */}
+              <div className="relative group">
+                {/* Animated background glow */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-red-600 via-red-500 to-purple-600 rounded-xl blur-lg opacity-70 group-hover:opacity-100 transition-all duration-500 group-hover:duration-200 animate-gradient"></div>
 
+                <motion.a
+                  href="#contact"
+                  onClick={handleStartProjectClick}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="relative flex items-center justify-center px-8 py-4 bg-black rounded-lg text-white text-lg font-medium overflow-hidden shadow-xl border border-white/10 backdrop-blur-sm"
+                >
+                  {/* Subtle particle effect */}
+                  <div className="absolute inset-0 overflow-hidden opacity-20">
+                    <div className="absolute top-0 left-[10%] w-2 h-2 bg-white rounded-full animate-float" style={{ animationDuration: '3s' }}></div>
+                    <div className="absolute top-[40%] left-[80%] w-1.5 h-1.5 bg-white rounded-full animate-float" style={{ animationDuration: '7s', animationDelay: '1s' }}></div>
+                    <div className="absolute top-[80%] left-[30%] w-1 h-1 bg-white rounded-full animate-float" style={{ animationDuration: '5s', animationDelay: '2s' }}></div>
+                  </div>
+
+                  {/* Button content with enhanced animation */}
+                  <span className="relative z-10 flex items-center">
+                    <span className="mr-2">✨</span>
+                    <span className="relative">
+                      <span className="block">Start Your Project</span>
+                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                    </span>
+                    <span className="relative ml-3 w-6 h-6 flex items-center justify-center overflow-hidden">
+                      <ArrowRight className="w-6 h-6 absolute group-hover:translate-x-8 group-hover:opacity-0 transition-all duration-300" />
+                      <ArrowRight className="w-6 h-6 absolute -translate-x-8 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" />
+                    </span>
+                  </span>
+                </motion.a>
+              </div>
+
+              {/* Secondary CTA - Explore Solutions */}
               <motion.a
                 href="#services"
                 onClick={handleExploreSolutionsClick}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, y: -5 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative inline-flex items-center px-10 py-5 border border-red-500/30 rounded-lg text-white text-lg font-medium overflow-hidden bg-black/60 backdrop-blur-sm shadow-lg"
+                className="group relative inline-flex items-center px-8 py-4 border border-red-500/20 rounded-lg text-white text-lg font-medium overflow-hidden bg-black/40 backdrop-blur-sm shadow-lg"
               >
-                <span className="relative z-10">Explore Solutions</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                {/* Animated gradient border */}
+                <div className="absolute inset-0 rounded-lg p-[1px] overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500/30 via-purple-500/30 to-red-500/30 animate-gradient rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+
+                {/* Button content */}
+                <span className="relative z-10 flex items-center">
+                  <span className="relative">
+                    <span className="block">Explore Solutions</span>
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  </span>
+                </span>
+
+                {/* Hover effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-purple-500/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
               </motion.a>
             </motion.div>
           </motion.div>
 
-          {/* Right column - Feature showcase */}
+          {/* Right column - Modern feature showcase */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="hidden lg:flex flex-col justify-center items-center"
           >
-            <div className="relative w-full max-w-md aspect-square">
-              {/* Floating feature showcase */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="absolute w-full h-full rounded-full border-2 border-red-500/30 animate-pulse"></div>
-                <div className="absolute w-4/5 h-4/5 rounded-full border-2 border-red-500/20 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                <div className="absolute w-3/5 h-3/5 rounded-full border-2 border-red-500/10 animate-pulse" style={{ animationDelay: '2s' }}></div>
-                
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeFeature}
-                    initial={{ opacity: 0, scale: 0.8, rotateY: -10 }}
-                    animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, rotateY: 10 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 20,
-                      duration: 0.6
-                    }}
-                    className="relative w-full max-w-md"
-                  >
-                    {/* Feature card with floating effect */}
-                    <div className="relative group">
-                      <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-red-700 rounded-xl blur-xl opacity-40 group-hover:opacity-60 group-hover:blur-2xl transition-all duration-500"></div>
-                      <div className="relative bg-gradient-to-br from-black to-gray-900/80 backdrop-blur-md border-2 border-red-500/30 rounded-xl p-8 shadow-2xl">
-                        <div className="flex flex-col items-center text-center">
-                          {/* Enhanced floating icon container */}
-                          <div className="relative w-36 h-36 mb-10 transform transition-transform duration-500 group-hover:scale-110">
-                            <div className="absolute inset-0 bg-red-500/30 rounded-full blur-3xl"></div>
-                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/40 to-red-800/20 rounded-full animate-pulse"></div>
-                            <div className="relative w-full h-full rounded-full bg-gradient-to-br from-red-500/40 to-red-800/20 flex items-center justify-center border-2 border-red-500/40 shadow-xl shadow-red-500/30">
-                              <div className="w-20 h-20 rounded-full bg-black flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
-                                {features[activeFeature].icon}
-                              </div>
+            <div className="relative w-full max-w-xl">
+              {/* Dynamic background elements */}
+              <div className="absolute -inset-10 z-0">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full border border-red-500/10 animate-pulse"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] rounded-full border border-red-500/5 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+
+                {/* Floating particles */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-red-500/5 rounded-full blur-xl animate-float" style={{ animationDuration: '15s' }}></div>
+                <div className="absolute bottom-20 left-10 w-32 h-32 bg-red-500/5 rounded-full blur-xl animate-float" style={{ animationDuration: '20s', animationDelay: '2s' }}></div>
+                <div className="absolute top-40 left-0 w-24 h-24 bg-purple-500/5 rounded-full blur-xl animate-float" style={{ animationDuration: '18s', animationDelay: '1s' }}></div>
+              </div>
+
+              {/* Service showcase */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeFeature}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15,
+                    duration: 0.5
+                  }}
+                  className="relative z-10"
+                >
+                  {/* Modern asymmetrical layout */}
+                  <div className="relative">
+                    {/* Subtle glow effect */}
+                    <div className="absolute -inset-4 bg-gradient-to-br from-red-500/20 to-purple-500/5 opacity-30 blur-3xl rounded-[30%] z-0"></div>
+
+                    <div className="relative glass-premium rounded-3xl overflow-hidden backdrop-blur-md z-10">
+                      <div className="flex flex-col p-8">
+                        {/* Icon and title row */}
+                        <div className="flex items-center mb-6">
+                          <div className="relative mr-4">
+                            <div className="absolute inset-0 bg-gradient-to-br from-red-500/30 to-purple-500/20 rounded-full blur-md"></div>
+                            <div className="relative w-16 h-16 rounded-full bg-black/80 border border-red-500/30 flex items-center justify-center">
+                              {features[activeFeature].icon}
                             </div>
                           </div>
+                          <div>
+                            <h3 className="text-3xl font-bold text-gradient">{features[activeFeature].title}</h3>
+                            <div className="h-0.5 w-20 bg-gradient-to-r from-red-500 to-transparent mt-2"></div>
+                          </div>
+                        </div>
 
-                          <h3 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600 drop-shadow-lg">{features[activeFeature].title}</h3>
-                          <p className="text-gray-200 text-xl mb-10 group-hover:text-white transition-colors duration-300">{features[activeFeature].description}</p>
+                        {/* Content area with asymmetrical design */}
+                        <div className="grid grid-cols-5 gap-6">
+                          {/* Description column */}
+                          <div className="col-span-2">
+                            <p className="text-gray-200 text-lg leading-relaxed">{features[activeFeature].description}</p>
 
-                          {/* Enhanced feature image with stronger parallax effect */}
-                          <div className="relative w-full h-64 rounded-lg overflow-hidden mb-8 group-hover:h-68 transition-all duration-300 shadow-2xl shadow-red-900/30">
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10"></div>
-                            <OptimizedImage
-                              src={features[activeFeature].image}
-                              alt={features[activeFeature].title}
-                              className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+                            <motion.a
+                              href={`/services/${features[activeFeature].title.toLowerCase().replace(/\s+/g, '-')}`}
+                              className="group inline-flex items-center mt-6 text-red-400 hover:text-red-300 transition-colors duration-300"
+                              whileHover={{ x: 5 }}
+                            >
+                              <span>Explore service</span>
+                              <ArrowRight className="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
+                            </motion.a>
                           </div>
 
-                          {/* Enhanced CTA button */}
-                          <a
-                            href={`/services/${features[activeFeature].title.toLowerCase().replace(/\s+/g, '-')}`}
-                            className="group relative inline-flex items-center px-6 py-3 overflow-hidden rounded-lg bg-gradient-to-r from-red-900/50 to-black border border-red-500/30 text-white font-medium shadow-lg hover:shadow-red-500/20 transition-all duration-300"
-                          >
-                            <span className="relative z-10 flex items-center">
-                              Learn more
-                              <ArrowRight className="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
-                            </span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-red-700/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-                          </a>
+                          {/* Image column */}
+                          <div className="col-span-3 relative">
+                            <div className="relative h-64 rounded-2xl overflow-hidden">
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
+                              <OptimizedImage
+                                src={features[activeFeature].image}
+                                alt={features[activeFeature].title}
+                                className="w-full h-full object-cover object-center"
+                              />
+
+                              {/* Decorative elements */}
+                              <div className="absolute top-4 right-4 w-20 h-20 border border-white/10 rounded-full z-20 opacity-60"></div>
+                              <div className="absolute bottom-4 left-4 w-12 h-12 border border-red-500/20 rounded-full z-20 opacity-60"></div>
+
+                              {/* Floating action button */}
+                              <motion.a
+                                href={`/services/${features[activeFeature].title.toLowerCase().replace(/\s+/g, '-')}`}
+                                className="absolute bottom-4 right-4 z-20 w-12 h-12 rounded-full bg-red-500/90 flex items-center justify-center backdrop-blur-sm border border-red-400/30 shadow-lg"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <ArrowRight className="w-5 h-5 text-white" />
+                              </motion.a>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
 
-              {/* Feature indicators with enhanced design */}
-              <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-3">
-                {features.map((_, index) => (
-                  <button
+              {/* Modern service indicators */}
+              <div className="relative mt-8 flex justify-center space-x-2 z-20">
+                {features.map((feature, index) => (
+                  <motion.button
                     key={index}
                     onClick={() => setActiveFeature(index)}
-                    className={`w-4 h-4 rounded-full transition-all duration-300 transform hover:scale-125 ${
-                      activeFeature === index
-                        ? 'bg-red-500 shadow-lg shadow-red-500/50'
-                        : 'bg-gray-700 hover:bg-gray-600 hover:shadow-lg hover:shadow-gray-800/30'
-                    }`}
-                    aria-label={`View ${features[index].title}`}
-                  />
+                    className="group relative px-4 py-2"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ y: 0 }}
+                  >
+                    <span className={`block text-sm transition-colors duration-300 ${
+                      activeFeature === index ? 'text-red-400' : 'text-gray-500 group-hover:text-gray-300'
+                    }`}>
+                      {feature.title.split(' ')[0]}
+                    </span>
+                    <span className={`block h-0.5 mt-1 transition-all duration-300 ${
+                      activeFeature === index ? 'w-full bg-red-500' : 'w-0 group-hover:w-full bg-gray-700 group-hover:bg-gray-500'
+                    }`}></span>
+                  </motion.button>
                 ))}
               </div>
             </div>

@@ -20,6 +20,10 @@ export default {
         'digital-gradient': 'digital-gradient 3s linear infinite',
         'slideInLeft': 'slideInLeft 3s infinite',
         'slideInRight': 'slideInRight 3s infinite',
+        'scroll-left': 'scroll-left 40s linear infinite',
+        'scroll-right': 'scroll-right 40s linear infinite',
+        'marquee': 'marquee 25s linear infinite',
+        'marquee-reverse': 'marquee-reverse 25s linear infinite',
       },
       keyframes: {
         gradient: {
@@ -45,11 +49,11 @@ export default {
           '100%': { backgroundPosition: '200% center' },
         },
         'warm-bounce': {
-          '0%, 100%': { 
+          '0%, 100%': {
             transform: 'translateY(0)',
             boxShadow: '0 0 20px rgba(255, 69, 0, 0.3)'
           },
-          '50%': { 
+          '50%': {
             transform: 'translateY(-20px)',
             boxShadow: '0 0 40px rgba(255, 69, 0, 0.6)'
           },
@@ -65,6 +69,22 @@ export default {
         slideInRight: {
           '0%, 100%': { transform: 'translateX(100%)' },
           '50%': { transform: 'translateX(-100%)' },
+        },
+        'scroll-left': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' }
+        },
+        'scroll-right': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' }
+        },
+        'marquee': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(calc(-100% - 48px))' }
+        },
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(calc(-100% - 48px))' },
+          '100%': { transform: 'translateX(0)' }
         },
       },
     },

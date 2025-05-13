@@ -1,0 +1,53 @@
+/* Tech Stack Scrolling Animation */
+.tech-scroll-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.tech-scroll {
+  display: flex;
+  width: max-content;
+  animation: scroll 40s linear infinite;
+}
+
+.tech-scroll-reverse {
+  display: flex;
+  width: max-content;
+  animation: scroll-reverse 40s linear infinite;
+}
+
+.tech-scroll-content {
+  display: flex;
+  align-items: center;
+}
+
+.tech-item {
+  flex: 0 0 auto;
+  position: relative;
+  margin: 0 24px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Pause animation on hover */
+.tech-scroll-container:hover .tech-scroll,
+.tech-scroll-container:hover .tech-scroll-reverse {
+  animation-play-state: paused;
+}
