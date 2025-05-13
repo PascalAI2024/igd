@@ -191,7 +191,7 @@ const InteractiveDataChart: React.FC<InteractiveDataChartProps> = ({
 
       <div className="h-[400px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          {renderChart()}
+          {renderChart() || <div>Loading chart...</div>}
         </ResponsiveContainer>
       </div>
 

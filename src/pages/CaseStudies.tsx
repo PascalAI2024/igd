@@ -84,7 +84,7 @@ const CaseStudies = () => {
                     {/* Image Container */}
                     <div className="relative aspect-[16/9] overflow-hidden">
                       <OptimizedImage
-                        src={study.imageUrl}
+                        src={study.image || ""}
                         alt={study.title}
                         className="w-full h-full transform transition-transform duration-700 group-hover:scale-105"
                         objectFit="cover"
@@ -113,21 +113,16 @@ const CaseStudies = () => {
                       </h3>
 
                       <p className="text-gray-400 mb-4 line-clamp-2">
-                        {study.description || study.subtitle}
+                        {study.challenge}
                       </p>
 
-                      {/* Technologies */}
+                      {/* Results */}
                       <div className="flex flex-wrap gap-2 mb-4">
-                        {study.technologies.slice(0, 3).map((tech, i) => (
+                        {study.results && study.results.slice(0, 1).map((result: string, i: number) => (
                           <span key={i} className="px-2 py-1 bg-white/5 text-xs text-gray-300 rounded">
-                            {tech}
+                            {result}
                           </span>
                         ))}
-                        {study.technologies.length > 3 && (
-                          <span className="px-2 py-1 bg-white/5 text-xs text-gray-300 rounded">
-                            +{study.technologies.length - 3} more
-                          </span>
-                        )}
                       </div>
 
                       {/* View Case Study Button */}

@@ -30,9 +30,7 @@ const BlogPost = () => {
     marked.use({
       gfm: true,
       breaks: true,
-      pedantic: false,
-      smartLists: true,
-      smartypants: true
+      pedantic: false
     });
   }, []);
 
@@ -133,7 +131,7 @@ const BlogPost = () => {
               />
             </div>
 
-            <style jsx global>{`
+            <style>{`
               .blog-content h1 {
                 font-size: 2.5rem;
                 margin-top: 2rem;

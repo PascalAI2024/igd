@@ -141,7 +141,7 @@ const Bar = ({
 };
 
 // Grid component
-const Grid = ({ size, divisions = 10 }) => {
+const Grid = ({ size, divisions = 10 }: { size: number, divisions?: number }) => {
   return (
     <gridHelper
       args={[size, divisions, '#444444', '#222222']}
