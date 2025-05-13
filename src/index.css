@@ -81,23 +81,77 @@ body {
   @apply bg-black/95 backdrop-blur-lg ring-1 ring-white/10 shadow-xl;
 }
 
+/* Enhanced dropdown styling */
+.nav-dropdown {
+  @apply bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-lg;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8),
+              0 4px 15px -3px rgba(255, 0, 0, 0.15),
+              inset 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
+  transform-origin: top center;
+}
+
+.nav-dropdown-item {
+  @apply relative block px-4 py-2.5 text-sm text-gray-300 transition-all duration-200;
+  border-left: 2px solid transparent;
+}
+
+.nav-dropdown-item:hover {
+  @apply text-white bg-white/5;
+  border-left: 2px solid rgba(255, 61, 61, 0.6);
+  padding-left: 1.25rem;
+}
+
+.nav-dropdown-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.nav-dropdown-arrow {
+  position: absolute;
+  top: -6px;
+  left: 20px;
+  width: 12px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.95);
+  transform: rotate(45deg);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 /* Gradient text - enhanced for premium look */
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-red-400 to-purple-500;
-  text-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+  text-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+  filter: drop-shadow(0 0 2px rgba(255, 0, 0, 0.1));
+  letter-spacing: 0.01em;
 }
 
 /* Premium gradient variations */
 .text-gradient-gold {
   @apply bg-clip-text text-transparent;
   background-image: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-  text-shadow: 0 0 30px rgba(191, 149, 63, 0.2);
+  text-shadow: 0 0 30px rgba(191, 149, 63, 0.3);
+  filter: drop-shadow(0 0 2px rgba(191, 149, 63, 0.2));
+  letter-spacing: 0.01em;
 }
 
 .text-gradient-silver {
   @apply bg-clip-text text-transparent;
   background-image: linear-gradient(to right, #757F9A, #D7DDE8, #9FA4A9, #E0E5EC);
-  text-shadow: 0 0 30px rgba(117, 127, 154, 0.2);
+  text-shadow: 0 0 30px rgba(117, 127, 154, 0.3);
+  filter: drop-shadow(0 0 2px rgba(117, 127, 154, 0.2));
+  letter-spacing: 0.01em;
+}
+
+/* New dark red gradient */
+.text-gradient-dark {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(to right, #8B0000, #FF0000, #8B0000);
+  text-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+  filter: drop-shadow(0 0 2px rgba(139, 0, 0, 0.2));
+  letter-spacing: 0.01em;
 }
 
 /* Smooth transitions */
@@ -160,32 +214,87 @@ body {
 /* Glass effect - enhanced for premium look */
 .glass {
   @apply bg-white/5 backdrop-blur-md border border-white/10 transition-all duration-300;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .glass-premium {
   @apply bg-white/5 backdrop-blur-md border border-white/10 transition-all duration-300;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.1);
+  background: linear-gradient(to bottom, rgba(20, 20, 20, 0.5), rgba(10, 10, 10, 0.5));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(255, 0, 0, 0.05), inset 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .glass-hover:hover {
   @apply border-white/20;
-  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.07), inset 0 0 1px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(255, 0, 0, 0.1), inset 0 0 2px rgba(255, 255, 255, 0.15);
+  background: linear-gradient(to bottom, rgba(25, 25, 25, 0.6), rgba(15, 15, 15, 0.6));
 }
 
 /* Consistent shadows */
 .shadow-overlay {
-  @apply shadow-lg shadow-black/20;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3), 0 2px 5px rgba(255, 0, 0, 0.05);
+}
+
+.shadow-overlay-light {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(255, 0, 0, 0.03);
+}
+
+.shadow-overlay-heavy {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 8px 20px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(255, 0, 0, 0.1);
+}
+
+/* Premium card styles */
+.card-premium {
+  @apply relative overflow-hidden rounded-xl transition-all duration-300;
+  background: linear-gradient(to bottom, rgba(25, 25, 25, 0.8), rgba(15, 15, 15, 0.8));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.card-premium:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.card-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 0, 0, 0.2), transparent);
+}
+
+.card-premium-header {
+  @apply relative overflow-hidden p-6;
+  background: linear-gradient(to right, rgba(30, 30, 30, 0.8), rgba(20, 20, 20, 0.8));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-premium-content {
+  @apply p-6 relative z-10;
 }
 
 /* Premium button effect */
 .btn-premium {
   @apply relative overflow-hidden transition-all duration-300;
   background: linear-gradient(90deg, rgba(255, 0, 0, 0.8), rgba(128, 0, 128, 0.8));
-  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
 }
 
 .btn-premium:hover {
-  box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  background: linear-gradient(90deg, rgba(255, 20, 20, 0.85), rgba(138, 10, 138, 0.85));
+  transform: translateY(-1px);
+}
+
+.btn-premium:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-premium::before {
@@ -205,13 +314,23 @@ body {
 
 /* Subtle border glow */
 .border-glow {
-  box-shadow: 0 0 5px rgba(255, 0, 0, 0.3), inset 0 0 5px rgba(255, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 61, 61, 0.2);
+}
+
+.border-glow:hover {
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.4), 0 0 30px rgba(0, 0, 0, 0.6), inset 0 0 8px rgba(255, 0, 0, 0.15);
+  border: 1px solid rgba(255, 61, 61, 0.3);
 }
 
 /* Premium text effect */
 .text-premium {
   @apply font-medium tracking-wide;
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.1), 0 0 15px rgba(255, 0, 0, 0.1);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(220, 220, 220, 1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.02em;
 }
 
 /* Prose Overrides for Blog Content */

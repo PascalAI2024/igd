@@ -27,7 +27,7 @@ const ServiceCardEnhanced: React.FC<ServiceCardProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  
+
   // Track service card impression when it comes into view
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -88,25 +88,32 @@ const ServiceCardEnhanced: React.FC<ServiceCardProps> = ({
       <AnimatePresence>
         {isHovered && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className={`absolute -inset-1 rounded-xl bg-gradient-to-r ${gradientClass} opacity-20 blur-lg z-0`}
-          />
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.3 }}
+            className={`absolute -inset-2 rounded-xl z-0`}
+          >
+            <div className={`absolute inset-0 bg-gradient-to-r ${gradientClass} opacity-20 blur-xl`} />
+            <div className="absolute inset-0 bg-black opacity-40 rounded-xl" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 rounded-xl" />
+          </motion.div>
         )}
       </AnimatePresence>
-      
+
       <motion.div
-        className="relative z-10 bg-black/60 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 h-full flex flex-col"
-        animate={{ 
+        className="card-premium h-full flex flex-col"
+        animate={{
           y: isHovered ? -5 : 0,
-          boxShadow: isHovered ? '0 20px 25px -5px rgba(0, 0, 0, 0.5)' : '0 0 0 0 rgba(0, 0, 0, 0)'
+          boxShadow: isHovered
+            ? '0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 20px rgba(255, 0, 0, 0.1)'
+            : '0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)'
         }}
       >
         {/* Header */}
-        <div className={`bg-gradient-to-r ${gradientClass} p-6`}>
+        <div className={`card-premium-header bg-gradient-to-r ${gradientClass}`}>
           <div className="flex items-center">
-            <div className="w-12 h-12 rounded-full bg-black/30 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-black/30 backdrop-blur-md flex items-center justify-center border border-white/10">
               <Icon className="w-6 h-6 text-white" />
             </div>
             <h3 className="text-xl font-bold text-white ml-4">{title}</h3>
@@ -114,7 +121,7 @@ const ServiceCardEnhanced: React.FC<ServiceCardProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6 flex-grow flex flex-col">
+        <div className="card-premium-content flex-grow flex flex-col">
           {/* Description */}
           <p className="text-gray-300 mb-6">{description}</p>
 
@@ -130,12 +137,19 @@ const ServiceCardEnhanced: React.FC<ServiceCardProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + (i * 0.1) }}
               >
-                <div className="text-xl font-bold text-white">{metric.value}</div>
-                <div className="text-xs text-gray-400">{metric.label}</div>
-                
-                {/* Subtle highlight on hover */}
-                <motion.div 
-                  className="absolute inset-0 rounded-lg bg-white/5 opacity-0 group-hover/metric:opacity-100 transition-opacity"
+                <div className={`text-xl font-bold bg-gradient-to-r ${gradientClass} bg-clip-text text-transparent`}>{metric.value}</div>
+                <div className="text-xs text-gray-400 mt-1">{metric.label}</div>
+
+                {/* Enhanced highlight on hover */}
+                <motion.div
+                  className="absolute inset-0 rounded-lg border border-white/0 group-hover/metric:border-white/10 transition-all duration-300"
+                  style={{
+                    boxShadow: '0 0 0 0 rgba(255, 0, 0, 0)',
+                  }}
+                  whileHover={{
+                    boxShadow: '0 0 15px rgba(255, 0, 0, 0.1)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.03)'
+                  }}
                   layoutId={`metric-highlight-${title}-${metric.label}`}
                 />
               </motion.div>
@@ -143,30 +157,31 @@ const ServiceCardEnhanced: React.FC<ServiceCardProps> = ({
           </div>
 
           {/* Features */}
-          <div className="space-y-2 mb-6 flex-grow">
+          <div className="space-y-3 mb-6 flex-grow">
             {features.slice(0, isExpanded ? features.length : 3).map((feature, i) => (
               <motion.div
                 key={feature}
-                className="flex items-center text-sm text-gray-300 cursor-pointer group/feature"
+                className="flex items-center text-sm text-gray-300 cursor-pointer group/feature relative"
                 whileHover={{ x: 5 }}
                 onClick={() => handleFeatureClick(feature)}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + (i * 0.05) }}
               >
-                <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${gradientClass} mr-2`} />
+                <div className="absolute left-0 w-0 h-full border-l border-red-500/0 group-hover/feature:border-red-500/30 transition-all duration-300"></div>
+                <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${gradientClass} mr-3 ml-2`} />
                 <span className="group-hover/feature:text-white transition-colors">{feature}</span>
               </motion.div>
             ))}
-            
+
             {features.length > 3 && (
               <motion.button
                 onClick={toggleExpand}
-                className="flex items-center text-sm text-gray-400 hover:text-white mt-2 transition-colors"
+                className="flex items-center text-sm text-gray-400 hover:text-white mt-3 transition-colors border border-white/5 rounded-md px-3 py-1.5 bg-black/20 hover:bg-black/40 hover:border-white/10"
                 whileHover={{ x: 5 }}
               >
-                <ChevronDown 
-                  className={`w-4 h-4 mr-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
+                <ChevronDown
+                  className={`w-4 h-4 mr-2 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                 />
                 {isExpanded ? 'Show less' : `${features.length - 3} more features`}
               </motion.button>
@@ -176,9 +191,9 @@ const ServiceCardEnhanced: React.FC<ServiceCardProps> = ({
           {/* CTA */}
           <NavigationButton
             to={path}
-            className="inline-flex items-center px-4 py-2 bg-black/50 border border-white/10 rounded-lg text-white hover:bg-white/10 transition-colors mt-auto"
+            className="btn-premium inline-flex items-center px-5 py-2.5 rounded-lg text-white mt-auto w-full justify-center"
           >
-            <span>Learn More</span>
+            <span className="text-premium">Learn More</span>
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </NavigationButton>
         </div>

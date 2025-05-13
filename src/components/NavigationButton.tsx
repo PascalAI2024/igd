@@ -33,6 +33,10 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({ to, children, class
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className={className}
+      style={{
+        transition: 'all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0)',
+        willChange: 'transform, opacity, box-shadow'
+      }}
     >
       {children}
     </motion.button>

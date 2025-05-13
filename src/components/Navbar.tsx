@@ -68,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
 
   const NavLink: React.FC<{ to: string; className?: string; children: React.ReactNode }> = ({
     to,
-    className = "text-gray-300 hover:text-white px-3 py-2 text-sm font-medium",
+    className = "text-gray-300 hover:text-white px-3 py-2 text-sm font-medium relative group",
     children
   }) => (
     <NavigationButton
@@ -77,12 +77,15 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
       onClick={closeMenu}
     >
       {children}
+      {className.includes("relative group") && (
+        <span className="absolute -bottom-0.5 left-1/2 w-0 h-0.5 bg-gradient-to-r from-red-500 to-red-400 group-hover:w-1/2 group-hover:left-1/4 transition-all duration-300 ease-out"></span>
+      )}
     </NavigationButton>
   );
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10 shadow-md shadow-black/20">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10 shadow-md shadow-black/20" style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5), 0 2px 3px rgba(255, 0, 0, 0.05)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -95,26 +98,34 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
                   onClick={() => toggleDropdown('industries')}
                   onMouseEnter={() => handleMouseEnter('industries')}
                   onMouseLeave={handleMouseLeave}
-                  className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
+                  className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium relative group flex items-center"
                 >
-                  Small Business
+                  <span>Small Business</span>
+                  <span className={`ml-1 transition-transform duration-200 ${activeDropdown === 'industries' || hoveredDropdown === 'industries' ? 'rotate-180' : ''}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                  <span className="absolute -bottom-0.5 left-1/2 w-0 h-0.5 bg-gradient-to-r from-red-500 to-red-400 group-hover:w-1/2 group-hover:left-1/4 transition-all duration-300 ease-out"></span>
                 </button>
                 <AnimatePresence>
                   {(activeDropdown === 'industries' || hoveredDropdown === 'industries') && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-0 mt-2 w-64 rounded-xl shadow-xl bg-black/95 backdrop-blur-lg border border-white/10 glass-premium"
+                      initial={{ opacity: 0, y: 5, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 5, scale: 0.98 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className="absolute left-0 mt-2 w-64 nav-dropdown"
                       onMouseEnter={() => handleMouseEnter('industries')}
                       onMouseLeave={handleMouseLeave}
                     >
+                      <div className="nav-dropdown-arrow"></div>
                       <div className="py-1">
-                        {industries.map((industry) => (
+                        {industries.map((industry, index) => (
                           <NavLink
                             key={industry.path}
                             to={industry.path}
-                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white"
+                            className="nav-dropdown-item"
                           >
                             {industry.name}
                           </NavLink>
@@ -130,26 +141,34 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
                   onClick={() => toggleDropdown('services')}
                   onMouseEnter={() => handleMouseEnter('services')}
                   onMouseLeave={handleMouseLeave}
-                  className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
+                  className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium relative group flex items-center"
                 >
-                  Services
+                  <span>Services</span>
+                  <span className={`ml-1 transition-transform duration-200 ${activeDropdown === 'services' || hoveredDropdown === 'services' ? 'rotate-180' : ''}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                  <span className="absolute -bottom-0.5 left-1/2 w-0 h-0.5 bg-gradient-to-r from-red-500 to-red-400 group-hover:w-1/2 group-hover:left-1/4 transition-all duration-300 ease-out"></span>
                 </button>
                 <AnimatePresence>
                   {(activeDropdown === 'services' || hoveredDropdown === 'services') && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-0 mt-2 w-56 rounded-xl shadow-xl bg-black/95 backdrop-blur-lg border border-white/10 glass-premium"
+                      initial={{ opacity: 0, y: 5, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 5, scale: 0.98 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className="absolute left-0 mt-2 w-56 nav-dropdown"
                       onMouseEnter={() => handleMouseEnter('services')}
                       onMouseLeave={handleMouseLeave}
                     >
+                      <div className="nav-dropdown-arrow"></div>
                       <div className="py-1">
-                        {services.map((service) => (
+                        {services.map((service, index) => (
                           <NavLink
                             key={service.path}
                             to={service.path}
-                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white"
+                            className="nav-dropdown-item"
                           >
                             {service.name}
                           </NavLink>
@@ -204,52 +223,83 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="fixed top-20 inset-x-0 z-40 bg-black/95 backdrop-blur-lg border-t border-white/10 md:hidden glass-premium"
+            className="fixed top-20 inset-x-0 z-40 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-lg border-t border-white/10 md:hidden glass-premium"
+            style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.8), 0 4px 15px -3px rgba(255, 0, 0, 0.1)' }}
           >
             <div className="mobile-menu-container">
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <div>
                   <button
                     onClick={() => toggleDropdown('industries')}
-                    className="w-full text-left text-gray-300 hover:text-white block px-3 py-2 text-base font-medium"
+                    className="w-full text-left text-gray-300 hover:text-white block px-3 py-2 text-base font-medium flex items-center justify-between"
                   >
-                    Small Business
+                    <span>Small Business</span>
+                    <span className={`transition-transform duration-200 ${activeDropdown === 'industries' ? 'rotate-180' : ''}`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </span>
                   </button>
-                  {activeDropdown === 'industries' && (
-                    <div className="pl-4">
-                      {industries.map((industry) => (
-                        <NavLink
-                          key={industry.path}
-                          to={industry.path}
-                          className="block px-3 py-2 text-sm text-gray-400 hover:text-white"
-                        >
-                          {industry.name}
-                        </NavLink>
-                      ))}
-                    </div>
-                  )}
+                  <AnimatePresence>
+                    {activeDropdown === 'industries' && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-4 border-l border-red-500/20 ml-3 my-2">
+                          {industries.map((industry) => (
+                            <NavLink
+                              key={industry.path}
+                              to={industry.path}
+                              className="block px-3 py-2 text-sm text-gray-400 hover:text-white hover:pl-5 transition-all duration-200"
+                            >
+                              {industry.name}
+                            </NavLink>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 <div>
                   <button
                     onClick={() => toggleDropdown('services')}
-                    className="w-full text-left text-gray-300 hover:text-white block px-3 py-2 text-base font-medium"
+                    className="w-full text-left text-gray-300 hover:text-white block px-3 py-2 text-base font-medium flex items-center justify-between"
                   >
-                    Services
+                    <span>Services</span>
+                    <span className={`transition-transform duration-200 ${activeDropdown === 'services' ? 'rotate-180' : ''}`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </span>
                   </button>
-                  {activeDropdown === 'services' && (
-                    <div className="pl-4">
-                      {services.map((service) => (
-                        <NavLink
-                          key={service.path}
-                          to={service.path}
-                          className="block px-3 py-2 text-sm text-gray-400 hover:text-white"
-                        >
-                          {service.name}
-                        </NavLink>
-                      ))}
-                    </div>
-                  )}
+                  <AnimatePresence>
+                    {activeDropdown === 'services' && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-4 border-l border-red-500/20 ml-3 my-2">
+                          {services.map((service) => (
+                            <NavLink
+                              key={service.path}
+                              to={service.path}
+                              className="block px-3 py-2 text-sm text-gray-400 hover:text-white hover:pl-5 transition-all duration-200"
+                            >
+                              {service.name}
+                            </NavLink>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {mainLinks.map((link) => (
