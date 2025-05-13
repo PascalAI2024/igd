@@ -4,7 +4,7 @@
 
 // Check if animation is supported
 export const isAnimationSupported = (): boolean => {
-  return typeof window !== 'undefined' && 
+  return typeof window !== 'undefined' &&
     typeof window.requestAnimationFrame === 'function' &&
     typeof window.cancelAnimationFrame === 'function' &&
     typeof window.performance === 'object' &&
@@ -89,23 +89,43 @@ export class AnimationController {
     });
   }
 
-  // Start animation loop
+  // Start animation loop with improved performance
   start(callback: (deltaTime: number) => void): () => void {
     let then = performance.now();
     let elapsed: number;
+    let fpsCounter = 0;
+    let lastFpsUpdate = then;
+    let currentFps = this.fps;
 
     const animate = (now: number) => {
       if (this.isPaused) return;
 
-      this.frameId = requestAnimationFrame(animate);
-      elapsed = now - then;
+      // Calculate FPS for internal tracking
+      fpsCounter++;
+      if (now - lastFpsUpdate >= 1000) {
+        currentFps = fpsCounter;
+        this.fps = currentFps; // Update the FPS value
+        fpsCounter = 0;
+        lastFpsUpdate = now;
+      }
 
+      // Request next frame early for better performance
+      this.frameId = requestAnimationFrame(animate);
+
+      // Calculate delta time with clamping to prevent large jumps
+      elapsed = Math.min(now - then, 100); // Cap at 100ms to prevent huge jumps after tab switch
+
+      // Only run animation at target FPS
       if (elapsed > this.fpsInterval) {
+        // Adjust timing to maintain consistent animation speed
         then = now - (elapsed % this.fpsInterval);
+
+        // Use high-resolution timing for smoother animations
         callback(elapsed);
       }
     };
 
+    // Start the animation loop
     this.frameId = requestAnimationFrame(animate);
 
     // Return cleanup function
@@ -147,7 +167,7 @@ interface LoadingCallback {
 // Utility function to handle loading states
 export const handleLoadingState = (callback: LoadingCallback, minTime: number = 800): LoadingCallback => {
   const startTime = performance.now();
-  
+
   return () => {
     const currentTime = performance.now();
     const elapsedTime = currentTime - startTime;
