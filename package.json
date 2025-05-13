@@ -13,8 +13,8 @@
     "check-links:specific": "node scripts/checkLinks.mjs"
   },
   "dependencies": {
-    "@react-three/drei": "^10.0.7",
-    "@react-three/fiber": "^9.1.2",
+    "@react-three/drei": "^9.88.7",
+    "@react-three/fiber": "^8.15.11",
     "@types/react-helmet": "^6.1.11",
     "framer-motion": "^10.16.4",
     "highlight.js": "^11.11.1",
