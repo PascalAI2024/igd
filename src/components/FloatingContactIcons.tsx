@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { trackInteraction } from '../utils/analytics';
 
@@ -21,14 +21,6 @@ const FloatingContactIcons: React.FC<FloatingContactIconsProps> = ({ isMobileMen
       'contact-button',
       'floating-email',
       'email_click'
-    );
-  };
-
-  const handleDirectionsClick = () => {
-    trackInteraction(
-      'contact-button',
-      'floating-directions',
-      'get_directions'
     );
   };
 
@@ -64,21 +56,6 @@ const FloatingContactIcons: React.FC<FloatingContactIconsProps> = ({ isMobileMen
             <Mail className="w-6 h-6 text-white" />
             <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1 bg-black/90 text-white text-sm rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
               Email Us
-            </span>
-          </motion.a>
-
-          <motion.a
-            href="https://www.google.com/maps/dir//Fort+Lauderdale,+FL+33304"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleDirectionsClick}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="group relative bg-red-500 p-3 rounded-full shadow-lg hover:shadow-red-500/25 transition-shadow"
-          >
-            <MapPin className="w-6 h-6 text-white" />
-            <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1 bg-black/90 text-white text-sm rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity md:block hidden">
-              Get Directions
             </span>
           </motion.a>
         </motion.div>
