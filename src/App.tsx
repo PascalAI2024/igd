@@ -22,6 +22,12 @@ const ServiceDetail = React.lazy(() => import('./pages/ServiceDetail'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const Landing = React.lazy(() => import('./pages/Landing'));
 
+// Lazy load legal pages
+const Privacy = React.lazy(() => import('./pages/Privacy'));
+const Terms = React.lazy(() => import('./pages/Terms'));
+const Cookie = React.lazy(() => import('./pages/Cookie'));
+const GDPR = React.lazy(() => import('./pages/GDPR'));
+
 // Lazy load service pages - SMB Focused
 const DigitalMarketing = React.lazy(() => import('./pages/services/DigitalMarketing'));
 const LeadGeneration = React.lazy(() => import('./pages/services/LeadGeneration'));
@@ -196,6 +202,12 @@ const App = () => {
               <Route path="/industries/healthcare" element={<Healthcare />} />
               <Route path="/industries/auto-services" element={<AutoServices />} />
               <Route path="/industries/manufacturing" element={<Manufacturing />} />
+
+              {/* Legal Pages */}
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/cookie" element={<Cookie />} />
+              <Route path="/gdpr" element={<GDPR />} />
 
               {/* Generic service route should come after specific service routes */}
               <Route path="/services/:id" element={<ServiceDetail />} />
