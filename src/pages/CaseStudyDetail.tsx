@@ -59,11 +59,12 @@ const CaseStudyDetail: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="bg-white/5 rounded-xl overflow-hidden mb-8">
+            <div className="bg-white/5 rounded-xl overflow-hidden mb-8 aspect-[16/9]">
               <img
                 src={study.imageUrl}
                 alt={study.title}
-                className="w-full h-auto"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: 'center center' }}
               />
             </div>
 

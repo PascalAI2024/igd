@@ -10,9 +10,9 @@ const CaseStudies = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const industries = ['All', ...new Set(caseStudies.map(study => study.industry))];
-  
-  const filteredStudies = selectedIndustry === 'All' 
-    ? caseStudies 
+
+  const filteredStudies = selectedIndustry === 'All'
+    ? caseStudies
     : caseStudies.filter(study => study.industry === selectedIndustry);
 
   return (
@@ -21,7 +21,7 @@ const CaseStudies = () => {
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -74,14 +74,15 @@ const CaseStudies = () => {
                   onMouseEnter={() => setHoveredId(study.id)}
                   onMouseLeave={() => setHoveredId(null)}
                 >
-                  <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
+                  <div className="relative rounded-2xl overflow-hidden aspect-[16/9]">
                     <img
                       src={study.image}
                       alt={study.title}
                       className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                      style={{ objectPosition: 'center center' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
-                    
+
                     <div className="absolute inset-0 p-8 flex flex-col justify-between z-10">
                       <div>
                         <span className="inline-block px-3 py-1 bg-red-500/90 text-white text-sm rounded-full mb-4">
