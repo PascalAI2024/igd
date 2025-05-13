@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Code2, Lightbulb, Users, Target } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
-import TeamMember from '../components/TeamMember';
+import TeamMemberIcon from '../components/TeamMemberIcon';
 import { team } from '../data/team';
 
 const values = [
@@ -35,7 +35,7 @@ const About = () => {
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -47,7 +47,7 @@ const About = () => {
                 Passionate About Technology
               </h1>
               <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
-                We're not just developers – we're technology enthusiasts who live and breathe innovation. 
+                We're not just developers – we're technology enthusiasts who live and breathe innovation.
                 Our mission is to transform businesses through cutting-edge digital solutions.
               </p>
             </motion.div>
@@ -94,7 +94,7 @@ const About = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {team.map((member, index) => (
-                <TeamMember key={member.name} member={member} index={index} />
+                <TeamMemberIcon key={member.name} member={member} index={index} />
               ))}
             </div>
           </div>
@@ -107,8 +107,8 @@ const About = () => {
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gradient mb-6">Our Mission</h2>
                 <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
-                  To empower businesses through innovative digital solutions, combining our passion 
-                  for technology with expertise to create transformative experiences that drive 
+                  To empower businesses through innovative digital solutions, combining our passion
+                  for technology with expertise to create transformative experiences that drive
                   success in the digital age.
                 </p>
               </div>
