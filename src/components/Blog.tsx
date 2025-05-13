@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Search, Calendar, Clock, ArrowRight, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
-import { blogPosts, categories } from "../data/blog";
+import OptimizedImage from "./OptimizedImage";
+import { blogPosts, categories } from "../data/blog/index";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -85,10 +86,11 @@ const Blog = () => {
               className="group bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-red-500/20 transition-all duration-300"
             >
               <div className="relative overflow-hidden aspect-video">
-                <img
+                <OptimizedImage
                   src={post.image}
                   alt={post.title}
                   className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
+                  objectFit="cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <span className="absolute bottom-4 left-4 px-3 py-1 bg-red-500/90 text-white text-sm rounded-full">
@@ -129,6 +131,12 @@ const Blog = () => {
                 <Link
                   to={`/blog/${post.id}`}
                   className="inline-flex items-center text-red-500 hover:text-red-400 transition-colors"
+                  onClick={(e) => {
+                    // Prevent default behavior
+                    e.preventDefault();
+                    // Navigate programmatically
+                    window.location.href = `/blog/${post.id}`;
+                  }}
                 >
                   Read More
                   <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />

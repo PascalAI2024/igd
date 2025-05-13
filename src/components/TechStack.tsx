@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code, Server, Cpu, Cloud, ChevronRight } from "lucide-react";
+import OptimizedImage from "./OptimizedImage";
 import "./TechStack.css";
 
 interface Technology {
@@ -224,10 +225,11 @@ const TechStack = () => {
                         boxShadow: `0 0 25px 0 ${tech.color}20`
                       }}
                     >
-                      <img
+                      <OptimizedImage
                         src={tech.logo}
                         alt={tech.name}
                         className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        objectFit="contain"
                       />
                     </div>
 
@@ -255,10 +257,11 @@ const TechStack = () => {
                         boxShadow: `0 0 25px 0 ${tech.color}20`
                       }}
                     >
-                      <img
+                      <OptimizedImage
                         src={tech.logo}
                         alt={tech.name}
                         className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        objectFit="contain"
                       />
                     </div>
 
@@ -292,10 +295,11 @@ const TechStack = () => {
                         boxShadow: `0 0 25px 0 ${tech.color}20`
                       }}
                     >
-                      <img
+                      <OptimizedImage
                         src={tech.logo}
                         alt={tech.name}
                         className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        objectFit="contain"
                       />
                     </div>
 
@@ -323,10 +327,11 @@ const TechStack = () => {
                         boxShadow: `0 0 25px 0 ${tech.color}20`
                       }}
                     >
-                      <img
+                      <OptimizedImage
                         src={tech.logo}
                         alt={tech.name}
                         className="w-full h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        objectFit="contain"
                       />
                     </div>
 
@@ -411,10 +416,12 @@ const TechStack = () => {
               >
                 <div className="flex items-center mb-4">
                   <div className="w-14 h-14 bg-black/80 rounded-lg p-2.5 mr-5 border border-white/10">
-                    <img
+                    <OptimizedImage
                       src={tech.logo}
                       alt={tech.name}
                       className="w-full h-full object-contain"
+                      objectFit="contain"
+                      priority={true}
                     />
                   </div>
                   <div>

@@ -2,8 +2,10 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Clock, Tag, Share2 } from 'lucide-react';
+import { marked } from 'marked';
 import PageTransition from '../components/PageTransition';
-import { blogPosts } from '../data/blog-posts';
+import OptimizedImage from '../components/OptimizedImage';
+import { blogPosts } from '../data/blog/index';
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -32,7 +34,7 @@ const BlogPost = () => {
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <Link
               to="/blog"
@@ -84,10 +86,11 @@ const BlogPost = () => {
         <section className="py-12">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative rounded-2xl overflow-hidden aspect-video">
-              <img
+              <OptimizedImage
                 src={post.image}
                 alt={post.title}
                 className="w-full h-full object-cover"
+                priority={true}
               />
             </div>
           </div>
@@ -96,8 +99,8 @@ const BlogPost = () => {
         {/* Content */}
         <section className="py-12">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="prose prose-invert max-w-none">
-              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            <div className="prose prose-invert prose-headings:text-white prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-p:text-gray-300 prose-a:text-red-400 prose-strong:text-white prose-code:text-red-300 prose-pre:bg-black/50 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-lg prose-li:text-gray-300 prose-img:rounded-lg max-w-none">
+              <div dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
             </div>
 
             {/* Share Section */}

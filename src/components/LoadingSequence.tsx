@@ -25,6 +25,8 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
 
     let currentMessageIndex = 0;
     let currentCharIndex = 0;
+    let glitchInterval: NodeJS.Timeout;
+    let isCompleting = false;
 
     const textElement = document.querySelector('.loading-text');
     if (!textElement) return;
@@ -33,7 +35,13 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
       if (!textElement) return;
 
       if (currentMessageIndex >= messages.length) {
+        // Set the final message without glitches before completing
+        textElement.textContent = messages[messages.length - 1];
+        isCompleting = true;
+
+        // Clear the glitch interval to prevent text corruption
         clearInterval(glitchInterval);
+
         setTimeout(() => {
           onComplete();
         }, 800);
@@ -56,8 +64,8 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
 
     typeMessage();
 
-    const glitchInterval = setInterval(() => {
-      if (!textElement) return;
+    glitchInterval = setInterval(() => {
+      if (!textElement || isCompleting) return;
       const currentMessage = messages[currentMessageIndex];
       if (!currentMessage) return;
 
@@ -147,18 +155,24 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Process all particles in a single loop for better performance
       particlesRef.current.forEach(particle => {
         particle.update();
         particle.draw(ctx);
       });
 
-      for (let i = 0; i < particlesRef.current.length; i += 2) {
-        for (let j = i + 2; j < particlesRef.current.length; j += 2) {
+      // Optimize connection drawing by using a spatial grid or reducing connections
+      // Only check connections for a subset of particles to improve performance
+      const connectionLimit = Math.min(40, particlesRef.current.length);
+      for (let i = 0; i < connectionLimit; i += 2) {
+        for (let j = i + 2; j < connectionLimit; j += 2) {
           const dx = particlesRef.current[i].x - particlesRef.current[j].x;
           const dy = particlesRef.current[i].y - particlesRef.current[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          // Use squared distance to avoid expensive sqrt operation when possible
+          const distanceSquared = dx * dx + dy * dy;
 
-          if (distance < 150) {
+          if (distanceSquared < 22500) { // 150^2 = 22500
+            const distance = Math.sqrt(distanceSquared);
             ctx.strokeStyle = `rgba(255, 0, 0, ${0.05 * (1 - distance / 150)})`;
             ctx.lineWidth = 1.2;
             ctx.beginPath();
@@ -178,6 +192,11 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
       window.removeEventListener('resize', resize);
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
+        rafRef.current = undefined;
+      }
+      // Clear particles array to free memory
+      if (particlesRef.current.length > 0) {
+        particlesRef.current = [];
       }
     };
   }, []);
@@ -254,7 +273,7 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
                 <span
                   className="loading-text text-red-500 font-mono text-sm sm:text-base"
                 >
-                  Initializing...
+                  Initializing Neural Network
                 </span>
               </div>
 
@@ -263,10 +282,10 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
                 <motion.button
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(239, 68, 68, 0.3)' }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onComplete}
-                  className="mt-8 px-4 py-2 bg-red-500/10 border border-red-500/30 rounded-md text-red-500 text-sm flex items-center justify-center mx-auto hover:bg-red-500/20 transition-colors duration-300"
+                  className="mt-8 px-4 py-2 bg-red-500/20 border border-red-500/40 rounded-md text-red-500 text-sm font-medium flex items-center justify-center mx-auto hover:bg-red-500/30 transition-all duration-300 shadow-sm shadow-red-500/20"
                   aria-label="Skip loading animation"
                 >
                   <span>Skip</span>

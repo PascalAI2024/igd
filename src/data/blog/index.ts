@@ -40,27 +40,11 @@ export const categories: BlogCategory[] = [
   }
 ];
 
-// Import all blog posts
-import { posts as aiPosts } from './posts/ai-ml';
-import { posts as securityPosts } from './posts/security';
-import { post as cloudPost } from './posts/cloud-computing';
-import { post as devPost } from './posts/software-development';
-import { post as transformationPost } from './posts/digital-transformation';
-import { post as marketingTrendsPost } from './posts/digital-marketing-trends';
-import { post as seoPost } from './posts/seo-strategies';
-import { post as webDevPost } from './posts/web-development-best-practices';
+// Import all blog posts from the centralized posts index
+import allBlogPosts from './posts';
 
-// Combine all posts and sort by date
-export const blogPosts: BlogPost[] = [
-  ...aiPosts,
-  ...securityPosts,
-  cloudPost,
-  devPost,
-  transformationPost,
-  marketingTrendsPost,
-  seoPost,
-  webDevPost
-].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+// Export the blog posts
+export const blogPosts: BlogPost[] = allBlogPosts;
 
 // Helper functions
 export const getPostsByCategory = (categoryId: string): BlogPost[] => {

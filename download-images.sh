@@ -5,6 +5,7 @@ mkdir -p public/images/web-dev
 mkdir -p public/images/ai-ml
 mkdir -p public/images/digital-marketing
 mkdir -p public/images/tech
+mkdir -p public/images/blog
 
 # Web Development Images
 curl -L "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&auto=format" -o public/images/web-dev/desktop.webp
@@ -47,5 +48,12 @@ curl -L "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&auto
 curl -L "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&auto=format" -o public/images/testimonials/client1.webp
 curl -L "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format" -o public/images/testimonials/client2.webp
 curl -L "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format" -o public/images/testimonials/client3.webp
+
+# Blog Images
+curl -L "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200&h=800" -o public/images/blog/local-seo.jpg
+curl -L "https://images.unsplash.com/photo-1677442135136-760c813a6a13?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200&h=800" -o public/images/blog/ai-marketing.jpg
+curl -L "https://images.unsplash.com/photo-1555421689-491a97ff2040?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200&h=800" -o public/images/blog/mobile-optimization.jpg
+curl -L "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200&h=800" -o public/images/blog/content-strategy.jpg
+curl -L "https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200&h=800" -o public/images/blog/business-automation.jpg
 
 echo "All images downloaded successfully!"

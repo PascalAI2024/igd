@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import { Search, Calendar, Clock, ArrowRight, Tag, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
-import { blogPosts, categories } from '../data/blog';
+import OptimizedImage from '../components/OptimizedImage';
+import { blogPosts, categories } from '../data/blog/index';
 
 const POSTS_PER_PAGE = 6;
 
@@ -56,7 +57,7 @@ const Blog = () => {
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -87,21 +88,21 @@ const Blog = () => {
                   className="w-full pl-10 pr-10 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400"
                 />
                 {searchQuery && (
-                  <button 
+                  <button
                     onClick={clearSearch}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 )}
-                <button 
+                <button
                   onClick={handleSearch}
                   className="ml-2 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
                 >
                   Search
                 </button>
               </div>
-              
+
               <div className="flex flex-wrap gap-2">
                 <button
                   key="All"
@@ -137,7 +138,7 @@ const Blog = () => {
                 {paginatedPosts.length} of {filteredPosts.length} articles
               </span>
               {isSearchActive && (
-                <button 
+                <button
                   onClick={clearSearch}
                   className="text-red-500 hover:text-red-400 flex items-center"
                 >
@@ -151,7 +152,7 @@ const Blog = () => {
               <div className="text-center py-12 bg-white/5 rounded-lg">
                 <h3 className="text-2xl text-gray-300 mb-4">No articles found</h3>
                 <p className="text-gray-500 mb-6">Try a different search or category</p>
-                <button 
+                <button
                   onClick={clearSearch}
                   className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
                 >
@@ -172,10 +173,11 @@ const Blog = () => {
                   >
                     {/* Existing post card content remains the same */}
                     <div className="relative overflow-hidden aspect-video">
-                      <img
+                      <OptimizedImage
                         src={post.image}
                         alt={post.title}
                         className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
+                        objectFit="cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <span className="absolute bottom-4 left-4 px-3 py-1 bg-red-500/90 text-white text-sm rounded-full">
@@ -218,6 +220,12 @@ const Blog = () => {
                       <Link
                         to={`/blog/${post.id}`}
                         className="inline-flex items-center text-red-500 hover:text-red-400 transition-colors"
+                        onClick={(e) => {
+                          // Prevent default behavior
+                          e.preventDefault();
+                          // Navigate programmatically
+                          window.location.href = `/blog/${post.id}`;
+                        }}
                       >
                         Read More
                         <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />

@@ -78,7 +78,7 @@ body {
 
 /* Dropdown menus */
 .dropdown-menu {
-  @apply bg-black/90 backdrop-blur-lg ring-1 ring-white/10 shadow-xl;
+  @apply bg-black/95 backdrop-blur-lg ring-1 ring-white/10 shadow-xl;
 }
 
 /* Gradient text - enhanced for premium look */
@@ -212,4 +212,73 @@ body {
 .text-premium {
   @apply font-medium tracking-wide;
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Prose Overrides for Blog Content */
+.prose {
+  @apply text-gray-300;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-white font-bold;
+}
+
+.prose h1 {
+  @apply text-3xl mt-8 mb-6;
+}
+
+.prose h2 {
+  @apply text-2xl mt-8 mb-4;
+}
+
+.prose h3 {
+  @apply text-xl mt-6 mb-3;
+}
+
+.prose p {
+  @apply my-4 leading-relaxed;
+}
+
+.prose ul, .prose ol {
+  @apply my-4 pl-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose a {
+  @apply text-red-400 no-underline hover:text-red-300 transition-colors;
+}
+
+.prose strong {
+  @apply text-white font-bold;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-red-500/50 pl-4 italic text-gray-400;
+}
+
+.prose pre {
+  @apply bg-black/50 border border-white/10 rounded-lg p-4 my-6 overflow-x-auto;
+}
+
+.prose code {
+  @apply text-red-300 bg-red-500/10 px-1 py-0.5 rounded;
+}
+
+.prose img {
+  @apply rounded-lg my-8 mx-auto shadow-lg;
+}
+
+.prose table {
+  @apply w-full border-collapse my-6;
+}
+
+.prose th {
+  @apply bg-white/10 text-white p-2 text-left;
+}
+
+.prose td {
+  @apply border-t border-white/10 p-2;
 }
