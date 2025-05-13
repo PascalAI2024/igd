@@ -17,6 +17,13 @@ Allow: /case-studies/
 Allow: /about/
 Allow: /contact/
 
+# Explicitly allow new blog posts
+Allow: /blog/local-seo-strategies
+Allow: /blog/ai-powered-marketing
+Allow: /blog/mobile-optimization
+Allow: /blog/content-strategy
+Allow: /blog/business-automation
+
 # Crawl delay for all bots
 Crawl-delay: 1
 
