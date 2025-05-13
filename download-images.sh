@@ -24,6 +24,17 @@ curl -L "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&auto
 curl -L "https://images.unsplash.com/photo-1576400883215-7083980b6193?w=800&auto=format" -o public/images/ai-ml/ai-usecase-3.webp
 curl -L "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format" -o public/images/ai-ml/ai-usecase-4.webp
 
+# Direct AI & Machine Learning Images for the page
+curl -L "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format" -o public/ai-process-1.webp
+curl -L "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&auto=format" -o public/ai-process-2.webp
+curl -L "https://images.unsplash.com/photo-1591453089816-0fbb971b454c?w=800&auto=format" -o public/ai-process-3.webp
+curl -L "https://images.unsplash.com/photo-1581092921461-7031e8fbc66c?w=800&auto=format" -o public/ai-process-4.webp
+curl -L "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&auto=format" -o public/ai-process-5.webp
+curl -L "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format" -o public/ai-usecase-1.webp
+curl -L "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&auto=format" -o public/ai-usecase-2.webp
+curl -L "https://images.unsplash.com/photo-1576400883215-7083980b6193?w=800&auto=format" -o public/ai-usecase-3.webp
+curl -L "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format" -o public/ai-usecase-4.webp
+
 # Digital Marketing Images
 curl -L "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format" -o public/images/digital-marketing/seo.webp
 curl -L "https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&auto=format" -o public/images/digital-marketing/social.webp

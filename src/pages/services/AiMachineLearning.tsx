@@ -85,15 +85,17 @@ const AiMachineLearning = () => {
               transition={{ delay: 0.4 }}
               className="relative"
             >
-              <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                <NeuralNetworkAnimation
-                  title="Neural Network Visualization"
-                  description="See how our AI models process and analyze data in real-time"
-                  layers={[6, 8, 12, 8, 4]}
-                  height={400}
-                  animationDelay={0.5}
-                  highlightColor="rgba(255, 0, 0, 0.8)"
-                />
+              <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-2xl p-6 bg-black/30">
+                <h3 className="text-xl font-bold mb-2">Neural Network Visualization</h3>
+                <p className="text-gray-400 mb-6">See how our AI models process and analyze data in real-time</p>
+
+                <div className="h-[300px] flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-500/50 to-purple-500/50 animate-pulse"></div>
+                    <p className="text-white">Interactive visualization loading...</p>
+                  </div>
+                </div>
+
                 <div className="absolute bottom-0 left-0 p-6 z-10">
                   <div className="text-sm text-gray-300 mb-2">Powered by</div>
                   <div className="text-xl font-bold text-white">Advanced Neural Networks</div>
@@ -323,7 +325,7 @@ const AiMachineLearning = () => {
                   "18% increase in customer retention campaigns ROI",
                   "35% improvement in identifying high-value at-risk customers"
                 ],
-                image: "/ai-usecase-1.webp",
+                image: "/images/ai-ml/ai-usecase-1.webp",
                 technologies: ["TensorFlow", "Python", "SQL", "Tableau"]
               },
               {
@@ -337,7 +339,7 @@ const AiMachineLearning = () => {
                   "67% decrease in processing costs",
                   "Staff redeployed to higher-value tasks"
                 ],
-                image: "/ai-usecase-2.webp",
+                image: "/images/ai-ml/ai-usecase-2.webp",
                 technologies: ["OCR", "NLP", "Python", "AWS"]
               },
               {
@@ -351,7 +353,7 @@ const AiMachineLearning = () => {
                   "22% increase in equipment lifespan",
                   "ROI achieved within 8 months"
                 ],
-                image: "/ai-usecase-3.webp",
+                image: "/images/ai-ml/ai-usecase-3.webp",
                 technologies: ["IoT", "Python", "TensorFlow", "Azure"]
               },
               {
@@ -365,7 +367,7 @@ const AiMachineLearning = () => {
                   "19% higher conversion rate",
                   "41% increase in cross-selling success"
                 ],
-                image: "/ai-usecase-4.webp",
+                image: "/images/ai-ml/ai-usecase-4.webp",
                 technologies: ["Collaborative Filtering", "Python", "AWS", "Redis"]
               }
             ]}
@@ -388,6 +390,67 @@ const AiMachineLearning = () => {
               ]}
               height={300}
               animationDelay={0.5}
+            />
+          </div>
+
+          {/* Additional Charts Section */}
+          <div className="mt-20">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Advanced Data Visualizations</h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Explore our AI metrics through interactive visualizations
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+              {/* Performance Chart */}
+              <DataVisualization
+                title="AI Performance by Industry"
+                description="Comparative analysis of AI performance metrics across different industries"
+                type="bar"
+                data={[
+                  { label: 'Retail', value: 85, color: 'rgba(255, 0, 0, 0.8)' },
+                  { label: 'Finance', value: 92, color: 'rgba(255, 50, 0, 0.8)' },
+                  { label: 'Healthcare', value: 78, color: 'rgba(255, 100, 0, 0.8)' },
+                  { label: 'Manufacturing', value: 88, color: 'rgba(255, 150, 0, 0.8)' },
+                  { label: 'Logistics', value: 82, color: 'rgba(255, 200, 0, 0.8)' }
+                ]}
+                height={400}
+                animationDelay={0.3}
+              />
+
+              {/* Technology Distribution Chart */}
+              <DataVisualization
+                title="AI Technology Distribution"
+                description="Breakdown of AI technologies used in our solutions"
+                type="bar"
+                data={[
+                  { label: 'Machine Learning', value: 35, color: 'rgba(255, 82, 82, 0.8)' },
+                  { label: 'Deep Learning', value: 25, color: 'rgba(255, 123, 82, 0.8)' },
+                  { label: 'Natural Language Processing', value: 20, color: 'rgba(255, 163, 82, 0.8)' },
+                  { label: 'Computer Vision', value: 15, color: 'rgba(255, 212, 82, 0.8)' },
+                  { label: 'Reinforcement Learning', value: 5, color: 'rgba(82, 255, 123, 0.8)' }
+                ]}
+                height={400}
+                animationDelay={0.5}
+              />
+            </div>
+
+            {/* Timeline Chart */}
+            <DataVisualization
+              title="AI Implementation Timeline & Metrics"
+              description="Visualization of AI project metrics over time"
+              type="line"
+              data={[
+                { label: 'Month 1', value: 20, color: 'rgba(255, 0, 0, 0.8)' },
+                { label: 'Month 2', value: 40, color: 'rgba(255, 50, 0, 0.8)' },
+                { label: 'Month 3', value: 55, color: 'rgba(255, 100, 0, 0.8)' },
+                { label: 'Month 4', value: 70, color: 'rgba(255, 150, 0, 0.8)' },
+                { label: 'Month 5', value: 85, color: 'rgba(255, 200, 0, 0.8)' },
+                { label: 'Month 6', value: 95, color: 'rgba(255, 250, 0, 0.8)' }
+              ]}
+              height={400}
+              animationDelay={0.7}
             />
           </div>
         </div>
@@ -483,7 +546,7 @@ const process = [
   {
     title: 'Discovery & Assessment',
     description: 'We analyze your business needs and identify AI opportunities',
-    image: '/ai-process-1.webp',
+    image: '/images/ai-ml/ai-process-1.webp',
     points: [
       'Business process analysis',
       'Data assessment',
@@ -494,7 +557,7 @@ const process = [
   {
     title: 'Data Preparation',
     description: 'We collect, clean, and structure your data for AI processing',
-    image: '/ai-process-2.webp',
+    image: '/images/ai-ml/ai-process-2.webp',
     points: [
       'Data collection',
       'Data cleaning',
@@ -505,7 +568,7 @@ const process = [
   {
     title: 'Model Development',
     description: 'We build and train custom AI models for your specific needs',
-    image: '/ai-process-3.webp',
+    image: '/images/ai-ml/ai-process-3.webp',
     points: [
       'Algorithm selection',
       'Model training',
@@ -516,7 +579,7 @@ const process = [
   {
     title: 'Implementation & Integration',
     description: 'We deploy AI solutions and integrate them with your systems',
-    image: '/ai-process-4.webp',
+    image: '/images/ai-ml/ai-process-4.webp',
     points: [
       'API development',
       'System integration',
@@ -527,7 +590,7 @@ const process = [
   {
     title: 'Monitoring & Optimization',
     description: 'We continuously monitor and improve your AI solutions',
-    image: '/ai-process-5.webp',
+    image: '/images/ai-ml/ai-process-5.webp',
     points: [
       'Performance monitoring',
       'Model retraining',
@@ -542,7 +605,7 @@ const useCases = [
   {
     title: 'Customer Churn Prediction',
     description: 'Implemented a machine learning model to predict customer churn with 92% accuracy, enabling proactive retention strategies.',
-    image: '/ai-usecase-1.webp',
+    image: '/images/ai-ml/ai-usecase-1.webp',
     industry: 'Retail & E-commerce',
     results: '24% reduction in customer churn rate',
     technologies: ['TensorFlow', 'Python', 'SQL', 'Tableau']
@@ -550,7 +613,7 @@ const useCases = [
   {
     title: 'Automated Document Processing',
     description: 'Developed an AI-powered system to automatically extract, classify, and process information from various document types.',
-    image: '/ai-usecase-2.webp',
+    image: '/images/ai-ml/ai-usecase-2.webp',
     industry: 'Financial Services',
     results: '85% reduction in processing time',
     technologies: ['OCR', 'NLP', 'Python', 'AWS']
@@ -558,7 +621,7 @@ const useCases = [
   {
     title: 'Predictive Maintenance System',
     description: 'Created a predictive maintenance solution using IoT sensors and machine learning to forecast equipment failures before they occur.',
-    image: '/ai-usecase-3.webp',
+    image: '/images/ai-ml/ai-usecase-3.webp',
     industry: 'Manufacturing',
     results: '37% decrease in unplanned downtime',
     technologies: ['IoT', 'Python', 'TensorFlow', 'Azure']
@@ -566,7 +629,7 @@ const useCases = [
   {
     title: 'Personalized Recommendation Engine',
     description: 'Built a sophisticated recommendation system that analyzes user behavior to provide highly personalized product suggestions.',
-    image: '/ai-usecase-4.webp',
+    image: '/images/ai-ml/ai-usecase-4.webp',
     industry: 'E-commerce',
     results: '28% increase in average order value',
     technologies: ['Collaborative Filtering', 'Python', 'AWS', 'Redis']
