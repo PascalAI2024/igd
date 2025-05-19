@@ -1,5 +1,5 @@
 import { CaseStudy } from './types';
-import { Thermometer, Calendar, Tools, TrendingUp, MapPin } from 'lucide-react';
+import { Thermometer, Calendar, Wrench, TrendingUp, MapPin } from 'lucide-react';
 
 export const hvacCaseStudy: CaseStudy = {
   id: 'hvac-business-growth',
