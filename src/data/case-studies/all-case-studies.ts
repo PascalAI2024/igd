@@ -1,7 +1,18 @@
 import { CaseStudy } from './types';
+import { landscapingCaseStudy } from './small-business-landscaping';
+import { bakeryCaseStudy } from './small-business-bakery';
+import { lawFirmCaseStudy } from './small-business-law-firm';
+import { hvacCaseStudy } from './small-business-hvac';
+import { boutiqueCaseStudy } from './small-business-boutique';
 
 // Enhanced case studies with professional images and detailed descriptions
 export const allCaseStudies: CaseStudy[] = [
+  // Small business focused case studies
+  landscapingCaseStudy,
+  bakeryCaseStudy,
+  lawFirmCaseStudy,
+  hvacCaseStudy,
+  boutiqueCaseStudy,
   // New case studies - AI/ML focused
   {
     id: 'ai-analytics',
