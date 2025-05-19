@@ -3,6 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Target, LineChart, Zap, ChevronRight, Users, TrendingUp, Star, ArrowRight, BarChart, MapPin, Globe, Mail } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
+import MetaTags from '../../components/MetaTags';
+import ServiceSchema from '../../components/ServiceSchema';
+import FAQSchema from '../../components/FAQSchema';
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import FeatureShowcase from '../../components/services/digital-marketing/FeatureShowcase';
 import RankingVisualizer from '../../components/services/digital-marketing/RankingVisualizer';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
@@ -18,9 +22,57 @@ const stats = [
 
 const DigitalMarketing = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  
+  // FAQ data for schema
+  const faqData = [
+    {
+      question: "How long does it take to see results from digital marketing?",
+      answer: "Most clients begin to see initial results within 30-60 days, with significant improvements in visibility and lead generation typically occurring within 90-120 days. SEO efforts may take longer, while paid advertising can produce immediate results."
+    },
+    {
+      question: "What digital marketing services do you offer?",
+      answer: "We offer comprehensive digital marketing services including local SEO, Google Business Profile optimization, social media marketing, content creation, PPC advertising, email marketing, reputation management, and detailed analytics reporting."
+    },
+    {
+      question: "How much does digital marketing cost?",
+      answer: "Our digital marketing packages start at $1,500 per month, with custom pricing based on your business size, goals, industry competition, and selected services. We provide transparent pricing and detailed ROI reporting."
+    },
+    {
+      question: "Do you guarantee first page rankings?",
+      answer: "While we can't guarantee specific rankings due to Google's constantly evolving algorithms, we have a proven track record of achieving first page rankings for our clients. We focus on sustainable growth and real business metrics rather than just rankings."
+    },
+    {
+      question: "How do you measure digital marketing success?",
+      answer: "We measure success through key performance indicators aligned with your business goals, including website traffic, conversion rates, lead quality, customer acquisition cost, local visibility, and ultimately, ROI. We provide detailed monthly reporting and analytics."
+    }
+  ];
 
   return (
     <PageTransition>
+      <MetaTags 
+        title="Digital Marketing & Local SEO Services"
+        description="Boost your local business with our digital marketing and local SEO services. We help you attract, engage, and convert local customers with proven strategies."
+      />
+      
+      <ServiceSchema 
+        serviceName="Digital Marketing & Local SEO"
+        description="Professional digital marketing and local SEO services for businesses in Fort Lauderdale and South Florida. We help local businesses improve their online visibility, generate qualified leads, and increase revenue through targeted digital marketing campaigns."
+        url="https://ingeniousdigital.com/services/digital-marketing"
+        serviceType="DigitalMarketingService"
+        areaServed="Fort Lauderdale, FL"
+        image="/images/digital-marketing/seo.webp"
+      />
+      
+      <FAQSchema faqs={faqData} />
+      
+      <BreadcrumbSchema 
+        customBreadcrumbs={[
+          { name: 'Home', url: 'https://ingeniousdigital.com' },
+          { name: 'Services', url: 'https://ingeniousdigital.com/services' },
+          { name: 'Digital Marketing', url: 'https://ingeniousdigital.com/services/digital-marketing' }
+        ]}
+      />
+      
       <div className="min-h-screen bg-black">
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">
