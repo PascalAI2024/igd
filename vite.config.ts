@@ -1,44 +1,32 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { Plugin } from 'vite';
-import Critters from 'critters';
 
-// Custom plugin for critical CSS extraction
-function criticalCssPlugin(): Plugin {
+// Simple CSS preload plugin (no external dependency)
+function cssPreloadPlugin(): Plugin {
   return {
-    name: 'vite:critical-css',
+    name: 'vite:css-preload',
     apply: 'build', // only run during build
-    async transformIndexHtml(html, { filename }) {
-      // Skip non-index HTML files
-      if (!/index\.html$/.test(filename)) return html;
+    transformIndexHtml(html) {
+      // Add preload links for CSS files
+      const cssLinkPattern = /<link rel="stylesheet" href="([^"]+)">/g;
+      const preloadLinks = [];
+      let match;
 
-      // Initialize Critters
-      const critters = new Critters({
-        // Inline all styles from external stylesheets
-        inlineThreshold: 0,
-        // Avoid potentially infinite loop with "recursion" approach
-        pruneSource: true,
-        // Don't worry about unused CSS - we'll do that with PurgeCSS
-        reduceInlineStyles: false,
-        // Don't actually remove critical styles from the main CSS bundle
-        // This ensures all styles are still applied when JS runs
-        mergeStylesheets: false,
-        // Enhance page speed by preloading the remaining stylesheets
-        preload: 'swap',
-        // Ensure the CSS is ready to apply when the page loads
-        noscriptFallback: true,
-        // Add media="print" to print-only styles
-        printRules: true,
-      });
-
-      try {
-        // Process the HTML to inline critical CSS
-        const processedHtml = await critters.process(html);
-        return processedHtml;
-      } catch (err) {
-        console.error('Error processing critical CSS:', err);
-        return html; // Return original if processing fails
+      // Find all CSS files and create preload links
+      while ((match = cssLinkPattern.exec(html)) !== null) {
+        const cssFile = match[1];
+        preloadLinks.push(
+          `<link rel="preload" href="${cssFile}" as="style">`
+        );
       }
+
+      // Insert preload links in head
+      if (preloadLinks.length > 0) {
+        html = html.replace('</head>', `${preloadLinks.join('\n')}\n</head>`);
+      }
+
+      return html;
     }
   };
 }
@@ -47,7 +35,7 @@ function criticalCssPlugin(): Plugin {
 export default defineConfig({
   plugins: [
     react(),
-    criticalCssPlugin(),
+    cssPreloadPlugin(),
   ],
   resolve: {
     alias: {
