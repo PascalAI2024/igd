@@ -1,7 +1,13 @@
 // Netlify serverless function to handle form submissions securely
 const fetch = require('node-fetch');
 const crypto = require('crypto');
-const { sanitize } = require('dompurify');
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+
+// Setup DOMPurify with jsdom window for server-side use
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+const sanitize = DOMPurify.sanitize;
 
 // API endpoints and keys would be set as environment variables in Netlify
 const FORM_ENDPOINT = process.env.FORM_ENDPOINT || 'https://api.example.com/submit-form';

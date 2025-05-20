@@ -1,0 +1,19 @@
+# Configuration for Netlify Functions
+
+[functions]
+  # Directory where your functions are stored
+  directory = "netlify/functions"
+  # Node.js version for the functions environment
+  node_bundler = "esbuild"
+
+[functions."api-proxy"]
+  # Increase timeout for API requests that might take longer
+  timeout = 10
+
+[functions."form-handler"]
+  # Standard timeout for form submissions
+  timeout = 10
+
+[build.environment]
+  # Add function-specific environment variables here, or use the Netlify UI
+  NODE_VERSION = "18"

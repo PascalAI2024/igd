@@ -16,6 +16,8 @@
     "check-links:specific": "node scripts/checkLinks.mjs",
     "validate": "./scripts/validate-build.sh",
     "setup-functions": "./scripts/setup-functions.sh",
+    "netlify-dev": "netlify dev",
+    "netlify-build": "netlify build",
     "deploy": "npm run validate && npm run setup-functions && echo 'Ready to deploy! Push to GitHub to trigger Netlify deployment.'"
   },
   "dependencies": {
@@ -27,6 +29,7 @@
     "framer-motion": "^10.16.4",
     "gsap": "^3.13.0",
     "highlight.js": "^11.11.1",
+    "jsdom": "^23.2.0",
     "lucide-react": "^0.284.0",
     "marked": "^15.0.11",
     "marked-highlight": "^2.2.1",
