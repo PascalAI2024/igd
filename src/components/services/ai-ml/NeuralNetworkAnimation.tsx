@@ -145,68 +145,94 @@ const NeuralNetworkAnimation: React.FC<NeuralNetworkAnimationProps> = ({
   // Animation function using the high performance hook
   const animate = useCallback((deltaTime: number) => {
     const canvas = canvasRef.current;
-    if (!canvas || neurons.length === 0 || connections.length === 0) return;
+    if (!canvas || !isVisible || neurons.length === 0 || connections.length === 0) return;
 
-    // Update rotation based on time
-    const newRotation = rotation + ROTATION_SPEED * deltaTime;
-    setRotation(newRotation);
+    try {
+      // Update rotation based on time
+      const newRotation = rotation + ROTATION_SPEED * deltaTime;
+      setRotation(newRotation);
 
-    // Update neuron values with smooth transitions
-    neurons.forEach(neuron => {
-      // Occasionally change target value
-      if (Math.random() < 0.01) {
-        neuron.targetValue = 0.1 + Math.random() * 0.9;
-      }
+      // Update neuron values with smooth transitions
+      neurons.forEach(neuron => {
+        // Occasionally change target value
+        if (Math.random() < 0.01) {
+          neuron.targetValue = 0.1 + Math.random() * 0.9;
+        }
 
-      // Smooth transition to target value
-      neuron.value += (neuron.targetValue - neuron.value) * 0.05;
+        // Smooth transition to target value
+        neuron.value += (neuron.targetValue - neuron.value) * 0.05;
 
-      // Add subtle oscillation based on rotation and offset
-      neuron.value += Math.sin(newRotation * neuron.rotationSpeed + neuron.rotationOffset) * 0.05;
+        // Add subtle oscillation based on rotation and offset
+        neuron.value += Math.sin(newRotation * neuron.rotationSpeed + neuron.rotationOffset) * 0.05;
 
-      // Clamp value between 0 and 1
-      neuron.value = Math.max(0.1, Math.min(1, neuron.value));
-    });
+        // Clamp value between 0 and 1
+        neuron.value = Math.max(0.1, Math.min(1, neuron.value));
+      });
 
-    // Update connection activity based on neuron values
-    connections.forEach(connection => {
-      // Connection becomes active if source neuron is highly activated
-      if (connection.from.value > 0.7 && Math.random() < 0.05) {
-        connection.active = true;
-      }
+      // Update connection activity based on neuron values
+      connections.forEach(connection => {
+        // Connection becomes active if source neuron is highly activated
+        if (connection.from.value > 0.7 && Math.random() < 0.05) {
+          connection.active = true;
+        }
 
-      // Update particles
-      if (connection.active) {
-        connection.particles.forEach(particle => {
-          particle.position += particle.speed * deltaTime / 16;
+        // Update particles
+        if (connection.active) {
+          connection.particles.forEach(particle => {
+            particle.position += particle.speed * deltaTime / 16;
 
-          // Reset particle when it reaches the end
-          if (particle.position >= 1) {
-            particle.position = 0;
+            // Reset particle when it reaches the end
+            if (particle.position >= 1) {
+              particle.position = 0;
 
-            // Transfer activation to target neuron
-            connection.to.targetValue = Math.min(1, connection.to.targetValue + 0.2);
+              // Transfer activation to target neuron
+              connection.to.targetValue = Math.min(1, connection.to.targetValue + 0.2);
 
-            // Occasionally deactivate connection
-            if (Math.random() < 0.2) {
-              connection.active = false;
+              // Occasionally deactivate connection
+              if (Math.random() < 0.2) {
+                connection.active = false;
+              }
             }
-          }
-        });
-      } else if (Math.random() < 0.01) {
-        // Randomly activate some connections
-        connection.active = true;
-      }
-    });
+          });
+        } else if (Math.random() < 0.01) {
+          // Randomly activate some connections
+          connection.active = true;
+        }
+      });
 
-    // Draw the network
-    drawNetwork3D(canvas, neurons, connections, newRotation, mousePosition, isHovering, highlightColor);
-  }, [neurons, connections, rotation, mousePosition, isHovering, highlightColor]);
+      // Draw the network
+      drawNetwork3D(canvas, neurons, connections, newRotation, mousePosition, isHovering, highlightColor);
+    } catch (error) {
+      console.error("Error in neural network animation:", error);
+      // Don't rethrow - we want to gracefully handle errors in the animation loop
+    }
+  }, [neurons, connections, rotation, mousePosition, isHovering, highlightColor, isVisible]);
 
-  // Use high performance animation hook
+  // Reference to track if animation is mounted
+  const isMountedRef = useRef(true);
+  
+  // Use high performance animation hook with cleanup
   const { canvasRef } = useHighPerformanceAnimation(animate, {
-    autoStart: isVisible
+    autoStart: isVisible && isMountedRef.current,
+    onCleanup: () => {
+      // Perform any necessary cleanup when component unmounts or animation stops
+      if (canvasRef.current) {
+        const ctx = canvasRef.current.getContext('2d');
+        if (ctx) {
+          ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        }
+      }
+    }
   });
+  
+  // Handle component unmounting
+  useEffect(() => {
+    isMountedRef.current = true;
+    
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   // Handle mouse interactions
   const handleMouseMove = useCallback((e: React.MouseEvent) => {

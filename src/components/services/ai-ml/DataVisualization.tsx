@@ -28,28 +28,65 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const [animationProgress, setAnimationProgress] = useState(0);
   
-  // Animation effect
+  // Handle mounting state
+  const isMountedRef = useRef(true);
+  
+  // Track animation frame ID for proper cleanup
+  const animationFrameRef = useRef<number | null>(null);
+  
+  // Animation effect with better cleanup
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && isMountedRef.current) {
       let startTime: number;
       const duration = 1000; // 1 second animation
       
       const animate = (timestamp: number) => {
+        if (!isMountedRef.current) return;
+        
         if (!startTime) startTime = timestamp;
         const elapsed = timestamp - startTime;
         const progress = Math.min(elapsed / duration, 1);
         
         setAnimationProgress(progress);
         
-        if (progress < 1) {
-          requestAnimationFrame(animate);
+        if (progress < 1 && isMountedRef.current) {
+          animationFrameRef.current = requestAnimationFrame(animate);
         }
       };
       
-      const animationId = requestAnimationFrame(animate);
-      return () => cancelAnimationFrame(animationId);
+      animationFrameRef.current = requestAnimationFrame(animate);
+      
+      return () => {
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+          animationFrameRef.current = null;
+        }
+      };
     }
   }, [isVisible]);
+  
+  // Handle component mount/unmount
+  useEffect(() => {
+    isMountedRef.current = true;
+    
+    return () => {
+      isMountedRef.current = false;
+      // Cancel any pending animation frames
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+      
+      // Clear canvas on unmount
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+    };
+  }, []);
   
   // Draw visualization
   useEffect(() => {

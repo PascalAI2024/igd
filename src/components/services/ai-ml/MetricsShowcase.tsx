@@ -29,14 +29,51 @@ const MetricsShowcase: React.FC<MetricsShowcaseProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const [counts, setCounts] = useState<number[]>(metrics.map(() => 0));
   
-  // Animate counters when visible
+  // Track mounted state
+  const isMountedRef = useRef(true);
+  
+  // Track interval ID for proper cleanup
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  
+  // Handle component mount/unmount
   useEffect(() => {
-    if (!isVisible) return;
+    isMountedRef.current = true;
+    
+    return () => {
+      isMountedRef.current = false;
+      // Clear any running intervals
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []);
+  
+  // Animate counters when visible with better cleanup
+  useEffect(() => {
+    if (!isVisible || !isMountedRef.current) return;
+    
+    // Reset counts when becoming visible
+    setCounts(metrics.map(() => 0));
     
     const duration = 2000; // 2 seconds
     const startTime = Date.now();
     
-    const interval = setInterval(() => {
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    
+    // Set new interval for animation
+    intervalRef.current = setInterval(() => {
+      if (!isMountedRef.current) {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+        return;
+      }
+      
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
@@ -45,12 +82,19 @@ const MetricsShowcase: React.FC<MetricsShowcaseProps> = ({
         Math.round(metric.value * progress)
       ));
       
-      if (progress >= 1) {
-        clearInterval(interval);
+      if (progress >= 1 && intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     }, 16); // ~60fps
     
-    return () => clearInterval(interval);
+    // Cleanup on effect change/unmount
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
   }, [isVisible, metrics]);
   
   return (

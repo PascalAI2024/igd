@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, ExternalLink } from 'lucide-react';
 import OptimizedImage from '../../OptimizedImage';
@@ -29,15 +29,38 @@ const UseCaseShowcase: React.FC<UseCaseShowcaseProps> = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  // Track if component is mounted
+  const isMountedRef = useRef(true);
+  
+  // Handle component mount/unmount
+  useEffect(() => {
+    isMountedRef.current = true;
+    
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+  
+  // Safely update state only if component is mounted
+  const safeSetState = (
+    stateSetter: React.Dispatch<React.SetStateAction<any>>,
+    value: any
+  ) => {
+    if (isMountedRef.current) {
+      stateSetter(value);
+    }
+  };
   
   const nextCase = () => {
-    setDirection(1);
-    setActiveIndex((prev) => (prev + 1) % useCases.length);
+    safeSetState(setDirection, 1);
+    safeSetState(setActiveIndex, (prev: number) => (prev + 1) % useCases.length);
   };
   
   const prevCase = () => {
-    setDirection(-1);
-    setActiveIndex((prev) => (prev - 1 + useCases.length) % useCases.length);
+    safeSetState(setDirection, -1);
+    safeSetState(setActiveIndex, (prev: number) => (prev - 1 + useCases.length) % useCases.length);
   };
   
   const activeCase = useCases[activeIndex];
@@ -63,6 +86,8 @@ const UseCaseShowcase: React.FC<UseCaseShowcaseProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ delay: animationDelay }}
+      onViewportEnter={() => safeSetState(setIsVisible, true)}
+      onViewportLeave={() => safeSetState(setIsVisible, false)}
       className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:border-red-500/20 transition-all duration-300"
     >
       <h3 className="text-xl font-bold mb-2">{title}</h3>
