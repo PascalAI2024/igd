@@ -4,7 +4,7 @@ export const post: BlogPost = {
   id: 'small-business-automation',
   title: 'Small Business Automation: Where to Start for Maximum Impact',
   excerpt: 'Discover practical automation strategies that small businesses can implement today to save time, reduce errors, and focus on growth.',
-  image: '/blog/business-automation.jpg',
+  image: '/images/blog/business-automation.jpg',
   date: '2024-04-25',
   author: {
     name: 'Pascal Ledesma',

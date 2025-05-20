@@ -3,21 +3,36 @@
   "@type": "Organization",
   "name": "Ingenious Digital",
   "url": "https://ingeniousdigital.com",
-  "logo": "https://ingeniousdigital.com/logo.png",
+  "logo": "https://ingeniousdigital.com/ingenious-digital-logo.svg",
   "description": "AI-powered digital marketing, web development, and business automation solutions for local businesses.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Fort Lauderdale",
     "addressRegion": "FL",
     "postalCode": "33304",
-    "addressCountry": "US"
+    "addressCountry": "US",
+    "streetAddress": "1234 Digital Avenue, Suite 100"
   },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+19545158586",
-    "contactType": "customer service",
-    "email": "pascal@ingeniousdigital.com"
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "26.1224",
+    "longitude": "-80.1373"
   },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+19545158586",
+      "contactType": "customer service",
+      "email": "pascal@ingeniousdigital.com",
+      "availableLanguage": ["English", "Spanish"]
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": "+19545158586",
+      "contactType": "sales",
+      "email": "sales@ingeniousdigital.com"
+    }
+  ],
   "sameAs": [
     "https://www.facebook.com/ingeniousdigital",
     "https://www.linkedin.com/company/ingenious-digital",
@@ -26,7 +41,9 @@
   ],
   "founder": {
     "@type": "Person",
-    "name": "Pascal Ledesma"
+    "name": "Pascal Ledesma",
+    "jobTitle": "CEO",
+    "image": "https://ingeniousdigital.com/team/pascal-ledesma.jpg"
   },
   "foundingDate": "2023",
   "knowsAbout": [
@@ -39,7 +56,31 @@
     "Lead Generation",
     "CRM",
     "Photography",
-    "Videography"
+    "Videography",
+    "Local Business Marketing",
+    "Small Business Solutions"
+  ],
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Fort Lauderdale",
+      "sameAs": "https://en.wikipedia.org/wiki/Fort_Lauderdale,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Miami",
+      "sameAs": "https://en.wikipedia.org/wiki/Miami"
+    },
+    {
+      "@type": "City",
+      "name": "Boca Raton",
+      "sameAs": "https://en.wikipedia.org/wiki/Boca_Raton,_Florida"
+    },
+    {
+      "@type": "State",
+      "name": "Florida",
+      "sameAs": "https://en.wikipedia.org/wiki/Florida"
+    }
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -50,7 +91,8 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Digital Marketing",
-          "description": "Comprehensive digital marketing services including SEO, content marketing, and social media management."
+          "description": "Comprehensive digital marketing services including SEO, content marketing, and social media management.",
+          "url": "https://ingeniousdigital.com/services/digital-marketing"
         }
       },
       {
@@ -58,7 +100,8 @@
         "itemOffered": {
           "@type": "Service",
           "name": "AI & Machine Learning",
-          "description": "Custom AI and machine learning solutions to automate processes and gain insights from your data."
+          "description": "Custom AI and machine learning solutions to automate processes and gain insights from your data.",
+          "url": "https://ingeniousdigital.com/services/ai-machine-learning"
         }
       },
       {
@@ -66,7 +109,8 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Web Development",
-          "description": "Custom website development with responsive design, e-commerce capabilities, and content management systems."
+          "description": "Custom website development with responsive design, e-commerce capabilities, and content management systems.",
+          "url": "https://ingeniousdigital.com/services/web-development"
         }
       },
       {
@@ -74,7 +118,8 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Lead Generation",
-          "description": "Strategies and systems to attract and convert potential customers into qualified leads."
+          "description": "Strategies and systems to attract and convert potential customers into qualified leads.",
+          "url": "https://ingeniousdigital.com/services/lead-generation"
         }
       },
       {
@@ -82,9 +127,96 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Business Automation",
-          "description": "Streamline operations and boost efficiency with smart automation solutions."
+          "description": "Streamline operations and boost efficiency with smart automation solutions.",
+          "url": "https://ingeniousdigital.com/services/business-automation"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "CRM Solutions",
+          "description": "Customer relationship management systems to improve client interactions and sales processes.",
+          "url": "https://ingeniousdigital.com/services/crm"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Photography",
+          "description": "Professional photography services for products, properties, and events.",
+          "url": "https://ingeniousdigital.com/services/photography"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Videography",
+          "description": "High-quality video production for marketing, training, and presentations.",
+          "url": "https://ingeniousdigital.com/services/videography"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Ad Management",
+          "description": "Strategic planning and management of digital advertising campaigns across multiple platforms.",
+          "url": "https://ingeniousdigital.com/services/ad-management"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Communication Solutions",
+          "description": "Integrated communication systems for improved team collaboration and client interactions.",
+          "url": "https://ingeniousdigital.com/services/communication"
         }
       }
     ]
+  },
+  "audience": [
+    {
+      "@type": "Audience",
+      "name": "Local Retail Businesses",
+      "url": "https://ingeniousdigital.com/industries/local-retail"
+    },
+    {
+      "@type": "Audience",
+      "name": "Restaurants",
+      "url": "https://ingeniousdigital.com/industries/restaurants"
+    },
+    {
+      "@type": "Audience",
+      "name": "Local Service Providers",
+      "url": "https://ingeniousdigital.com/industries/local-services"
+    },
+    {
+      "@type": "Audience",
+      "name": "Healthcare Providers",
+      "url": "https://ingeniousdigital.com/industries/healthcare"
+    },
+    {
+      "@type": "Audience",
+      "name": "Auto Services",
+      "url": "https://ingeniousdigital.com/industries/auto-services"
+    },
+    {
+      "@type": "Audience",
+      "name": "Manufacturing Businesses",
+      "url": "https://ingeniousdigital.com/industries/manufacturing"
+    }
+  ],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://ingeniousdigital.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ingeniousdigital.com"
   }
 }

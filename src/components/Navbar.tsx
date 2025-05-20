@@ -34,6 +34,7 @@ const services = [
 const mainLinks = [
   { name: 'About', path: '/about' },
   { name: 'Case Studies', path: '/case-studies' },
+  { name: 'Locations', path: '/locations' },
   { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' }
 ];

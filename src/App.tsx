@@ -48,6 +48,10 @@ const Healthcare = React.lazy(() => import('./pages/industries/Healthcare'));
 const AutoServices = React.lazy(() => import('./pages/industries/AutoServices'));
 const Manufacturing = React.lazy(() => import('./pages/industries/Manufacturing'));
 
+// Lazy load location pages
+const Locations = React.lazy(() => import('./pages/Locations'));
+const Location = React.lazy(() => import('./pages/Location'));
+
 const App = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(() => {
@@ -202,6 +206,10 @@ const App = () => {
               <Route path="/industries/healthcare" element={<Healthcare />} />
               <Route path="/industries/auto-services" element={<AutoServices />} />
               <Route path="/industries/manufacturing" element={<Manufacturing />} />
+
+              {/* Location Pages */}
+              <Route path="/locations" element={<Locations />} />
+              <Route path="/locations/:locationId" element={<Location />} />
 
               {/* Legal Pages */}
               <Route path="/privacy" element={<Privacy />} />

@@ -4,7 +4,7 @@ export const post: BlogPost = {
   id: 'small-business-content-marketing',
   title: 'Content Marketing for Small Businesses: A Practical Approach',
   excerpt: 'Learn how to create an effective content marketing strategy that generates leads and builds authority for your small business, even with limited resources.',
-  image: '/blog/content-strategy.jpg',
+  image: '/images/blog/content-strategy.jpg',
   date: '2024-04-15',
   author: {
     name: 'Pascal Ledesma',
