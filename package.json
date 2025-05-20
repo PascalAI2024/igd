@@ -7,7 +7,7 @@
     "dev": "vite",
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc && vite build",
-    "build-force": "npm run clean && tsc --noEmit --skipLibCheck && vite build",
+    "build-force": "npm run clean && vite build --emptyOutDir",
     "preview": "vite preview",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "typecheck": "tsc --noEmit",
