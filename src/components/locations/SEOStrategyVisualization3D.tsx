@@ -5,7 +5,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, Map, Star, MapPin, Globe, Users, 
-  Share2, MessageSquare, TrendingUp, Award, Phone
+  Share2, MessageSquare, ArrowUpRight, Award, Phone
 } from 'lucide-react';
 import * as THREE from 'three';
 import { AnimationErrorBoundary } from '../AnimationErrorBoundary';
@@ -649,7 +649,7 @@ const Code: React.FC<{ className?: string; style?: React.CSSProperties }> = (pro
   </svg>
 );
 
-const TrendingUp: React.FC<{ className?: string; style?: React.CSSProperties }> = (props) => (
+const TrendingUpIcon: React.FC<{ className?: string; style?: React.CSSProperties }> = (props) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="24" 

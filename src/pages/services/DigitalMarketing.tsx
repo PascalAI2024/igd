@@ -8,11 +8,10 @@ import ServiceSchema from '../../components/ServiceSchema';
 import FAQSchema from '../../components/FAQSchema';
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import FeatureShowcase from '../../components/services/digital-marketing/FeatureShowcase';
-import RankingVisualizer3D from '../../components/services/digital-marketing/RankingVisualizer3D';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
-import DigitalMarketingProcessFlow3D from '../../components/services/digital-marketing/DigitalMarketingProcessFlow3D';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
 import TestimonialShowcase from '../../components/services/shared/TestimonialShowcase';
+import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
   { label: 'Client Growth', value: '150%', icon: TrendingUp },
@@ -216,7 +215,7 @@ const DigitalMarketing = () => {
               </p>
             </motion.div>
 
-            <DigitalMarketingProcessFlow3D />
+            <lazy3D.DigitalMarketingProcessFlow3D />
           </div>
         </section>
 
@@ -343,7 +342,7 @@ const DigitalMarketing = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <RankingVisualizer3D />
+              <lazy3D.RankingVisualizer3D />
 
               <ResultsComparison
                 title="Client Success Metrics"

@@ -8,7 +8,9 @@ import FloatingContactIcons from './components/FloatingContactIcons';
 import LoadingSequence from './components/LoadingSequence';
 import BreadcrumbSchema from './components/BreadcrumbSchema';
 import CustomCursor from './components/effects/CustomCursor';
-import { initializeAnalytics, trackPageView, trackError } from './utils/analytics';
+import CookieConsent from './components/CookieConsent';
+import { PerformanceProvider } from './contexts/PerformanceContext';
+import { initializeAnalytics, trackPageView, trackError, checkExistingConsent } from './utils/analytics';
 import { measurePerformance } from './utils/performance';
 
 // Lazy load pages
@@ -65,18 +67,28 @@ const App = () => {
 
   // Initialize analytics and performance tracking
   useEffect(() => {
-    initializeAnalytics();
+    // Only initialize analytics if user has consented
+    if (checkExistingConsent()) {
+      initializeAnalytics();
+    }
+    
     const cleanup = measurePerformance();
 
     // Setup global error tracking
     const handleError = (event: ErrorEvent) => {
-      trackError(event.error);
+      // Only track errors if user has consented to analytics
+      if (checkExistingConsent()) {
+        trackError(event.error);
+      }
     };
     window.addEventListener('error', handleError);
 
     // Setup unhandled promise rejection tracking
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      trackError(`Unhandled Promise Rejection: ${event.reason}`);
+      // Only track errors if user has consented to analytics
+      if (checkExistingConsent()) {
+        trackError(`Unhandled Promise Rejection: ${event.reason}`);
+      }
     };
     window.addEventListener('unhandledrejection', handleUnhandledRejection);
 
@@ -89,7 +101,10 @@ const App = () => {
 
   // Track page views and handle scrolling
   useEffect(() => {
-    trackPageView(location.pathname + location.search);
+    // Only track page views if user has consented to analytics
+    if (checkExistingConsent()) {
+      trackPageView(location.pathname + location.search);
+    }
     window.scrollTo(0, 0);
   }, [location]);
 
@@ -149,22 +164,26 @@ const App = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Add breadcrumb schema for SEO */}
-      <BreadcrumbSchema />
-      
-      {/* Custom cursor for desktop */}
-      <div className="hidden md:block">
-        <CustomCursor color="#e03131" size={24} />
-      </div>
+    <PerformanceProvider>
+      <div className="min-h-screen bg-black">
+        {/* Add breadcrumb schema for SEO */}
+        <BreadcrumbSchema />
+        
+        {/* Cookie Consent Banner */}
+        <CookieConsent />
+        
+        {/* Custom cursor for desktop */}
+        <div className="hidden md:block">
+          <CustomCursor color="#e03131" size={24} />
+        </div>
 
-      {showNavigation && (
-        <>
-          <ScrollProgress />
-          <Navbar isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
-          <FloatingContactIcons isMobileMenuOpen={isMobileMenuOpen} />
-        </>
-      )}
+        {showNavigation && (
+          <>
+            <ScrollProgress />
+            <Navbar isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
+            <FloatingContactIcons isMobileMenuOpen={isMobileMenuOpen} />
+          </>
+        )}
 
       <AnimatePresence mode="wait" initial={false}>
         <Suspense fallback={
@@ -234,6 +253,7 @@ const App = () => {
 
       {showNavigation && <Footer />}
     </div>
+    </PerformanceProvider>
   );
 };
 

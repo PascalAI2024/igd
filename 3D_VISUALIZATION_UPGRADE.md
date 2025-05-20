@@ -36,6 +36,8 @@ We've developed several reusable 3D visualization components:
 
 All 3D visualizations implement performance best practices:
 
+- **Lazy loading** - Components are dynamically imported and only loaded when needed
+- **Code splitting** - 3D visualization code is separated from the main bundle
 - **Battery-aware rendering** - Reduces frame rate when on battery power
 - **Visibility detection** - Only renders when component is visible in viewport
 - **Optimized geometry** - Uses simplified geometries for better performance
@@ -108,15 +110,17 @@ All 3D visualizations use:
 
 When implementing additional 3D visualizations, follow these best practices:
 
-1. **Battery awareness** - Reduce animation complexity on battery power
-2. **Visibility detection** - Only render when in viewport
-3. **Throttled rendering** - Use appropriate frame rates
-4. **Model optimization** - Keep polygon counts low
-5. **Texture efficiency** - Use appropriate texture sizes and compression
-6. **Proper lighting** - Use efficient lighting techniques
-7. **Frustum culling** - Only render what's visible
-8. **Level of Detail (LOD)** - Adjust complexity based on distance/zoom
-9. **Shared materials** - Reuse materials when possible
-10. **Error handling** - Provide fallbacks for rendering failures
+1. **Dynamic imports** - Use lazy loading with code splitting
+2. **Centralized utility** - Manage all 3D component loading through a single utility
+3. **Battery awareness** - Reduce animation complexity on battery power
+4. **Visibility detection** - Only render when in viewport
+5. **Throttled rendering** - Use appropriate frame rates
+6. **Model optimization** - Keep polygon counts low
+7. **Texture efficiency** - Use appropriate texture sizes and compression
+8. **Proper lighting** - Use efficient lighting techniques
+9. **Frustum culling** - Only render what's visible
+10. **Level of Detail (LOD)** - Adjust complexity based on distance/zoom
+11. **Shared materials** - Reuse materials when possible
+12. **Error handling** - Provide fallbacks for rendering failures
 
 These improvements will continue to enhance the user experience and showcase our technical capabilities across all service offerings.

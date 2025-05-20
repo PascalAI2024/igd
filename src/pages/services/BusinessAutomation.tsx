@@ -3,9 +3,8 @@ import { motion } from 'framer-motion';
 import { Zap, Settings, Bot } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/business-automation/FeatureShowcase';
-import BusinessAutomationProcessFlow3D from '../../components/services/business-automation/BusinessAutomationProcessFlow3D';
-import WorkflowVisualization3D from '../../components/services/business-automation/WorkflowVisualization3D';
 import TechnologyStack from '../../components/services/business-automation/TechnologyStack';
+import { lazy3D } from '../../utils/lazyLoad3D';
 
 const BusinessAutomation = () => {
   const showcaseMetrics = [
@@ -121,7 +120,7 @@ const BusinessAutomation = () => {
               </p>
             </div>
 
-            <BusinessAutomationProcessFlow3D />
+            <lazy3D.BusinessAutomationProcessFlow3D />
           </div>
         </section>
 
@@ -135,7 +134,7 @@ const BusinessAutomation = () => {
               </p>
             </div>
 
-            <WorkflowVisualization3D />
+            <lazy3D.WorkflowVisualization3D />
           </div>
         </section>
 

@@ -5,7 +5,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Database, Server, Laptop, Cloud, 
-  ArrowRight, Globe, Mobile, Shield,
+  ArrowRight, Globe, Smartphone, Shield,
   Clock, AlertCircle
 } from 'lucide-react';
 import * as THREE from 'three';
@@ -417,7 +417,7 @@ const IntegrationScene = ({
       id: 'mobile_app',
       position: [2, -2, 2],
       title: 'Mobile Applications',
-      icon: Mobile,
+      icon: Smartphone,
       type: 'mobile',
       connections: ['monitoring'],
       description: 'Native and web-based mobile applications',
@@ -572,7 +572,7 @@ const SystemNetworkFallback = () => {
     { id: 'legacy', label: 'Legacy Systems', icon: Database, color: '#3b82f6' },
     { id: 'middleware', label: 'Middleware', icon: ArrowRight, color: '#ef4444' },
     { id: 'cloud', label: 'Cloud Services', icon: Cloud, color: '#10b981' },
-    { id: 'mobile', label: 'Mobile Apps', icon: Mobile, color: '#ec4899' },
+    { id: 'mobile', label: 'Mobile Apps', icon: Smartphone, color: '#ec4899' },
     { id: 'security', label: 'Security', icon: Shield, color: '#6366f1' }
   ];
   
@@ -647,7 +647,7 @@ const SystemNetwork3D = () => {
     { id: 'legacy', label: 'Legacy Systems', icon: Database },
     { id: 'middleware', label: 'Middleware', icon: ArrowRight },
     { id: 'cloud', label: 'Cloud Services', icon: Cloud },
-    { id: 'mobile', label: 'Mobile Apps', icon: Mobile },
+    { id: 'mobile', label: 'Mobile Apps', icon: Smartphone },
     { id: 'security', label: 'Security', icon: Shield }
   ];
   

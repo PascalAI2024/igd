@@ -7,8 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/system-integration/FeatureShowcase';
-import SystemIntegrationProcessFlow3D from '../../components/services/system-integration/SystemIntegrationProcessFlow3D';
-import SystemNetwork3D from '../../components/services/system-integration/SystemNetwork3D';
+import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
   { label: 'Integration Speed', value: '-60%', icon: Zap, trend: 'Faster' },
@@ -203,7 +202,7 @@ const SystemIntegration = () => {
               </p>
             </motion.div>
 
-            <SystemNetwork3D />
+            <lazy3D.SystemNetwork3D />
           </div>
         </section>
 
@@ -245,7 +244,7 @@ const SystemIntegration = () => {
               </p>
             </motion.div>
 
-            <SystemIntegrationProcessFlow3D />
+            <lazy3D.SystemIntegrationProcessFlow3D />
           </div>
         </section>
 

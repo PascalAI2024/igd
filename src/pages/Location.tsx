@@ -6,7 +6,7 @@ import { allServiceAreas, Location } from '../data/locations';
 import MetaTags from '../components/MetaTags';
 import BreadcrumbSchema from '../components/BreadcrumbSchema';
 import PageTransition from '../components/PageTransition';
-import LocationDemographics3D from '../components/locations/LocationDemographics3D';
+import { lazy3D } from '../utils/lazyLoad3D';
 import { Helmet } from 'react-helmet';
 
 const serviceIcons: Record<string, React.FC<{ className?: string }>> = {
@@ -396,7 +396,7 @@ const LocationPage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <LocationDemographics3D
+                <lazy3D.LocationDemographics3D
                   locationName={location.city}
                   state={location.state}
                   population={location.population}

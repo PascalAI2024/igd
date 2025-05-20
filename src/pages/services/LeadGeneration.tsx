@@ -7,9 +7,8 @@ import {
 import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
 import FeatureShowcase from '../../components/services/lead-generation/FeatureShowcase';
-import LeadGenerationProcessFlow3D from '../../components/services/lead-generation/LeadGenerationProcessFlow3D';
-import LeadFunnel3D from '../../components/services/lead-generation/LeadFunnel3D';
 import TechnologyStack from '../../components/services/lead-generation/TechnologyStack';
+import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
   { label: 'Lead Growth', value: '200%', icon: TrendingUp },
@@ -218,7 +217,7 @@ const LeadGeneration = () => {
                 A systematic approach to generating and nurturing leads.
               </p>
             </motion.div>
-            <LeadGenerationProcessFlow3D />
+            <lazy3D.LeadGenerationProcessFlow3D />
           </div>
         </section>
 
@@ -238,7 +237,7 @@ const LeadGeneration = () => {
                 Watch your leads progress through our optimized funnel.
               </p>
             </motion.div>
-            <LeadFunnel3D />
+            <lazy3D.LeadFunnel3D />
           </div>
         </section>
 

@@ -9,15 +9,46 @@ declare global {
   }
 }
 
+// User consent tracking
+let userHasConsented = false;
+
+// Check for existing consent
+export const checkExistingConsent = (): boolean => {
+  try {
+    const storedConsent = localStorage.getItem('analytics-consent');
+    userHasConsented = storedConsent === 'true';
+    return userHasConsented;
+  } catch (e) {
+    return false;
+  }
+};
+
+// Set user consent
+export const setUserConsent = (consent: boolean): void => {
+  userHasConsented = consent;
+  try {
+    localStorage.setItem('analytics-consent', consent ? 'true' : 'false');
+    if (consent) {
+      initializeAnalytics();
+    }
+  } catch (e) {
+    console.error('Error setting consent:', e);
+  }
+};
+
 // Initialize dataLayer array if it doesn't exist
 window.dataLayer = window.dataLayer || [];
 
 // Track page views
 export const trackPageView = (url: string) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
   
-  window.gtag('config', 'G-VEDZ17M6MH', {
-    page_path: url
+  // Remove potential sensitive data from URL
+  const urlObj = new URL(url, window.location.origin);
+  const cleanUrl = urlObj.pathname;
+  
+  window.gtag('config', import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-VEDZ17M6MH', {
+    page_path: cleanUrl
   });
 };
 
@@ -28,7 +59,7 @@ export const trackEvent = (
   label?: string,
   value?: number
 ) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
 
   window.gtag('event', action, {
     event_category: category,
@@ -43,7 +74,7 @@ export const trackInteraction = (
   elementClass: string,
   interactionType: string
 ) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
 
   window.gtag('event', 'user_interaction', {
     element_id: elementId,
@@ -58,7 +89,7 @@ export const trackFormSubmission = (
   formId: string,
   success: boolean
 ) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
 
   window.gtag('event', 'form_submission', {
     form_name: formName,
@@ -72,7 +103,7 @@ export const trackServiceView = (
   serviceName: string,
   serviceCategory: string
 ) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
 
   window.gtag('event', 'service_view', {
     service_name: serviceName,
@@ -86,7 +117,7 @@ export const trackLeadGeneration = (
   medium: string,
   campaign?: string
 ) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
 
   window.gtag('event', 'generate_lead', {
     source: source,
@@ -101,7 +132,7 @@ export const trackError = (
   errorCode?: string,
   errorContext?: string
 ) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
 
   window.gtag('event', 'error', {
     error_message: errorMessage,
@@ -116,7 +147,7 @@ export const trackPerformance = (
   value: number,
   category: string
 ) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
 
   window.gtag('event', 'performance', {
     metric_name: metricName,
@@ -131,7 +162,7 @@ export const trackEngagement = (
   duration: number,
   pageSection?: string
 ) => {
-  if (!window.gtag) return;
+  if (!window.gtag || !userHasConsented) return;
 
   window.gtag('event', 'user_engagement', {
     engagement_type: engagementType,
@@ -142,10 +173,18 @@ export const trackEngagement = (
 
 // Initialize analytics
 export const initializeAnalytics = () => {
+  // Check consent before initializing
+  if (!userHasConsented && !checkExistingConsent()) {
+    return;
+  }
+  
   window.dataLayer = window.dataLayer || [];
   window.gtag = function(...args: (string | GtagArg | Date)[]) {
     window.dataLayer.push(args);
   };
   window.gtag('js', new Date());
-  window.gtag('config', 'G-VEDZ17M6MH');
+  window.gtag('config', import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-VEDZ17M6MH', {
+    anonymize_ip: true, // Anonymize IP addresses
+    allow_ad_personalization_signals: false // Disable ad personalization
+  });
 };

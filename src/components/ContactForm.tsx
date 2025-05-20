@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Zap } from 'lucide-react';
 import { trackFormSubmission, trackLeadGeneration, trackError } from '../utils/analytics';
+import DOMPurify from 'dompurify';
+
+// Validate email format
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+// Validate phone number format (accept various formats)
+const isValidPhone = (phone: string): boolean => {
+  if (!phone) return true; // Phone is optional
+  const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+  return phoneRegex.test(phone);
+};
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -14,20 +28,100 @@ const ContactForm = () => {
     budget: ''
   });
 
+  const [csrfToken, setCsrfToken] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'validation-error'>('idle');
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [lastSubmissionTime, setLastSubmissionTime] = useState(0);
+  const SUBMISSION_COOLDOWN = 10000; // 10 seconds in milliseconds
+
+  // Generate CSRF token on component mount
+  useEffect(() => {
+    // Generate a random token
+    const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    setCsrfToken(token);
+    
+    // Store in session storage as a simple implementation
+    // In a real app, this should be handled by the backend
+    sessionStorage.setItem('csrf-token', token);
+  }, []);
+
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+    
+    // Validate required fields
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!isValidEmail(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    if (formData.phone && !isValidPhone(formData.phone)) {
+      errors.phone = 'Please enter a valid phone number';
+    }
+    
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required';
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const sanitizeInput = (data: typeof formData) => {
+    return {
+      name: DOMPurify.sanitize(data.name),
+      email: DOMPurify.sanitize(data.email),
+      phone: DOMPurify.sanitize(data.phone),
+      company: DOMPurify.sanitize(data.company),
+      message: DOMPurify.sanitize(data.message),
+      projectType: DOMPurify.sanitize(data.projectType),
+      budget: DOMPurify.sanitize(data.budget)
+    };
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Implement rate limiting
+    const now = Date.now();
+    if (now - lastSubmissionTime < SUBMISSION_COOLDOWN) {
+      setSubmitStatus('error');
+      setValidationErrors({
+        form: 'Please wait a moment before submitting again'
+      });
+      return;
+    }
+    
+    // Validate form
+    if (!validateForm()) {
+      setSubmitStatus('validation-error');
+      return;
+    }
+    
     setIsSubmitting(true);
+    setLastSubmissionTime(now);
+    
+    // Sanitize all inputs
+    const sanitizedData = sanitizeInput(formData);
     
     try {
+      // Check if the CSRF token matches
+      if (csrfToken !== sessionStorage.getItem('csrf-token')) {
+        throw new Error('CSRF token validation failed');
+      }
+      
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
           'form-name': 'contact',
-          ...formData
+          'csrf-token': csrfToken,
+          ...sanitizedData
         }).toString()
       });
 
@@ -39,7 +133,7 @@ const ContactForm = () => {
         trackLeadGeneration(
           'website',
           'contact-form',
-          formData.projectType || 'general'
+          sanitizedData.projectType || 'general'
         );
         setFormData({
           name: '',
@@ -50,6 +144,11 @@ const ContactForm = () => {
           projectType: '',
           budget: ''
         });
+        
+        // Generate a new CSRF token for next submission
+        const newToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
+        setCsrfToken(newToken);
+        sessionStorage.setItem('csrf-token', newToken);
       } else {
         setSubmitStatus('error');
         // Track failed form submission
@@ -78,9 +177,19 @@ const ContactForm = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    
+    // Clear validation error when field is being edited
+    if (validationErrors[name]) {
+      setValidationErrors({
+        ...validationErrors,
+        [name]: ''
+      });
+    }
+    
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
   };
 
@@ -115,6 +224,13 @@ const ContactForm = () => {
           className="space-y-6"
         >
           <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="csrf-token" value={csrfToken} />
+          
+          {validationErrors.form && (
+            <div className="text-red-500 text-sm bg-red-100/10 p-3 rounded-lg">
+              {validationErrors.form}
+            </div>
+          )}
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -128,9 +244,14 @@ const ContactForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400"
+                className={`w-full px-4 py-3 bg-white/5 border ${
+                  validationErrors.name ? 'border-red-500' : 'border-white/10'
+                } rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400`}
                 placeholder="Your name"
               />
+              {validationErrors.name && (
+                <p className="mt-1 text-sm text-red-500">{validationErrors.name}</p>
+              )}
             </div>
 
             <div>
@@ -144,9 +265,14 @@ const ContactForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400"
+                className={`w-full px-4 py-3 bg-white/5 border ${
+                  validationErrors.email ? 'border-red-500' : 'border-white/10'
+                } rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400`}
                 placeholder="your@email.com"
               />
+              {validationErrors.email && (
+                <p className="mt-1 text-sm text-red-500">{validationErrors.email}</p>
+              )}
             </div>
           </div>
 
@@ -161,9 +287,14 @@ const ContactForm = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400"
+                className={`w-full px-4 py-3 bg-white/5 border ${
+                  validationErrors.phone ? 'border-red-500' : 'border-white/10'
+                } rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400`}
                 placeholder="Your phone number"
               />
+              {validationErrors.phone && (
+                <p className="mt-1 text-sm text-red-500">{validationErrors.phone}</p>
+              )}
             </div>
 
             <div>
@@ -234,9 +365,14 @@ const ContactForm = () => {
               onChange={handleChange}
               required
               rows={4}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400 resize-none"
+              className={`w-full px-4 py-3 bg-white/5 border ${
+                validationErrors.message ? 'border-red-500' : 'border-white/10'
+              } rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400 resize-none`}
               placeholder="Tell us about your project"
             />
+            {validationErrors.message && (
+              <p className="mt-1 text-sm text-red-500">{validationErrors.message}</p>
+            )}
           </div>
 
           <motion.button

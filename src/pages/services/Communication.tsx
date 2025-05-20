@@ -5,8 +5,8 @@ import {
   Mail, Phone, TrendingUp, Zap, Bell, Settings
 } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
-import CommunicationNetwork3D from '../../components/services/communication/CommunicationNetwork3D';
 import NavigationButton from '../../components/NavigationButton';
+import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
   { label: 'Response Time', value: '-65%', icon: Clock, trend: 'Faster' },
@@ -174,7 +174,7 @@ const Communication = () => {
                 See how our communication solutions connect your business with customers
               </p>
             </motion.div>
-            <CommunicationNetwork3D />
+            <lazy3D.CommunicationNetwork3D />
           </div>
         </section>
 

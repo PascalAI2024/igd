@@ -19,8 +19,9 @@
   "dependencies": {
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
-    "@react-three/postprocessing": "^3.0.4",
+    "@react-three/postprocessing": "^2.16.0",
     "@types/react-helmet": "^6.1.11",
+    "dompurify": "^3.2.6",
     "framer-motion": "^10.16.4",
     "gsap": "^3.13.0",
     "highlight.js": "^11.11.1",
@@ -33,9 +34,10 @@
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.16.0",
     "recharts": "^2.15.3",
-    "three": "^0.176.0"
+    "three": "^0.157.0"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.5",
     "@types/node": "^20.8.3",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.10",

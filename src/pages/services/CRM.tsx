@@ -3,10 +3,9 @@ import { motion } from 'framer-motion';
 import { Users, ArrowRight, Database, Zap, Shield, MessageSquare, Settings } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/crm/FeatureShowcase';
-import CRMProcessFlow3D from '../../components/services/crm/CRMProcessFlow3D';
-import CRMDashboard3D from '../../components/services/crm/CRMDashboard3D';
 import TechnologyStack from '../../components/services/crm/TechnologyStack';
 import NavigationButton from '../../components/NavigationButton';
+import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
   { label: 'Customer Growth', value: '150%', icon: Users },
@@ -141,7 +140,7 @@ const CRM = () => {
               </p>
             </motion.div>
 
-            <CRMDashboard3D />
+            <lazy3D.CRMDashboard3D />
           </div>
         </section>
 
@@ -185,7 +184,7 @@ const CRM = () => {
               </p>
             </motion.div>
 
-            <CRMProcessFlow3D />
+            <lazy3D.CRMProcessFlow3D />
           </div>
         </section>
 

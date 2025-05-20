@@ -8,10 +8,11 @@ import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
 import FeatureShowcase from '../../components/services/web-development/FeatureShowcase';
 import WebsiteVisualizer from '../../components/services/web-development/WebsiteVisualizer';
-import WebDevelopmentProcess3D from '../../components/services/web-development/WebDevelopmentProcess3D';
+import { SuspenseWithFallback } from '../../components/SuspenseWithFallback';
 import CodeShowcase from '../../components/services/web-development/CodeShowcase';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
+import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
   { label: 'Page Speed', value: '< 3s', icon: Zap, trend: '-40%' },
@@ -264,7 +265,33 @@ const WebDevelopment = () => {
               </p>
             </motion.div>
 
-            <WebDevelopmentProcess3D />
+            <SuspenseWithFallback 
+              name="Web Development Process" 
+              height={500}
+              fallback={
+                <div className="bg-black/30 rounded-lg p-8 backdrop-blur-md border border-white/10">
+                  <h3 className="text-2xl font-semibold text-center mb-6">Development Process</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    {['Strategy', 'Design', 'Development', 'Launch'].map((step, index) => (
+                      <div key={step} className="relative bg-white/5 p-5 rounded-lg border border-white/10">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-red-500 text-white font-semibold mb-3">
+                          {index + 1}
+                        </div>
+                        <h4 className="text-lg font-semibold mb-1">{step}</h4>
+                        <p className="text-gray-400 text-sm">
+                          {index === 0 && "Planning your website for success"}
+                          {index === 1 && "Creating your site's unique look and feel"}
+                          {index === 2 && "Building with powerful, modern code"}
+                          {index === 3 && "Testing and deploying your site"}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              }
+            >
+              <lazy3D.WebDevelopmentProcess3D />
+            </SuspenseWithFallback>
           </div>
         </section>
 
