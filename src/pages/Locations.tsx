@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, Building, Users, ArrowRight, Search, TrendingUp, CheckCircle, BarChart } from 'lucide-react';
@@ -6,23 +6,30 @@ import { primaryServiceArea, secondaryServiceArea } from '../data/locations';
 import MetaTags from '../components/MetaTags';
 import BreadcrumbSchema from '../components/BreadcrumbSchema';
 import PageTransition from '../components/PageTransition';
-import LocationDemographics3D from '../components/locations/LocationDemographics3D';
+import { lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
+import { AnimationErrorBoundary } from '../components/AnimationErrorBoundary';
+
+// Lazy load the heavy 3D component
+const LocationDemographics3D = lazy(() => import('../components/locations/LocationDemographics3D'));
 
 const Locations: React.FC = () => {
+  const [contentReady, setContentReady] = useState(false);
+
   useEffect(() => {
     // Scroll to top and add a small delay to allow the page to render properly
     window.scrollTo(0, 0);
     
-    // Force a reflow/repaint after render to prevent animation issues
-    const timer = setTimeout(() => {
-      const element = document.querySelector('.locations-page');
-      if (element) {
-        element.classList.add('locations-ready');
-      }
-    }, 50);
+    // Use RAF to ensure DOM is fully rendered before adding the class
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setContentReady(true);
+      });
+    });
     
-    return () => clearTimeout(timer);
+    return () => {
+      setContentReady(false);
+    };
   }, []);
 
   // Schema.org Place structured data for service areas
@@ -84,7 +91,7 @@ const Locations: React.FC = () => {
       </Helmet>
 
       <PageTransition>
-        <div className="min-h-screen bg-black locations-page">
+        <div className={`min-h-screen bg-black transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
           {/* Hero Section */}
           <section className="relative py-24 overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
@@ -389,25 +396,39 @@ const Locations: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <div className="relative">
-                  <LocationDemographics3D
-                    locationName="Fort Lauderdale"
-                    state="Florida"
-                    population="182437"
-                    medianIncome="$64,850"
-                    medianHomeValue="$378,000"
-                    medianAge="42.4"
-                    employmentRate="95.8%"
-                    educationRate="36%"
-                    householdSize="2.4"
-                    commuteTime="27 min"
-                    topIndustries={["Tourism", "Healthcare", "Technology", "Retail"]}
-                    additionalInfo={[
-                      { label: "Internet Adoption", value: "92%" },
-                      { label: "Smartphone Usage", value: "86%" },
-                      { label: "E-commerce Shoppers", value: "73%" }
-                    ]}
-                  />
+                <div className={`locations-3d-container relative ${contentReady ? 'locations-3d-ready' : ''}`}>
+                  <AnimationErrorBoundary>
+                    <Suspense fallback={
+                      <div className="locations-3d-loader">
+                        <div className="text-center">
+                          <div className="w-10 h-10 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                          <p className="text-white font-medium">Loading visualization...</p>
+                          <p className="text-sm text-gray-400 mt-1">This may take a moment</p>
+                        </div>
+                      </div>
+                    }>
+                      {contentReady && (
+                        <LocationDemographics3D
+                          locationName="Fort Lauderdale"
+                          state="Florida"
+                          population="182437"
+                          medianIncome="$64,850"
+                          medianHomeValue="$378,000"
+                          medianAge="42.4"
+                          employmentRate="95.8%"
+                          educationRate="36%"
+                          householdSize="2.4"
+                          commuteTime="27 min"
+                          topIndustries={["Tourism", "Healthcare", "Technology", "Retail"]}
+                          additionalInfo={[
+                            { label: "Internet Adoption", value: "92%" },
+                            { label: "Smartphone Usage", value: "86%" },
+                            { label: "E-commerce Shoppers", value: "73%" }
+                          ]}
+                        />
+                      )}
+                    </Suspense>
+                  </AnimationErrorBoundary>
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-300">
                     <div className="bg-black/80 backdrop-blur-md p-6 rounded-xl border border-red-500/20 max-w-xl text-center">
                       <h3 className="text-xl font-bold text-white mb-2">Interactive Demographics</h3>

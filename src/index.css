@@ -220,14 +220,52 @@ body {
   display: flex !important;
 }
 
-/* Page transition helpers */
-.locations-page {
-  opacity: 0.01;
-  transition: opacity 0.3s ease-in;
+/* Page transition helpers - improved for stability */
+.locations-page,
+.location-page {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+  will-change: opacity, transform;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  position: relative;
+  z-index: 1;
 }
 
-.locations-page.locations-ready {
-  opacity: 1;
+.locations-ready,
+.location-ready {
+  opacity: 1 !important;
+}
+
+/* Add specific animation handling for locations components */
+.locations-3d-container {
+  position: relative;
+  min-height: 400px;
+  transform: translateZ(0);
+  will-change: transform;
+  z-index: 1;
+}
+
+.locations-3d-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+  border-radius: 0.75rem;
+  transition: opacity 0.3s ease-out;
+}
+
+.locations-3d-ready .locations-3d-loader {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Ensure page transitions don't cause content to disappear */
