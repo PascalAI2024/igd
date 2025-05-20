@@ -74,7 +74,7 @@ export const primaryServiceArea: Location[] = [
     ],
     nearbyLocations: ['fort-lauderdale', 'coral-gables', 'miami-beach', 'hialeah'],
     metaTitle: 'Digital Marketing & Web Development in Miami, FL',
-    metaDescription: 'Multilingual digital marketing and web solutions for Miami businesses. Boost your local visibility with strategies designed for Miami's diverse market.'
+    metaDescription: 'Multilingual digital marketing and web solutions for Miami businesses. Boost your local visibility with strategies designed for Miami\'s diverse market.'
   },
   {
     id: 'boca-raton',
