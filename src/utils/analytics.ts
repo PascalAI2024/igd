@@ -47,7 +47,7 @@ export const setUserConsent = (consent: boolean): void => {
 // Initialize dataLayer array if it doesn't exist
 window.dataLayer = window.dataLayer || [];
 
-// Track page views
+// Track page views with enhanced data
 export const trackPageView = (url: string) => {
   if (!window.gtag || !userHasConsented) return;
   
@@ -55,9 +55,53 @@ export const trackPageView = (url: string) => {
   const urlObj = new URL(url, window.location.origin);
   const cleanUrl = urlObj.pathname;
   
+  // Determine page type from URL structure
+  let pageType = 'other';
+  if (cleanUrl === '/' || cleanUrl === '/home') {
+    pageType = 'home';
+  } else if (cleanUrl.startsWith('/services/')) {
+    pageType = 'service';
+  } else if (cleanUrl.startsWith('/blog/')) {
+    pageType = 'blog_post';
+  } else if (cleanUrl === '/blog') {
+    pageType = 'blog_index';
+  } else if (cleanUrl.startsWith('/locations/')) {
+    pageType = 'location';
+  } else if (cleanUrl === '/locations') {
+    pageType = 'locations_index';
+  } else if (cleanUrl.startsWith('/case-studies/')) {
+    pageType = 'case_study';
+  } else if (cleanUrl === '/case-studies') {
+    pageType = 'case_studies_index';
+  } else if (cleanUrl === '/contact') {
+    pageType = 'contact';
+  } else if (cleanUrl === '/about') {
+    pageType = 'about';
+  }
+  
+  // Get page title
+  const pageTitle = document.title || 'Untitled Page';
+  
+  // Track performance data if available
+  let pageLoadTime = 0;
+  if (window.performance && window.performance.timing) {
+    const timing = window.performance.timing;
+    pageLoadTime = timing.loadEventEnd - timing.navigationStart;
+  }
+  
+  // Send the pageview with enhanced data
   window.gtag('config', import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-VEDZ17M6MH', {
-    page_path: cleanUrl
+    page_path: cleanUrl,
+    page_title: pageTitle,
+    page_type: pageType,
+    page_load_time: pageLoadTime > 0 ? pageLoadTime : undefined
   });
+  
+  // Start timing for engagement tracking
+  sessionStorage.setItem('page_view_start_time', Date.now().toString());
+  
+  // Reset interaction counter for this page
+  sessionStorage.setItem('page_interactions', '0');
 };
 
 // Track events
@@ -76,18 +120,48 @@ export const trackEvent = (
   });
 };
 
-// Track user interactions
+// Track user interactions with improved data collection
 export const trackInteraction = (
   elementId: string,
   elementClass: string,
-  interactionType: string
+  interactionType: string,
+  elementContent?: string
 ) => {
   if (!window.gtag || !userHasConsented) return;
 
+  // Increment interaction counter for the current page
+  const currentInteractions = parseInt(sessionStorage.getItem('page_interactions') || '0', 10);
+  sessionStorage.setItem('page_interactions', (currentInteractions + 1).toString());
+
+  // Get location in page (using element position data if available)
+  let locationInPage = 'unknown';
+  const element = document.getElementById(elementId) || document.querySelector(`.${elementClass}`);
+  if (element) {
+    const rect = element.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    if (rect.top < viewportHeight / 3) {
+      locationInPage = 'top';
+    } else if (rect.top < viewportHeight * 2/3) {
+      locationInPage = 'middle';
+    } else {
+      locationInPage = 'bottom';
+    }
+  }
+
+  // Determine time on page before interaction
+  const pageStartTime = parseInt(sessionStorage.getItem('page_view_start_time') || '0', 10);
+  const timeBeforeInteraction = pageStartTime ? Math.round((Date.now() - pageStartTime) / 1000) : 0;
+
+  // Send the enhanced interaction event
   window.gtag('event', 'user_interaction', {
     element_id: elementId,
     element_class: elementClass,
-    interaction_type: interactionType
+    interaction_type: interactionType,
+    element_content: elementContent || 'not_provided',
+    location_in_page: locationInPage,
+    time_before_interaction: timeBeforeInteraction,
+    interaction_count: currentInteractions + 1,
+    page_path: window.location.pathname
   });
 };
 
@@ -164,19 +238,91 @@ export const trackPerformance = (
   });
 };
 
-// Track user engagement
+// Track user engagement with enhanced metrics
 export const trackEngagement = (
   engagementType: string,
   duration: number,
-  pageSection?: string
+  pageSection?: string,
+  additionalData?: Record<string, any>
 ) => {
   if (!window.gtag || !userHasConsented) return;
 
+  // Get scroll depth
+  let scrollDepth = 0;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  if (scrollHeight > 0) {
+    scrollDepth = Math.min(100, Math.round((window.scrollY / scrollHeight) * 100));
+  }
+  
+  // Get interaction count
+  const interactionCount = parseInt(sessionStorage.getItem('page_interactions') || '0', 10);
+  
+  // Calculate session duration
+  const sessionStart = localStorage.getItem('session_start_time');
+  let sessionDuration = 0;
+  if (sessionStart) {
+    sessionDuration = Math.round((Date.now() - parseInt(sessionStart, 10)) / 1000);
+  } else {
+    localStorage.setItem('session_start_time', Date.now().toString());
+  }
+
+  // Send the enhanced engagement event
   window.gtag('event', 'user_engagement', {
     engagement_type: engagementType,
     duration: duration,
-    page_section: pageSection
+    page_section: pageSection || 'not_specified',
+    scroll_depth: scrollDepth,
+    interaction_count: interactionCount,
+    session_duration: sessionDuration,
+    page_path: window.location.pathname,
+    ...additionalData
   });
+  
+  // For exit engagement, track conversion probability
+  if (engagementType === 'exit' || engagementType === 'leave') {
+    // Calculate a rough conversion probability based on engagement factors
+    const conversionProbability = _calculateConversionProbability(
+      duration, 
+      scrollDepth, 
+      interactionCount
+    );
+    
+    window.gtag('event', 'conversion_probability', {
+      probability: conversionProbability,
+      page_path: window.location.pathname,
+      page_type: _getPageTypeFromPath(window.location.pathname)
+    });
+  }
+};
+
+// Helper function to calculate conversion probability
+const _calculateConversionProbability = (
+  duration: number, 
+  scrollDepth: number, 
+  interactionCount: number
+): number => {
+  // Simple weighted formula - can be refined based on actual data
+  const durationScore = Math.min(1, duration / 120); // Max out at 2 minutes
+  const scrollScore = scrollDepth / 100;
+  const interactionScore = Math.min(1, interactionCount / 5); // Max out at 5 interactions
+  
+  // Weighted average with more emphasis on interactions
+  return Math.round((durationScore * 0.3 + scrollScore * 0.3 + interactionScore * 0.4) * 100);
+};
+
+// Helper to get page type from path
+const _getPageTypeFromPath = (path: string): string => {
+  if (path === '/' || path === '/home') return 'home';
+  if (path.startsWith('/services/')) return 'service';
+  if (path.startsWith('/blog/')) return 'blog_post';
+  if (path === '/blog') return 'blog_index';
+  if (path.startsWith('/locations/')) return 'location';
+  if (path === '/locations') return 'locations_index';
+  if (path.startsWith('/case-studies/')) return 'case_study';
+  if (path === '/case-studies') return 'case_studies_index';
+  if (path === '/contact') return 'contact';
+  if (path === '/about') return 'about';
+  return 'other';
 };
 
 // Initialize analytics
@@ -193,6 +339,56 @@ export const initializeAnalytics = () => {
   window.gtag('js', new Date());
   window.gtag('config', import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-VEDZ17M6MH', {
     anonymize_ip: true, // Anonymize IP addresses
-    allow_ad_personalization_signals: false // Disable ad personalization
+    allow_ad_personalization_signals: false, // Disable ad personalization
+    page_title: document.title,
+    send_page_view: true,
+    cookie_domain: 'auto',
+    cookie_expires: 63072000, // 2 years in seconds
+    cookie_update: true,
+    cookie_flags: 'SameSite=None;Secure',
+    transport_type: 'beacon', // Uses navigator.sendBeacon for better reliability
+    custom_map: {
+      dimension1: 'page_type',
+      dimension2: 'user_type',
+      dimension3: 'device_type',
+      dimension4: 'site_version',
+      metric1: 'page_load_time',
+      metric2: 'interaction_count'
+    }
+  });
+
+  // Send useful session-level data
+  _sendSessionData();
+};
+
+// Private helper to send session-level data
+const _sendSessionData = () => {
+  if (!window.gtag || !userHasConsented) return;
+
+  // Detect device type
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const isTablet = /iPad|tablet|Tablet|Android(?!.*Mobile)/i.test(navigator.userAgent);
+  const deviceType = isTablet ? 'tablet' : (isMobile ? 'mobile' : 'desktop');
+
+  // Detect user type (new vs returning)
+  const isReturningUser = localStorage.getItem('user_first_visit') !== null;
+  
+  if (!isReturningUser) {
+    localStorage.setItem('user_first_visit', new Date().toISOString());
+  }
+
+  // Get site version (or build date as proxy)
+  const siteVersion = import.meta.env.VITE_BUILD_VERSION || 
+                     import.meta.env.VITE_BUILD_DATE || 
+                     new Date().toISOString().split('T')[0];
+
+  // Set user properties
+  window.gtag('set', 'user_properties', {
+    device_type: deviceType,
+    user_type: isReturningUser ? 'returning' : 'new',
+    site_version: siteVersion,
+    screen_size: `${window.innerWidth}x${window.innerHeight}`,
+    viewport_size: `${window.screen.width}x${window.screen.height}`,
+    connection_type: (navigator as any).connection ? (navigator as any).connection.effectiveType : 'unknown'
   });
 };

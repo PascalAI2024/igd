@@ -10,8 +10,37 @@ import BreadcrumbSchema from './components/BreadcrumbSchema';
 import CustomCursor from './components/effects/CustomCursor';
 import CookieConsent from './components/CookieConsent';
 import { PerformanceProvider } from './contexts/PerformanceContext';
-import { initializeAnalytics, trackPageView, trackError, checkExistingConsent } from './utils/analytics';
+import { 
+  initializeAnalytics, 
+  trackPageView, 
+  trackError, 
+  checkExistingConsent, 
+  trackEngagement 
+} from './utils/analytics';
 import { measurePerformance } from './utils/performance';
+
+// Declare missing type for analytics tracking timeout
+declare global {
+  interface Window {
+    _scrollTimeout?: ReturnType<typeof setTimeout>;
+    gtag?: (...args: any[]) => void;
+  }
+}
+
+// Helper to determine page type from path
+const _getPageTypeFromPath = (path: string): string => {
+  if (path === '/' || path === '/home') return 'home';
+  if (path.startsWith('/services/')) return 'service';
+  if (path.startsWith('/blog/')) return 'blog_post';
+  if (path === '/blog') return 'blog_index';
+  if (path.startsWith('/locations/')) return 'location';
+  if (path === '/locations') return 'locations_index';
+  if (path.startsWith('/case-studies/')) return 'case_study';
+  if (path === '/case-studies') return 'case_studies_index';
+  if (path === '/contact') return 'contact';
+  if (path === '/about') return 'about';
+  return 'other';
+};
 
 // Lazy load pages
 const Home = React.lazy(() => import('./pages/Home'));
@@ -103,7 +132,68 @@ const App = () => {
   useEffect(() => {
     // Only track page views if user has consented to analytics
     if (checkExistingConsent()) {
+      // Send enhanced page view tracking
       trackPageView(location.pathname + location.search);
+      
+      // Set up scroll tracking for enhanced analytics
+      const handleScroll = () => {
+        // Track max scroll depth every 2 seconds to avoid excessive events
+        if (!window._scrollTimeout) {
+          window._scrollTimeout = setTimeout(() => {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollHeight > 0) {
+              const scrollDepth = Math.min(100, Math.round((window.scrollY / scrollHeight) * 100));
+              
+              // Only track if significant scroll has occurred
+              if (scrollDepth > 25) {
+                const scrollData = {
+                  scroll_depth: scrollDepth,
+                  page_path: location.pathname,
+                  page_type: _getPageTypeFromPath(location.pathname)
+                };
+                
+                // Update scroll depth in session
+                const prevDepth = parseInt(sessionStorage.getItem(`scroll_depth_${location.pathname}`) || '0', 10);
+                if (scrollDepth > prevDepth) {
+                  sessionStorage.setItem(`scroll_depth_${location.pathname}`, scrollDepth.toString());
+                  window.gtag?.('event', 'scroll_depth', scrollData);
+                }
+              }
+            }
+            window._scrollTimeout = null;
+          }, 2000);
+        }
+      };
+      
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      
+      // Set up exit intent tracking
+      const handleExitIntent = (e: MouseEvent) => {
+        // Track when mouse moves to top of page (potential exit)
+        if (e.clientY < 20) {
+          const pageViewStartTime = parseInt(sessionStorage.getItem('page_view_start_time') || '0', 10);
+          if (pageViewStartTime) {
+            const timeOnPage = Math.round((Date.now() - pageViewStartTime) / 1000);
+            
+            // Only track exit intent if user has been on page for at least 5 seconds
+            if (timeOnPage > 5) {
+              window.gtag?.('event', 'exit_intent', {
+                page_path: location.pathname,
+                time_on_page: timeOnPage,
+                scroll_depth: parseInt(sessionStorage.getItem(`scroll_depth_${location.pathname}`) || '0', 10)
+              });
+            }
+          }
+        }
+      };
+      
+      window.addEventListener('mousemove', handleExitIntent, { passive: true });
+      
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('mousemove', handleExitIntent);
+        clearTimeout(window._scrollTimeout);
+      };
     }
     
     // Scroll to top with performance optimization
