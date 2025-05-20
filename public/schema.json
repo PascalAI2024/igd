@@ -77,6 +77,76 @@
       "sameAs": "https://en.wikipedia.org/wiki/Boca_Raton,_Florida"
     },
     {
+      "@type": "City",
+      "name": "West Palm Beach",
+      "sameAs": "https://en.wikipedia.org/wiki/West_Palm_Beach,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Hollywood",
+      "sameAs": "https://en.wikipedia.org/wiki/Hollywood,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Plantation",
+      "sameAs": "https://en.wikipedia.org/wiki/Plantation,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Sunrise",
+      "sameAs": "https://en.wikipedia.org/wiki/Sunrise,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Coral Springs",
+      "sameAs": "https://en.wikipedia.org/wiki/Coral_Springs,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Davie",
+      "sameAs": "https://en.wikipedia.org/wiki/Davie,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Weston",
+      "sameAs": "https://en.wikipedia.org/wiki/Weston,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Miramar",
+      "sameAs": "https://en.wikipedia.org/wiki/Miramar,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Pembroke Pines",
+      "sameAs": "https://en.wikipedia.org/wiki/Pembroke_Pines,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Tamarac",
+      "sameAs": "https://en.wikipedia.org/wiki/Tamarac,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Hallandale Beach",
+      "sameAs": "https://en.wikipedia.org/wiki/Hallandale_Beach,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Dania Beach",
+      "sameAs": "https://en.wikipedia.org/wiki/Dania_Beach,_Florida"
+    },
+    {
+      "@type": "City",
+      "name": "Lighthouse Point",
+      "sameAs": "https://en.wikipedia.org/wiki/Lighthouse_Point,_Florida"
+    },
+    {
+      "@type": "County",
+      "name": "Broward County",
+      "sameAs": "https://en.wikipedia.org/wiki/Broward_County,_Florida"
+    },
+    {
       "@type": "State",
       "name": "Florida",
       "sameAs": "https://en.wikipedia.org/wiki/Florida"

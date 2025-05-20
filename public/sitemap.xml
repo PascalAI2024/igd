@@ -128,6 +128,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Primary Service Areas -->
   <url>
     <loc>https://ingeniousdigital.com/locations/fort-lauderdale</loc>
     <lastmod>2024-05-19</lastmod>
@@ -158,6 +159,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Secondary Service Areas -->
   <url>
     <loc>https://ingeniousdigital.com/locations/pompano-beach</loc>
     <lastmod>2024-05-19</lastmod>
@@ -184,6 +186,73 @@
   </url>
   <url>
     <loc>https://ingeniousdigital.com/locations/miami-beach</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Newly Added Broward County Cities -->
+  <url>
+    <loc>https://ingeniousdigital.com/locations/plantation</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/sunrise</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/coral-springs</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/davie</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/weston</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/miramar</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/pembroke-pines</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/tamarac</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/hallandale-beach</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/dania-beach</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ingeniousdigital.com/locations/lighthouse-point</loc>
     <lastmod>2024-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
