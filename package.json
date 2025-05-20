@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && vite build",
-    "build-force": "npm run clean && vite build --emptyOutDir",
+    "apply-patches": "./patches/apply-patches.sh",
+    "build": "npm run clean && tsc && npm run apply-patches && vite build",
+    "build-force": "npm run clean && npm run apply-patches && vite build --emptyOutDir",
     "preview": "vite preview",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",

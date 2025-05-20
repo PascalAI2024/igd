@@ -70,7 +70,7 @@ const Building3D = ({
   const windowPattern = useMemo(() => {
     const pattern = new THREE.DataTexture(
       new Uint8Array(16 * 16 * 3).map(() => Math.random() > 0.5 ? 255 : 0),
-      16, 16, THREE.RGBFormat
+      16, 16, THREE.RGB
     );
     pattern.needsUpdate = true;
     return pattern;

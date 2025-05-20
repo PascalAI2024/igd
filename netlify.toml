@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "rm -rf dist && npm install --legacy-peer-deps && npm run build-force"
+  command = "rm -rf dist && npm install --legacy-peer-deps && ./patches/apply-patches.sh && npm run build-force"
 
 [build.environment]
   NODE_VERSION = "18"
