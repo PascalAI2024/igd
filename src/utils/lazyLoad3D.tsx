@@ -182,6 +182,9 @@ export const lazy3D = {
   LocationDemographics3D: lazyLoad3DComponent(() => 
     import('../components/locations/LocationDemographics3D')
   ),
+  OptimizedLocationDemographics: lazyLoad3DComponent(() => 
+    import('../components/locations/OptimizedLocationDemographics')
+  ),
   SEOStrategyVisualization3D: lazyLoad3DComponent(() => 
     import('../components/locations/SEOStrategyVisualization3D')
   )

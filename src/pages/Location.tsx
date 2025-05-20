@@ -413,7 +413,7 @@ const LocationPage: React.FC = () => {
                 transition={{ duration: 0.8 }}
               >
                 <AnimationErrorBoundary>
-                  {lazy3D.LocationDemographics3D({
+                  {lazy3D.OptimizedLocationDemographics({
                     locationName: location.city,
                     state: location.state,
                     population: location.population,

@@ -6,7 +6,8 @@ import {
 } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/crm/FeatureShowcase';
-import TechnologyStack from '../../components/services/crm/TechnologyStack';
+import OptimizedCRMProcessFlow from '../../components/services/crm/OptimizedCRMProcessFlow';
+import OptimizedTechStack from '../../components/services/crm/OptimizedTechStack';
 import NavigationButton from '../../components/NavigationButton';
 import { lazy3D } from '../../utils/lazyLoad3D';
 
@@ -345,9 +346,9 @@ const CRM = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-red-500/5"
+              className="shadow-2xl shadow-red-500/5"
             >
-              <lazy3D.CRMProcessFlow3D />
+              <OptimizedCRMProcessFlow />
             </motion.div>
           </div>
         </section>
@@ -379,7 +380,14 @@ const CRM = () => {
               </p>
             </motion.div>
 
-            <TechnologyStack />
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              <OptimizedTechStack />
+            </motion.div>
           </div>
         </section>
 
