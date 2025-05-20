@@ -9,7 +9,7 @@ import {
   TrendingUp, LucideIcon
 } from 'lucide-react';
 import * as THREE from 'three';
-import { AnimationErrorBoundary } from '../../../AnimationErrorBoundary';
+import { AnimationErrorBoundary } from '../../../components/AnimationErrorBoundary';
 
 interface Node {
   id: string;

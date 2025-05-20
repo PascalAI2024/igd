@@ -4,7 +4,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text, Float, useTexture } from '@react-three/drei';
 import { Users, Filter, Target, Zap, LucideIcon, TrendingUp, ChevronRight } from 'lucide-react';
 import * as THREE from 'three';
-import { AnimationErrorBoundary } from '../../../AnimationErrorBoundary';
+import { AnimationErrorBoundary } from '../../../components/AnimationErrorBoundary';
 
 interface Metric {
   label: string;

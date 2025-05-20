@@ -5,7 +5,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Text, Html, Float } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
-import { AnimationErrorBoundary } from '../../../AnimationErrorBoundary';
+import { AnimationErrorBoundary } from '../../../components/AnimationErrorBoundary';
 
 const rankings = [
   {

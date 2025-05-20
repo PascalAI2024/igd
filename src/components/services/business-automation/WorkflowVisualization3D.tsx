@@ -8,7 +8,7 @@ import {
   Mail, FileText, Clock, Calculator, Settings
 } from 'lucide-react';
 import * as THREE from 'three';
-import { AnimationErrorBoundary } from '../../../AnimationErrorBoundary';
+import { AnimationErrorBoundary } from '../../../components/AnimationErrorBoundary';
 
 interface WorkflowNode {
   id: string;

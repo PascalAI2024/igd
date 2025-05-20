@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import * as THREE from 'three';
 import { EffectComposer, Bloom, Noise } from '@react-three/postprocessing';
 import { KernelSize } from 'postprocessing';
-import { AnimationErrorBoundary } from '../../../AnimationErrorBoundary';
+import { AnimationErrorBoundary } from '../../../components/AnimationErrorBoundary';
 
 // Node types with different visual representations
 export type NodeType = 'server' | 'database' | 'client' | 'api' | 'cloud' | 'device' | 'router' | 'custom';

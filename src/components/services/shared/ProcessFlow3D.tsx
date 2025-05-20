@@ -6,7 +6,7 @@ import { LucideIcon } from 'lucide-react';
 import * as THREE from 'three';
 import { EffectComposer, Bloom, Noise } from '@react-three/postprocessing';
 import { KernelSize } from 'postprocessing';
-import { AnimationErrorBoundary } from '../../../AnimationErrorBoundary';
+import { AnimationErrorBoundary } from '../../../components/AnimationErrorBoundary';
 
 interface ProcessStep {
   icon: LucideIcon;
