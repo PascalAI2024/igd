@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text } from '@react-three/drei';
 import { motion } from 'framer-motion';
+import { AnimationErrorBoundary } from '../../components/AnimationErrorBoundary';
 import * as THREE from 'three';
 
 interface DataPoint {
@@ -38,37 +39,52 @@ const Bar = ({
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const isMountedRef = useRef(true);
+  
+  // Clean up on unmount
+  useEffect(() => {
+    isMountedRef.current = true;
+    
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   // Animation on mount
   useFrame((state) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || !isMountedRef.current) return;
 
-    // Animate height on mount
-    const targetHeight = size[1];
-    const currentHeight = meshRef.current.scale.y * targetHeight;
-    const newHeight = THREE.MathUtils.lerp(currentHeight, targetHeight, 0.05);
-    meshRef.current.scale.y = newHeight / targetHeight;
-
-    // Adjust position based on scale to keep bottom fixed
-    meshRef.current.position.y = position[1] + (newHeight - targetHeight) / 2;
-
-    // Add subtle floating animation
-    const t = state.clock.getElapsedTime() + index;
-    meshRef.current.position.y += Math.sin(t * 2) * 0.01;
-
-    // Rotate slightly when hovered
-    if (hovered) {
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        Math.PI * 0.05,
-        0.1
-      );
-    } else {
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        0,
-        0.1
-      );
+    try {
+      // Animate height on mount
+      const targetHeight = size[1];
+      const currentHeight = meshRef.current.scale.y * targetHeight;
+      const newHeight = THREE.MathUtils.lerp(currentHeight, targetHeight, 0.05);
+      meshRef.current.scale.y = newHeight / targetHeight;
+  
+      // Adjust position based on scale to keep bottom fixed
+      meshRef.current.position.y = position[1] + (newHeight - targetHeight) / 2;
+  
+      // Add subtle floating animation
+      const t = state.clock.getElapsedTime() + index;
+      meshRef.current.position.y += Math.sin(t * 2) * 0.01;
+  
+      // Rotate slightly when hovered
+      if (hovered) {
+        meshRef.current.rotation.y = THREE.MathUtils.lerp(
+          meshRef.current.rotation.y,
+          Math.PI * 0.05,
+          0.1
+        );
+      } else {
+        meshRef.current.rotation.y = THREE.MathUtils.lerp(
+          meshRef.current.rotation.y,
+          0,
+          0.1
+        );
+      }
+    } catch (error) {
+      console.error("Error in bar animation:", error);
+      // Don't throw the error to prevent crashing the animation loop
     }
   });
 
@@ -154,11 +170,25 @@ const Grid = ({ size, divisions = 10 }: { size: number, divisions?: number }) =>
 // Scene setup
 const ChartScene = ({ data }: { data: DataPoint[] }) => {
   const { camera } = useThree();
-
-  // Set initial camera position
+  const controlsRef = useRef<any>(null);
+  const isMountedRef = useRef(true);
+  
+  // Set initial camera position and handle cleanup
   React.useEffect(() => {
+    isMountedRef.current = true;
+    
+    // Set camera position
     camera.position.set(5, 5, 5);
     camera.lookAt(0, 0, 0);
+    
+    return () => {
+      isMountedRef.current = false;
+      
+      // Clean up controls to prevent memory leaks
+      if (controlsRef.current) {
+        controlsRef.current.dispose();
+      }
+    };
   }, [camera]);
 
   // Calculate max value for scaling
@@ -194,6 +224,7 @@ const ChartScene = ({ data }: { data: DataPoint[] }) => {
       })}
 
       <OrbitControls
+        ref={controlsRef}
         enableZoom={true}
         enablePan={false}
         minPolarAngle={Math.PI / 6}

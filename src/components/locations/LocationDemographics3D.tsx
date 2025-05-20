@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Text, Html, Float, Sky } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
@@ -46,12 +46,25 @@ const DemographicBars = ({
 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
+  const isMountedRef = useRef(true);
+  
+  // Track mounted state
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
   
   // Set up the camera
   useFrame(() => {
-    if (groupRef.current) {
+    if (!groupRef.current || !isMountedRef.current) return;
+    
+    try {
       // Subtle rotation for better perspective
       groupRef.current.rotation.y = Math.sin(Date.now() * 0.0001) * 0.1;
+    } catch (error) {
+      console.error('Error in DemographicBars animation:', error);
     }
   });
   
@@ -206,11 +219,38 @@ const DemographicsScene = ({
 }) => {
   const [hoveredBar, setHoveredBar] = useState<number | null>(null);
   const { camera } = useThree();
+  const controlsRef = useRef<any>(null);
+  const isMountedRef = useRef(true);
+  
+  // Track mounted state
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      // Clean up OrbitControls if they were added
+      if (controlsRef.current) {
+        controlsRef.current.dispose();
+      }
+    };
+  }, []);
+  
+  // Safe state setter
+  const safeSetHoveredBar = useCallback((index: number | null) => {
+    if (isMountedRef.current) {
+      setHoveredBar(index);
+    }
+  }, []);
   
   // Set camera position
-  React.useEffect(() => {
-    camera.position.set(0, 2, 5);
-    camera.lookAt(0, 1, 0);
+  useEffect(() => {
+    if (!isMountedRef.current) return;
+    
+    try {
+      camera.position.set(0, 2, 5);
+      camera.lookAt(0, 1, 0);
+    } catch (error) {
+      console.error('Error setting camera position:', error);
+    }
   }, [camera]);
   
   return (
@@ -312,6 +352,35 @@ const LocationDemographics3D: React.FC<LocationDemographics3DProps> = ({
 }) => {
   // Format population with commas
   const formattedPopulation = parseInt(population).toLocaleString();
+  const isMountedRef = useRef(true);
+  
+  // Handle component mount/unmount and visibility changes
+  useEffect(() => {
+    isMountedRef.current = true;
+    
+    // Handle visibility changes
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        console.log('LocationDemographics3D: Page hidden, cleaning up');
+      }
+    };
+    
+    // Handle bfcache restoration
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        console.log('LocationDemographics3D: Page restored from bfcache');
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pageshow', handlePageShow);
+    
+    return () => {
+      isMountedRef.current = false;
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, []);
   
   // Prepare demographic data for visualization
   const demographicData: DemographicData[] = [
@@ -385,15 +454,23 @@ const LocationDemographics3D: React.FC<LocationDemographics3DProps> = ({
     }
   ];
   
-  // State to track if the component is mounted
-  const [isMounted, setIsMounted] = useState(false);
+  // State to track if the component is visible
+  const [isVisible, setIsVisible] = useState(false);
   
-  // Handle component mount/unmount
+  // Handle component visibility
   useEffect(() => {
-    setIsMounted(true);
+    if (!isMountedRef.current) return;
+    
+    // Use timeout to prevent flash during transitions
+    const timer = setTimeout(() => {
+      if (isMountedRef.current) {
+        setIsVisible(true);
+      }
+    }, 300);
     
     return () => {
-      setIsMounted(false);
+      clearTimeout(timer);
+      setIsVisible(false);
     };
   }, []);
   
@@ -414,16 +491,20 @@ const LocationDemographics3D: React.FC<LocationDemographics3DProps> = ({
         {/* 3D visualization */}
         <div className="h-[400px] w-full mb-8">
           <AnimationErrorBoundary>
-            <div style={{ width: '100%', height: '100%', display: isMounted ? 'block' : 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: isVisible ? 'block' : 'none' }}>
               <Canvas 
                 shadows 
                 dpr={[1, 2]} // Limit pixel ratio for better performance
                 fallback={<div className="h-full flex items-center justify-center text-gray-400">Loading demographics visualization...</div>} 
                 camera={{ position: [0, 2, 5], fov: 50 }}
-                style={{ visibility: isMounted ? 'visible' : 'hidden' }}
+                style={{ visibility: isVisible ? 'visible' : 'hidden' }}
                 onCreated={({ gl }) => {
-                  // Configure renderer for better performance
-                  gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                  try {
+                    // Configure renderer for better performance
+                    gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                  } catch (error) {
+                    console.error('Error configuring renderer:', error);
+                  }
                 }}
               >
                 <DemographicsScene 

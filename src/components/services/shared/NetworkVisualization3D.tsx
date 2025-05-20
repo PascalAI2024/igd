@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState, useEffect } from 'react';
+import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Text, Html, OrbitControls, Billboard, useTexture } from '@react-three/drei';
 import { motion } from 'framer-motion';
@@ -98,6 +98,7 @@ const Node = ({
   const nodeRef = useRef<THREE.Group>(null);
   const glowRef = useRef<THREE.Mesh>(null);
   const { camera } = useThree();
+  const isMountedRef = useRef(true);
   
   // Define node appearance
   const nodeColor = node.color || NODE_COLOR_MAP[node.type] || '#3b82f6';
@@ -107,9 +108,19 @@ const Node = ({
   // Load texture for icon
   const texture = useTexture(iconUrl);
   
+  // Track mounted state
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+  
   // Animation
   useFrame((state) => {
-    if (nodeRef.current) {
+    if (!nodeRef.current || !isMountedRef.current) return;
+    
+    try {
       // Basic hover/select scaling
       const targetScale = selected ? 1.2 : hovered ? 1.1 : 1;
       nodeRef.current.scale.x = THREE.MathUtils.lerp(nodeRef.current.scale.x, targetScale, 0.1);
@@ -135,6 +146,8 @@ const Node = ({
           (glowRef.current.material as THREE.MeshBasicMaterial).opacity = 0.1;
         }
       }
+    } catch (error) {
+      console.error('Error in Node animation:', error);
     }
   });
 
@@ -242,12 +255,21 @@ const Link = ({
   const pointsRef = useRef<THREE.Points>(null);
   const curveRef = useRef<THREE.CubicBezierCurve3 | null>(null);
   const particles = useRef<Particle[]>([]);
+  const isMountedRef = useRef(true);
   
   // Define appearance
   const linkColor = link.color || '#ffffff';
   const intensity = link.strength || 0.5;
   const thickness = link.thickness || 1;
   const animated = link.animated !== false; // Default to true
+  
+  // Track mounted state
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
   
   // Generate or update curve when positions change
   useEffect(() => {
@@ -288,41 +310,45 @@ const Link = ({
   
   // Animation
   useFrame((state) => {
-    if (!curveRef.current) return;
+    if (!curveRef.current || !isMountedRef.current) return;
     
-    // Update line appearance based on selection/hover state
-    if (lineRef.current) {
-      const material = lineRef.current.material as THREE.LineBasicMaterial;
-      material.opacity = selected ? 0.8 : hovered ? 0.6 : 0.3;
-      material.linewidth = thickness * (selected ? 2 : hovered ? 1.5 : 1);
-    }
-    
-    // Update particles
-    if (animated && pointsRef.current) {
-      const pointGeometry = pointsRef.current.geometry;
-      const positions = pointsRef.current.geometry.attributes.position.array as Float32Array;
-      
-      // Update each particle
-      for (let i = 0; i < particles.current.length; i++) {
-        const particle = particles.current[i];
-        
-        // Move along the curve
-        particle.position += particle.speed * (selected ? 1.5 : hovered ? 1.2 : 1);
-        if (particle.position > 1) particle.position = 0;
-        
-        // Get position on curve
-        const point = curveRef.current.getPointAt(particle.position);
-        
-        // Update geometry
-        const idx = i * 3;
-        if (idx + 2 < positions.length) {
-          positions[idx] = point.x;
-          positions[idx + 1] = point.y;
-          positions[idx + 2] = point.z;
-        }
+    try {
+      // Update line appearance based on selection/hover state
+      if (lineRef.current) {
+        const material = lineRef.current.material as THREE.LineBasicMaterial;
+        material.opacity = selected ? 0.8 : hovered ? 0.6 : 0.3;
+        material.linewidth = thickness * (selected ? 2 : hovered ? 1.5 : 1);
       }
       
-      pointGeometry.attributes.position.needsUpdate = true;
+      // Update particles
+      if (animated && pointsRef.current) {
+        const pointGeometry = pointsRef.current.geometry;
+        const positions = pointsRef.current.geometry.attributes.position.array as Float32Array;
+        
+        // Update each particle
+        for (let i = 0; i < particles.current.length; i++) {
+          const particle = particles.current[i];
+          
+          // Move along the curve
+          particle.position += particle.speed * (selected ? 1.5 : hovered ? 1.2 : 1);
+          if (particle.position > 1) particle.position = 0;
+          
+          // Get position on curve
+          const point = curveRef.current.getPointAt(particle.position);
+          
+          // Update geometry
+          const idx = i * 3;
+          if (idx + 2 < positions.length) {
+            positions[idx] = point.x;
+            positions[idx + 1] = point.y;
+            positions[idx + 2] = point.z;
+          }
+        }
+        
+        pointGeometry.attributes.position.needsUpdate = true;
+      }
+    } catch (error) {
+      console.error('Error in Link animation:', error);
     }
   });
   
@@ -443,6 +469,27 @@ const NetworkScene = ({
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const sceneRef = useRef<THREE.Group>(null);
+  const controlsRef = useRef<any>(null);
+  const isMountedRef = useRef(true);
+  
+  // Track mounted state
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      // Clean up OrbitControls when unmounting
+      if (controlsRef.current) {
+        controlsRef.current.dispose();
+      }
+    };
+  }, []);
+  
+  // Safe state setter to prevent updates on unmounted component
+  const safeSetState = useCallback(<T,>(setter: React.Dispatch<React.SetStateAction<T>>, value: T) => {
+    if (isMountedRef.current) {
+      setter(value);
+    }
+  }, []);
   
   // Force-directed layout computation (simplified)
   const [nodePositions, setNodePositions] = useState<Record<string, [number, number, number]>>({});
@@ -472,14 +519,26 @@ const NetworkScene = ({
   
   // Handle camera position
   useEffect(() => {
-    camera.position.set(0, 0, 10);
-    camera.lookAt(0, 0, 0);
+    if (!isMountedRef.current) return;
+    
+    try {
+      camera.position.set(0, 0, 10);
+      camera.lookAt(0, 0, 0);
+    } catch (error) {
+      console.error('Error setting camera position:', error);
+    }
   }, [camera]);
   
   // Auto-rotation
   useFrame(({ clock }) => {
-    if (autoRotate && sceneRef.current && !selectedNode) {
-      sceneRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+    if (!isMountedRef.current || !sceneRef.current) return;
+    
+    try {
+      if (autoRotate && !selectedNode) {
+        sceneRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+      }
+    } catch (error) {
+      console.error('Error in scene rotation:', error);
     }
   });
   
@@ -498,7 +557,7 @@ const NetworkScene = ({
   
   // Handle node selection
   const handleNodeClick = (id: string) => {
-    setSelectedNode(selectedNode === id ? null : id);
+    safeSetState(setSelectedNode, selectedNode === id ? null : id);
   };
   
   return (
@@ -590,6 +649,7 @@ const NetworkScene = ({
       
       {/* Camera controls */}
       <OrbitControls 
+        ref={controlsRef}
         enablePan={true}
         enableZoom={true}
         enableRotate={true}
@@ -669,13 +729,17 @@ const NetworkVisualizationFallback = ({
 // Visibility detection hook
 const useIsVisible = (ref: React.RefObject<HTMLElement>, threshold = 0.1) => {
   const [isVisible, setIsVisible] = useState(false);
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
+    isMountedRef.current = true;
     if (!ref.current) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        if (isMountedRef.current) {
+          setIsVisible(entry.isIntersecting);
+        }
       },
       { threshold }
     );
@@ -683,6 +747,7 @@ const useIsVisible = (ref: React.RefObject<HTMLElement>, threshold = 0.1) => {
     observer.observe(ref.current);
 
     return () => {
+      isMountedRef.current = false;
       if (ref.current) {
         observer.unobserve(ref.current);
       }
@@ -707,6 +772,35 @@ const NetworkVisualization3D: React.FC<NetworkVisualization3DProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(containerRef, 0.2);
+  const isMountedRef = useRef(true);
+  
+  // Lifecycle management
+  useEffect(() => {
+    isMountedRef.current = true;
+    
+    // Handle visibility changes
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        console.log('NetworkVisualization3D: Page hidden, cleaning up');
+      }
+    };
+    
+    // Handle bfcache restoration
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        console.log('NetworkVisualization3D: Page restored from bfcache');
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pageshow', handlePageShow);
+    
+    return () => {
+      isMountedRef.current = false;
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, []);
   return (
     <motion.div
       ref={containerRef}

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import { motion } from 'framer-motion';
@@ -141,6 +141,21 @@ const PieSegment = ({
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+  
+  // Safe state setter to prevent updates on unmounted component
+  const safeSetState = useCallback(<T,>(setter: React.Dispatch<React.SetStateAction<T>>, value: T) => {
+    if (isMountedRef.current) {
+      setter(value);
+    }
+  }, []);
 
   // Calculate midpoint angle for positioning label and explosion direction
   const midAngle = (startAngle + endAngle) / 2;
@@ -155,27 +170,31 @@ const PieSegment = ({
 
   // Animation
   useFrame((state) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || !isMountedRef.current) return;
+    
+    try {
+      // Subtle floating animation
+      const t = state.clock.getElapsedTime() + index;
+      const floatY = Math.sin(t) * 0.01;
 
-    // Subtle floating animation
-    const t = state.clock.getElapsedTime() + index;
-    const floatY = Math.sin(t) * 0.01;
+      // Smooth transition for explosion effect
+      const targetX = explodeX;
+      const targetZ = explodeZ;
 
-    // Smooth transition for explosion effect
-    const targetX = explodeX;
-    const targetZ = explodeZ;
+      meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, 0.1);
+      meshRef.current.position.z = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, 0.1);
+      meshRef.current.position.y = floatY;
 
-    meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, 0.1);
-    meshRef.current.position.z = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, 0.1);
-    meshRef.current.position.y = floatY;
-
-    // Subtle rotation when hovered
-    if (hovered) {
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        meshRef.current.rotation.y + 0.01,
-        0.1
-      );
+      // Subtle rotation when hovered
+      if (hovered) {
+        meshRef.current.rotation.y = THREE.MathUtils.lerp(
+          meshRef.current.rotation.y,
+          meshRef.current.rotation.y + 0.01,
+          0.1
+        );
+      }
+    } catch (error) {
+      console.error('Error in PieSegment animation:', error);
     }
   });
 
@@ -200,9 +219,9 @@ const PieSegment = ({
       <mesh
         ref={meshRef}
         geometry={geometry}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        onClick={() => setClicked(!clicked)}
+        onPointerOver={() => safeSetState(setHovered, true)}
+        onPointerOut={() => safeSetState(setHovered, false)}
+        onClick={() => safeSetState(setClicked, !clicked)}
       >
         <primitive object={material} attach="material" />
       </mesh>
@@ -236,11 +255,27 @@ const PieSegment = ({
 // Chart scene
 const ChartScene = ({ data, exploded }: { data: DataPoint[], exploded: boolean }) => {
   const { camera } = useThree();
+  const controlsRef = useRef<any>(null);
+  const isMountedRef = useRef(true);
+
+  // Track mounted state to prevent memory leaks
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   // Set initial camera position
-  React.useEffect(() => {
-    camera.position.set(0, 5, 5);
-    camera.lookAt(0, 0, 0);
+  useEffect(() => {
+    if (!isMountedRef.current) return;
+    
+    try {
+      camera.position.set(0, 5, 5);
+      camera.lookAt(0, 0, 0);
+    } catch (error) {
+      console.error('Error setting camera position:', error);
+    }
   }, [camera]);
 
   // Calculate total for percentages
@@ -285,6 +320,7 @@ const ChartScene = ({ data, exploded }: { data: DataPoint[], exploded: boolean }
       </group>
 
       <OrbitControls
+        ref={controlsRef}
         enableZoom={true}
         enablePan={false}
         minPolarAngle={Math.PI / 6}
@@ -308,6 +344,36 @@ const ThreeDPieChart: React.FC<ThreeDPieChartProps> = ({
   animationDelay = 0.3,
   exploded = false
 }) => {
+  // Use a ref to track if the component is mounted
+  const isMountedRef = useRef(true);
+  
+  useEffect(() => {
+    isMountedRef.current = true;
+    
+    // Handle visibility changes
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        // Clean up resources when page is hidden
+        console.log('ThreeDPieChart: Page hidden, cleaning up');
+      }
+    };
+    
+    // Handle bfcache restoration
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        console.log('ThreeDPieChart: Page restored from bfcache');
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pageshow', handlePageShow);
+    
+    return () => {
+      isMountedRef.current = false;
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, []);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
