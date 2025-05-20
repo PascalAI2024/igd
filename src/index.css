@@ -220,6 +220,23 @@ body {
   display: flex !important;
 }
 
+/* Page transition helpers */
+.locations-page {
+  opacity: 0.01;
+  transition: opacity 0.3s ease-in;
+}
+
+.locations-page.locations-ready {
+  opacity: 1;
+}
+
+/* Ensure page transitions don't cause content to disappear */
+.page-content {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: opacity, transform;
+}
+
 /* Optimize animations for reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * {

@@ -11,7 +11,18 @@ import { Helmet } from 'react-helmet';
 
 const Locations: React.FC = () => {
   useEffect(() => {
+    // Scroll to top and add a small delay to allow the page to render properly
     window.scrollTo(0, 0);
+    
+    // Force a reflow/repaint after render to prevent animation issues
+    const timer = setTimeout(() => {
+      const element = document.querySelector('.locations-page');
+      if (element) {
+        element.classList.add('locations-ready');
+      }
+    }, 50);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   // Schema.org Place structured data for service areas
@@ -73,7 +84,7 @@ const Locations: React.FC = () => {
       </Helmet>
 
       <PageTransition>
-        <div className="min-h-screen bg-black">
+        <div className="min-h-screen bg-black locations-page">
           {/* Hero Section */}
           <section className="relative py-24 overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />

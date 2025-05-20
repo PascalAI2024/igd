@@ -188,6 +188,7 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
         <motion.div
           variants={childVariants}
           className="page-content"
+          style={{ visibility: 'visible' }} // Force visibility to prevent flashing
         >
           {children}
         </motion.div>
