@@ -1,5 +1,5 @@
-import React, { lazy, Suspense, ReactNode, useState, useEffect } from 'react';
-import { AnimationErrorBoundary } from '../components/AnimationErrorBoundary';
+import React, { lazy, Suspense, ReactNode, useState, useEffect, useRef } from 'react';
+import { AnimationErrorBoundary, SafeAnimationProvider } from '../components/AnimationErrorBoundary';
 
 /**
  * Utility function to lazy load 3D components with proper error handling
@@ -27,32 +27,87 @@ export const lazyLoad3DComponent = (
   return (props: any) => {
     // Create state to track component mounting
     const [isMounted, setIsMounted] = useState(false);
+    const [hasError, setHasError] = useState(false);
+    const unmountingRef = useRef(false);
     
     // Use effect to set mounted state after a short delay to prevent flickering
     useEffect(() => {
+      unmountingRef.current = false;
+      
+      // Add a small delay to prevent flickering during transitions
       const timer = setTimeout(() => {
-        setIsMounted(true);
+        if (!unmountingRef.current) {
+          setIsMounted(true);
+        }
       }, 100);
       
+      // Handle browser back/forward cache
+      const handlePageShow = (event: PageTransitionEvent) => {
+        if (event.persisted) {
+          // Page was restored from bfcache, reset state
+          setIsMounted(false);
+          setHasError(false);
+          
+          // Re-mount after a delay
+          setTimeout(() => {
+            if (!unmountingRef.current) {
+              setIsMounted(true);
+            }
+          }, 100);
+        }
+      };
+      
+      // Handle visibility changes
+      const handleVisibilityChange = () => {
+        if (document.visibilityState === 'hidden') {
+          // Page is being hidden, might go into bfcache
+          setIsMounted(false);
+        } else if (document.visibilityState === 'visible' && !unmountingRef.current) {
+          // Page is visible again
+          setTimeout(() => {
+            if (!unmountingRef.current) {
+              setIsMounted(true);
+            }
+          }, 100);
+        }
+      };
+      
+      window.addEventListener('pageshow', handlePageShow);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      
       return () => {
+        unmountingRef.current = true;
         clearTimeout(timer);
         setIsMounted(false);
+        window.removeEventListener('pageshow', handlePageShow);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
       };
     }, []);
     
+    // Handle errors
+    const handleError = (error: Error) => {
+      console.error('3D component error:', error);
+      setHasError(true);
+    };
+    
     return (
-      <AnimationErrorBoundary>
-        <div style={{ 
-          width: '100%', 
-          height: '100%', 
-          position: 'relative',
-          visibility: isMounted ? 'visible' : 'hidden' 
-        }}>
-          <Suspense fallback={fallback || <LoadingFallback />}>
-            <LazyComponent {...props} />
-          </Suspense>
-        </div>
-      </AnimationErrorBoundary>
+      <SafeAnimationProvider>
+        <AnimationErrorBoundary onError={handleError}>
+          <div style={{ 
+            width: '100%', 
+            height: '100%', 
+            position: 'relative',
+            visibility: isMounted && !hasError ? 'visible' : 'hidden',
+            display: isMounted ? 'block' : 'none',
+            opacity: isMounted ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out'
+          }}>
+            <Suspense fallback={fallback || <LoadingFallback />}>
+              {isMounted && <LazyComponent {...props} />}
+            </Suspense>
+          </div>
+        </AnimationErrorBoundary>
+      </SafeAnimationProvider>
     );
   };
 };
