@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Cpu, Network, Database, LineChart, Bot, BarChart, PieChart, TrendingUp } from 'lucide-react';
+import { Brain, Cpu, Network, Database, LineChart, Bot, BarChart, PieChart, TrendingUp, Search, Target, Rocket } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
 import MetaTags from '../../components/MetaTags';
 import ServiceCTA from '../../services/components/ServiceCTA';
@@ -9,6 +9,10 @@ import DataVisualization from '../../components/services/ai-ml/DataVisualization
 import NeuralNetworkAnimation from '../../components/services/ai-ml/NeuralNetworkAnimation';
 import MetricsShowcase from '../../components/services/ai-ml/MetricsShowcase';
 import UseCaseShowcase from '../../components/services/ai-ml/UseCaseShowcase';
+import ThreeDBarChart from '../../components/charts/ThreeDBarChart';
+import ThreeDPieChart from '../../components/charts/ThreeDPieChart';
+import ProcessFlow3D from '../../components/services/shared/ProcessFlow3D';
+import NetworkVisualization3D from '../../components/services/shared/NetworkVisualization3D';
 
 const AiMachineLearning = () => {
   const showcaseMetrics = [
@@ -85,22 +89,14 @@ const AiMachineLearning = () => {
               transition={{ delay: 0.4 }}
               className="relative"
             >
-              <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-2xl p-6 bg-black/30">
-                <h3 className="text-xl font-bold mb-2">Neural Network Visualization</h3>
-                <p className="text-gray-400 mb-6">See how our AI models process and analyze data in real-time</p>
-
-                <div className="h-[300px] flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-500/50 to-purple-500/50 animate-pulse"></div>
-                    <p className="text-white">Interactive visualization loading...</p>
-                  </div>
-                </div>
-
-                <div className="absolute bottom-0 left-0 p-6 z-10">
-                  <div className="text-sm text-gray-300 mb-2">Powered by</div>
-                  <div className="text-xl font-bold text-white">Advanced Neural Networks</div>
-                </div>
-              </div>
+              <NeuralNetworkAnimation
+                title="Neural Network Visualization"
+                description="See how our AI models process and analyze data in real-time"
+                layers={[4, 8, 6, 2]}
+                height={400}
+                animationDelay={0.4}
+                highlightColor="rgba(255, 0, 0, 0.8)"
+              />
 
               <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-red-500/20 to-purple-500/20 rounded-full blur-xl" />
             </motion.div>
@@ -147,36 +143,33 @@ const AiMachineLearning = () => {
             ))}
           </div>
 
-          {/* Data Visualizations */}
+          {/* 3D Data Visualizations */}
           <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <DataVisualization
+            <ThreeDBarChart
               title="AI Performance Metrics"
               description="Our AI solutions consistently outperform traditional approaches across key metrics"
-              type="bar"
               data={[
-                { label: 'Accuracy', value: 95, color: 'rgba(255, 0, 0, 0.8)' },
-                { label: 'Speed', value: 87, color: 'rgba(255, 50, 0, 0.8)' },
-                { label: 'Efficiency', value: 92, color: 'rgba(255, 100, 0, 0.8)' },
-                { label: 'Scalability', value: 89, color: 'rgba(255, 150, 0, 0.8)' },
-                { label: 'Cost Savings', value: 78, color: 'rgba(255, 200, 0, 0.8)' }
+                { label: 'Accuracy', value: 95, color: '#ef4444' },
+                { label: 'Speed', value: 87, color: '#f97316' },
+                { label: 'Efficiency', value: 92, color: '#f59e0b' },
+                { label: 'Scalability', value: 89, color: '#eab308' },
+                { label: 'Cost Savings', value: 78, color: '#84cc16' }
               ]}
-              height={300}
+              height={400}
               animationDelay={0.3}
             />
 
-            <DataVisualization
+            <ThreeDPieChart
               title="AI Adoption by Industry"
               description="See how different industries are leveraging AI technologies"
-              type="radar"
               data={[
-                { label: 'Retail', value: 85, color: 'rgba(255, 0, 0, 0.8)' },
-                { label: 'Finance', value: 92, color: 'rgba(255, 50, 0, 0.8)' },
-                { label: 'Healthcare', value: 78, color: 'rgba(255, 100, 0, 0.8)' },
-                { label: 'Manufacturing', value: 88, color: 'rgba(255, 150, 0, 0.8)' },
-                { label: 'Logistics', value: 82, color: 'rgba(255, 200, 0, 0.8)' },
-                { label: 'Marketing', value: 90, color: 'rgba(255, 250, 0, 0.8)' }
+                { label: 'Retail', value: 25, color: '#ef4444' },
+                { label: 'Finance', value: 30, color: '#f97316' },
+                { label: 'Healthcare', value: 15, color: '#f59e0b' },
+                { label: 'Manufacturing', value: 20, color: '#eab308' },
+                { label: 'Logistics', value: 10, color: '#84cc16' }
               ]}
-              height={300}
+              height={400}
               animationDelay={0.5}
             />
           </div>
@@ -229,56 +222,74 @@ const AiMachineLearning = () => {
             />
           </div>
 
-          <div className="relative">
-            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-red-500/50 to-purple-500/50 transform -translate-x-1/2 hidden md:block" />
-
-            {process.map((step, index) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="relative mb-16 last:mb-0"
-              >
-                <div className={`flex flex-col md:flex-row items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  <div className="md:w-1/2 p-6">
-                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:border-red-500/20 transition-all duration-300">
-                      <div className="w-12 h-12 bg-gradient-to-br from-red-500/20 to-purple-500/20 rounded-full flex items-center justify-center mb-6">
-                        <span className="text-xl font-bold text-red-500">{index + 1}</span>
-                      </div>
-
-                      <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-                      <p className="text-gray-400 mb-6">{step.description}</p>
-
-                      <ul className="space-y-2">
-                        {step.points.map((point, i) => (
-                          <li key={i} className="flex items-start">
-                            <span className="text-red-500 mr-2">•</span>
-                            <span className="text-gray-300">{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="hidden md:block md:w-1/2 p-6">
-                    <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                      <OptimizedImage
-                        src={step.image}
-                        alt={step.title}
-                        className="w-full h-auto"
-                        fallbackClassName="bg-gradient-to-br from-red-900/20 to-purple-900/20 aspect-video flex items-center justify-center"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="absolute left-1/2 top-1/2 w-6 h-6 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 hidden md:block" />
-              </motion.div>
-            ))}
-          </div>
+          <ProcessFlow3D
+            steps={[
+              {
+                icon: Search,
+                title: 'Discovery & Assessment',
+                description: 'We analyze your business needs and identify AI opportunities',
+                focus: 'Business Analysis',
+                details: [
+                  'Business process analysis',
+                  'Data assessment',
+                  'Opportunity identification',
+                  'ROI estimation'
+                ]
+              },
+              {
+                icon: Database,
+                title: 'Data Preparation',
+                description: 'We collect, clean, and structure your data for AI processing',
+                focus: 'Data Engineering',
+                details: [
+                  'Data collection',
+                  'Data cleaning',
+                  'Feature engineering',
+                  'Data validation'
+                ]
+              },
+              {
+                icon: Brain,
+                title: 'Model Development',
+                description: 'We build and train custom AI models for your specific needs',
+                focus: 'ML Engineering',
+                details: [
+                  'Algorithm selection',
+                  'Model training',
+                  'Hyperparameter tuning',
+                  'Performance evaluation'
+                ]
+              },
+              {
+                icon: Network,
+                title: 'Implementation',
+                description: 'We deploy AI solutions and integrate them with your systems',
+                focus: 'System Integration',
+                details: [
+                  'API development',
+                  'System integration',
+                  'User interface design',
+                  'Documentation'
+                ]
+              },
+              {
+                icon: Rocket,
+                title: 'Monitoring & Optimization',
+                description: 'We continuously monitor and improve your AI solutions',
+                focus: 'Continuous Improvement',
+                details: [
+                  'Performance monitoring',
+                  'Model retraining',
+                  'Continuous improvement',
+                  'ROI tracking'
+                ]
+              }
+            ]}
+            title="Our AI Implementation Process"
+            subtitle="A systematic approach to implementing AI solutions for your business"
+            primaryColor="#ef4444"
+            secondaryColor="#3b82f6"
+          />
 
           {/* Line Chart */}
           <div className="mt-20">
@@ -393,65 +404,65 @@ const AiMachineLearning = () => {
             />
           </div>
 
-          {/* Additional Charts Section */}
+          {/* Advanced 3D Network Visualization */}
           <div className="mt-20">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Advanced Data Visualizations</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">AI Solution Architecture</h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Explore our AI metrics through interactive visualizations
+                Interactive 3D visualization of our AI system architecture
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-              {/* Performance Chart */}
-              <DataVisualization
-                title="AI Performance by Industry"
-                description="Comparative analysis of AI performance metrics across different industries"
-                type="bar"
-                data={[
-                  { label: 'Retail', value: 85, color: 'rgba(255, 0, 0, 0.8)' },
-                  { label: 'Finance', value: 92, color: 'rgba(255, 50, 0, 0.8)' },
-                  { label: 'Healthcare', value: 78, color: 'rgba(255, 100, 0, 0.8)' },
-                  { label: 'Manufacturing', value: 88, color: 'rgba(255, 150, 0, 0.8)' },
-                  { label: 'Logistics', value: 82, color: 'rgba(255, 200, 0, 0.8)' }
-                ]}
-                height={400}
-                animationDelay={0.3}
-              />
+            <NetworkVisualization3D
+              title="AI & Machine Learning System Architecture"
+              description="Explore our comprehensive AI solution architecture with this interactive 3D visualization"
+              height={600}
+              autoRotate={true}
+              primaryColor="#ef4444"
+              secondaryColor="#3b82f6"
+              nodes={[
+                { id: 'data-sources', type: 'device', label: 'Data Sources', description: 'Multiple data input channels including IoT devices, databases, and APIs' },
+                { id: 'data-lake', type: 'database', label: 'Data Lake', description: 'Central repository for all structured and unstructured data' },
+                { id: 'etl', type: 'server', label: 'ETL Pipeline', description: 'Data extraction, transformation, and loading processes' },
+                { id: 'data-warehouse', type: 'database', label: 'Data Warehouse', description: 'Structured repository optimized for analysis' },
+                { id: 'ml-platform', type: 'cloud', label: 'ML Platform', description: 'Cloud-based machine learning environment for model development' },
+                { id: 'model-registry', type: 'database', label: 'Model Registry', description: 'Version control system for trained ML models' },
+                { id: 'inference-engine', type: 'server', label: 'Inference Engine', description: 'High-performance system for real-time predictions' },
+                { id: 'api-gateway', type: 'api', label: 'API Gateway', description: 'Secure access point for ML services' },
+                { id: 'dashboard', type: 'client', label: 'Analytics Dashboard', description: 'Interactive visualization of insights and metrics' },
+                { id: 'monitoring', type: 'server', label: 'Monitoring System', description: 'Continuous performance monitoring and alerting' }
+              ]}
+              links={[
+                { source: 'data-sources', target: 'data-lake', label: 'Data Ingestion', animated: true },
+                { source: 'data-lake', target: 'etl', label: 'Raw Data', animated: true },
+                { source: 'etl', target: 'data-warehouse', label: 'Processed Data', animated: true },
+                { source: 'data-warehouse', target: 'ml-platform', label: 'Training Data', animated: true },
+                { source: 'ml-platform', target: 'model-registry', label: 'Trained Models', animated: true },
+                { source: 'model-registry', target: 'inference-engine', label: 'Model Deployment', animated: true },
+                { source: 'inference-engine', target: 'api-gateway', label: 'Predictions', animated: true },
+                { source: 'api-gateway', target: 'dashboard', label: 'API Access', animated: true },
+                { source: 'inference-engine', target: 'monitoring', label: 'Performance Metrics', animated: true },
+                { source: 'monitoring', target: 'ml-platform', label: 'Feedback Loop', animated: true, bidirectional: true },
+                { source: 'dashboard', target: 'data-sources', label: 'Data Collection Config', animated: true }
+              ]}
+            />
 
-              {/* Technology Distribution Chart */}
-              <DataVisualization
+            {/* Technology Distribution 3D Chart */}
+            <div className="mt-16">
+              <ThreeDPieChart
                 title="AI Technology Distribution"
                 description="Breakdown of AI technologies used in our solutions"
-                type="bar"
                 data={[
-                  { label: 'Machine Learning', value: 35, color: 'rgba(255, 82, 82, 0.8)' },
-                  { label: 'Deep Learning', value: 25, color: 'rgba(255, 123, 82, 0.8)' },
-                  { label: 'Natural Language Processing', value: 20, color: 'rgba(255, 163, 82, 0.8)' },
-                  { label: 'Computer Vision', value: 15, color: 'rgba(255, 212, 82, 0.8)' },
-                  { label: 'Reinforcement Learning', value: 5, color: 'rgba(82, 255, 123, 0.8)' }
+                  { label: 'Machine Learning', value: 35, color: '#ef4444' },
+                  { label: 'Deep Learning', value: 25, color: '#f97316' },
+                  { label: 'NLP', value: 20, color: '#f59e0b' },
+                  { label: 'Computer Vision', value: 15, color: '#84cc16' },
+                  { label: 'Reinforcement Learning', value: 5, color: '#3b82f6' }
                 ]}
-                height={400}
+                height={500}
                 animationDelay={0.5}
               />
             </div>
-
-            {/* Timeline Chart */}
-            <DataVisualization
-              title="AI Implementation Timeline & Metrics"
-              description="Visualization of AI project metrics over time"
-              type="line"
-              data={[
-                { label: 'Month 1', value: 20, color: 'rgba(255, 0, 0, 0.8)' },
-                { label: 'Month 2', value: 40, color: 'rgba(255, 50, 0, 0.8)' },
-                { label: 'Month 3', value: 55, color: 'rgba(255, 100, 0, 0.8)' },
-                { label: 'Month 4', value: 70, color: 'rgba(255, 150, 0, 0.8)' },
-                { label: 'Month 5', value: 85, color: 'rgba(255, 200, 0, 0.8)' },
-                { label: 'Month 6', value: 95, color: 'rgba(255, 250, 0, 0.8)' }
-              ]}
-              height={400}
-              animationDelay={0.7}
-            />
           </div>
         </div>
       </section>

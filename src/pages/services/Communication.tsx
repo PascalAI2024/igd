@@ -5,7 +5,7 @@ import {
   Mail, Phone, TrendingUp, Zap, Bell, Settings
 } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
-import NetworkVisualization from '../../components/services/communication/NetworkVisualization';
+import CommunicationNetwork3D from '../../components/services/communication/CommunicationNetwork3D';
 import NavigationButton from '../../components/NavigationButton';
 
 const stats = [
@@ -174,7 +174,7 @@ const Communication = () => {
                 See how our communication solutions connect your business with customers
               </p>
             </motion.div>
-            <NetworkVisualization />
+            <CommunicationNetwork3D />
           </div>
         </section>
 

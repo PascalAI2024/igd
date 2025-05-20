@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Users, ArrowRight, Database, Zap, Shield, MessageSquare, Settings } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/crm/FeatureShowcase';
-import ProcessFlow from '../../components/services/crm/ProcessFlow';
-import CRMDashboard from '../../components/services/crm/CRMDashboard';
+import CRMProcessFlow3D from '../../components/services/crm/CRMProcessFlow3D';
+import CRMDashboard3D from '../../components/services/crm/CRMDashboard3D';
 import TechnologyStack from '../../components/services/crm/TechnologyStack';
 import NavigationButton from '../../components/NavigationButton';
 
@@ -141,7 +141,7 @@ const CRM = () => {
               </p>
             </motion.div>
 
-            <CRMDashboard />
+            <CRMDashboard3D />
           </div>
         </section>
 
@@ -185,7 +185,7 @@ const CRM = () => {
               </p>
             </motion.div>
 
-            <ProcessFlow />
+            <CRMProcessFlow3D />
           </div>
         </section>
 

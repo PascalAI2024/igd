@@ -5,6 +5,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Home, DollarSign, Briefcase, Target, Baby, GraduationCap, Car, Building } from 'lucide-react';
 import * as THREE from 'three';
+import { AnimationErrorBoundary } from '../AnimationErrorBoundary';
 
 interface DemographicData {
   category: string;
@@ -399,12 +400,14 @@ const LocationDemographics3D: React.FC<LocationDemographics3DProps> = ({
         
         {/* 3D visualization */}
         <div className="h-[400px] w-full mb-8">
-          <Canvas shadows camera={{ position: [0, 2, 5], fov: 50 }}>
-            <DemographicsScene 
-              data={demographicData} 
-              locationName={locationName}
-            />
-          </Canvas>
+          <AnimationErrorBoundary>
+            <Canvas shadows camera={{ position: [0, 2, 5], fov: 50 }}>
+              <DemographicsScene 
+                data={demographicData} 
+                locationName={locationName}
+              />
+            </Canvas>
+          </AnimationErrorBoundary>
         </div>
         
         {/* Additional info cards */}

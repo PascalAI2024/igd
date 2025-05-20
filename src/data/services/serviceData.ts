@@ -20,6 +20,7 @@ interface Service {
   metrics: { value: string; label: string }[];
   path: string;
   color: string;
+  has3dVisualizations?: boolean;
 }
 
 export const services: Service[] = [
@@ -41,7 +42,8 @@ export const services: Service[] = [
       { value: '3X', label: 'Visibility' }
     ],
     path: '/services/digital-marketing',
-    color: 'from-green-500 to-emerald-500'
+    color: 'from-green-500 to-emerald-500',
+    has3dVisualizations: true
   },
   {
     icon: Target,
@@ -61,7 +63,8 @@ export const services: Service[] = [
       { value: '24/7', label: 'Automation' }
     ],
     path: '/services/lead-generation',
-    color: 'from-purple-500 to-pink-500'
+    color: 'from-purple-500 to-pink-500',
+    has3dVisualizations: true
   },
   {
     icon: Users,
@@ -81,7 +84,8 @@ export const services: Service[] = [
       { value: '24/7', label: 'Support' }
     ],
     path: '/services/crm',
-    color: 'from-yellow-500 to-amber-500'
+    color: 'from-yellow-500 to-amber-500',
+    has3dVisualizations: true
   },
   {
     icon: Globe,
@@ -101,7 +105,8 @@ export const services: Service[] = [
       { value: '99%', label: 'Uptime' }
     ],
     path: '/services/web-development',
-    color: 'from-red-500 to-orange-500'
+    color: 'from-red-500 to-orange-500',
+    has3dVisualizations: true
   },
   {
     icon: Camera,
@@ -181,7 +186,8 @@ export const services: Service[] = [
       { value: '24/7', label: 'Availability' }
     ],
     path: '/services/communication',
-    color: 'from-amber-500 to-yellow-500'
+    color: 'from-amber-500 to-yellow-500',
+    has3dVisualizations: true
   },
   {
     icon: Zap,
@@ -201,7 +207,8 @@ export const services: Service[] = [
       { value: '3X', label: 'Efficiency' }
     ],
     path: '/services/business-automation',
-    color: 'from-teal-500 to-cyan-500'
+    color: 'from-teal-500 to-cyan-500',
+    has3dVisualizations: true
   },
   {
     icon: Cpu,
@@ -221,6 +228,7 @@ export const services: Service[] = [
       { value: '3X', label: 'Insights' }
     ],
     path: '/services/ai-machine-learning',
-    color: 'from-blue-500 to-indigo-500'
+    color: 'from-blue-500 to-indigo-500',
+    has3dVisualizations: true
   }
 ];

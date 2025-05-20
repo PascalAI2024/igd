@@ -7,8 +7,8 @@ import {
 import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
 import FeatureShowcase from '../../components/services/lead-generation/FeatureShowcase';
-import ProcessFlow from '../../components/services/lead-generation/ProcessFlow';
-import LeadFunnel from '../../components/services/lead-generation/LeadFunnel';
+import LeadGenerationProcessFlow3D from '../../components/services/lead-generation/LeadGenerationProcessFlow3D';
+import LeadFunnel3D from '../../components/services/lead-generation/LeadFunnel3D';
 import TechnologyStack from '../../components/services/lead-generation/TechnologyStack';
 
 const stats = [
@@ -218,7 +218,7 @@ const LeadGeneration = () => {
                 A systematic approach to generating and nurturing leads.
               </p>
             </motion.div>
-            <ProcessFlow />
+            <LeadGenerationProcessFlow3D />
           </div>
         </section>
 
@@ -238,7 +238,7 @@ const LeadGeneration = () => {
                 Watch your leads progress through our optimized funnel.
               </p>
             </motion.div>
-            <LeadFunnel />
+            <LeadFunnel3D />
           </div>
         </section>
 

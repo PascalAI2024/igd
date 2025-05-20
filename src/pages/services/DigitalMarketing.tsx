@@ -8,9 +8,9 @@ import ServiceSchema from '../../components/ServiceSchema';
 import FAQSchema from '../../components/FAQSchema';
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import FeatureShowcase from '../../components/services/digital-marketing/FeatureShowcase';
-import RankingVisualizer from '../../components/services/digital-marketing/RankingVisualizer';
+import RankingVisualizer3D from '../../components/services/digital-marketing/RankingVisualizer3D';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
-import ProcessFlow from '../../components/services/shared/ProcessFlow';
+import DigitalMarketingProcessFlow3D from '../../components/services/digital-marketing/DigitalMarketingProcessFlow3D';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
 import TestimonialShowcase from '../../components/services/shared/TestimonialShowcase';
 
@@ -216,56 +216,7 @@ const DigitalMarketing = () => {
               </p>
             </motion.div>
 
-            <ProcessFlow
-              title="Strategic Digital Marketing Process"
-              description="Our comprehensive approach ensures consistent results and growth for your business"
-              steps={[
-                {
-                  title: "Research & Discovery",
-                  description: "In-depth analysis of your local market and target audience",
-                  icon: <Search className="w-5 h-5" />,
-                  details: [
-                    "Competitor analysis to identify opportunities",
-                    "Keyword research for local search terms",
-                    "Market trends analysis for your industry",
-                    "Audience insights and behavior patterns"
-                  ]
-                },
-                {
-                  title: "Strategy Development",
-                  description: "Custom strategy development focused on your service area",
-                  icon: <Target className="w-5 h-5" />,
-                  details: [
-                    "Campaign planning with measurable goals",
-                    "Content strategy aligned with business objectives",
-                    "Channel selection based on audience behavior",
-                    "Budget allocation for maximum ROI"
-                  ]
-                },
-                {
-                  title: "Implementation",
-                  description: "Execution of targeted marketing campaigns with real-time monitoring",
-                  icon: <BarChart className="w-5 h-5" />,
-                  details: [
-                    "Campaign launch across selected channels",
-                    "Performance tracking with advanced analytics",
-                    "A/B testing to optimize conversion rates",
-                    "Real-time adjustments based on performance data"
-                  ]
-                },
-                {
-                  title: "Optimization & Growth",
-                  description: "Continuous improvement based on performance data",
-                  icon: <TrendingUp className="w-5 h-5" />,
-                  details: [
-                    "Data analysis to identify improvement areas",
-                    "Strategy refinement for better performance",
-                    "ROI optimization to maximize results",
-                    "Growth scaling to expand your market reach"
-                  ]
-                }
-              ]}
-            />
+            <DigitalMarketingProcessFlow3D />
           </div>
         </section>
 
@@ -392,7 +343,7 @@ const DigitalMarketing = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <RankingVisualizer />
+              <RankingVisualizer3D />
 
               <ResultsComparison
                 title="Client Success Metrics"

@@ -8,7 +8,7 @@ import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
 import FeatureShowcase from '../../components/services/web-development/FeatureShowcase';
 import WebsiteVisualizer from '../../components/services/web-development/WebsiteVisualizer';
-import InteractiveProcess from '../../components/services/web-development/InteractiveProcess';
+import WebDevelopmentProcess3D from '../../components/services/web-development/WebDevelopmentProcess3D';
 import CodeShowcase from '../../components/services/web-development/CodeShowcase';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
@@ -264,10 +264,7 @@ const WebDevelopment = () => {
               </p>
             </motion.div>
 
-            <InteractiveProcess
-              title="Our Web Development Process"
-              description="Watch how we transform your ideas into a powerful online presence"
-            />
+            <WebDevelopmentProcess3D />
           </div>
         </section>
 
