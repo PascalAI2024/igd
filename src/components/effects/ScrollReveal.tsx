@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import gsap from 'gsap';
+import { gsap } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Register ScrollTrigger plugin with GSAP
@@ -184,7 +184,7 @@ export const StaggerReveal: React.FC<ScrollRevealProps & { itemSelector?: string
     });
     
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger: ScrollTrigger) => trigger.kill());
     };
   }, [props.delay, props.duration, props.staggerAmount, itemSelector]);
   

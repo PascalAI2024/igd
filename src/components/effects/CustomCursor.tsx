@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
-import gsap from 'gsap';
 
 interface CustomCursorProps {
   color?: string;
@@ -17,78 +16,129 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
   const [cursorType, setCursorType] = useState<'default' | 'link' | 'text' | 'drag'>('default');
   const cursorRef = useRef<HTMLDivElement>(null);
   const innerCursorRef = useRef<HTMLDivElement>(null);
-  const trailElements = useRef<HTMLDivElement[]>([]);
   const trailRefs = Array(3).fill(0).map(() => useRef<HTMLDivElement>(null));
+  const isInitialized = useRef(false);
   
+  // Use motion values for better performance
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  const cursorX = useSpring(mouseX, { stiffness: 400, damping: 28 });
-  const cursorY = useSpring(mouseY, { stiffness: 400, damping: 28 });
+  // Apply spring physics with optimized settings
+  const cursorX = useSpring(mouseX, { stiffness: 500, damping: 25, mass: 0.5 });
+  const cursorY = useSpring(mouseY, { stiffness: 500, damping: 25, mass: 0.5 });
   
-  // Track the mouse position
+  // Use requestAnimationFrame for trail effects
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+    if (!isInitialized.current) {
+      // Hide default cursor when our custom cursor is active
+      document.documentElement.style.cursor = 'none';
       
-      // Update the regular cursor position immediately (without spring)
-      if (innerCursorRef.current) {
-        innerCursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-      }
+      // Fix for cursor disappearing when leaving window
+      document.addEventListener('mouseleave', () => setVisible(false));
+      document.addEventListener('mouseenter', () => setVisible(true));
       
-      // Update trail positions with delay
-      if (trailElements.current.length > 0) {
-        for (let i = 0; i < trailElements.current.length; i++) {
-          gsap.to(trailElements.current[i], {
-            x: e.clientX,
-            y: e.clientY,
-            duration: 0.3 + i * 0.08,
-            ease: "power2.out"
-          });
-        }
-      }
+      isInitialized.current = true;
       
-      // Check if cursor is over any exclusion zone
-      const element = document.elementFromPoint(e.clientX, e.clientY);
-      if (element) {
-        const isOverLink = !!(element as Element).closest('a, button, [role="button"]');
-        const isOverInput = !!(element as Element).closest('input, textarea, select, [contenteditable="true"]');
-        const isOverDraggable = !!(element as Element).closest('[draggable="true"]');
-        const isOverCustomInteractive = exclusionZones.some(selector => 
-          !!(element as Element).closest(selector)
-        );
-        
-        if (isOverLink || isOverCustomInteractive) {
-          setCursorType('link');
-        } else if (isOverInput) {
-          setCursorType('text');
-        } else if (isOverDraggable) {
-          setCursorType('drag');
-        } else {
-          setCursorType('default');
-        }
+      // Initial position to avoid cursor jumping
+      if (typeof window !== 'undefined') {
+        mouseX.set(window.innerWidth / 2);
+        mouseY.set(window.innerHeight / 2);
       }
-    };
-    
-    const handleMouseEnter = () => setVisible(true);
-    const handleMouseLeave = () => setVisible(false);
-    
-    // Initialize trail elements
-    trailElements.current = trailRefs.map(ref => ref.current).filter(Boolean) as HTMLDivElement[];
-    
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    document.addEventListener('mouseleave', handleMouseLeave);
+    }
     
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      document.removeEventListener('mouseleave', handleMouseLeave);
+      // Restore default cursor when component unmounts
+      document.documentElement.style.cursor = '';
+      
+      // Clear event listeners
+      document.removeEventListener('mouseleave', () => setVisible(false));
+      document.removeEventListener('mouseenter', () => setVisible(true));
     };
-  }, [mouseX, mouseY, exclusionZones]);
+  }, [mouseX, mouseY]);
   
-  // Cursor styles based on state
+  // Use pointer events for better performance and touch support
+  useEffect(() => {
+    const trailElements = trailRefs.map(ref => ref.current).filter(Boolean) as HTMLDivElement[];
+    let animationFrameId: number;
+    
+    const handlePointerMove = (e: PointerEvent) => {
+      // Only track mouse movements (not touch)
+      if (e.pointerType === 'mouse') {
+        // Show cursor when it moves
+        if (!visible) setVisible(true);
+        
+        // Set motion values
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+        
+        // Update inner cursor immediately for responsiveness
+        if (innerCursorRef.current) {
+          innerCursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+        }
+        
+        // Check what element the cursor is over
+        const element = document.elementFromPoint(e.clientX, e.clientY);
+        if (element) {
+          const isOverLink = !!(element as Element).closest('a, button, [role="button"]');
+          const isOverInput = !!(element as Element).closest('input, textarea, select, [contenteditable="true"]');
+          const isOverDraggable = !!(element as Element).closest('[draggable="true"]');
+          const isOverCustomInteractive = exclusionZones.some(selector => 
+            !!(element as Element).closest(selector)
+          );
+          
+          if (isOverLink || isOverCustomInteractive) {
+            setCursorType('link');
+          } else if (isOverInput) {
+            setCursorType('text');
+          } else if (isOverDraggable) {
+            setCursorType('drag');
+          } else {
+            setCursorType('default');
+          }
+        }
+      }
+    };
+    
+    // Smooth trail animation with requestAnimationFrame
+    const animateTrails = () => {
+      const x = mouseX.get();
+      const y = mouseY.get();
+      
+      trailElements.forEach((trail, i) => {
+        if (trail) {
+          // Apply delay based on trail index (more delay for later trails)
+          const delay = 0.15 + i * 0.1;
+          const trailX = trail.dataset.x ? parseFloat(trail.dataset.x) : x;
+          const trailY = trail.dataset.y ? parseFloat(trail.dataset.y) : y;
+          
+          // Calculate new position with easing
+          const newX = trailX + (x - trailX) * (1 - delay);
+          const newY = trailY + (y - trailY) * (1 - delay);
+          
+          // Save position in dataset for next frame
+          trail.dataset.x = newX.toString();
+          trail.dataset.y = newY.toString();
+          
+          // Apply transform
+          trail.style.transform = `translate3d(${newX}px, ${newY}px, 0) translate(-50%, -50%)`;
+        }
+      });
+      
+      animationFrameId = requestAnimationFrame(animateTrails);
+    };
+    
+    // Add event listener and start animation
+    document.addEventListener('pointermove', handlePointerMove, { passive: true });
+    animationFrameId = requestAnimationFrame(animateTrails);
+    
+    // Clean up
+    return () => {
+      document.removeEventListener('pointermove', handlePointerMove);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [mouseX, mouseY, exclusionZones, visible]);
+  
+  // Handle cursor styles based on type
   const getCursorStyles = () => {
     switch (cursorType) {
       case 'link':
@@ -134,7 +184,8 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
           borderRadius: '50%',
           opacity: visible ? 1 : 0,
           mixBlendMode: 'difference',
-          willChange: 'transform'
+          willChange: 'transform',
+          transition: 'opacity 0.2s'
         }}
       />
       
@@ -150,7 +201,7 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
           borderRadius: cursorType === 'text' ? '1px' : '50%',
           border: `2px solid ${color}`,
           opacity: visible ? 1 : 0,
-          transition: 'opacity 0.3s, width 0.3s, height 0.3s, border-radius 0.3s, background-color 0.3s, transform 0.3s',
+          transition: 'opacity 0.2s, width 0.3s, height 0.3s, border-radius 0.3s, background-color 0.3s, transform 0.3s',
           ...getCursorStyles()
         }}
       />
@@ -160,14 +211,15 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
         <div
           key={i}
           ref={ref}
-          className="fixed top-0 left-0 pointer-events-none z-[9997] transform -translate-x-1/2 -translate-y-1/2"
+          className="fixed top-0 left-0 pointer-events-none z-[9997]"
           style={{
             width: size * (0.7 - i * 0.2),
             height: size * (0.7 - i * 0.2),
             borderRadius: '50%',
             border: `1px solid ${color}`,
             opacity: visible ? 0.5 - i * 0.15 : 0,
-            willChange: 'transform'
+            willChange: 'transform',
+            transition: 'opacity 0.2s'
           }}
         />
       ))}
