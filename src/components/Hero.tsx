@@ -277,7 +277,7 @@ const Hero = () => {
       icon: <Brain className="w-8 h-8" />,
       title: "AI & Machine Learning",
       description: "Harness the power of artificial intelligence to automate and optimize your business",
-      image: "/images/ai-ml/ai-ml-hero.webp"
+      image: "/ai-ml-hero.webp"
     },
     {
       icon: <BarChart2 className="w-8 h-8" />,
@@ -528,7 +528,11 @@ const Hero = () => {
                             <p className="text-gray-200 text-lg leading-relaxed">{features[activeFeature].description}</p>
 
                             <motion.a
-                              href={`/services/${features[activeFeature].title.toLowerCase().replace(/\s+/g, '-')}`}
+                              href={
+                                activeFeature === 0 ? "/services/web-development" :
+                                activeFeature === 1 ? "/services/ai-machine-learning" :
+                                "/services/digital-marketing"
+                              }
                               className="group inline-flex items-center mt-6 text-red-400 hover:text-red-300 transition-colors duration-300"
                               whileHover={{ x: 5 }}
                             >
@@ -553,7 +557,11 @@ const Hero = () => {
 
                               {/* Floating action button */}
                               <motion.a
-                                href={`/services/${features[activeFeature].title.toLowerCase().replace(/\s+/g, '-')}`}
+                                href={
+                                  activeFeature === 0 ? "/services/web-development" :
+                                  activeFeature === 1 ? "/services/ai-machine-learning" :
+                                  "/services/digital-marketing"
+                                }
                                 className="absolute bottom-4 right-4 z-20 w-12 h-12 rounded-full bg-red-500/90 flex items-center justify-center backdrop-blur-sm border border-red-400/30 shadow-lg"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
