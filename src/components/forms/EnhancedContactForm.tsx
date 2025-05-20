@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Send, Zap } from 'lucide-react';
 import { trackFormSubmission, trackLeadGeneration, trackError } from '../utils/analytics';
+import { useForm } from '../hooks/useApi';
 import SecureFormWrapper from './SecureFormWrapper';
 import FormField from './FormField';
 import SubmitButton from './SubmitButton';
@@ -26,6 +27,17 @@ const BUDGET_OPTIONS = [
   { value: '100k+', label: '$100,000+' }
 ];
 
+// Define our form data type
+interface ContactFormData {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  message: string;
+  projectType: string;
+  budget: string;
+}
+
 // Initial form data
 const INITIAL_FORM_DATA = {
   name: '',
@@ -40,43 +52,82 @@ const INITIAL_FORM_DATA = {
 // Required fields
 const REQUIRED_FIELDS = ['name', 'email', 'message'];
 
-const ContactForm = () => {
+const EnhancedContactForm: React.FC = () => {
+  // Use our custom form hook
+  const { 
+    loading, 
+    error, 
+    success, 
+    message, 
+    reference,
+    submitData, 
+    reset 
+  } = useForm<ContactFormData>('contact');
+
   // Handle form submission
   const handleSubmit = async (data: Record<string, string>) => {
     try {
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'form-name': 'contact',
-          ...data
-        }).toString()
-      });
+      // Convert data to our expected format
+      const formData: ContactFormData = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone || '',
+        company: data.company || '',
+        message: data.message,
+        projectType: data.projectType || '',
+        budget: data.budget || ''
+      };
 
-      if (!response.ok) {
-        throw new Error(`Form submission failed: ${response.status}`);
-      }
-
-      // Track successful form submission
-      trackFormSubmission('contact', 'contact-form', true);
+      // Get reCAPTCHA response if we're using it
+      const recaptchaResponse = (window as any).grecaptcha?.getResponse() || undefined;
       
-      // Track lead generation
-      trackLeadGeneration(
-        'website',
-        'contact-form',
-        data.projectType || 'general'
-      );
+      // Submit the form through our secure proxy
+      const result = await submitData(formData, recaptchaResponse);
+      
+      if (result) {
+        // Track successful form submission
+        trackFormSubmission('contact', 'contact-form', true);
+        
+        // Track lead generation
+        trackLeadGeneration(
+          'website',
+          'contact-form',
+          formData.projectType || 'general'
+        );
+      } else {
+        throw new Error('Form submission failed');
+      }
     } catch (error) {
       // Track error details
       trackError(
         'Form submission error',
-        'FETCH_ERROR',
+        'API_ERROR',
         error instanceof Error ? error.message : 'Unknown error'
       );
       
       // Re-throw the error to be handled by the form wrapper
       throw error;
     }
+  };
+
+  // Create a custom message that includes the reference number if available
+  const getSuccessMessage = () => {
+    let msg = 'Thank you! We\'ll get back to you soon.';
+    if (reference) {
+      msg += ` Reference: ${reference}`;
+    }
+    return msg;
+  };
+
+  const getErrorMessage = () => {
+    let msg = 'Something went wrong. Please try again later.';
+    if (error) {
+      msg = error;
+    }
+    if (reference) {
+      msg += ` Reference: ${reference}`;
+    }
+    return msg;
   };
 
   return (
@@ -116,6 +167,7 @@ const ContactForm = () => {
               label="Name"
               placeholder="Your name"
               required
+              maxLength={100}
             />
 
             <FormField
@@ -124,6 +176,7 @@ const ContactForm = () => {
               label="Email"
               placeholder="your@email.com"
               required
+              maxLength={150}
             />
           </div>
 
@@ -133,6 +186,7 @@ const ContactForm = () => {
               name="phone"
               label="Phone"
               placeholder="Your phone number"
+              maxLength={20}
             />
 
             <FormField
@@ -140,6 +194,7 @@ const ContactForm = () => {
               name="company"
               label="Company"
               placeholder="Your company"
+              maxLength={100}
             />
           </div>
 
@@ -166,17 +221,20 @@ const ContactForm = () => {
             placeholder="Tell us about your project"
             required
             rows={4}
+            maxLength={2000}
           />
 
           <SubmitButton 
             text="Send Message" 
             loadingText="Sending..." 
             icon={<Send className="w-5 h-5" />} 
+            isLoading={loading}
           />
 
           <FormStatus 
-            successMessage="Thank you! We'll get back to you soon." 
-            errorMessage="Something went wrong. Please try again later." 
+            successMessage={getSuccessMessage()} 
+            errorMessage={getErrorMessage()} 
+            status={success ? 'success' : error ? 'error' : 'idle'}
           />
         </SecureFormWrapper>
       </div>
@@ -184,4 +242,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default EnhancedContactForm;

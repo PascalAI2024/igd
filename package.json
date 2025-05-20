@@ -14,7 +14,8 @@
     "check-links": "node scripts/checkLinks.mjs",
     "check-links:specific": "node scripts/checkLinks.mjs",
     "validate": "./scripts/validate-build.sh",
-    "deploy": "npm run validate && echo 'Ready to deploy! Push to GitHub to trigger Netlify deployment.'"
+    "setup-functions": "./scripts/setup-functions.sh",
+    "deploy": "npm run validate && npm run setup-functions && echo 'Ready to deploy! Push to GitHub to trigger Netlify deployment.'"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",

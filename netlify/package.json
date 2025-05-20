@@ -1,0 +1,10 @@
+{
+  "name": "igd-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify serverless functions for Ingenious Digital website",
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "dompurify": "^3.2.6",
+    "jsdom": "^21.1.0"
+  }
+}
