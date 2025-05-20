@@ -126,7 +126,8 @@ export const services: Service[] = [
       { value: '2X', label: 'Engagement' }
     ],
     path: '/services/photography',
-    color: 'from-violet-500 to-purple-500'
+    color: 'from-violet-500 to-purple-500',
+    has3dVisualizations: true
   },
   {
     icon: Play,
@@ -146,7 +147,8 @@ export const services: Service[] = [
       { value: '90%', label: 'Retention' }
     ],
     path: '/services/videography',
-    color: 'from-pink-500 to-rose-500'
+    color: 'from-pink-500 to-rose-500',
+    has3dVisualizations: true
   },
   {
     icon: Megaphone,
@@ -166,7 +168,8 @@ export const services: Service[] = [
       { value: '2X', label: 'Conversion' }
     ],
     path: '/services/ad-management',
-    color: 'from-cyan-500 to-blue-500'
+    color: 'from-cyan-500 to-blue-500',
+    has3dVisualizations: true
   },
   {
     icon: MessageSquare,

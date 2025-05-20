@@ -5,6 +5,8 @@ import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/ad-management/FeatureShowcase';
 import ProcessFlow from '../../components/services/ad-management/ProcessFlow';
 import TechnologyStack from '../../components/services/ad-management/TechnologyStack';
+import AdCampaignFlow3D from '../../components/services/ad-management/AdCampaignFlow3D';
+import AdMetrics3D from '../../components/services/ad-management/AdMetrics3D';
 
 const AdManagement = () => {
   const showcaseMetrics = [
@@ -110,8 +112,15 @@ const AdManagement = () => {
           </div>
         </section>
 
-        {/* Process Section */}
+        {/* Ad Metrics 3D Visualization */}
         <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <AdMetrics3D />
+          </div>
+        </section>
+
+        {/* Process Section */}
+        <section className="py-20 bg-black/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gradient mb-4">Our Process</h2>
@@ -120,6 +129,13 @@ const AdManagement = () => {
               </p>
             </div>
 
+            <AdCampaignFlow3D />
+          </div>
+        </section>
+
+        {/* 2D Process Section (for fallback and SEO) */}
+        <section className="py-20 md:hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ProcessFlow />
           </div>
         </section>

@@ -5,6 +5,7 @@ import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/videography/FeatureShowcase';
 import ProcessFlow from '../../components/services/videography/ProcessFlow';
 import TechnologyStack from '../../components/services/videography/TechnologyStack';
+import PortfolioShowcase3D from '../../components/services/videography/PortfolioShowcase3D';
 
 const Videography = () => {
   const showcaseMetrics = [
@@ -124,8 +125,15 @@ const Videography = () => {
           </div>
         </section>
 
-        {/* Technology Section */}
+        {/* Portfolio Showcase */}
         <section className="py-20 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <PortfolioShowcase3D />
+          </div>
+        </section>
+
+        {/* Technology Section */}
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gradient mb-4">Our Equipment</h2>
