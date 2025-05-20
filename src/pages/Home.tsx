@@ -10,7 +10,7 @@ import PageTransition from '../components/PageTransition';
 import CustomCursor from '../components/effects/CustomCursor';
 import InteractiveBackground from '../components/backgrounds/InteractiveBackground';
 import ScrollReveal, { StaggerReveal } from '../components/effects/ScrollReveal';
-import { gsap } from '@gsap/react';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Register GSAP plugins
