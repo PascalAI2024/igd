@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, Building, Trophy, CheckCircle, ChevronRight, ArrowRight, Cpu, Megaphone, Smartphone } from 'lucide-react';
@@ -8,6 +8,7 @@ import BreadcrumbSchema from '../components/BreadcrumbSchema';
 import PageTransition from '../components/PageTransition';
 import { lazy3D } from '../utils/lazyLoad3D';
 import { Helmet } from 'react-helmet';
+import { AnimationErrorBoundary } from '../components/AnimationErrorBoundary';
 
 const serviceIcons: Record<string, React.FC<{ className?: string }>> = {
   'Web Development': Cpu,
@@ -19,9 +20,24 @@ const serviceIcons: Record<string, React.FC<{ className?: string }>> = {
 const LocationPage: React.FC = () => {
   const { locationId } = useParams<{ locationId: string }>();
   const location = allServiceAreas.find(loc => loc.id === locationId);
+  const [contentReady, setContentReady] = useState(false);
   
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Set initial state to false
+    setContentReady(false);
+    
+    // Use timeout to ensure DOM is fully rendered before adding the class
+    // This helps prevent flickering during transitions
+    const timer = setTimeout(() => {
+      setContentReady(true);
+    }, 300);
+    
+    return () => {
+      clearTimeout(timer);
+      setContentReady(false);
+    };
   }, [location]);
 
   if (!location) {
@@ -140,7 +156,7 @@ const LocationPage: React.FC = () => {
       </Helmet>
 
       <PageTransition>
-        <div className="min-h-screen bg-black">
+        <div className={`min-h-screen bg-black transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
           {/* Hero Section */}
           <section className="relative py-24 overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
@@ -396,25 +412,27 @@ const LocationPage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <lazy3D.LocationDemographics3D
-                  locationName={location.city}
-                  state={location.state}
-                  population={location.population}
-                  medianIncome="$68,450"
-                  medianHomeValue="$395,000"
-                  medianAge="36.8"
-                  employmentRate="96.2%"
-                  educationRate="38%"
-                  householdSize="2.8"
-                  commuteTime="28 min"
-                  topIndustries={["Technology", "Healthcare", "Retail", "Education"]}
-                  additionalInfo={[
-                    { label: "Internet Adoption", value: "94%" },
-                    { label: "Smartphone Usage", value: "88%" },
-                    { label: "E-commerce Shoppers", value: "76%" },
-                    { label: "Social Media Users", value: "82%" }
-                  ]}
-                />
+                <AnimationErrorBoundary>
+                  {lazy3D.LocationDemographics3D({
+                    locationName: location.city,
+                    state: location.state,
+                    population: location.population,
+                    medianIncome: "$68,450",
+                    medianHomeValue: "$395,000",
+                    medianAge: "36.8",
+                    employmentRate: "96.2%",
+                    educationRate: "38%",
+                    householdSize: "2.8",
+                    commuteTime: "28 min",
+                    topIndustries: ["Technology", "Healthcare", "Retail", "Education"],
+                    additionalInfo: [
+                      { label: "Internet Adoption", value: "94%" },
+                      { label: "Smartphone Usage", value: "88%" },
+                      { label: "E-commerce Shoppers", value: "76%" },
+                      { label: "Social Media Users", value: "82%" }
+                    ]
+                  })}
+                </AnimationErrorBoundary>
               </motion.div>
             </div>
           </section>

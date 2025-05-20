@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, ReactNode } from 'react';
+import React, { lazy, Suspense, ReactNode, useState, useEffect } from 'react';
 import { AnimationErrorBoundary } from '../components/AnimationErrorBoundary';
 
 /**
@@ -24,13 +24,37 @@ export const lazyLoad3DComponent = (
     );
   };
 
-  return (props: any) => (
-    <AnimationErrorBoundary>
-      <Suspense fallback={fallback || <LoadingFallback />}>
-        <LazyComponent {...props} />
-      </Suspense>
-    </AnimationErrorBoundary>
-  );
+  return (props: any) => {
+    // Create state to track component mounting
+    const [isMounted, setIsMounted] = useState(false);
+    
+    // Use effect to set mounted state after a short delay to prevent flickering
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setIsMounted(true);
+      }, 100);
+      
+      return () => {
+        clearTimeout(timer);
+        setIsMounted(false);
+      };
+    }, []);
+    
+    return (
+      <AnimationErrorBoundary>
+        <div style={{ 
+          width: '100%', 
+          height: '100%', 
+          position: 'relative',
+          visibility: isMounted ? 'visible' : 'hidden' 
+        }}>
+          <Suspense fallback={fallback || <LoadingFallback />}>
+            <LazyComponent {...props} />
+          </Suspense>
+        </div>
+      </AnimationErrorBoundary>
+    );
+  };
 };
 
 /**

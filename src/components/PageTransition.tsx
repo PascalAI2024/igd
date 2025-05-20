@@ -12,6 +12,7 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
   const [direction, setDirection] = useState<'up' | 'down' | 'left' | 'right'>('right');
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollY, setScrollY] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   // Custom scroll progress value
   const scrollYSpring = useSpring(scrollY, { damping: 15, stiffness: 300 });
@@ -21,6 +22,9 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
   // Update direction based on route depth
   useEffect(() => {
     if (prevPath && location.pathname !== prevPath) {
+      // Mark as transitioning
+      setIsTransitioning(true);
+      
       // Determine the transition direction based on path depth
       const prevPathDepth = prevPath.split('/').filter(Boolean).length;
       const currentPathDepth = location.pathname.split('/').filter(Boolean).length;
@@ -34,19 +38,31 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
         const prevSection = prevPath.split('/')[1] || '';
         const currentSection = location.pathname.split('/')[1] || '';
         
-        // Determine direction based on navigation order (using a defined order of sections)
-        const sections = ['', 'services', 'case-studies', 'blog', 'about', 'contact'];
-        const prevIndex = sections.indexOf(prevSection);
-        const currentIndex = sections.indexOf(currentSection);
-        
-        if (prevIndex < currentIndex) {
+        // Special handling for locations - always use 'left'
+        if (currentSection === 'locations' || prevSection === 'locations') {
           setDirection('left');
         } else {
-          setDirection('right');
+          // Determine direction based on navigation order (using a defined order of sections)
+          const sections = ['', 'services', 'case-studies', 'blog', 'about', 'contact'];
+          const prevIndex = sections.indexOf(prevSection);
+          const currentIndex = sections.indexOf(currentSection);
+          
+          if (prevIndex < currentIndex) {
+            setDirection('left');
+          } else {
+            setDirection('right');
+          }
         }
       }
     }
     setPrevPath(location.pathname);
+    
+    // End transition after animation completes
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 700); // Slightly longer than animation duration
+    
+    return () => clearTimeout(timer);
   }, [location.pathname, prevPath]);
   
   // Listen for scroll with optimized event handler
@@ -167,7 +183,11 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
         className="min-h-screen w-full"
         style={{
           willChange: 'transform, opacity',
-          transformOrigin: 'center top'
+          transformOrigin: 'center top',
+          // Force hardware acceleration for better performance
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          transform: 'translateZ(0)'
         }}
       >
         {/* Subtle scroll parallax effect for headers */}
@@ -187,8 +207,21 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
         {/* Main content with children */}
         <motion.div
           variants={childVariants}
-          className="page-content"
-          style={{ visibility: 'visible' }} // Force visibility to prevent flashing
+          className={`page-content ${isTransitioning ? 'pointer-events-none' : ''}`}
+          style={{ 
+            visibility: 'visible', // Force visibility to prevent flashing
+            // Force hardware acceleration and prevent content disappearing
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            transform: 'translateZ(0)',
+            position: 'relative',
+            zIndex: 1,
+            willChange: 'transform, opacity'
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
         >
           {children}
         </motion.div>

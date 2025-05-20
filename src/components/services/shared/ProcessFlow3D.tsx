@@ -554,11 +554,12 @@ const ProcessFlow3D: React.FC<ProcessFlow3DProps> = ({
             />
           }
         >
-          {isVisible && (
+          <div style={{ display: isVisible ? 'block' : 'none', width: '100%', height: '100%' }}>
             <Canvas 
               dpr={[1, 2]} 
               camera={{ position: [0, 0, 5], fov: 50 }}
               performance={{ min: 0.5 }}
+              style={{ visibility: isVisible ? 'visible' : 'hidden' }}
             >
               <ProcessFlowScene 
                 steps={steps}
@@ -570,7 +571,7 @@ const ProcessFlow3D: React.FC<ProcessFlow3DProps> = ({
                 setExpandedStep={(index) => setExpandedStep(expandedStep === index ? null : index)}
               />
             </Canvas>
-          )}
+          </div>
         </AnimationErrorBoundary>
       </div>
       

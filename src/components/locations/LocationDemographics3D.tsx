@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Text, Html, Float, Sky } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
@@ -385,9 +385,22 @@ const LocationDemographics3D: React.FC<LocationDemographics3DProps> = ({
     }
   ];
   
-  // Render the component
+  // State to track if the component is mounted
+  const [isMounted, setIsMounted] = useState(false);
+  
+  // Handle component mount/unmount
+  useEffect(() => {
+    setIsMounted(true);
+    
+    return () => {
+      setIsMounted(false);
+    };
+  }, []);
+  
+  // Render the component with safety checks
   return (
-    <div className="bg-black/50 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden">
+    <div className="bg-black/50 backdrop-blur-sm rounded-xl border border-white/10 overflow-hidden"
+         style={{ minHeight: '400px' }}>
       <div className="p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-3xl font-bold text-gradient">
@@ -401,12 +414,24 @@ const LocationDemographics3D: React.FC<LocationDemographics3DProps> = ({
         {/* 3D visualization */}
         <div className="h-[400px] w-full mb-8">
           <AnimationErrorBoundary>
-            <Canvas shadows fallback={<div className="h-full flex items-center justify-center text-gray-400">Loading demographics visualization...</div>} camera={{ position: [0, 2, 5], fov: 50 }}>
-              <DemographicsScene 
-                data={demographicData} 
-                locationName={locationName}
-              />
-            </Canvas>
+            <div style={{ width: '100%', height: '100%', display: isMounted ? 'block' : 'none' }}>
+              <Canvas 
+                shadows 
+                dpr={[1, 2]} // Limit pixel ratio for better performance
+                fallback={<div className="h-full flex items-center justify-center text-gray-400">Loading demographics visualization...</div>} 
+                camera={{ position: [0, 2, 5], fov: 50 }}
+                style={{ visibility: isMounted ? 'visible' : 'hidden' }}
+                onCreated={({ gl }) => {
+                  // Configure renderer for better performance
+                  gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                }}
+              >
+                <DemographicsScene 
+                  data={demographicData} 
+                  locationName={locationName}
+                />
+              </Canvas>
+            </div>
           </AnimationErrorBoundary>
         </div>
         
