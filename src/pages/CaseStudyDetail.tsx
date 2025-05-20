@@ -7,6 +7,7 @@ import type { RequiredCaseStudy } from '../data/case-studies/types';
 import { caseStudies as importedCaseStudies } from '../data/case-studies';
 import { caseStudies as simpleCaseStudies } from './SimpleCaseStudies';
 import OptimizedImage from '../components/OptimizedImage';
+import PageTransition from '../components/PageTransition';
 
 // Combine case studies from both sources
 const caseStudies = [...importedCaseStudies, ...simpleCaseStudies];
@@ -17,23 +18,26 @@ const CaseStudyDetail: React.FC = () => {
 
   if (!study) {
     return (
-      <div className="min-h-screen bg-black py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl font-bold text-white mb-6">Case Study Not Found</h1>
-          <Link
-            to="/case-studies"
-            className="inline-flex items-center px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Case Studies
-          </Link>
+      <PageTransition>
+        <div className="min-h-screen bg-black py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-3xl font-bold text-white mb-6">Case Study Not Found</h1>
+            <Link
+              to="/case-studies"
+              className="inline-flex items-center px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back to Case Studies
+            </Link>
+          </div>
         </div>
-      </div>
+      </PageTransition>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black py-20">
+    <PageTransition>
+      <div className="min-h-screen bg-black py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <div className="mb-8">
@@ -193,7 +197,7 @@ const CaseStudyDetail: React.FC = () => {
           </Link>
         </motion.div>
       </div>
-    </div>
+    </PageTransition>
   );
 };
 
