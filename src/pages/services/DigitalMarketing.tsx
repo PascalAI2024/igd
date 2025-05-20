@@ -8,6 +8,7 @@ import ServiceSchema from '../../components/ServiceSchema';
 import FAQSchema from '../../components/FAQSchema';
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import FeatureShowcase from '../../components/services/digital-marketing/FeatureShowcase';
+import OptimizedDigitalMarketingFlow from '../../components/services/digital-marketing/OptimizedDigitalMarketingFlow';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
 import TestimonialShowcase from '../../components/services/shared/TestimonialShowcase';
@@ -215,7 +216,15 @@ const DigitalMarketing = () => {
               </p>
             </motion.div>
 
-            <lazy3D.DigitalMarketingProcessFlow3D />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="shadow-xl shadow-red-500/5"
+            >
+              <OptimizedDigitalMarketingFlow />
+            </motion.div>
           </div>
         </section>
 

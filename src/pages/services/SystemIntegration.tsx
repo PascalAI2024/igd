@@ -7,6 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/system-integration/FeatureShowcase';
+import OptimizedSystemNetwork from '../../components/services/system-integration/OptimizedSystemNetwork';
 import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
@@ -202,7 +203,15 @@ const SystemIntegration = () => {
               </p>
             </motion.div>
 
-            <lazy3D.SystemNetwork3D />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="shadow-xl shadow-red-500/5"
+            >
+              <OptimizedSystemNetwork />
+            </motion.div>
           </div>
         </section>
 
