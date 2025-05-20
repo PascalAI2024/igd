@@ -5,16 +5,21 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc && vite build",
+    "build-force": "npm run clean && tsc --noEmit --skipLibCheck && vite build",
     "preview": "vite preview",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "check-links": "node scripts/checkLinks.mjs",
-    "check-links:specific": "node scripts/checkLinks.mjs"
+    "check-links:specific": "node scripts/checkLinks.mjs",
+    "validate": "./scripts/validate-build.sh",
+    "deploy": "npm run validate && echo 'Ready to deploy! Push to GitHub to trigger Netlify deployment.'"
   },
   "dependencies": {
-    "@react-three/drei": "^9.88.7",
-    "@react-three/fiber": "^8.15.11",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@react-three/postprocessing": "^3.0.4",
     "@types/react-helmet": "^6.1.11",
     "framer-motion": "^10.16.4",
     "gsap": "^3.13.0",
@@ -22,6 +27,7 @@
     "lucide-react": "^0.284.0",
     "marked": "^15.0.11",
     "marked-highlight": "^2.2.1",
+    "postprocessing": "^6.37.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
