@@ -6,6 +6,7 @@ import { allServiceAreas, Location } from '../data/locations';
 import MetaTags from '../components/MetaTags';
 import BreadcrumbSchema from '../components/BreadcrumbSchema';
 import PageTransition from '../components/PageTransition';
+import LocationDemographics3D from '../components/locations/LocationDemographics3D';
 import { Helmet } from 'react-helmet';
 
 const serviceIcons: Record<string, React.FC<{ className?: string }>> = {
@@ -368,6 +369,53 @@ const LocationPage: React.FC = () => {
                   </ul>
                 </motion.div>
               </div>
+            </div>
+          </section>
+
+          {/* Demographics Section */}
+          <section className="py-20 bg-black/50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-16"
+              >
+                <h2 className="text-3xl font-bold text-gradient mb-4">
+                  {location.city} Market Demographics
+                </h2>
+                <p className="text-gray-400 max-w-2xl mx-auto">
+                  Understanding the local market demographics helps develop targeted marketing strategies for your {location.city} business.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <LocationDemographics3D
+                  locationName={location.city}
+                  state={location.state}
+                  population={location.population}
+                  medianIncome="$68,450"
+                  medianHomeValue="$395,000"
+                  medianAge="36.8"
+                  employmentRate="96.2%"
+                  educationRate="38%"
+                  householdSize="2.8"
+                  commuteTime="28 min"
+                  topIndustries={["Technology", "Healthcare", "Retail", "Education"]}
+                  additionalInfo={[
+                    { label: "Internet Adoption", value: "94%" },
+                    { label: "Smartphone Usage", value: "88%" },
+                    { label: "E-commerce Shoppers", value: "76%" },
+                    { label: "Social Media Users", value: "82%" }
+                  ]}
+                />
+              </motion.div>
             </div>
           </section>
 

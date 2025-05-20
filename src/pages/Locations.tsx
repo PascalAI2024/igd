@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Building, Users, ArrowRight, Search, TrendingUp, CheckCircle } from 'lucide-react';
+import { MapPin, Building, Users, ArrowRight, Search, TrendingUp, CheckCircle, BarChart } from 'lucide-react';
 import { primaryServiceArea, secondaryServiceArea } from '../data/locations';
 import MetaTags from '../components/MetaTags';
 import BreadcrumbSchema from '../components/BreadcrumbSchema';
 import PageTransition from '../components/PageTransition';
+import LocationDemographics3D from '../components/locations/LocationDemographics3D';
 import { Helmet } from 'react-helmet';
 
 const Locations: React.FC = () => {
@@ -349,6 +350,79 @@ const Locations: React.FC = () => {
                   </div>
                 </motion.div>
               </div>
+            </div>
+          </section>
+
+          {/* Demographics Visualization Preview */}
+          <section className="py-20 bg-black/50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-16"
+              >
+                <BarChart className="w-12 h-12 text-red-500 mx-auto mb-6" />
+                <h2 className="text-3xl font-bold text-gradient mb-4">
+                  Data-Driven Local Marketing
+                </h2>
+                <p className="text-gray-400 max-w-2xl mx-auto">
+                  Our location-specific approach leverages demographic insights to create targeted marketing strategies tailored to each community.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="relative">
+                  <LocationDemographics3D
+                    locationName="Fort Lauderdale"
+                    state="Florida"
+                    population="182437"
+                    medianIncome="$64,850"
+                    medianHomeValue="$378,000"
+                    medianAge="42.4"
+                    employmentRate="95.8%"
+                    educationRate="36%"
+                    householdSize="2.4"
+                    commuteTime="27 min"
+                    topIndustries={["Tourism", "Healthcare", "Technology", "Retail"]}
+                    additionalInfo={[
+                      { label: "Internet Adoption", value: "92%" },
+                      { label: "Smartphone Usage", value: "86%" },
+                      { label: "E-commerce Shoppers", value: "73%" }
+                    ]}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-300">
+                    <div className="bg-black/80 backdrop-blur-md p-6 rounded-xl border border-red-500/20 max-w-xl text-center">
+                      <h3 className="text-xl font-bold text-white mb-2">Interactive Demographics</h3>
+                      <p className="text-gray-300 mb-4">
+                        Each location page features interactive 3D demographic visualizations to help you understand the local market.
+                      </p>
+                      <Link
+                        to="/locations/fort-lauderdale"
+                        className="inline-flex items-center px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+                      >
+                        Explore Fort Lauderdale
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-center mt-8">
+                  <Link 
+                    to="/locations/fort-lauderdale" 
+                    className="inline-flex items-center text-red-500 hover:text-red-400 font-medium transition-colors"
+                  >
+                    View Full Fort Lauderdale Demographics
+                    <ArrowRight className="w-5 h-5 ml-1" />
+                  </Link>
+                </div>
+              </motion.div>
             </div>
           </section>
 
