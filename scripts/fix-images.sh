@@ -48,4 +48,8 @@ cp -v distbak/images/testimonials/*.webp public/images/testimonials/
 echo "Copying web dev images..."
 cp -v distbak/images/web-dev/*.webp public/images/web-dev/
 
+# Generate case study images
+echo "Generating case study images..."
+./scripts/generate-case-studies.sh
+
 echo "All images have been fixed!"

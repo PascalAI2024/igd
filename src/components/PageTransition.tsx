@@ -49,13 +49,21 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
     setPrevPath(location.pathname);
   }, [location.pathname, prevPath]);
   
-  // Listen for scroll
+  // Listen for scroll with optimized event handler
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   

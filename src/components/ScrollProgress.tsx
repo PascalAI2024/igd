@@ -2,27 +2,43 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 const ScrollProgress = () => {
   const [progress, setProgress] = useState(0);
-
+  const prevProgressRef = React.useRef(0);
+  const frameIdRef = React.useRef<number>(0);
+  
+  // Throttled update function to improve performance
   const updateProgress = useCallback(() => {
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollHeight <= 0) return; // Avoid division by zero
+    
     const scrolled = window.scrollY;
-    const progress = Math.min(Math.max((scrolled / scrollHeight) * 100, 0), 100);
-    setProgress(progress);
+    const currentProgress = Math.min(Math.max((scrolled / scrollHeight) * 100, 0), 100);
+    
+    // Only update state if progress changed by at least 0.5%
+    if (Math.abs(currentProgress - prevProgressRef.current) > 0.5) {
+      prevProgressRef.current = currentProgress;
+      setProgress(currentProgress);
+    }
   }, []);
 
   useEffect(() => {
-    let rafId: number;
     const handleScroll = () => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(updateProgress);
+      if (!frameIdRef.current) {
+        frameIdRef.current = requestAnimationFrame(() => {
+          updateProgress();
+          frameIdRef.current = 0;
+        });
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    updateProgress();
+    updateProgress(); // Initial update
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      cancelAnimationFrame(rafId);
+      if (frameIdRef.current) {
+        cancelAnimationFrame(frameIdRef.current);
+        frameIdRef.current = 0;
+      }
     };
   }, [updateProgress]);
 

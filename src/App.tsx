@@ -99,13 +99,25 @@ const App = () => {
     };
   }, []);
 
-  // Track page views and handle scrolling
+  // Track page views and handle scrolling with smooth behavior
   useEffect(() => {
     // Only track page views if user has consented to analytics
     if (checkExistingConsent()) {
       trackPageView(location.pathname + location.search);
     }
-    window.scrollTo(0, 0);
+    
+    // Scroll to top with performance optimization
+    if ('scrollBehavior' in document.documentElement.style) {
+      // Use smooth scroll if supported and not reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ 
+        top: 0, 
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
+    } else {
+      // Fallback for browsers without scrollBehavior support
+      window.scrollTo(0, 0);
+    }
   }, [location]);
 
   // Handle route changes
@@ -197,8 +209,13 @@ const App = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{
-              duration: 0.4,
+              duration: 0.3,
               ease: [0.22, 1, 0.36, 1]
+            }}
+            style={{ 
+              willChange: 'opacity, transform',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden'
             }}
             className={isMobileMenuOpen ? 'pointer-events-none' : ''}
           >

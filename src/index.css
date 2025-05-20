@@ -8,12 +8,31 @@
 
 html {
   scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+
+/* Only add smooth scrolling if user doesn't prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Optimize performance for fixed elements */
+.fixed {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Neural network animation effects */

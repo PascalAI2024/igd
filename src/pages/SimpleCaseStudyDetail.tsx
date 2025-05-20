@@ -155,9 +155,15 @@ const SimpleCaseStudyDetail: React.FC = () => {
         >
           <div className="bg-white/5 rounded-xl overflow-hidden aspect-[21/9] max-h-[500px]">
             <img
-              src={study.imageUrl}
+              src={`/case-studies/${study.id}.webp`}
               alt={study.title}
               className="w-full h-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                // Fallback to unsplash URL if local image fails to load
+                const target = e.target as HTMLImageElement;
+                target.src = study.imageUrl;
+              }}
             />
           </div>
         </motion.div>

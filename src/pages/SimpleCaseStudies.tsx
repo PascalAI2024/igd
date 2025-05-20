@@ -142,9 +142,15 @@ const SimpleCaseStudies = () => {
                     {/* Image Container */}
                     <div className="relative aspect-[16/9] overflow-hidden">
                       <img
-                        src={study.imageUrl}
+                        src={`/case-studies/${study.id}.webp`}
                         alt={study.title}
                         className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                        onError={(e) => {
+                          // Fallback to unsplash URL if local image fails to load
+                          const target = e.target as HTMLImageElement;
+                          target.src = study.imageUrl;
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
 
