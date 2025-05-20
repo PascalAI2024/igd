@@ -70,7 +70,12 @@ const BreadcrumbSchema: React.FC<BreadcrumbSchemaProps> = ({
     // Create the URL for this breadcrumb
     const url = `https://ingeniousdigital.com/${pathSegments.slice(0, index + 1).join('/')}`;
     
-    return { name, url };
+    return { 
+      name, 
+      url,
+      image: undefined,
+      description: undefined
+    };
   });
 
   // If there are breadcrumbs and currentPageTitle is provided, override the last breadcrumb name
@@ -80,7 +85,12 @@ const BreadcrumbSchema: React.FC<BreadcrumbSchemaProps> = ({
 
   // Add home as the first breadcrumb if not already included and we have at least one path segment
   const fullBreadcrumbs = pathSegments.length > 0 
-    ? [{ name: 'Home', url: 'https://ingeniousdigital.com' }, ...breadcrumbs]
+    ? [{ 
+        name: 'Home', 
+        url: 'https://ingeniousdigital.com',
+        image: undefined,
+        description: undefined
+      }, ...breadcrumbs]
     : breadcrumbs; // Don't add Home if we're on the homepage (to avoid duplicate)
 
   // Create the schema.org JSON-LD data
@@ -125,7 +135,7 @@ const BreadcrumbSchema: React.FC<BreadcrumbSchemaProps> = ({
   };
 
   // Update the breadcrumbListSchema to include an @id
-  breadcrumbListSchema['@id'] = `${currentUrl}#breadcrumb`;
+  (breadcrumbListSchema as any)['@id'] = `${currentUrl}#breadcrumb`;
 
   return (
     <Helmet>
