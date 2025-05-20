@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { allServiceAreas, Location } from '../data/locations';
 import MetaTags from '../components/MetaTags';
 import BreadcrumbSchema from '../components/BreadcrumbSchema';
-import ContactForm from '../components/ContactForm';
+import LightContactForm from '../components/LightContactForm';
 import { Helmet } from 'react-helmet';
 
 const LocationPage: React.FC = () => {
@@ -169,9 +169,15 @@ const LocationPage: React.FC = () => {
           </div>
           
           <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-            <h3 className="text-xl font-semibold mb-4">Get a Free Consultation</h3>
-            <p className="mb-4">Grow your {location.city} business with our digital marketing expertise. Contact us today for a free consultation.</p>
-            <ContactForm />
+            <h3 className="text-xl font-semibold mb-4">{location.city} Digital Marketing Consultation</h3>
+            <p className="mb-4">Request information about our specialized {location.city} digital services. Our local team will contact you with custom recommendations for your business.</p>
+            <div className="mb-4 text-sm text-gray-600">
+              <p>✓ Local business specialists</p>
+              <p>✓ Custom {location.city} market analysis</p>
+              <p>✓ No obligation consultation</p>
+            </div>
+            <LightContactForm />
+            <p className="mt-4 text-xs text-gray-500 text-center">Your information is secure and will never be shared with third parties. By submitting this form, you're requesting information about our services.</p>
           </div>
         </div>
       </div>
