@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { MapPin, Building, Users, ArrowRight, Search, TrendingUp, CheckCircle } from 'lucide-react';
 import { primaryServiceArea, secondaryServiceArea } from '../data/locations';
 import MetaTags from '../components/MetaTags';
 import BreadcrumbSchema from '../components/BreadcrumbSchema';
+import PageTransition from '../components/PageTransition';
 import { Helmet } from 'react-helmet';
 
 const Locations: React.FC = () => {
@@ -68,112 +71,318 @@ const Locations: React.FC = () => {
         </script>
       </Helmet>
 
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        <h1 className="text-3xl md:text-5xl font-bold mb-6">Digital Marketing Service Areas</h1>
-        
-        <div className="mb-12">
-          <p className="text-lg mb-6">
-            Ingenious Digital provides specialized digital marketing services throughout South Florida. 
-            Our local expertise helps businesses connect with their communities through targeted digital strategies.
-          </p>
-          
-          <h2 className="text-2xl md:text-3xl font-semibold mb-6">Primary Service Areas</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {primaryServiceArea.map((location, index) => (
-              <Link 
-                key={index}
-                to={`/locations/${location.id}`}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow border border-gray-200"
+      <PageTransition>
+        <div className="min-h-screen bg-black">
+          {/* Hero Section */}
+          <section className="relative py-24 overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
+            
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-center max-w-3xl mx-auto"
               >
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{location.city}, {location.stateAbbr}</h3>
-                  <p className="text-gray-600 text-sm mb-4">{location.description.substring(0, 120)}...</p>
-                  <div className="flex flex-wrap gap-2">
-                    {location.servicesOffered.slice(0, 3).map((service, idx) => (
-                      <span key={idx} className="bg-blue-50 text-blue-800 text-xs px-2 py-1 rounded">
-                        {service}
-                      </span>
-                    ))}
-                    {location.servicesOffered.length > 3 && (
-                      <span className="bg-gray-50 text-gray-500 text-xs px-2 py-1 rounded">
-                        +{location.servicesOffered.length - 3} more
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="bg-blue-50 p-3 text-center border-t border-gray-200">
-                  <span className="text-blue-600 font-medium">View Services</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          
-          <h2 className="text-2xl md:text-3xl font-semibold mb-6">Additional Service Areas</h2>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            {secondaryServiceArea.map((location, index) => (
-              <Link 
-                key={index}
-                to={`/locations/${location.id}`}
-                className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:bg-blue-50 transition-colors"
+                <MapPin className="w-16 h-16 text-red-500 mx-auto mb-6" />
+                <h1 className="text-5xl font-bold mb-6 text-gradient">
+                  Our Service Areas
+                </h1>
+                <p className="text-xl text-gray-300 leading-relaxed">
+                  Specialized digital marketing and web development services for businesses throughout South Florida.
+                </p>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Featured Service Areas */}
+          <section className="py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-16"
               >
-                <h3 className="font-semibold">{location.city}, {location.stateAbbr}</h3>
-                <p className="text-sm text-gray-600 mt-1">{location.servicesOffered.length} services available</p>
-              </Link>
-            ))}
-          </div>
-          
-          <div className="bg-gray-50 p-8 rounded-lg mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Why Local Digital Marketing Matters</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-lg font-medium mb-2">Local Search Visibility</h3>
-                <p className="text-gray-700">
-                  78% of local mobile searches result in offline purchases. Our location-specific SEO strategies 
-                  help your business appear in local search results when potential customers are looking for 
-                  services in your area.
+                <h2 className="text-3xl font-bold text-gradient mb-4">
+                  Primary Service Areas
+                </h2>
+                <p className="text-gray-400 max-w-2xl mx-auto">
+                  Our team of digital experts provides comprehensive services in these key locations.
                 </p>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium mb-2">Community Connection</h3>
-                <p className="text-gray-700">
-                  Building trust with your local community is essential for sustainable growth. 
-                  Our targeted content strategies highlight your local expertise and community involvement.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium mb-2">Competitive Edge</h3>
-                <p className="text-gray-700">
-                  Understanding the local competitive landscape helps your business stand out. 
-                  We research your local competitors to develop strategies that highlight your unique advantages.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium mb-2">Mobile Optimization</h3>
-                <p className="text-gray-700">
-                  With 88% of consumers who search for local businesses on mobile devices calling or visiting 
-                  within 24 hours, we ensure your website is optimized for local mobile searches.
-                </p>
+              </motion.div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {primaryServiceArea.map((location, index) => (
+                  <motion.div
+                    key={location.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                  >
+                    <Link 
+                      to={`/locations/${location.id}`}
+                      className="group block bg-white/5 backdrop-blur-sm border border-white/10 hover:border-red-500/20 rounded-xl overflow-hidden transition-all duration-300 h-full"
+                    >
+                      <div className="p-6">
+                        <div className="flex items-center mb-4">
+                          <div className="p-2 bg-red-500/10 rounded-lg">
+                            <Building className="h-6 w-6 text-red-500" />
+                          </div>
+                          <h3 className="text-xl font-bold text-white ml-3 group-hover:text-red-400 transition-colors">
+                            {location.city}, {location.stateAbbr}
+                          </h3>
+                        </div>
+                        
+                        <p className="text-gray-400 mb-6">
+                          {location.description.substring(0, 120)}...
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {location.servicesOffered.slice(0, 3).map((service, idx) => (
+                            <span key={idx} className="bg-white/5 text-gray-300 text-xs px-2 py-1 rounded-full">
+                              {service}
+                            </span>
+                          ))}
+                          {location.servicesOffered.length > 3 && (
+                            <span className="bg-white/5 text-gray-400 text-xs px-2 py-1 rounded-full">
+                              +{location.servicesOffered.length - 3}
+                            </span>
+                          )}
+                        </div>
+                        
+                        <div className="flex items-center text-red-500 group-hover:text-red-400 transition-colors text-sm font-medium">
+                          View Services
+                          <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </div>
-          
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Don't See Your Location?</h2>
-            <p className="mb-6">
-              We serve clients throughout South Florida. Contact us to discuss how we can help your business, 
-              regardless of location.
-            </p>
-            <Link 
-              to="/contact" 
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
-            >
-              Contact Us Today
-            </Link>
-          </div>
+          </section>
+
+          {/* Search Section */}
+          <section className="py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="bg-gradient-to-r from-red-500/10 to-purple-500/10 rounded-2xl p-12 backdrop-blur-sm border border-red-500/20">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <h2 className="text-3xl font-bold text-gradient mb-6">
+                      Find Services in Your Area
+                    </h2>
+                    <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                      We provide tailored digital solutions for businesses across South Florida. 
+                      Search for your location to discover services specific to your area.
+                    </p>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                  >
+                    <div className="relative">
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="text"
+                        placeholder="Enter your city or ZIP code..."
+                        className="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400"
+                      />
+                      <button className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg transition-colors text-white">
+                        Search
+                      </button>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Additional Service Areas */}
+          <section className="py-20 bg-black/50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-16"
+              >
+                <h2 className="text-3xl font-bold text-gradient mb-4">
+                  Additional Service Areas
+                </h2>
+                <p className="text-gray-400 max-w-2xl mx-auto">
+                  Our digital expertise extends to these additional locations throughout South Florida.
+                </p>
+              </motion.div>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {secondaryServiceArea.map((location, index) => (
+                  <motion.div
+                    key={location.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.05 }}
+                  >
+                    <Link 
+                      to={`/locations/${location.id}`}
+                      className="group flex flex-col h-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-red-500/20 rounded-lg p-4 transition-all duration-300"
+                    >
+                      <div className="flex items-center mb-2">
+                        <MapPin className="w-4 h-4 text-red-500 mr-2" />
+                        <h3 className="font-semibold text-white group-hover:text-red-400 transition-colors">
+                          {location.city}, {location.stateAbbr}
+                        </h3>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-1">
+                        {location.servicesOffered.length} digital services
+                      </p>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Why Local Digital Marketing Matters */}
+          <section className="py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-16"
+              >
+                <Users className="w-12 h-12 text-red-500 mx-auto mb-6" />
+                <h2 className="text-3xl font-bold text-gradient mb-4">
+                  Why Local Digital Marketing Matters
+                </h2>
+                <p className="text-gray-400 max-w-2xl mx-auto">
+                  Connecting with your local community online has never been more important for business growth.
+                </p>
+              </motion.div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 h-full">
+                    <div className="flex items-start mb-6">
+                      <div className="p-2 bg-red-500/10 rounded-lg mr-4">
+                        <Search className="h-6 w-6 text-red-500" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-white mb-2">Local Search Visibility</h3>
+                        <p className="text-gray-400">
+                          78% of local mobile searches result in offline purchases. Our location-specific SEO 
+                          strategies help your business appear in local search results when potential customers 
+                          are looking for services in your area.
+                        </p>
+                      </div>
+                    </div>
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <CheckCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />
+                        <span className="text-gray-300">Google Business Profile optimization</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />
+                        <span className="text-gray-300">Local keyword targeting</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />
+                        <span className="text-gray-300">Location-based search campaigns</span>
+                      </li>
+                    </ul>
+                  </div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 h-full">
+                    <div className="flex items-start mb-6">
+                      <div className="p-2 bg-red-500/10 rounded-lg mr-4">
+                        <TrendingUp className="h-6 w-6 text-red-500" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-white mb-2">Competitive Edge</h3>
+                        <p className="text-gray-400">
+                          Understanding the local competitive landscape helps your business stand out. 
+                          We research your local competitors to develop strategies that highlight your 
+                          unique advantages.
+                        </p>
+                      </div>
+                    </div>
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <CheckCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />
+                        <span className="text-gray-300">Competitive market analysis</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />
+                        <span className="text-gray-300">Local differentiator identification</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />
+                        <span className="text-gray-300">Targeted local advertising campaigns</span>
+                      </li>
+                    </ul>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* CTA Section */}
+          <section className="py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="bg-gradient-to-r from-red-500/10 to-purple-500/10 rounded-2xl p-12 backdrop-blur-sm border border-red-500/20">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="max-w-3xl mx-auto text-center"
+                >
+                  <h2 className="text-3xl font-bold text-gradient mb-6">
+                    Don't See Your Location?
+                  </h2>
+                  <p className="text-xl text-gray-300 mb-8">
+                    We serve clients throughout South Florida. Contact us to discuss how we can help your business, 
+                    regardless of location.
+                  </p>
+                  <Link 
+                    to="/contact" 
+                    className="inline-flex items-center px-8 py-4 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+                  >
+                    Contact Us
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Link>
+                </motion.div>
+              </div>
+            </div>
+          </section>
         </div>
-      </div>
+      </PageTransition>
     </>
   );
 };
