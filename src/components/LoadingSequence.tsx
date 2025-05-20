@@ -1,300 +1,352 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Code2, Cpu, Network, Zap, SkipForward } from 'lucide-react';
 
-interface LoadingSequenceProps {
-  onComplete: () => void;
-}
-
-const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
-  const controls = useAnimation();
-  const [showSkip, setShowSkip] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
+const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number>();
-  const noiseFieldRef = useRef<Array<{ x: number; y: number; intensity: number; vx: number; vy: number }>>([]);
-  
-  // Professional loading messages
-  const loadingSteps = [
-    { text: "Preparing experience" },
-    { text: "Optimizing interface" },
-    { text: "Loading resources" },
-    { text: "Finalizing" }
-  ];
-  
-  // Skip button appears after a delay
+  const rafRef = useRef<number>();
+  const particlesRef = useRef<Particle[]>([]);
+  const [showSkip, setShowSkip] = useState(false);
+
+  // Show skip button immediately
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSkip(true);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+    // Show skip button immediately
+    setShowSkip(true);
   }, []);
-  
-  // Handle auto-progression through loading steps
+
   useEffect(() => {
-    if (currentStep < loadingSteps.length) {
-      const timer = setTimeout(() => {
-        setCurrentStep(prev => {
-          const nextStep = prev + 1;
-          if (nextStep >= loadingSteps.length) {
-            // Final step reached, start exit animation
-            startExitAnimation();
-          }
-          return nextStep;
-        });
-      }, 1200);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [currentStep, loadingSteps.length]);
-  
-  // Handle exit animation
-  const startExitAnimation = async () => {
-    await controls.start({
-      y: -30,
-      opacity: 0,
-      transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] }
-    });
-    
-    // After animation completes, call onComplete
-    setTimeout(onComplete, 200);
-  };
-  
-  // Setup noise field animation
+    const messages = [
+      'Initializing Neural Network',
+      'Synthesizing Digital Pathways',
+      'Calibrating Innovation Matrix',
+      'Engaging Quantum Processors',
+      'Activating Digital Excellence'
+    ];
+
+    let currentMessageIndex = 0;
+    let currentCharIndex = 0;
+    let glitchInterval: NodeJS.Timeout;
+    let isCompleting = false;
+
+    const textElement = document.querySelector('.loading-text');
+    if (!textElement) return;
+
+    const typeMessage = () => {
+      if (!textElement) return;
+
+      if (currentMessageIndex >= messages.length) {
+        // Set the final message without glitches before completing
+        textElement.textContent = messages[messages.length - 1];
+        isCompleting = true;
+
+        // Clear the glitch interval to prevent text corruption
+        clearInterval(glitchInterval);
+
+        setTimeout(() => {
+          onComplete();
+        }, 800);
+        return;
+      }
+
+      const currentMessage = messages[currentMessageIndex];
+      if (currentCharIndex < currentMessage.length) {
+        textElement.textContent = currentMessage.substring(0, currentCharIndex + 1);
+        currentCharIndex++;
+        setTimeout(typeMessage, 30 + Math.random() * 40);
+      } else {
+        setTimeout(() => {
+          currentMessageIndex++;
+          currentCharIndex = 0;
+          typeMessage();
+        }, 800);
+      }
+    };
+
+    typeMessage();
+
+    glitchInterval = setInterval(() => {
+      if (!textElement || isCompleting) return;
+      const currentMessage = messages[currentMessageIndex];
+      if (!currentMessage) return;
+
+      const glitchedText = currentMessage
+        .split('')
+        .map((char, index) => {
+          if (index >= currentCharIndex) return '';
+          return Math.random() < 0.1
+            ? String.fromCharCode(33 + Math.floor(Math.random() * 94))
+            : char;
+        })
+        .join('');
+
+      textElement.textContent = glitchedText;
+    }, 50);
+
+    return () => clearInterval(glitchInterval);
+  }, [onComplete]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
-    // Set canvas dimensions
-    const resizeCanvas = () => {
+
+    const resize = () => {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      
-      // Initialize or reinitialize the noise field
-      initNoiseField();
     };
-    
-    // Create noise field particles
-    const initNoiseField = () => {
-      const fieldSize = Math.max(50, Math.min(150, window.innerWidth / 20));
-      noiseFieldRef.current = [];
-      
-      for (let i = 0; i < fieldSize; i++) {
-        noiseFieldRef.current.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          intensity: Math.random() * 0.3 + 0.1,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5
-        });
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    class ParticleClass implements Particle {
+      x: number;
+      y: number;
+      lastX: number;
+      lastY: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      color: string;
+      opacity: number;
+
+      constructor() {
+        if (!canvas) throw new Error('Canvas not initialized');
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.lastX = this.x;
+        this.lastY = this.y;
+        this.size = Math.random() * 3 + 2;
+        this.speedX = (Math.random() - 0.5) * 0.8;
+        this.speedY = (Math.random() - 0.5) * 0.8;
+        this.color = `rgba(255, ${Math.random() * 50}, 0`;
+        this.opacity = Math.random() * 0.3 + 0.1;
       }
-    };
-    
-    // Render loop
-    const render = () => {
-      if (!canvas || !ctx) return;
-      
-      // Clear canvas with fading effect
+
+      update() {
+        if (!canvas) return;
+        this.lastX = this.x;
+        this.lastY = this.y;
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+
+      draw(ctx: CanvasRenderingContext2D) {
+        ctx.strokeStyle = `${this.color}, ${this.opacity})`;
+        ctx.lineWidth = this.size;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(this.lastX, this.lastY);
+        ctx.lineTo(this.x, this.y);
+        ctx.stroke();
+      }
+    }
+
+    for (let i = 0; i < 70; i++) {
+      particlesRef.current.push(new ParticleClass());
+    }
+
+    const animate = () => {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw noise field
-      noiseFieldRef.current.forEach(particle => {
-        // Update position
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        
-        // Wrap around edges
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
-        
-        // Draw noise particle
-        const size = Math.random() * 3 + 1;
-        ctx.fillStyle = `rgba(220, 38, 38, ${particle.intensity * Math.random() * 0.5})`;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, size, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Occasionally create flowing line effects
-        if (Math.random() < 0.03) {
-          const maxLength = Math.random() * 40 + 10;
-          const angle = Math.random() * Math.PI * 2;
-          const endX = particle.x + Math.cos(angle) * maxLength;
-          const endY = particle.y + Math.sin(angle) * maxLength;
-          
-          ctx.strokeStyle = `rgba(220, 38, 38, ${particle.intensity * 0.3})`;
-          ctx.lineWidth = Math.random() * 0.5 + 0.1;
-          ctx.beginPath();
-          ctx.moveTo(particle.x, particle.y);
-          ctx.lineTo(endX, endY);
-          ctx.stroke();
-        }
+
+      // Process all particles in a single loop for better performance
+      particlesRef.current.forEach(particle => {
+        particle.update();
+        particle.draw(ctx);
       });
-      
-      animationFrameRef.current = requestAnimationFrame(render);
+
+      // Optimize connection drawing by using a spatial grid or reducing connections
+      // Only check connections for a subset of particles to improve performance
+      const connectionLimit = Math.min(40, particlesRef.current.length);
+      for (let i = 0; i < connectionLimit; i += 2) {
+        for (let j = i + 2; j < connectionLimit; j += 2) {
+          const dx = particlesRef.current[i].x - particlesRef.current[j].x;
+          const dy = particlesRef.current[i].y - particlesRef.current[j].y;
+          // Use squared distance to avoid expensive sqrt operation when possible
+          const distanceSquared = dx * dx + dy * dy;
+
+          if (distanceSquared < 22500) { // 150^2 = 22500
+            const distance = Math.sqrt(distanceSquared);
+            ctx.strokeStyle = `rgba(255, 0, 0, ${0.05 * (1 - distance / 150)})`;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);
+            ctx.lineTo(particlesRef.current[j].x, particlesRef.current[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(animate);
     };
-    
-    // Initialize and start
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    render();
-    
-    // Cleanup
+
+    animate();
+
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      window.removeEventListener('resize', resize);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = undefined;
+      }
+      // Clear particles array to free memory
+      if (particlesRef.current.length > 0) {
+        particlesRef.current = [];
       }
     };
   }, []);
-  
+
   return (
-    <motion.div
-      className="fixed inset-0 bg-gradient-to-b from-black to-gray-900 z-50 flex flex-col items-center justify-center overflow-hidden"
-      animate={controls}
-    >
-      {/* Background noise field */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full opacity-60"
-      />
-      
-      {/* Semi-transparent radial gradient */}
-      <div 
-        className="absolute inset-0 bg-radial-gradient pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle at center, transparent 20%, #000 70%)'
+    <AnimatePresence mode="wait">
+      <motion.div
+        key="loading"
+        className="fixed inset-0 bg-black z-50 flex items-center justify-center"
+        exit={{
+          clipPath: 'circle(0% at 50% 50%)',
+          transition: {
+            duration: 0.8,
+            ease: [0.65, 0, 0.35, 1]
+          }
         }}
-      />
-      
-      {/* Branding and loading animation */}
-      <div className="relative z-10 flex flex-col items-center max-w-md px-6 text-center">
-        {/* Logo animation */}
-        <motion.div
-          className="mb-16"
-          animate={{
-            y: [0, -5, 0],
-            scale: [1, 1.02, 1],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          <div className="w-32 h-32 relative flex items-center justify-center">
-            {/* Animated background elements */}
-            <motion.div
-              className="absolute inset-0 rounded-full bg-gradient-to-br from-red-600 to-red-800 opacity-20"
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.2, 0.3, 0.2]
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            />
-            
-            {/* Logo container */}
-            <div className="w-20 h-20 relative bg-black rounded-lg flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-red-700/20 rounded-lg" />
-              <div className="w-12 h-12 relative">
-                {/* Your company logo or icon goes here */}
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 4L2 20H22L12 4Z" fill="#DC2626" />
-                  <path d="M12 12L17 20H7L12 12Z" fill="#FFFFFF" />
-                </svg>
+        style={{
+          clipPath: 'circle(150% at 50% 50%)'
+        }}
+      >
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full"
+        />
+
+        <div className="relative z-10 w-full max-w-md px-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{
+              opacity: 0,
+              scale: 0.5,
+              transition: {
+                duration: 0.4,
+                ease: [0.65, 0, 0.35, 1]
+              }
+            }}
+            className="text-center"
+          >
+            <div className="relative w-32 h-32 mx-auto mb-8 sm:w-48 sm:h-48">
+              <div className="absolute inset-0">
+                <div className="absolute inset-0 border-4 border-red-500/20 rounded-full animate-[spin_8s_linear_infinite]">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-red-500/20 to-transparent blur-xl" />
+                </div>
+                <div className="absolute inset-4 border-4 border-red-500/30 rounded-full animate-[spin_6s_linear_infinite_reverse]">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-red-500/30 to-transparent blur-lg" />
+                </div>
+                <div className="absolute inset-8 border-4 border-red-500/40 rounded-full animate-[spin_4s_linear_infinite]">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-red-500/40 to-transparent blur-md" />
+                </div>
+
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.div
+                    animate={{
+                      rotate: [0, 180, 360],
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-lg sm:w-24 sm:h-24"
+                  >
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-lg" />
+                    <div className="absolute inset-1 border border-white/20 rounded-lg" />
+                  </motion.div>
+                </div>
               </div>
             </div>
-            
-            {/* Animated rings */}
-            <motion.div
-              className="absolute -inset-4 border border-red-500/20 rounded-full"
-              animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
-            />
-            <motion.div
-              className="absolute -inset-8 border border-red-500/10 rounded-full"
-              animate={{ scale: [0.8, 1.4], opacity: [0.3, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: 0.2 }}
-            />
-          </div>
-        </motion.div>
-        
-        {/* Loading step text */}
-        <div className="h-8 mb-4">
-          <AnimatePresence mode="wait">
-            {currentStep < loadingSteps.length && (
-              <motion.div
-                key={currentStep}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="flex items-center justify-center"
-              >
-                <span className="text-gray-300 font-medium mr-2">
-                  {loadingSteps[currentStep].text}
+
+            <div className="space-y-6">
+              <div className="h-6">
+                <span
+                  className="loading-text text-red-500 font-mono text-sm sm:text-base"
+                >
+                  Initializing Neural Network
                 </span>
-                <LoadingDots />
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+
+              {/* Skip Button */}
+              {showSkip && (
+                <motion.button
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(239, 68, 68, 0.3)' }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onComplete}
+                  className="mt-8 px-4 py-2 bg-red-500/20 border border-red-500/40 rounded-md text-red-500 text-sm font-medium flex items-center justify-center mx-auto hover:bg-red-500/30 transition-all duration-300 shadow-sm shadow-red-500/20"
+                  aria-label="Skip loading animation"
+                >
+                  <span>Skip</span>
+                  <SkipForward className="ml-2 w-4 h-4" />
+                </motion.button>
+              )}
+            </div>
+          </motion.div>
         </div>
-        
-        {/* Progress bar */}
-        <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
-          <motion.div
-            className="h-full bg-gradient-to-r from-red-500 to-red-600"
-            initial={{ width: 0 }}
-            animate={{ 
-              width: `${Math.min(100, (currentStep / loadingSteps.length) * 100)}%` 
-            }}
-            transition={{ ease: "easeInOut" }}
-          />
-        </div>
-        
-        {/* Skip button */}
-        {showSkip && (
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            onClick={onComplete}
-            className="mt-12 px-4 py-2 bg-gradient-to-r from-red-700/10 to-red-800/10 border border-red-500/20 rounded-md text-gray-300 text-sm flex items-center space-x-2 hover:bg-red-700/20 transition-all duration-300 group"
-          >
-            <span>Skip intro</span>
-            <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-          </motion.button>
-        )}
-      </div>
-    </motion.div>
+
+        <motion.div
+          className="fixed top-1/4 left-4 transform -translate-y-1/2 opacity-20 hidden sm:block"
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 0.2 }}
+          exit={{ x: -50, opacity: 0 }}
+        >
+          <Code2 className="w-24 h-24 text-red-500" />
+        </motion.div>
+        <motion.div
+          className="fixed top-3/4 left-4 transform -translate-y-1/2 opacity-20 hidden sm:block"
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 0.2 }}
+          exit={{ x: -50, opacity: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Cpu className="w-24 h-24 text-red-500" />
+        </motion.div>
+        <motion.div
+          className="fixed top-1/4 right-4 transform -translate-y-1/2 opacity-20 hidden sm:block"
+          initial={{ x: 50, opacity: 0 }}
+          animate={{ x: 0, opacity: 0.2 }}
+          exit={{ x: 50, opacity: 0 }}
+        >
+          <Network className="w-24 h-24 text-red-500" />
+        </motion.div>
+        <motion.div
+          className="fixed top-3/4 right-4 transform -translate-y-1/2 opacity-20 hidden sm:block"
+          initial={{ x: 50, opacity: 0 }}
+          animate={{ x: 0, opacity: 0.2 }}
+          exit={{ x: 50, opacity: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Zap className="w-24 h-24 text-red-500" />
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
-// Loading dots animation
-const LoadingDots = () => {
-  return (
-    <div className="flex space-x-1">
-      {[0, 1, 2].map((i) => (
-        <motion.div
-          key={i}
-          className="w-1.5 h-1.5 bg-red-500 rounded-full"
-          animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
-          transition={{
-            duration: 1.2,
-            repeat: Infinity,
-            delay: i * 0.2,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
-    </div>
-  );
-};
+interface Particle {
+  x: number;
+  y: number;
+  lastX: number;
+  lastY: number;
+  size: number;
+  speedX: number;
+  speedY: number;
+  color: string;
+  opacity: number;
+  update: () => void;
+  draw: (ctx: CanvasRenderingContext2D) => void;
+}
 
 export default LoadingSequence;
