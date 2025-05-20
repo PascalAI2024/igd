@@ -197,6 +197,7 @@ const CaseStudyDetail: React.FC = () => {
           </Link>
         </motion.div>
       </div>
+      </div>
     </PageTransition>
   );
 };

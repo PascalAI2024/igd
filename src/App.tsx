@@ -17,8 +17,8 @@ const About = React.lazy(() => import('./pages/About'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
-const CaseStudies = React.lazy(() => import('./pages/SimpleCaseStudies'));
-const CaseStudyDetail = React.lazy(() => import('./pages/SimpleCaseStudyDetail'));
+const SimpleCaseStudies = React.lazy(() => import('./pages/SimpleCaseStudies'));
+const SimpleCaseStudyDetail = React.lazy(() => import('./pages/SimpleCaseStudyDetail'));
 const ServiceDetail = React.lazy(() => import('./pages/ServiceDetail'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const Landing = React.lazy(() => import('./pages/Landing'));
@@ -191,7 +191,7 @@ const App = () => {
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogPost />} />
               <Route path="/case-studies" element={<SimpleCaseStudies />} />
-              <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
+              <Route path="/case-studies/:id" element={<SimpleCaseStudyDetail />} />
 
               {/* Service Routes - SMB Focused */}
               <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
