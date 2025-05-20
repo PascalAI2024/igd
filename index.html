@@ -291,6 +291,42 @@
     </style>
   </head>
   <body>
+    <!-- Netlify Forms Pre-rendering -->
+    <!-- This is required for Netlify Forms to work with React/SPA -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="company" />
+      <input type="text" name="message" />
+      <input type="text" name="projectType" />
+      <input type="text" name="budget" />
+      <input type="text" name="timeframe" />
+      <input type="text" name="csrf-token" />
+    </form>
+    
+    <form name="contact-enhanced" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="company" />
+      <input type="text" name="message" />
+      <input type="text" name="projectType" />
+      <input type="text" name="budget" />
+      <input type="text" name="timeframe" />
+      <input type="text" name="csrf-token" />
+    </form>
+    
+    <form name="contact-light" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="company" />
+      <input type="text" name="message" />
+      <input type="text" name="projectType" />
+      <input type="text" name="csrf-token" />
+    </form>
+    
     <div id="root"></div>
     <noscript>
       <div style="padding: 20px; text-align: center; color: white; background: black;">

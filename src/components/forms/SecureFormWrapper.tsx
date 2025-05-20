@@ -121,8 +121,39 @@ const SecureFormWrapper: React.FC<SecureFormProps> = ({
       // Add CSRF token to the data
       sanitizedData['csrf-token'] = csrfToken;
       
-      // Submit form data
-      await onSubmit(sanitizedData);
+      // Check if we should use Netlify Forms or the API proxy
+      const useNetlifyForms = true; // Set to true to use Netlify Forms
+      
+      if (useNetlifyForms) {
+        // Create a standard form submission using Netlify Forms
+        const formElement = document.getElementById(formId) as HTMLFormElement;
+        if (formElement) {
+          // Netlify Forms requires a proper form submission
+          // Add form data to hidden inputs or use FormData
+          const formData = new FormData(formElement);
+          
+          // Add all values from sanitizedData to formData
+          Object.entries(sanitizedData).forEach(([key, value]) => {
+            formData.append(key, value as string);
+          });
+          
+          // Submit via fetch to ensure email is sent through Netlify Forms
+          const response = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData as any).toString()
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Form submission failed: ${response.status}`);
+          }
+        } else {
+          throw new Error('Form element not found');
+        }
+      } else {
+        // Use the custom API proxy for form submission
+        await onSubmit(sanitizedData);
+      }
       
       // Success handling
       setSubmitStatus('success');

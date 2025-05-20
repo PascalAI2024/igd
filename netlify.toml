@@ -2,6 +2,37 @@
   publish = "dist"
   command = "rm -rf dist && npm install --legacy-peer-deps && npm run build-force"
 
+[build.environment]
+  NODE_VERSION = "18"
+
+[dev]
+  command = "npm run dev"
+  framework = "vite"
+
+# Netlify Forms settings
+# Ensure forms are forwarded to correct email
+[forms]
+  # Contact form settings
+  [forms.contact]
+    name = "contact"
+    # Forms will be sent to this email address
+    [forms.contact.recipients]
+      email = "pascal@ingeniousdigital.com"
+      # Send a copy to the support email if needed
+      # email = "support@ingeniousdigital.com"
+  
+  # Enhanced contact form settings
+  [forms.contact-enhanced]
+    name = "contact-enhanced"
+    [forms.contact-enhanced.recipients]
+      email = "pascal@ingeniousdigital.com"
+  
+  # Light contact form settings
+  [forms.contact-light]
+    name = "contact-light"
+    [forms.contact-light.recipients]
+      email = "pascal@ingeniousdigital.com"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
