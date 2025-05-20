@@ -158,8 +158,19 @@ const Funnel = ({
     }
   }, [camera]);
   
+  // Light references for animation
+  const lightRefs = useRef<THREE.Group[]>([]);
+  const spotlightRef = useRef<THREE.SpotLight>(null);
+  
+  // Set up light refs
+  useEffect(() => {
+    lightRefs.current = [];
+  }, []);
+  
   // Animation loop
   useFrame((state, delta) => {
+    const time = state.clock.getElapsedTime();
+    
     // Add new particles at the top of the funnel
     if (Math.random() < 0.1) {
       const x = (Math.random() - 0.5) * 6;
@@ -254,7 +265,7 @@ const Funnel = ({
     
     // Rotate funnel slightly to add visual interest
     if (funnelRef.current) {
-      funnelRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.2) * 0.1;
+      funnelRef.current.rotation.y = Math.sin(time * 0.2) * 0.1;
     }
     
     // Animate stage indicators
@@ -262,9 +273,9 @@ const Funnel = ({
       stagesRef.current.children.forEach((child, index) => {
         // Add pulse effect to hovered stage
         if (hoveredStage === index) {
-          child.scale.x = 1.1 + Math.sin(state.clock.getElapsedTime() * 5) * 0.05;
-          child.scale.y = 1.1 + Math.sin(state.clock.getElapsedTime() * 5) * 0.05;
-          child.scale.z = 1.1 + Math.sin(state.clock.getElapsedTime() * 5) * 0.05;
+          child.scale.x = 1.1 + Math.sin(time * 5) * 0.05;
+          child.scale.y = 1.1 + Math.sin(time * 5) * 0.05;
+          child.scale.z = 1.1 + Math.sin(time * 5) * 0.05;
         } else {
           child.scale.x = THREE.MathUtils.lerp(child.scale.x, 1, 0.1);
           child.scale.y = THREE.MathUtils.lerp(child.scale.y, 1, 0.1);
@@ -272,6 +283,41 @@ const Funnel = ({
         }
       });
     }
+    
+    // Animate spotlight
+    if (spotlightRef.current) {
+      // Animate spotlight intensity
+      spotlightRef.current.intensity = 2 + Math.sin(time * 0.5) * 1;
+      
+      // Animate spotlight position
+      spotlightRef.current.position.x = Math.sin(time * 0.2) * 1.5;
+      
+      // Animate spotlight angle
+      spotlightRef.current.angle = 0.5 + Math.sin(time * 0.3) * 0.1;
+    }
+    
+    // Animate the point lights
+    lightRefs.current.forEach((lightGroup, index) => {
+      if (lightGroup) {
+        // Get the point light, assuming it's the first child mesh
+        const light = lightGroup.children[0] as THREE.PointLight;
+        
+        if (light) {
+          // Custom animation for each light
+          const offset = index * 0.5;
+          
+          // Pulsing intensity
+          light.intensity = 1.5 + Math.sin(time * 0.8 + offset) * 0.5;
+          
+          // Subtle position movement
+          lightGroup.position.y = Math.sin(time * 0.5 + offset) * 0.3;
+          lightGroup.position.x = THREE.MathUtils.lerp(-4, 4, index / (stages.length - 1)) + Math.sin(time * 0.3 + offset) * 0.2;
+          
+          // Animate distance 
+          light.distance = 5 + Math.sin(time * 0.7 + offset) * 2;
+        }
+      }
+    });
   });
   
   // Create point material with custom shader for better particles
@@ -313,8 +359,92 @@ const Funnel = ({
       <pointLight position={[10, 10, 10]} intensity={0.8} />
       <pointLight position={[-10, -10, -10]} intensity={0.4} color="#ff0000" />
       
+      {/* Animated lights under funnel */}
+      <group position={[0, -3, -1]}>
+        {/* Center spotlight */}
+        <spotLight 
+          ref={spotlightRef}
+          position={[0, 0, 2]} 
+          angle={0.5} 
+          penumbra={0.8}
+          intensity={3} 
+          color="#ef4444" 
+          castShadow
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+          shadow-bias={-0.0001}
+        />
+        
+        {/* Animated light particles */}
+        {stages.map((stage, index) => {
+          // Calculate position based on stage
+          const t = index / (stages.length - 1);
+          const x = THREE.MathUtils.lerp(-4, 4, t);
+          
+          return (
+            <group 
+              key={`light-${index}`}
+              position={[x, Math.sin(index * 2) * 0.5, 0]}
+              ref={(el) => {
+                if (el && !lightRefs.current.includes(el)) {
+                  lightRefs.current[index] = el;
+                }
+              }}
+            >
+              <pointLight
+                intensity={1.5}
+                color={stage.color}
+                distance={5}
+                decay={2}
+              >
+                <mesh>
+                  <sphereGeometry args={[0.05, 16, 16]} />
+                  <meshBasicMaterial color={stage.color} />
+                </mesh>
+              </pointLight>
+              
+              {/* Light ray effect */}
+              <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]}>
+                <coneGeometry args={[0.5, 1, 16, 1, true]} />
+                <meshBasicMaterial 
+                  color={stage.color} 
+                  transparent={true} 
+                  opacity={0.15} 
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+            </group>
+          );
+        })}
+
+        {/* Add volumetric light beams */}
+        <group position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <mesh>
+            <cylinderGeometry args={[3, 0.5, 3, 32, 1, true]} />
+            <meshBasicMaterial 
+              color="#ef4444" 
+              transparent={true} 
+              opacity={0.05} 
+              side={THREE.DoubleSide}
+              blending={THREE.AdditiveBlending}
+            />
+          </mesh>
+        </group>
+      </group>
+      
+      {/* Floor for light reflection */}
+      <mesh position={[0, -2.5, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[12, 6]} />
+        <meshStandardMaterial 
+          color="#111111"
+          metalness={0.8}
+          roughness={0.2}
+          envMapIntensity={0.5}
+        />
+      </mesh>
+      
       {/* Funnel shape */}
-      <mesh ref={funnelRef} position={[0, 0, 0]}>
+      <mesh ref={funnelRef} position={[0, 0, 0]} castShadow>
         <extrudeGeometry 
           args={[
             funnelShape, 
@@ -483,12 +613,21 @@ const LeadFunnel3D = () => {
           {isAnimating ? 'Pause' : 'Resume'} Animation
         </button>
       </div>
+      
+      {/* Lead Funnel Headline */}
+      <div className="text-center mb-6">
+        <h2 className="text-3xl font-bold text-gradient mb-2">Lead Generation Funnel</h2>
+        <p className="text-lg text-gray-300 italic">
+          Watch your leads progress through our optimized funnel
+        </p>
+      </div>
 
       {/* 3D Lead Funnel Visualization */}
-      <div className="h-[400px] w-full">
+      <div className="h-[450px] w-full">
         <AnimationErrorBoundary fallback={<LeadFunnelFallback />}>
           {isVisible && (
-            <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 8], fov: 45 }}>
+            <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 8], fov: 45 }} shadows>
+              <fog attach="fog" args={['#000000', 5, 15]} />
               <Funnel 
                 hoveredStage={hoveredStage} 
                 expandedStage={expandedStage}
