@@ -21,7 +21,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       transition={{ delay: index * 0.1 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="relative group"
+      className="relative group project-card"
     >
       {/* Background glow effect */}
       <AnimatePresence>
