@@ -7,7 +7,6 @@ import Blog from '../components/Blog';
 import TestimonialsEnhanced from '../components/TestimonialsEnhanced';
 import ContactFormEnhanced from '../components/ContactFormEnhanced';
 import PageTransition from '../components/PageTransition';
-import CustomCursor from '../components/effects/CustomCursor';
 import InteractiveBackground from '../components/backgrounds/InteractiveBackground';
 import ScrollReveal, { StaggerReveal } from '../components/effects/ScrollReveal';
 import gsap from 'gsap';
@@ -60,10 +59,6 @@ const Home = () => {
 
   return (
     <PageTransition>
-      {/* Custom cursor for desktop */}
-      <div className="hidden md:block">
-        <CustomCursor color="#e03131" size={24} />
-      </div>
       
       <main className="relative z-10">
         {/* Hero section with 3D interactive background */}

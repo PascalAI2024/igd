@@ -7,6 +7,7 @@ import ScrollProgress from './components/ScrollProgress';
 import FloatingContactIcons from './components/FloatingContactIcons';
 import LoadingSequence from './components/LoadingSequence';
 import BreadcrumbSchema from './components/BreadcrumbSchema';
+import CustomCursor from './components/effects/CustomCursor';
 import { initializeAnalytics, trackPageView, trackError } from './utils/analytics';
 import { measurePerformance } from './utils/performance';
 
@@ -151,6 +152,11 @@ const App = () => {
     <div className="min-h-screen bg-black">
       {/* Add breadcrumb schema for SEO */}
       <BreadcrumbSchema />
+      
+      {/* Custom cursor for desktop */}
+      <div className="hidden md:block">
+        <CustomCursor color="#e03131" size={24} />
+      </div>
 
       {showNavigation && (
         <>
