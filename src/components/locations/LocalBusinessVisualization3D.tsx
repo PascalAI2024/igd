@@ -68,9 +68,21 @@ const Building3D = ({
   
   // Random window pattern
   const windowPattern = useMemo(() => {
+    // Create RGBA data (4 components per pixel)
+    const size = 16 * 16;
+    const data = new Uint8Array(size * 4);
+    for (let i = 0; i < size; i++) {
+      const stride = i * 4;
+      const value = Math.random() > 0.5 ? 255 : 0;
+      data[stride] = value;     // R
+      data[stride + 1] = value; // G
+      data[stride + 2] = value; // B
+      data[stride + 3] = 255;   // A (full opacity)
+    }
+    
+    // Create texture with RGBA format
     const pattern = new THREE.DataTexture(
-      new Uint8Array(16 * 16 * 3).map(() => Math.random() > 0.5 ? 255 : 0),
-      16, 16, THREE.RGB
+      data, 16, 16, THREE.RGBAFormat
     );
     pattern.needsUpdate = true;
     return pattern;
