@@ -7,13 +7,17 @@ const CookieConsent: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
-    // Check if user has already provided consent
+    // Check if user has already provided consent or if banner has been shown this session
     const hasConsent = checkExistingConsent();
+    const shownThisSession = sessionStorage.getItem('consent-shown-this-session') === 'true';
     
-    if (!hasConsent) {
+    // Only show if no consent has been given AND it hasn't been shown this session
+    if (!hasConsent && !shownThisSession) {
       // Show the consent banner after a short delay
       const timer = setTimeout(() => {
         setIsVisible(true);
+        // Mark that we've shown it this session
+        sessionStorage.setItem('consent-shown-this-session', 'true');
       }, 1000);
       
       return () => clearTimeout(timer);

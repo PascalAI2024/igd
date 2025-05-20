@@ -15,7 +15,15 @@ let userHasConsented = false;
 // Check for existing consent
 export const checkExistingConsent = (): boolean => {
   try {
+    // Check if user has a consent cookie or localStorage entry
     const storedConsent = localStorage.getItem('analytics-consent');
+    const storedSessionConsent = sessionStorage.getItem('consent-shown-this-session');
+
+    // Only show the consent banner once per session even if they haven't made a choice yet
+    if (!storedConsent && !storedSessionConsent) {
+      sessionStorage.setItem('consent-shown-this-session', 'true');
+    }
+    
     userHasConsented = storedConsent === 'true';
     return userHasConsented;
   } catch (e) {

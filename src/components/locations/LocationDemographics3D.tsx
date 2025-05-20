@@ -401,7 +401,7 @@ const LocationDemographics3D: React.FC<LocationDemographics3DProps> = ({
         {/* 3D visualization */}
         <div className="h-[400px] w-full mb-8">
           <AnimationErrorBoundary>
-            <Canvas shadows camera={{ position: [0, 2, 5], fov: 50 }}>
+            <Canvas shadows fallback={<div className="h-full flex items-center justify-center text-gray-400">Loading demographics visualization...</div>} camera={{ position: [0, 2, 5], fov: 50 }}>
               <DemographicsScene 
                 data={demographicData} 
                 locationName={locationName}
