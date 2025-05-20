@@ -18,6 +18,8 @@ A modern React application built with TypeScript, Tailwind CSS, and Framer Motio
 - **Routing**: React Router v6
 - **Build Tool**: Vite
 - **Code Quality**: ESLint + TypeScript
+- **3D Rendering**: Three.js with React Three Fiber
+- **Post-processing**: @react-three/postprocessing
 
 ## Project Structure
 
@@ -45,6 +47,16 @@ src/
 - **PageTransition**: Provides consistent page transition animations
 - **ServiceComponents**: Modular components for each service type
 - **AnimationErrorBoundary**: Graceful handling of animation errors
+- **3D Visualizations**: Interactive 3D components for enhanced user experience
+
+### 3D Components
+
+The project includes several interactive 3D visualizations built with Three.js:
+
+- **LocationDemographics3D**: Visualizes demographic data for locations
+- **SystemNetwork3D**: Displays system integration networks
+- **CRMDashboard3D**: Interactive CRM dashboard visualization
+- **RankingVisualizer3D**: SEO ranking visualization
 
 ## Getting Started
 
