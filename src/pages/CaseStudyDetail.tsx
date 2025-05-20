@@ -3,8 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import type { RequiredCaseStudy } from '../data/case-studies/types';
-import { caseStudies } from '../data/case-studies';
+// Fix: Import case studies from both sources to handle all potential references
+import { caseStudies as importedCaseStudies } from '../data/case-studies';
+import { caseStudies as simpleCaseStudies } from './SimpleCaseStudies';
 import OptimizedImage from '../components/OptimizedImage';
+
+// Combine case studies from both sources
+const caseStudies = [...importedCaseStudies, ...simpleCaseStudies];
 
 const CaseStudyDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

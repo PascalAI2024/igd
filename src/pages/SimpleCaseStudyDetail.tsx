@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 // Simple case studies data with all required properties inline
-const caseStudies = [
+export const caseStudies = [
   {
     id: 'ai-analytics',
     title: 'AI-Powered Analytics Platform',

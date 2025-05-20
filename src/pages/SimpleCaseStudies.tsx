@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 
 // Simple case studies data with all required properties inline
-const caseStudies = [
+export const caseStudies = [
   {
     id: 'ai-analytics',
     title: 'AI-Powered Analytics Platform',
