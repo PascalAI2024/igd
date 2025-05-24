@@ -68,14 +68,14 @@ export const fintech: CaseStudy = {
     reliability: '99.99%',
     roi: '350%'
   },
-  image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1200',
-  imageUrl: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1200',
+  image: '/case-studies/fintech-platform.webp',
+  imageUrl: '/case-studies/fintech-platform.webp',
   icon: CreditCard,
   testimonial: {
     quote: "The payment platform has been transformative for our business. We've been able to streamline our payment processes, reduce costs, and provide a better experience for our customers. The security and reliability give us peace of mind, and the integrations with our existing systems made adoption seamless.",
     author: "Sarah Johnson",
     role: "CEO, PayLocal",
-    image: "/team/fintech-ceo.webp"
+    image: "/team/pascal.jpg"
   },
   timeline: {
     planning: '8 weeks',

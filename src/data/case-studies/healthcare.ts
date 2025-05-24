@@ -66,14 +66,14 @@ export const healthcare: CaseStudy = {
     compliance: '100%',
     roi: '300%'
   },
-  image: '/images/tech/react.webp',
-  imageUrl: '/images/tech/react.webp',
+  image: '/case-studies/healthcare-platform.webp',
+  imageUrl: '/case-studies/healthcare-platform.webp',
   icon: Stethoscope,
   testimonial: {
     quote: "We were drowning in administrative complexity, struggling to provide quality patient care. Ingenious Digital didn't just upgrade our technology—they reimagined our entire healthcare delivery model. Our clinicians now spend more time with patients and less time fighting with systems.",
     author: "Dr. Elena Rodriguez",
     role: "Chief Executive Officer, St. Mary's Regional Health System",
-    image: "/images/tech/react.webp"
+    image: "/team/pascal.jpg"
   },
   timeline: {
     planning: '8 weeks',

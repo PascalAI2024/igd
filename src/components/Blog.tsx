@@ -3,10 +3,12 @@ import { Search, Calendar, Clock, ArrowRight, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
 import OptimizedImage from "./OptimizedImage";
 import { blogPosts, categories } from "../data/blog/index";
+import { useNavigateWithTransition } from "../hooks/useNavigateWithTransition";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const navigateWithTransition = useNavigateWithTransition();
 
   const filteredPosts = blogPosts.filter((post) => {
     const matchesCategory =
@@ -134,8 +136,8 @@ const Blog = () => {
                   onClick={(e) => {
                     // Prevent default behavior
                     e.preventDefault();
-                    // Navigate programmatically
-                    window.location.href = `/blog/${post.id}`;
+                    // Navigate with transition
+                    navigateWithTransition(`/blog/${post.id}`);
                   }}
                 >
                   Read More
@@ -151,6 +153,13 @@ const Blog = () => {
           <Link
             to="/blog"
             className="inline-flex items-center px-8 py-4 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+            onClick={(e) => {
+              // Only use custom navigation if we're not already on the blog page
+              if (window.location.pathname !== '/blog') {
+                e.preventDefault();
+                navigateWithTransition('/blog');
+              }
+            }}
           >
             View All Articles
             <ArrowRight className="w-5 h-5 ml-2" />

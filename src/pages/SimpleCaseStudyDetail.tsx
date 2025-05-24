@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { useNavigateWithTransition } from '../hooks/useNavigateWithTransition';
+import PageTransition from '../components/PageTransition';
 
 // Simple case studies data with all required properties inline
 export const caseStudies = [
@@ -81,33 +83,45 @@ export const caseStudies = [
 
 const SimpleCaseStudyDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigateWithTransition = useNavigateWithTransition();
   const study = caseStudies.find(s => s.id === id);
 
   if (!study) {
     return (
-      <div className="min-h-screen bg-black py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl font-bold text-white mb-6">Case Study Not Found</h1>
-          <Link 
-            to="/case-studies" 
-            className="inline-flex items-center px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Case Studies
-          </Link>
+      <PageTransition>
+        <div className="min-h-screen bg-black py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-3xl font-bold text-white mb-6">Case Study Not Found</h1>
+            <Link 
+              to="/case-studies" 
+              className="inline-flex items-center px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateWithTransition('/case-studies');
+              }}
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back to Case Studies
+            </Link>
+          </div>
         </div>
-      </div>
+      </PageTransition>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <PageTransition>
+      <div className="min-h-screen bg-black py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <div className="mb-8">
           <Link 
             to="/case-studies" 
             className="inline-flex items-center text-gray-400 hover:text-white transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              navigateWithTransition('/case-studies');
+            }}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Case Studies
@@ -160,9 +174,24 @@ const SimpleCaseStudyDetail: React.FC = () => {
               className="w-full h-full object-cover"
               loading="lazy"
               onError={(e) => {
-                // Fallback to unsplash URL if local image fails to load
+                // Try SVG if webp fails, then fallback to unsplash URL
                 const target = e.target as HTMLImageElement;
-                target.src = study.imageUrl;
+                const svgPath = `/case-studies/${study.id}.svg`;
+                
+                // First try to load the SVG version
+                fetch(svgPath)
+                  .then(response => {
+                    if (response.ok) {
+                      target.src = svgPath;
+                    } else {
+                      // If SVG also fails, use the fallback URL
+                      target.src = study.imageUrl;
+                    }
+                  })
+                  .catch(() => {
+                    // If fetch fails, use the fallback URL
+                    target.src = study.imageUrl;
+                  });
               }}
             />
           </div>
@@ -258,13 +287,17 @@ const SimpleCaseStudyDetail: React.FC = () => {
           <Link
             to="/contact"
             className="inline-flex items-center px-8 py-4 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              navigateWithTransition('/contact');
+            }}
           >
             Start Your Project
             <ArrowRight className="w-5 h-5 ml-2" />
           </Link>
         </motion.div>
       </div>
-    </div>
+    </PageTransition>
   );
 };
 

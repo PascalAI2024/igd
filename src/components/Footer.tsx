@@ -29,6 +29,7 @@ const Footer = () => {
         { name: 'Lead Generation', href: '/services/lead-generation' },
         { name: 'CRM Solutions', href: '/services/crm' },
         { name: 'Web Development', href: '/services/web-development' },
+        { name: 'System Integration', href: '/services/system-integration' },
         { name: 'Photography', href: '/services/photography' },
         { name: 'Videography', href: '/services/videography' }
       ]

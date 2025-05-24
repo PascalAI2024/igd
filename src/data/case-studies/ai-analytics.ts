@@ -35,7 +35,8 @@ export const aiAnalytics: CaseStudy = {
     'Docker',
     'Kubernetes'
   ],
-  imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop",
+  imageUrl: "/case-studies/ai-analytics.webp",
+  image: "/case-studies/ai-analytics.webp",
   description: "How we developed an AI-powered analytics platform that processes massive datasets in real-time, providing actionable insights and predictive capabilities.",
   subtitle: 'Advanced AI Analytics for Enterprise Data'
 };

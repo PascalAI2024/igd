@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Code2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
+import { useNavigateWithTransition } from '../hooks/useNavigateWithTransition';
 
 // Simple case studies data with all required properties inline
 export const caseStudies = [
@@ -99,6 +100,8 @@ export const caseStudies = [
 ];
 
 const SimpleCaseStudies = () => {
+  const navigateWithTransition = useNavigateWithTransition();
+  
   return (
     <PageTransition>
       <div className="min-h-screen bg-black">
@@ -131,6 +134,10 @@ const SimpleCaseStudies = () => {
                 <Link
                   key={study.id}
                   to={`/case-studies/${study.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateWithTransition(`/case-studies/${study.id}`);
+                  }}
                   className="group block rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-black border border-white/5 hover:border-red-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-red-500/10 hover:-translate-y-1"
                 >
                   <motion.div
@@ -147,9 +154,24 @@ const SimpleCaseStudies = () => {
                         className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                         onError={(e) => {
-                          // Fallback to unsplash URL if local image fails to load
+                          // Try SVG if webp fails, then fallback to unsplash URL
                           const target = e.target as HTMLImageElement;
-                          target.src = study.imageUrl;
+                          const svgPath = `/case-studies/${study.id}.svg`;
+                          
+                          // First try to load the SVG version
+                          fetch(svgPath)
+                            .then(response => {
+                              if (response.ok) {
+                                target.src = svgPath;
+                              } else {
+                                // If SVG also fails, use the fallback URL
+                                target.src = study.imageUrl;
+                              }
+                            })
+                            .catch(() => {
+                              // If fetch fails, use the fallback URL
+                              target.src = study.imageUrl;
+                            });
                         }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
@@ -212,6 +234,10 @@ const SimpleCaseStudies = () => {
                 </p>
                 <Link
                   to="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateWithTransition('/contact');
+                  }}
                   className="inline-flex items-center px-8 py-4 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
                 >
                   Start Your Project

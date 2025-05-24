@@ -295,7 +295,28 @@ const LocationPage: React.FC = () => {
                           </div>
                         </div>
                         <Link
-                          to={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
+                          to={`/services/${
+                            service === 'Web Development' ? 'web-development' : 
+                            service === 'Digital Marketing' ? 'digital-marketing' :
+                            service === 'Local SEO' ? 'digital-marketing' :
+                            service === 'SEO' ? 'digital-marketing' :
+                            service === 'Content Marketing' ? 'digital-marketing' :
+                            service === 'Social Media Management' ? 'digital-marketing' :
+                            service === 'Google Business Profile Optimization' ? 'digital-marketing' :
+                            service === 'Photography' ? 'photography' :
+                            service === 'Videography' ? 'videography' :
+                            service === 'Tourism Marketing' ? 'digital-marketing' :
+                            service === 'Luxury Brand Marketing' ? 'digital-marketing' :
+                            service === 'Multilingual SEO' ? 'digital-marketing' :
+                            service === 'Restaurant Marketing' ? 'digital-marketing' :
+                            service === 'Retail Marketing' ? 'digital-marketing' :
+                            service === 'Hospitality Marketing' ? 'digital-marketing' :
+                            service === 'Education Marketing' ? 'digital-marketing' :
+                            service === 'Seasonal Campaign Management' ? 'digital-marketing' :
+                            service === 'International SEO' ? 'digital-marketing' :
+                            service === 'Mobile Optimization' ? 'web-development' :
+                            service.toLowerCase().replace(/\s+/g, '-')
+                          }`}
                           className="inline-flex items-center text-red-500 group-hover:text-red-400 transition-colors text-sm font-medium"
                         >
                           Learn More

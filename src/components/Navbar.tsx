@@ -11,6 +11,7 @@ interface NavbarProps {
 
 const industries = [
   { name: 'Local Retail', path: '/industries/local-retail' },
+  { name: 'Retail Businesses', path: '/industries/retail' },
   { name: 'Small Restaurants', path: '/industries/restaurants' },
   { name: 'Local Services', path: '/industries/local-services' },
   { name: 'Small Healthcare', path: '/industries/healthcare' },
