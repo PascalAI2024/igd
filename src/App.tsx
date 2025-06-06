@@ -15,7 +15,6 @@ import {
   initializeAnalytics, 
   trackPageView, 
   trackError, 
-  checkExistingConsent, 
   trackEngagement 
 } from './utils/analytics';
 import { measurePerformance } from './utils/performance';
@@ -100,28 +99,20 @@ const App = () => {
 
   // Initialize analytics and performance tracking
   useEffect(() => {
-    // Only initialize analytics if user has consented
-    if (checkExistingConsent()) {
-      initializeAnalytics();
-    }
+    // Initialize analytics immediately (opt-out approach)
+    initializeAnalytics();
     
     const cleanup = measurePerformance();
 
     // Setup global error tracking
     const handleError = (event: ErrorEvent) => {
-      // Only track errors if user has consented to analytics
-      if (checkExistingConsent()) {
-        trackError(event.error);
-      }
+      trackError(event.error);
     };
     window.addEventListener('error', handleError);
 
     // Setup unhandled promise rejection tracking
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      // Only track errors if user has consented to analytics
-      if (checkExistingConsent()) {
-        trackError(`Unhandled Promise Rejection: ${event.reason}`);
-      }
+      trackError(`Unhandled Promise Rejection: ${event.reason}`);
     };
     window.addEventListener('unhandledrejection', handleUnhandledRejection);
 
@@ -134,13 +125,11 @@ const App = () => {
 
   // Track page views and handle scrolling with smooth behavior
   useEffect(() => {
-    // Only track page views if user has consented to analytics
-    if (checkExistingConsent()) {
-      // Send enhanced page view tracking
-      trackPageView(location.pathname + location.search);
-      
-      // Set up scroll tracking for enhanced analytics
-      const handleScroll = () => {
+    // Send enhanced page view tracking immediately (opt-out approach)
+    trackPageView(location.pathname + location.search);
+    
+    // Set up scroll tracking for enhanced analytics
+    const handleScroll = () => {
         // Track max scroll depth every 2 seconds to avoid excessive events
         if (!window._scrollTimeout) {
           window._scrollTimeout = setTimeout(() => {
@@ -192,13 +181,12 @@ const App = () => {
       };
       
       window.addEventListener('mousemove', handleExitIntent, { passive: true });
-      
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('mousemove', handleExitIntent);
-        clearTimeout(window._scrollTimeout);
-      };
-    }
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleExitIntent);
+      clearTimeout(window._scrollTimeout);
+    };
     
     // Scroll to top with performance optimization
     if ('scrollBehavior' in document.documentElement.style) {

@@ -7,12 +7,12 @@ const CookieConsent: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
-    // Check if user has already provided consent or if banner has been shown this session
-    const hasConsent = checkExistingConsent();
+    // Check if user has made a choice about cookies
+    const hasChosenConsent = localStorage.getItem('analytics-consent') !== null;
     const shownThisSession = sessionStorage.getItem('consent-shown-this-session') === 'true';
     
-    // Only show if no consent has been given AND it hasn't been shown this session
-    if (!hasConsent && !shownThisSession) {
+    // Show banner if user hasn't made a choice AND it hasn't been shown this session
+    if (!hasChosenConsent && !shownThisSession) {
       // Show the consent banner after a short delay
       const timer = setTimeout(() => {
         setIsVisible(true);
@@ -24,12 +24,12 @@ const CookieConsent: React.FC = () => {
     }
   }, []);
   
-  const acceptCookies = () => {
+  const acceptAllCookies = () => {
     setUserConsent(true);
     setIsVisible(false);
   };
   
-  const declineCookies = () => {
+  const optOutOfAnalytics = () => {
     setUserConsent(false);
     setIsVisible(false);
   };
@@ -46,9 +46,9 @@ const CookieConsent: React.FC = () => {
         >
           <div className="max-w-screen-lg mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-white font-semibold text-lg mb-1">Cookie Consent</h3>
+              <h3 className="text-white font-semibold text-lg mb-1">Cookie Notice</h3>
               <p className="text-gray-300 text-sm">
-                We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+                We use cookies and analytics to improve your experience on our site. Analytics helps us understand how you use our site so we can make it better. You can opt out of analytics tracking at any time.
                 <a href="/privacy" className="text-red-400 ml-1 underline">
                   Learn more about how we use cookies
                 </a>
@@ -57,16 +57,16 @@ const CookieConsent: React.FC = () => {
             
             <div className="flex flex-wrap gap-2 mt-2 sm:mt-0">
               <button
-                onClick={declineCookies}
+                onClick={optOutOfAnalytics}
                 className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md text-sm"
               >
-                Necessary Only
+                Opt Out of Analytics
               </button>
               <button
-                onClick={acceptCookies}
+                onClick={acceptAllCookies}
                 className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm"
               >
-                Accept All
+                Got It
               </button>
               <button
                 onClick={() => setIsVisible(false)}

@@ -9,25 +9,27 @@ declare global {
   }
 }
 
-// User consent tracking
-let userHasConsented = false;
+// User consent tracking - default to true for opt-out approach
+let userHasConsented = true;
 
-// Check for existing consent
+// Check for existing consent - opt-out approach
 export const checkExistingConsent = (): boolean => {
   try {
-    // Check if user has a consent cookie or localStorage entry
+    // Check if user has explicitly opted out
     const storedConsent = localStorage.getItem('analytics-consent');
     const storedSessionConsent = sessionStorage.getItem('consent-shown-this-session');
 
-    // Only show the consent banner once per session even if they haven't made a choice yet
+    // Only show the consent banner once per session
     if (!storedConsent && !storedSessionConsent) {
       sessionStorage.setItem('consent-shown-this-session', 'true');
     }
     
-    userHasConsented = storedConsent === 'true';
+    // Default to true unless user explicitly opted out
+    userHasConsented = storedConsent !== 'false';
     return userHasConsented;
   } catch (e) {
-    return false;
+    // Default to tracking if localStorage is not available
+    return true;
   }
 };
 
@@ -327,10 +329,8 @@ const _getPageTypeFromPath = (path: string): string => {
 
 // Initialize analytics
 export const initializeAnalytics = () => {
-  // Check consent before initializing
-  if (!userHasConsented && !checkExistingConsent()) {
-    return;
-  }
+  // Check consent status - but don't block initialization
+  checkExistingConsent();
   
   window.dataLayer = window.dataLayer || [];
   window.gtag = function(...args: (string | GtagArg | Date)[]) {
