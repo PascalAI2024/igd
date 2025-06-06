@@ -5,7 +5,7 @@ import {
   generateSecureToken, 
   setCSRFToken, 
   verifyCSRFToken 
-} from '../utils/formValidation';
+} from '../../utils/formValidation';
 
 // Rate limiting constants
 const SUBMISSION_COOLDOWN = 10000; // 10 seconds between submissions

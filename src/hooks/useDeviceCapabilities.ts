@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-interface DeviceCapabilities {
+export interface DeviceCapabilities {
   performanceLevel: 'low' | 'medium' | 'high';
   isMobile: boolean;
   supportsWebGL2: boolean;

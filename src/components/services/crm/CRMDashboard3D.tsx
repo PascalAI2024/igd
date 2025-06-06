@@ -79,7 +79,7 @@ const NodeObject = ({
   });
   
   const handleClick = (e: THREE.Event) => {
-    e.stopPropagation();
+    (e as any).stopPropagation?.();
     setActiveNode(isActive ? null : node.id);
   };
   
@@ -212,7 +212,7 @@ const ConnectionLine = ({
   return (
     <group>
       {/* Connection line */}
-      <line ref={ref}>
+      <line ref={ref as any}>
         <bufferGeometry>
           <float32BufferAttribute 
             attach="attributes-position" 

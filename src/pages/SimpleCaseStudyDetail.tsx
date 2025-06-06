@@ -296,6 +296,7 @@ const SimpleCaseStudyDetail: React.FC = () => {
             <ArrowRight className="w-5 h-5 ml-2" />
           </Link>
         </motion.div>
+        </div>
       </div>
     </PageTransition>
   );

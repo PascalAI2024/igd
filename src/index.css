@@ -25,6 +25,8 @@ body {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
+  /* Ensure cursor is never completely hidden - critical for user experience */
+  cursor: auto;
 }
 
 /* Optimize performance for fixed elements */

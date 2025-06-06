@@ -4,8 +4,8 @@ interface GtagArg {
 
 declare global {
   interface Window {
-    gtag: (command: string, ...args: (string | GtagArg | Date)[]) => void;
-    dataLayer: Array<(string | GtagArg | Date)[]>;
+    gtag?: (command: string, ...args: (string | GtagArg | Date)[]) => void;
+    dataLayer?: Array<(string | GtagArg | Date)[]>;
   }
 }
 
@@ -334,7 +334,7 @@ export const initializeAnalytics = () => {
   
   window.dataLayer = window.dataLayer || [];
   window.gtag = function(...args: (string | GtagArg | Date)[]) {
-    window.dataLayer.push(args);
+    window.dataLayer!.push(args);
   };
   window.gtag('js', new Date());
   window.gtag('config', import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-VEDZ17M6MH', {
@@ -348,13 +348,13 @@ export const initializeAnalytics = () => {
     cookie_flags: 'SameSite=None;Secure',
     transport_type: 'beacon', // Uses navigator.sendBeacon for better reliability
     custom_map: {
-      dimension1: 'page_type',
-      dimension2: 'user_type',
-      dimension3: 'device_type',
-      dimension4: 'site_version',
-      metric1: 'page_load_time',
-      metric2: 'interaction_count'
-    }
+      'dimension1': 'page_type',
+      'dimension2': 'user_type',
+      'dimension3': 'device_type',
+      'dimension4': 'site_version',
+      'metric1': 'page_load_time',
+      'metric2': 'interaction_count'
+    } as any
   });
 
   // Send useful session-level data

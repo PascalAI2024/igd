@@ -11,7 +11,7 @@ interface BusinessType {
   id: string;
   name: string;
   count: number;
-  icon: React.FC;
+  icon: React.FC<any>;
   color: string;
   description: string;
 }
@@ -257,7 +257,7 @@ const BusinessDistrict = ({
                   }`}
                   style={{ boxShadow: '0 0 10px rgba(0,0,0,0.2)' }}
                 >
-                  <business.icon className="w-6 h-6" style={{ color: business.color }} />
+                  {React.createElement(business.icon, { className: "w-6 h-6", style: { color: business.color } })}
                 </div>
               </Html>
               
@@ -292,7 +292,7 @@ const BusinessDistrict = ({
                   <div className="bg-black/80 backdrop-blur-md p-3 rounded-lg border border-white/20 text-white w-60">
                     <div className="flex items-center mb-2">
                       <div className="w-6 h-6 rounded-full flex items-center justify-center mr-2" style={{ backgroundColor: business.color }}>
-                        <business.icon className="w-4 h-4 text-white" />
+                        {React.createElement(business.icon, { className: "w-4 h-4 text-white" })}
                       </div>
                       <h4 className="text-lg font-bold">{business.name}</h4>
                     </div>
@@ -341,7 +341,7 @@ const MarketOpportunityCard = ({
     >
       <div className="flex items-start">
         <div className="p-2 rounded-lg mr-3" style={{ backgroundColor: `${color}20` }}>
-          <Icon className="w-6 h-6" style={{ color }} />
+          {React.createElement(Icon as any, { className: "w-6 h-6", style: { color } })}
         </div>
         <div>
           <h4 className="text-white font-semibold">{title}</h4>

@@ -5,7 +5,7 @@
  * Handles CSRF protection, error handling, and request formatting
  */
 
-import { sanitize } from 'dompurify';
+import DOMPurify from 'dompurify';
 
 // Request timeouts (in milliseconds)
 const DEFAULT_TIMEOUT = 15000; // 15 seconds
@@ -154,7 +154,7 @@ export const submitForm = async (
     const sanitizedData: Record<string, unknown> = {};
     Object.entries(formData).forEach(([key, value]) => {
       if (typeof value === 'string') {
-        sanitizedData[key] = sanitize(value.trim());
+        sanitizedData[key] = DOMPurify.sanitize(value.trim());
       } else {
         sanitizedData[key] = value;
       }

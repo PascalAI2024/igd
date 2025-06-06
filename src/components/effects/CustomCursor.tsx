@@ -30,12 +30,22 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
   // Use requestAnimationFrame for trail effects
   useEffect(() => {
     if (!isInitialized.current) {
-      // Hide default cursor when our custom cursor is active
-      document.documentElement.style.cursor = 'none';
+      // Only hide default cursor after custom cursor is confirmed visible
+      // This prevents users from losing their cursor if the component fails
+      const handleFirstMove = () => {
+        if (visible) {
+          document.documentElement.style.cursor = 'none';
+          document.removeEventListener('pointermove', handleFirstMove);
+        }
+      };
       
       // Fix for cursor disappearing when leaving window
-      document.addEventListener('mouseleave', () => setVisible(false));
-      document.addEventListener('mouseenter', () => setVisible(true));
+      const handleMouseLeave = () => setVisible(false);
+      const handleMouseEnter = () => setVisible(true);
+      
+      document.addEventListener('mouseleave', handleMouseLeave);
+      document.addEventListener('mouseenter', handleMouseEnter);
+      document.addEventListener('pointermove', handleFirstMove);
       
       isInitialized.current = true;
       
@@ -50,11 +60,13 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
       // Restore default cursor when component unmounts
       document.documentElement.style.cursor = '';
       
-      // Clear event listeners
-      document.removeEventListener('mouseleave', () => setVisible(false));
-      document.removeEventListener('mouseenter', () => setVisible(true));
+      // Clear event listeners properly
+      const handleMouseLeave = () => setVisible(false);
+      const handleMouseEnter = () => setVisible(true);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, visible]);
   
   // Use pointer events for better performance and touch support
   useEffect(() => {

@@ -17,7 +17,7 @@ import {
 /**
  * Interface for the form data structure
  */
-interface LightContactFormData {
+interface LightContactFormData extends Record<string, unknown> {
   name: string;
   email: string;
   phone: string;

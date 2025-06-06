@@ -77,9 +77,9 @@ const Bar = ({ height, width, position, color, keyword, rank, volume, change, is
     if (glowRef.current) {
       // Pulse glow effect on hover
       if (isActive) {
-        glowRef.current.material.opacity = 0.6 + Math.sin(clock.getElapsedTime() * 4) * 0.2;
+        (glowRef.current.material as THREE.MeshBasicMaterial).opacity = 0.6 + Math.sin(clock.getElapsedTime() * 4) * 0.2;
       } else {
-        glowRef.current.material.opacity = THREE.MathUtils.lerp(glowRef.current.material.opacity, 0.3, 0.1);
+        (glowRef.current.material as THREE.MeshBasicMaterial).opacity = THREE.MathUtils.lerp((glowRef.current.material as THREE.MeshBasicMaterial).opacity, 0.3, 0.1);
       }
     }
   });
@@ -192,7 +192,7 @@ const Environment = () => {
 
 interface RankingSceneProps {
   activeIndex: number | null;
-  setActiveIndex: (index: number | null) => void;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 // Scene component
@@ -212,7 +212,7 @@ const RankingScene = ({ activeIndex, setActiveIndex }: RankingSceneProps) => {
         return (
           <Bar 
             key={ranking.keyword}
-            position={position}
+            position={position as [number, number, number]}
             height={height}
             width={barWidth}
             color={ranking.color}
@@ -304,7 +304,7 @@ const RankingVisualizerFallback = () => {
 
 // Main component
 const RankingVisualizer3D = () => {
-  const [activeIndex, setActiveIndex] = React.useState(null);
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(containerRef, 0.2);
   
@@ -338,7 +338,7 @@ const RankingVisualizer3D = () => {
                   ? 'border-red-500/40 shadow-lg shadow-red-500/10' 
                   : 'border-white/10 hover:border-white/20'
               }`}
-              onMouseEnter={() => setActiveIndex(index)}
+              onMouseEnter={() => setActiveIndex(index as any)}
               onMouseLeave={() => setActiveIndex(null)}
             >
               <div className="flex items-center justify-between mb-2">

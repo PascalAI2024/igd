@@ -151,7 +151,7 @@ const PieSegment = ({
   }, []);
   
   // Safe state setter to prevent updates on unmounted component
-  const safeSetState = useCallback(<T,>(setter: React.Dispatch<React.SetStateAction<T>>, value: T) => {
+  const safeSetState = useCallback((setter: React.Dispatch<React.SetStateAction<any>>, value: any) => {
     if (isMountedRef.current) {
       setter(value);
     }
@@ -219,8 +219,8 @@ const PieSegment = ({
       <mesh
         ref={meshRef}
         geometry={geometry}
-        onPointerOver={() => safeSetState(setHovered, true)}
-        onPointerOut={() => safeSetState(setHovered, false)}
+        onPointerOver={() => safeSetState(setHovered as React.Dispatch<React.SetStateAction<boolean>>, true)}
+        onPointerOut={() => safeSetState(setHovered as React.Dispatch<React.SetStateAction<boolean>>, false)}
         onClick={() => safeSetState(setClicked, !clicked)}
       >
         <primitive object={material} attach="material" />

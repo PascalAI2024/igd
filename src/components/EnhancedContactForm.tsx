@@ -28,7 +28,7 @@ const BUDGET_OPTIONS = [
 ];
 
 // Define our form data type
-interface ContactFormData {
+interface ContactFormData extends Record<string, unknown> {
   name: string;
   email: string;
   phone: string;

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, ReactNode } from 'react';
-import useDeviceCapabilities from '../hooks/useDeviceCapabilities';
+import useDeviceCapabilities, { DeviceCapabilities } from '../hooks/useDeviceCapabilities';
 
 // Create a context for performance settings
 export const PerformanceContext = createContext<ReturnType<typeof useDeviceCapabilities> | undefined>(undefined);

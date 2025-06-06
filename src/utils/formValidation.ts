@@ -35,7 +35,7 @@ export const sanitizeInput = <T extends Record<string, string>>(data: T): T => {
   
   for (const key in sanitizedData) {
     if (typeof sanitizedData[key] === 'string') {
-      sanitizedData[key] = DOMPurify.sanitize(sanitizedData[key], DOMPURIFY_CONFIG);
+      sanitizedData[key] = DOMPurify.sanitize(sanitizedData[key], DOMPURIFY_CONFIG) as T[Extract<keyof T, string>];
     }
   }
   

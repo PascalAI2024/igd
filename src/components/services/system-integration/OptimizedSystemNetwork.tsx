@@ -615,7 +615,7 @@ const OptimizedSystemNetwork = () => {
       </div>
       
       {/* Add styles for the animation */}
-      <style jsx>{`
+      <style>{`
         @keyframes flow {
           0% {
             stroke-dashoffset: 20;

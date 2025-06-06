@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import FloatingContactIcons from './components/FloatingContactIcons';
 import LoadingSequence from './components/LoadingSequence';
+import LightweightLoadingSequence from './components/LightweightLoadingSequence';
 import BreadcrumbSchema from './components/BreadcrumbSchema';
 import CustomCursor from './components/effects/CustomCursor';
 import CookieConsent from './components/CookieConsent';
@@ -22,8 +23,7 @@ import { measurePerformance } from './utils/performance';
 // Declare missing type for analytics tracking timeout
 declare global {
   interface Window {
-    _scrollTimeout?: ReturnType<typeof setTimeout>;
-    gtag?: (...args: any[]) => void;
+    _scrollTimeout?: NodeJS.Timeout;
   }
 }
 
@@ -89,8 +89,12 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(() => {
     // Check sessionStorage for a flag
     const hasLoadedBefore = sessionStorage.getItem('has_loaded_before');
-    // Only show loading on initial load of the home page
-    return !hasLoadedBefore && location.pathname === '/';
+    // Skip loading entirely if URL parameter is present
+    const urlParams = new URLSearchParams(window.location.search);
+    const skipLoading = urlParams.get('skip_loading') === 'true';
+    
+    // Only show loading on initial load of the home page, and not if explicitly skipped
+    return !skipLoading && !hasLoadedBefore && location.pathname === '/';
   });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -160,7 +164,7 @@ const App = () => {
                 }
               }
             }
-            window._scrollTimeout = null;
+            window._scrollTimeout = undefined;
           }, 2000);
         }
       };
@@ -262,6 +266,19 @@ const App = () => {
   }, [isLoading]);
 
   if (isLoading) {
+    // Detect low-end devices or poor network conditions
+    const isLowEndDevice = 
+      (navigator as any).deviceMemory < 4 || 
+      navigator.hardwareConcurrency < 4 ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      (navigator as any).connection?.effectiveType === '2g' ||
+      (navigator as any).connection?.effectiveType === 'slow-2g';
+    
+    // Use lightweight loading for low-end devices
+    if (isLowEndDevice) {
+      return <LightweightLoadingSequence onComplete={handleLoadingComplete} />;
+    }
+    
     return <LoadingSequence onComplete={handleLoadingComplete} />;
   }
 
@@ -274,9 +291,11 @@ const App = () => {
         {/* Cookie Consent Banner */}
         <CookieConsent />
         
-        {/* Custom cursor for desktop */}
+        {/* Custom cursor for desktop - with error boundary to prevent cursor loss */}
         <div className="hidden md:block">
-          <CustomCursor color="#e03131" size={24} />
+          <React.Suspense fallback={null}>
+            <CustomCursor color="#e03131" size={24} />
+          </React.Suspense>
         </div>
 
         {showNavigation && (

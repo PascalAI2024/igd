@@ -660,10 +660,10 @@ const OptimizedProcessFlow3D: React.FC<ProcessFlow3DProps> = React.memo(({
   // Set canvas quality based on device capabilities
   const dpr = useMemo(() => {
     switch (performanceLevel) {
-      case 'high': return [1, 2];
-      case 'medium': return [1, 1.5];
-      case 'low': return [0.5, 1];
-      default: return [1, 1];
+      case 'high': return [1, 2] as [number, number];
+      case 'medium': return [1, 1.5] as [number, number];
+      case 'low': return [0.5, 1] as [number, number];
+      default: return [1, 1] as [number, number];
     }
   }, [performanceLevel]);
 

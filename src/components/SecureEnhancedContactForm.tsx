@@ -11,7 +11,7 @@ import FormStatus from './FormStatus';
 /**
  * Interface for the enhanced contact form data
  */
-interface EnhancedContactFormData {
+interface EnhancedContactFormData extends Record<string, unknown> {
   name: string;
   email: string;
   phone: string;

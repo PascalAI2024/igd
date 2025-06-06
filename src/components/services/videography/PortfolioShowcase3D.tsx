@@ -173,7 +173,7 @@ const PortfolioItem = ({
         ref={meshRef as any}
         url={item.image} 
         transparent
-        scale={[width, height, 1]}
+        scale={[width, height] as [number, number]}
       />
       
       {/* Play button overlay */}

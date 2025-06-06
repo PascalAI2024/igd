@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { useFrame, extend, Canvas } from '@react-three/fiber';
 import { OrbitControls, Sphere } from '@react-three/drei';
@@ -295,9 +295,50 @@ interface InteractiveBackgroundProps {
 }
 
 const InteractiveBackground: React.FC<InteractiveBackgroundProps> = ({ height = '70vh' }) => {
+  // Check device capabilities
+  const [shouldRender, setShouldRender] = useState(false);
+  
+  useEffect(() => {
+    // Delay rendering of 3D background to prioritize main content
+    const timer = setTimeout(() => {
+      // Only render on capable devices
+      const isCapableDevice = 
+        (navigator as any).deviceMemory >= 4 && 
+        navigator.hardwareConcurrency >= 4 &&
+        !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && window.innerWidth < 768);
+      
+      setShouldRender(isCapableDevice);
+    }, 100); // Small delay to let main content render first
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  // Fallback gradient for low-end devices
+  if (!shouldRender) {
+    return (
+      <div 
+        className="absolute top-0 left-0 w-full z-0" 
+        style={{ 
+          height, 
+          overflow: 'hidden',
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a1a 100%)'
+        }}
+      >
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500/10 rounded-full filter blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse delay-1000" />
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="absolute top-0 left-0 w-full z-0" style={{ height, overflow: 'hidden' }}>
-      <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+      <Canvas 
+        camera={{ position: [0, 0, 5], fov: 75 }}
+        dpr={[1, 2]} // Limit pixel ratio
+        performance={{ min: 0.5 }} // Performance hints
+      >
         <Scene />
       </Canvas>
     </div>

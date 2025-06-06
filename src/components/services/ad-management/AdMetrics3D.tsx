@@ -268,7 +268,7 @@ const ConnectionLines = ({
         <line key={line.index}>
           <bufferGeometry attach="geometry">
             <bufferAttribute
-              attachObject={['attributes', 'position']}
+              attach="attributes-position"
               count={2}
               array={new Float32Array([0, 0, 0, line.end.x, line.end.y, line.end.z])}
               itemSize={3}

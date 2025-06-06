@@ -262,7 +262,7 @@ const StrategyCard = ({
     >
       <div className="flex items-start">
         <div className="p-2 rounded-lg mr-3" style={{ backgroundColor: `${strategy.color}20` }}>
-          <Icon className="w-6 h-6" style={{ color: strategy.color }} />
+          {React.createElement(Icon as any, { className: "w-6 h-6", style: { color: strategy.color } })}
         </div>
         <div>
           <h4 className="text-white font-semibold">{strategy.title}</h4>

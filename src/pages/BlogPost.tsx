@@ -125,7 +125,7 @@ const BlogPost = () => {
             <div className="prose prose-invert prose-headings:text-white prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-p:text-gray-300 prose-a:text-red-400 prose-strong:text-white prose-code:text-red-300 prose-li:text-gray-300 prose-img:rounded-lg max-w-none">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: marked(post.content.trim())
+                  __html: marked(post.content.trim()) as string
                 }}
                 className="blog-content"
               />

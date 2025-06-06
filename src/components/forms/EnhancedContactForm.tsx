@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Send, Zap } from 'lucide-react';
-import { trackFormSubmission, trackLeadGeneration, trackError } from '../utils/analytics';
-import { useForm } from '../hooks/useApi';
+import { trackFormSubmission, trackLeadGeneration, trackError } from '../../utils/analytics';
+import { useForm } from '../../hooks/useApi';
 import SecureFormWrapper from './SecureFormWrapper';
 import FormField from './FormField';
 import SubmitButton from './SubmitButton';
@@ -28,7 +28,7 @@ const BUDGET_OPTIONS = [
 ];
 
 // Define our form data type
-interface ContactFormData {
+interface ContactFormData extends Record<string, unknown> {
   name: string;
   email: string;
   phone: string;

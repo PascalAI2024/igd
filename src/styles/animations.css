@@ -1,13 +1,7 @@
 /* Custom Animation Styles */
 
-/* Cursor styles */
-body {
-  cursor: none;
-}
-
-a, button, input, textarea, select, [role="button"] {
-  cursor: none;
-}
+/* Cursor styles - removed cursor: none to prevent users from losing their cursor */
+/* The custom cursor will overlay the default cursor when loaded */
 
 /* Section transitions */
 .section {
@@ -108,12 +102,13 @@ a, button, input, textarea, select, [role="button"] {
 
 /* Mobile optimization */
 @media (max-width: 768px) {
+  /* Ensure cursor is always visible on mobile */
   body {
-    cursor: auto;
+    cursor: auto !important;
   }
   
   a, button, input, textarea, select, [role="button"] {
-    cursor: auto;
+    cursor: pointer !important;
   }
   
   .parallax-slow, .parallax-medium, .parallax-fast {

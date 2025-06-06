@@ -105,8 +105,8 @@ const CommNodeObject = ({
     }
   });
   
-  const handleClick = (e: React.MouseEvent<THREE.Object3D> & { stopPropagation: () => void }) => {
-    e.stopPropagation();
+  const handleClick = (e: any) => {
+    e.stopPropagation?.();
     setActiveNode(isActive ? null : node.id);
   };
   
@@ -155,7 +155,7 @@ const CommNodeObject = ({
           style={{ pointerEvents: 'none' }}
         >
           <div className={`p-1 rounded-full mb-1 ${isActive || isHovered ? 'bg-white/20' : ''}`}>
-            <node.icon className={`w-4 h-4 ${isActive || isHovered ? 'text-white' : 'text-gray-400'}`} />
+            {React.createElement(node.icon as any, { className: `w-4 h-4 ${isActive || isHovered ? 'text-white' : 'text-gray-400'}` })}
           </div>
           <div className="text-xs font-semibold text-white whitespace-nowrap">{node.label}</div>
         </div>
@@ -283,7 +283,7 @@ const ConnectionLine = ({
   });
   
   return (
-    <line ref={lineRef}>
+    <line ref={lineRef as any}>
       <bufferGeometry>
         <float32BufferAttribute 
           attach="attributes-position" 
