@@ -252,6 +252,18 @@ const App = () => {
     sessionStorage.setItem('has_loaded_before', 'true');
   };
 
+  // Add a fallback timeout to ensure loading completes
+  useEffect(() => {
+    if (isLoading) {
+      const fallbackTimeout = setTimeout(() => {
+        console.warn('Loading sequence timeout - forcing completion');
+        handleLoadingComplete();
+      }, 5000); // 5 second max loading time
+
+      return () => clearTimeout(fallbackTimeout);
+    }
+  }, [isLoading]);
+
   // Hide navigation on landing page
   const showNavigation = !location.pathname.includes('/landing');
 

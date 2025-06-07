@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
-import { useNavigateWithTransition } from '../hooks/useNavigateWithTransition';
+import { useLocation, Link } from 'react-router-dom';
 import { trackInteraction } from '../utils/analytics';
 import animationSystem from '../styles/animation-system';
 import { getRouteByPath } from '../data/routes';
@@ -25,22 +24,21 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
   prefetch = false,
   disabled = false,
   'aria-label': ariaLabel,
-  role = 'button'
+  role = 'link'
 }) => {
-  const navigateWithTransition = useNavigateWithTransition();
   const location = useLocation();
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
   
   // Check if this is the current page
   const isActive = location.pathname === to;
   const route = getRouteByPath(to);
   
   // Add active state styling
-  const finalClassName = `${className} ${isActive ? 'nav-link-active' : ''} nav-button`.trim();
+  const finalClassName = `${className} ${isActive ? 'nav-link-active' : ''} nav-button inline-block`.trim();
   
   // Prefetch route on hover if enabled
   useEffect(() => {
-    if (prefetch && buttonRef.current) {
+    if (prefetch && linkRef.current) {
       const prefetchRoute = () => {
         // Use link prefetch strategy
         const link = document.createElement('link');
@@ -60,15 +58,18 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
         prefetchRoute();
       };
 
-      buttonRef.current.addEventListener('mouseenter', handleMouseEnter);
+      linkRef.current.addEventListener('mouseenter', handleMouseEnter);
       return () => {
-        buttonRef.current?.removeEventListener('mouseenter', handleMouseEnter);
+        linkRef.current?.removeEventListener('mouseenter', handleMouseEnter);
       };
     }
   }, [prefetch, to]);
 
-  const handleClick = () => {
-    if (disabled) return;
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
     
     // Track the navigation interaction
     trackInteraction(
@@ -80,39 +81,57 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
     if (onClick) {
       onClick();
     }
-    navigateWithTransition(to);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    // Handle Enter and Space key activation
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleClick();
-    }
-  };
+  // For disabled links, render a span instead
+  if (disabled) {
+    return (
+      <motion.span
+        className={finalClassName}
+        whileHover={animationSystem.states.hover.scale.whileHover}
+        whileTap={animationSystem.states.tap.scale.whileTap}
+        transition={{ duration: animationSystem.duration.fast }}
+        aria-label={ariaLabel || (route?.description)}
+        aria-current={isActive ? 'page' : undefined}
+        role={role}
+        style={{
+          willChange: 'transform',
+          opacity: 0.6,
+          cursor: 'not-allowed'
+        }}
+      >
+        {children}
+      </motion.span>
+    );
+  }
 
+  // Use motion.div as wrapper and Link inside for proper navigation
   return (
-    <motion.button
-      ref={buttonRef}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      whileHover={disabled ? {} : animationSystem.states.hover.scale.whileHover}
-      whileTap={disabled ? {} : animationSystem.states.tap.scale.whileTap}
+    <motion.div
+      className="inline-block"
+      whileHover={animationSystem.states.hover.scale.whileHover}
+      whileTap={animationSystem.states.tap.scale.whileTap}
       transition={{ duration: animationSystem.duration.fast }}
-      className={finalClassName}
-      disabled={disabled}
-      aria-label={ariaLabel || (route?.description)}
-      aria-current={isActive ? 'page' : undefined}
-      role={role}
-      tabIndex={disabled ? -1 : 0}
       style={{
-        willChange: 'transform',
-        opacity: disabled ? 0.6 : 1,
-        cursor: disabled ? 'not-allowed' : 'pointer'
+        willChange: 'transform'
       }}
     >
-      {children}
-    </motion.button>
+      <Link
+        ref={linkRef}
+        to={to}
+        onClick={handleClick}
+        className={finalClassName}
+        aria-label={ariaLabel || (route?.description)}
+        aria-current={isActive ? 'page' : undefined}
+        role={role}
+        style={{
+          textDecoration: 'none',
+          cursor: 'pointer'
+        }}
+      >
+        {children}
+      </Link>
+    </motion.div>
   );
 };
 
