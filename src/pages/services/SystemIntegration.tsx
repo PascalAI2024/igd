@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/system-integration/FeatureShowcase';
 import OptimizedSystemNetwork from '../../components/services/system-integration/OptimizedSystemNetwork';
+import InteractiveNetworkDiagram from '../../components/services/system-integration/InteractiveNetworkDiagram';
 import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
@@ -212,6 +213,13 @@ const SystemIntegration = () => {
             >
               <OptimizedSystemNetwork />
             </motion.div>
+          </div>
+        </section>
+
+        {/* Interactive Network Diagram */}
+        <section className="py-20 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <InteractiveNetworkDiagram />
           </div>
         </section>
 

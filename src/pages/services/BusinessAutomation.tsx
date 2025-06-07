@@ -4,6 +4,7 @@ import { Zap, Settings, Bot } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/business-automation/FeatureShowcase';
 import TechnologyStack from '../../components/services/business-automation/TechnologyStack';
+import InteractiveWorkflowBuilder from '../../components/services/business-automation/InteractiveWorkflowBuilder';
 import { lazy3D } from '../../utils/lazyLoad3D';
 
 const BusinessAutomation = () => {
@@ -138,8 +139,15 @@ const BusinessAutomation = () => {
           </div>
         </section>
 
-        {/* Technology Section */}
+        {/* Interactive Workflow Builder Section */}
         <section className="py-20 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <InteractiveWorkflowBuilder />
+          </div>
+        </section>
+
+        {/* Technology Section */}
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gradient mb-4">Our Tools</h2>

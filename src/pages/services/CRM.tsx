@@ -8,6 +8,7 @@ import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/crm/FeatureShowcase';
 import OptimizedCRMProcessFlow from '../../components/services/crm/OptimizedCRMProcessFlow';
 import OptimizedTechStack from '../../components/services/crm/OptimizedTechStack';
+import LiveDataFlowVisualization from '../../components/services/crm/LiveDataFlowVisualization';
 import NavigationButton from '../../components/NavigationButton';
 import { lazy3D } from '../../utils/lazyLoad3D';
 
@@ -311,6 +312,13 @@ const CRM = () => {
             </motion.div>
 
             <FeatureShowcase />
+          </div>
+        </section>
+
+        {/* Live Data Flow Visualization */}
+        <section className="py-20 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <LiveDataFlowVisualization />
           </div>
         </section>
 

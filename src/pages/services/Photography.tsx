@@ -5,7 +5,7 @@ import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/photography/FeatureShowcase';
 import ProcessFlow from '../../components/services/photography/ProcessFlow';
 import TechnologyStack from '../../components/services/photography/TechnologyStack';
-import PortfolioShowcase3D from '../../components/services/photography/PortfolioShowcase3D';
+import GSAPPortfolioShowcase from '../../components/services/photography/GSAPPortfolioShowcase';
 
 const Photography = () => {
   const showcaseMetrics = [
@@ -128,7 +128,7 @@ const Photography = () => {
         {/* Portfolio Showcase */}
         <section className="py-20 bg-black/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <PortfolioShowcase3D />
+            <GSAPPortfolioShowcase />
           </div>
         </section>
 

@@ -1,7 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
+
+// Register ScrollTrigger plugin
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ServiceCardGSAPProps {
   title: string;
@@ -38,11 +44,13 @@ const ServiceCardGSAP: React.FC<ServiceCardGSAPProps> = ({
     // Set initial states
     gsap.set(glowRef.current, { opacity: 0 });
     gsap.set(ctaRef.current, { x: -20, opacity: 0 });
-    gsap.set(particlesRef.current?.children, { 
-      scale: 0, 
-      x: 'random(-50, 50)', 
-      y: 'random(-50, 50)' 
-    });
+    if (particlesRef.current?.children) {
+      gsap.set(particlesRef.current.children, { 
+        scale: 0, 
+        x: 'random(-50, 50)', 
+        y: 'random(-50, 50)' 
+      });
+    }
 
     // Build hover animation sequence
     hoverTl
@@ -84,7 +92,7 @@ const ServiceCardGSAP: React.FC<ServiceCardGSAPProps> = ({
         ease: 'power2.out'
       }, 0.2)
       // Particles
-      .to(particlesRef.current?.children, {
+      .to(particlesRef.current?.children || [], {
         scale: 1,
         opacity: 0.6,
         duration: 0.6,
@@ -94,7 +102,7 @@ const ServiceCardGSAP: React.FC<ServiceCardGSAPProps> = ({
         },
         ease: 'power2.out'
       }, 0.1)
-      .to(particlesRef.current?.children, {
+      .to(particlesRef.current?.children || [], {
         y: '-=30',
         opacity: 0,
         duration: 0.8,
