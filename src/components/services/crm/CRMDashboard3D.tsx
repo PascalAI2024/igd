@@ -116,27 +116,65 @@ const NodeObject = ({
       </mesh>
       
       {/* Icon and label */}
-      <Html position={[0, 0.4, 0]} center transform sprite>
+      <Html 
+        position={[0, 0.6, 0]} 
+        center 
+        distanceFactor={3}
+        style={{
+          zIndex: isActive || isHovered ? 10 : 5,
+          pointerEvents: 'none'
+        }}
+      >
         <div 
-          className={`flex flex-col items-center px-2 py-1 rounded-lg backdrop-blur-sm transition-all duration-300 ${
-            isActive || isHovered ? 'scale-110 bg-white/10' : 'scale-100 bg-black/50'
+          className={`flex flex-col items-center px-3 py-2 rounded-lg backdrop-blur-sm transition-all duration-300 ${
+            isActive || isHovered ? 'scale-110 bg-white/20' : 'scale-100 bg-black/70'
           }`}
-          style={{ pointerEvents: 'none' }}
+          style={{ 
+            pointerEvents: 'none',
+            minWidth: '80px',
+            transform: 'translateY(-50%)'
+          }}
         >
-          <div className={`p-1 rounded-full mb-1 ${isActive || isHovered ? `bg-${node.color}/20` : ''}`}>
-            <node.icon className={`w-4 h-4 ${isActive || isHovered ? 'text-' + node.color.split('#')[1] : 'text-white'}`} />
+          <div 
+            className="p-2 rounded-full mb-1"
+            style={{ 
+              backgroundColor: isActive || isHovered ? `${node.color}33` : 'rgba(255,255,255,0.1)'
+            }}
+          >
+            <node.icon 
+              className="w-5 h-5" 
+              style={{ 
+                color: isActive || isHovered ? node.color : '#ffffff'
+              }} 
+            />
           </div>
-          <div className="text-xs font-semibold text-white whitespace-nowrap">{node.label}</div>
+          <div className="text-[11px] font-semibold text-white whitespace-nowrap leading-tight text-center">
+            {node.label}
+          </div>
         </div>
       </Html>
       
       {/* Details tooltip */}
       {isActive && (
-        <Html position={[0, -0.4, 0]} center>
-          <div className="bg-black/90 px-3 py-2 rounded-lg border border-white/10 text-white w-40">
-            <div className="font-semibold mb-1">{node.label}</div>
-            <div className="text-xs mb-1">{node.value}</div>
-            <div className="flex items-center text-xs text-green-500">
+        <Html 
+          position={[0, -0.8, 0]} 
+          center
+          distanceFactor={3}
+          style={{
+            zIndex: 20,
+            pointerEvents: 'none'
+          }}
+        >
+          <div 
+            className="bg-black/95 px-4 py-3 rounded-lg border border-white/20 text-white shadow-xl"
+            style={{
+              minWidth: '160px',
+              transform: 'translateY(50%)'
+            }}
+          >
+            <div className="font-semibold mb-2 text-sm">{node.label}</div>
+            <div className="text-xs mb-2 text-gray-300">{node.value}</div>
+            <div className="flex items-center text-xs text-green-400">
               <TrendingUp className="w-3 h-3 mr-1" />
               <span>{node.trend}</span>
             </div>
@@ -268,22 +306,22 @@ const NetworkScene = ({
   
   // Set up initial camera position
   React.useEffect(() => {
-    camera.position.set(0, 2, 7);
+    camera.position.set(0, 3, 10);
     camera.lookAt(0, 0, 0);
   }, [camera]);
   
   // Node configuration
   const nodes: Node[] = [
-    { id: 'contacts', position: [-2.5, 0, 0], icon: Users, label: 'Contacts', value: '2,500+', trend: '+15%', color: '#ef4444' },
-    { id: 'communication', position: [2.5, 0, 0], icon: MessageSquare, label: 'Communication', value: '500/day', trend: '+25%', color: '#3b82f6' },
-    { id: 'calendar', position: [0, 1.5, 0], icon: Calendar, label: 'Calendar', value: '95% Booked', trend: '+30%', color: '#f59e0b' },
-    { id: 'email', position: [3.0, 1.0, 0], icon: Mail, label: 'Email', value: '98% Open Rate', trend: '+20%', color: '#8b5cf6' },
-    { id: 'calls', position: [-3.0, 1.0, 0], icon: Phone, label: 'Calls', value: '200/day', trend: '+40%', color: '#ec4899' },
-    { id: 'analytics', position: [0, -2.0, 0], icon: BarChart2, label: 'Analytics', value: 'Real-time', trend: 'Live', color: '#10b981' },
+    { id: 'contacts', position: [-3.5, 0.5, 0], icon: Users, label: 'Contacts', value: '2,500+', trend: '+15%', color: '#ef4444' },
+    { id: 'communication', position: [3.5, 0.5, 0], icon: MessageSquare, label: 'Communication', value: '500/day', trend: '+25%', color: '#3b82f6' },
+    { id: 'calendar', position: [0, 2.5, 0], icon: Calendar, label: 'Calendar', value: '95% Booked', trend: '+30%', color: '#f59e0b' },
+    { id: 'email', position: [4.0, 2.0, 0], icon: Mail, label: 'Email', value: '98% Open Rate', trend: '+20%', color: '#8b5cf6' },
+    { id: 'calls', position: [-4.0, 2.0, 0], icon: Phone, label: 'Calls', value: '200/day', trend: '+40%', color: '#ec4899' },
+    { id: 'analytics', position: [0, -2.8, 0], icon: BarChart2, label: 'Analytics', value: 'Real-time', trend: 'Live', color: '#10b981' },
     { id: 'automation', position: [0, 0, 0], icon: Settings, label: 'Automation', value: '50+ Workflows', trend: '+35%', color: '#f97316' },
-    { id: 'database', position: [-2.0, -1.5, 0], icon: Database, label: 'Database', value: '99.9% Uptime', trend: '+0.5%', color: '#6366f1' },
-    { id: 'notifications', position: [2.0, -1.5, 0], icon: Bell, label: 'Notifications', value: 'Instant', trend: '-50ms', color: '#14b8a6' },
-    { id: 'documents', position: [-1.0, -1.0, 0], icon: FileText, label: 'Documents', value: '10K+', trend: '+45%', color: '#a855f7' }
+    { id: 'database', position: [-3.0, -2.0, 0], icon: Database, label: 'Database', value: '99.9% Uptime', trend: '+0.5%', color: '#6366f1' },
+    { id: 'notifications', position: [3.0, -2.0, 0], icon: Bell, label: 'Notifications', value: 'Instant', trend: '-50ms', color: '#14b8a6' },
+    { id: 'documents', position: [-1.8, -1.5, 0], icon: FileText, label: 'Documents', value: '10K+', trend: '+45%', color: '#a855f7' }
   ];
   
   // Connection configuration
@@ -322,9 +360,10 @@ const NetworkScene = ({
   return (
     <>
       {/* Lighting */}
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[5, 5, 5]} intensity={0.5} />
-      <pointLight position={[-5, 5, -5]} intensity={0.3} color="#ef4444" />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 5, 5]} intensity={0.8} />
+      <pointLight position={[-5, 5, -5]} intensity={0.4} color="#ef4444" />
+      <pointLight position={[5, 5, 5]} intensity={0.3} color="#3b82f6" />
       
       {/* Background elements */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -3, 0]}>
@@ -478,7 +517,7 @@ const CRMDashboard3D = () => {
       <AnimationErrorBoundary fallback={<CRMDashboardFallback />}>
         {isVisible && (
           <Canvas 
-            camera={{ position: [0, 2, 7], fov: 50 }}
+            camera={{ position: [0, 3, 10], fov: 50 }}
             shadows
           >
             <NetworkScene 
