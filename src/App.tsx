@@ -9,7 +9,6 @@ import FloatingContactIcons from './components/FloatingContactIcons';
 import LoadingSequence from './components/LoadingSequence';
 import LightweightLoadingSequence from './components/LightweightLoadingSequence';
 import BreadcrumbSchema from './components/BreadcrumbSchema';
-import Breadcrumbs from './components/Breadcrumbs';
 import CustomCursor from './components/effects/CustomCursor';
 import CookieConsent from './components/CookieConsent';
 import { PerformanceProvider } from './contexts/PerformanceContext';
@@ -328,13 +327,6 @@ const App = () => {
             className={isMobileMenuOpen ? 'pointer-events-none' : ''}
           >
             {/* Add breadcrumbs for non-home pages */}
-            {showNavigation && location.pathname !== '/' && !location.pathname.includes('/landing') && (
-              <div className="pt-20">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <Breadcrumbs />
-                </div>
-              </div>
-            )}
             
             <Routes location={location}>
               <Route path="/" element={<Home />} />
