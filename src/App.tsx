@@ -4,10 +4,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
+import ScrollToTop from './components/ScrollToTop';
 import FloatingContactIcons from './components/FloatingContactIcons';
 import LoadingSequence from './components/LoadingSequence';
 import LightweightLoadingSequence from './components/LightweightLoadingSequence';
 import BreadcrumbSchema from './components/BreadcrumbSchema';
+import Breadcrumbs from './components/Breadcrumbs';
 import CustomCursor from './components/effects/CustomCursor';
 import CookieConsent from './components/CookieConsent';
 import { PerformanceProvider } from './contexts/PerformanceContext';
@@ -73,6 +75,7 @@ const AiMachineLearning = React.lazy(() => import('./pages/services/AiMachineLea
 
 // Lazy load industry pages - Local Business Focused
 const LocalRetail = React.lazy(() => import('./pages/industries/LocalRetail'));
+const Retail = React.lazy(() => import('./pages/industries/Retail'));
 const Restaurants = React.lazy(() => import('./pages/industries/Restaurants'));
 const LocalServices = React.lazy(() => import('./pages/industries/LocalServices'));
 const Healthcare = React.lazy(() => import('./pages/industries/Healthcare'));
@@ -277,6 +280,9 @@ const App = () => {
   return (
     <PerformanceProvider>
       <div className="min-h-screen bg-black">
+        {/* Scroll to top on route changes */}
+        <ScrollToTop />
+        
         {/* Add breadcrumb schema for SEO */}
         <BreadcrumbSchema />
         
@@ -305,6 +311,7 @@ const App = () => {
           </div>
         }>
           <motion.main
+            id="main-content"
             key={location.pathname}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -320,6 +327,15 @@ const App = () => {
             }}
             className={isMobileMenuOpen ? 'pointer-events-none' : ''}
           >
+            {/* Add breadcrumbs for non-home pages */}
+            {showNavigation && location.pathname !== '/' && !location.pathname.includes('/landing') && (
+              <div className="pt-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <Breadcrumbs />
+                </div>
+              </div>
+            )}
+            
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/landing" element={<Landing />} />
@@ -344,6 +360,7 @@ const App = () => {
 
               {/* Industry Routes - Local Business Focused */}
               <Route path="/industries/local-retail" element={<LocalRetail />} />
+              <Route path="/industries/retail" element={<Retail />} />
               <Route path="/industries/restaurants" element={<Restaurants />} />
               <Route path="/industries/local-services" element={<LocalServices />} />
               <Route path="/industries/healthcare" element={<Healthcare />} />

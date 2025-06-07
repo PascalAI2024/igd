@@ -8,7 +8,7 @@ import Projects from '../components/Projects';
 import TechStack from '../components/TechStack';
 import Blog from '../components/Blog';
 import TestimonialsEnhanced from '../components/TestimonialsEnhanced';
-import ContactFormEnhanced from '../components/ContactFormEnhanced';
+import ContactOptions from '../components/ContactOptions';
 import PageTransition from '../components/PageTransition';
 import InteractiveBackground from '../components/backgrounds/InteractiveBackground';
 import { MagneticCursor, createStaggerAnimation, createParallaxEffect } from '../utils/gsapAnimations';
@@ -496,10 +496,10 @@ const HomeEnhanced = () => {
           <TestimonialsEnhanced />
         </section>
         
-        {/* Contact form with morphing effects */}
+        {/* Contact options with morphing effects */}
         <section ref={contactRef} className="section relative">
           <div className="absolute inset-0 bg-gradient-to-t from-red-500/10 via-transparent to-transparent" />
-          <ContactFormEnhanced />
+          <ContactOptions />
         </section>
       </main>
     </PageTransition>

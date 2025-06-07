@@ -1,0 +1,58 @@
+{
+  "timestamp": "2025-06-07T05:19:59.904Z",
+  "siteUrl": "https://ingeniousdigital.com",
+  "tests": [
+    {
+      "name": "Homepage Hero Animations",
+      "passed": false,
+      "details": "No hero animations detected"
+    },
+    {
+      "name": "Scroll Animations",
+      "passed": false,
+      "details": "No scroll animations found"
+    },
+    {
+      "name": "Mobile 3D Performance",
+      "passed": true,
+      "details": "3D running at 121 FPS"
+    },
+    {
+      "name": "Photography GSAP Showcase",
+      "passed": true,
+      "details": "GSAP: false, Portfolio items: 43"
+    },
+    {
+      "name": "Business Automation Workflow",
+      "passed": true,
+      "details": "Canvas: true, Workflow elements: 0"
+    },
+    {
+      "name": "CRM Data Flow Visualization",
+      "passed": true,
+      "details": "Canvas: false, Data elements: 34"
+    },
+    {
+      "name": "System Integration Network",
+      "passed": false,
+      "details": "Canvas: false, Network elements: 0"
+    },
+    {
+      "name": "Button Hover Effects",
+      "passed": false,
+      "details": "1 buttons found, hover effects: not detected"
+    },
+    {
+      "name": "Console Errors",
+      "passed": true,
+      "details": "No console errors"
+    }
+  ],
+  "consoleErrors": [],
+  "performance": {
+    "firstPaint": 60,
+    "firstContentfulPaint": 60,
+    "domContentLoaded": 0,
+    "loadComplete": 0
+  }
+}

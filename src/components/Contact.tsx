@@ -1,10 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import ContactForm from './ContactForm';
+import ContactOptions from './ContactOptions';
 
 const Contact = () => {
-  // Rest of the component code...
+  return (
+    <ContactOptions variant="default" />
+  );
 };
 
 export default Contact;

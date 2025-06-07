@@ -5,7 +5,7 @@ import Projects from '../components/Projects';
 import TechStack from '../components/TechStack';
 import Blog from '../components/Blog';
 import TestimonialsEnhanced from '../components/TestimonialsEnhanced';
-import ContactFormEnhanced from '../components/ContactFormEnhanced';
+import ContactOptions from '../components/ContactOptions';
 import PageTransition from '../components/PageTransition';
 import InteractiveBackground from '../components/backgrounds/InteractiveBackground';
 import ScrollReveal, { StaggerReveal } from '../components/effects/ScrollReveal';
@@ -119,14 +119,14 @@ const Home = () => {
           <TestimonialsEnhanced />
         </ScrollReveal>
         
-        {/* Contact form with flip animation */}
+        {/* Contact options with fade animation */}
         <ScrollReveal 
           animation="fade" 
           className="section relative"
           threshold={0.2}
           duration={0.8}
         >
-          <ContactFormEnhanced />
+          <ContactOptions />
         </ScrollReveal>
       </main>
     </PageTransition>

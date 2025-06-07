@@ -142,6 +142,63 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* Mobile Menu Styles */
+.mobile-menu-backdrop {
+  @apply fixed inset-0 z-30 bg-black/50 backdrop-blur-sm;
+}
+
+.mobile-menu-container {
+  @apply max-h-screen overflow-y-auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-menu-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile menu open state */
+.menu-open {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.menu-open .mobile-menu-backdrop {
+  @apply opacity-100;
+}
+
+/* Active navigation states */
+.nav-link-active {
+  @apply text-white relative;
+}
+
+.nav-link-active::after {
+  content: '';
+  @apply absolute -bottom-0.5 left-1/4 w-1/2 h-0.5 bg-gradient-to-r from-red-500 to-red-400;
+}
+
+.nav-dropdown-item-active {
+  @apply text-white bg-white/10 border-l-red-500;
+  border-left: 2px solid rgba(255, 61, 61, 0.8);
+  padding-left: 1.25rem;
+}
+
+/* Keyboard navigation focus states */
+.nav-button:focus-visible {
+  @apply outline-none ring-2 ring-red-500/50 ring-offset-2 ring-offset-black;
+}
+
+.nav-dropdown-item:focus-visible {
+  @apply outline-none bg-white/10 border-l-red-500;
+  border-left: 2px solid rgba(255, 61, 61, 0.8);
+  padding-left: 1.25rem;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-red-600 focus:text-white focus:rounded-md;
+}
+
 /* Gradient text - enhanced for premium look */
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-red-400 to-purple-500;

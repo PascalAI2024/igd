@@ -1,0 +1,89 @@
+{
+  "timestamp": "2025-06-07T05:21:22.323Z",
+  "siteUrl": "https://ingeniousdigital.com",
+  "detailedTests": [
+    {
+      "page": "Homepage",
+      "analysis": {
+        "heroSection": {},
+        "serviceCards": {
+          "count": 0,
+          "classes": "none",
+          "hasHoverClass": false
+        },
+        "buttons": {
+          "total": 1,
+          "primary": 0,
+          "firstButtonClass": "mt-8 px-4 py-2 bg-red-500/20 border border-red-500/40 rounded-md text-red-500 text-sm font-medium flex items-center justify-center mx-auto hover:bg-red-500/30 transition-all duration-300 shadow-sm shadow-red-500/20"
+        },
+        "animations": {
+          "count": 4,
+          "hasFramerMotion": true,
+          "hasTransitions": true
+        },
+        "cursor": {
+          "found": false,
+          "className": "none"
+        }
+      }
+    },
+    {
+      "test": "Hover Interaction",
+      "result": {
+        "noCards": true
+      }
+    },
+    {
+      "page": "Photography",
+      "features": {
+        "canvas": false,
+        "animations": 0,
+        "transitions": 103,
+        "gsap": false,
+        "framerMotion": true,
+        "threejs": false
+      }
+    },
+    {
+      "page": "Business Automation",
+      "features": {
+        "canvas": true,
+        "animations": 0,
+        "transitions": 86,
+        "gsap": false,
+        "framerMotion": true,
+        "threejs": true
+      }
+    },
+    {
+      "page": "CRM",
+      "features": {
+        "canvas": false,
+        "animations": 0,
+        "transitions": 96,
+        "gsap": false,
+        "framerMotion": true,
+        "threejs": false
+      }
+    },
+    {
+      "page": "System Integration",
+      "features": {
+        "canvas": false,
+        "animations": 0,
+        "transitions": 45,
+        "gsap": false,
+        "framerMotion": false,
+        "threejs": false
+      }
+    },
+    {
+      "test": "Mobile View",
+      "result": {
+        "hasCanvas": true,
+        "canvasDisplay": "block",
+        "responsiveElements": 7
+      }
+    }
+  ]
+}
