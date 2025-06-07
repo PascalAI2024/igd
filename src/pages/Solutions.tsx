@@ -1,167 +1,338 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Code2, Brain, Cloud, Shield, Database, Globe } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { 
+  ArrowRight, 
+  Filter, 
+  Users, 
+  Building, 
+  TrendingUp,
+  CheckCircle,
+  Star,
+  Clock
+} from 'lucide-react';
+import MetaTags from '../components/MetaTags';
 import PageTransition from '../components/PageTransition';
+import ScrollReveal from '../components/effects/ScrollReveal';
+import { solutions, getSolutionsByCategory, type Solution } from '../data/solutions/solutions';
 
-const solutions = [
-  {
-    icon: Code2,
-    title: 'Enterprise Solutions',
-    description: 'Custom software solutions designed for large-scale operations.',
-    features: [
-      'Scalable Architecture',
-      'Integration Capabilities',
-      'Custom Workflows',
-      'Advanced Analytics'
-    ],
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80'
-  },
-  {
-    icon: Brain,
-    title: 'AI & Machine Learning',
-    description: 'Intelligent solutions that automate and optimize processes.',
-    features: [
-      'Predictive Analytics',
-      'Natural Language Processing',
-      'Computer Vision',
-      'Deep Learning'
-    ],
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80'
-  },
-  {
-    icon: Cloud,
-    title: 'Cloud Solutions',
-    description: 'Secure and scalable cloud infrastructure services.',
-    features: [
-      'Cloud Migration',
-      'Hybrid Cloud',
-      'Cloud Security',
-      'Performance Optimization'
-    ],
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80'
-  }
-];
-
-const industries = [
-  {
-    name: 'Healthcare',
-    description: 'HIPAA-compliant solutions for healthcare providers.',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80'
-  },
-  {
-    name: 'Finance',
-    description: 'Secure solutions for financial institutions.',
-    image: 'https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&q=80'
-  },
-  {
-    name: 'Retail',
-    description: 'Digital transformation solutions for retail businesses.',
-    image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80'
-  }
-];
-
-const Solutions = () => {
+const Solutions: React.FC = () => {
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedBusinessSize, setSelectedBusinessSize] = useState<string>('all');
+  
+  const categories = [
+    { id: 'all', name: 'All Solutions', icon: TrendingUp },
+    { id: 'growth', name: 'Growth & Marketing', icon: TrendingUp },
+    { id: 'automation', name: 'Automation & AI', icon: Users },
+    { id: 'local', name: 'Local Business', icon: Building },
+    { id: 'enterprise', name: 'Enterprise', icon: Building }
+  ];
+  
+  const businessSizes = [
+    { id: 'all', name: 'All Business Sizes' },
+    { id: 'Small Business', name: 'Small Business (1-50)' },
+    { id: 'Medium Business', name: 'Medium Business (51-200)' },
+    { id: 'Enterprise', name: 'Enterprise (200+)' }
+  ];
+  
+  const getFilteredSolutions = (): Solution[] => {
+    let filtered = selectedCategory === 'all' ? solutions : getSolutionsByCategory(selectedCategory);
+    
+    if (selectedBusinessSize !== 'all') {
+      filtered = filtered.filter(solution => 
+        solution.businessSize.some(size => size.includes(selectedBusinessSize))
+      );
+    }
+    
+    // Sort by popularity and featured status
+    return filtered.sort((a, b) => {
+      if (a.isFeatured && !b.isFeatured) return -1;
+      if (!a.isFeatured && b.isFeatured) return 1;
+      if (a.isPopular && !b.isPopular) return -1;
+      if (!a.isPopular && b.isPopular) return 1;
+      return 0;
+    });
+  };
+  
+  const handleSolutionClick = (solution: Solution) => {
+    navigate(`/solutions/${solution.slug}`);
+  };
+  
+  const SolutionCard: React.FC<{ solution: Solution; index: number }> = ({ solution, index }) => {
+    const Icon = solution.icon;
+    
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        className="group relative bg-gradient-to-br from-gray-900 to-black rounded-2xl border border-gray-700 hover:border-red-500/50 transition-all duration-300 overflow-hidden cursor-pointer"
+        onClick={() => handleSolutionClick(solution)}
+      >
+        {/* Popular/Featured Badge */}
+        {(solution.isPopular || solution.isFeatured) && (
+          <div className="absolute top-4 right-4 z-10">
+            {solution.isPopular && (
+              <span className="px-3 py-1 bg-green-500 text-white text-sm font-medium rounded-full mb-2 block">
+                Most Popular
+              </span>
+            )}
+            {solution.isFeatured && (
+              <span className="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded-full">
+                Featured
+              </span>
+            )}
+          </div>
+        )}
+        
+        <div className="p-8">
+          {/* Icon and Category */}
+          <div className="flex items-start justify-between mb-6">
+            <div className="p-3 bg-gradient-to-r from-red-500 to-orange-500 rounded-xl">
+              <Icon className="w-8 h-8 text-white" />
+            </div>
+            <span className="px-3 py-1 bg-gray-800 text-gray-300 text-sm rounded-full capitalize">
+              {solution.category}
+            </span>
+          </div>
+          
+          {/* Title and Description */}
+          <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-red-400 transition-colors">
+            {solution.name}
+          </h3>
+          <p className="text-gray-400 mb-6 leading-relaxed">
+            {solution.description}
+          </p>
+          
+          {/* Key Metrics */}
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="text-center p-3 bg-black/50 rounded-lg">
+              <div className="text-lg font-bold text-green-400">{solution.averageROI}</div>
+              <div className="text-xs text-gray-400">Avg ROI</div>
+            </div>
+            <div className="text-center p-3 bg-black/50 rounded-lg">
+              <div className="text-lg font-bold text-blue-400">{solution.timeToResults}</div>
+              <div className="text-xs text-gray-400">Results</div>
+            </div>
+          </div>
+          
+          {/* Key Features Preview */}
+          <div className="mb-6">
+            <h4 className="text-sm font-semibold text-gray-300 mb-3">Key Features:</h4>
+            <ul className="space-y-2">
+              {solution.keyFeatures.slice(0, 3).map((feature, featureIndex) => (
+                <li key={featureIndex} className="flex items-center text-sm text-gray-400">
+                  <CheckCircle className="w-4 h-4 text-green-400 mr-2 flex-shrink-0" />
+                  {feature}
+                </li>
+              ))}
+              {solution.keyFeatures.length > 3 && (
+                <li className="text-sm text-gray-500">
+                  +{solution.keyFeatures.length - 3} more features...
+                </li>
+              )}
+            </ul>
+          </div>
+          
+          {/* Pricing */}
+          <div className="mb-6 p-4 bg-gradient-to-r from-gray-800 to-black rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-2xl font-bold text-white">{solution.startingPrice}</div>
+                <div className="text-sm text-gray-400">Starting price</div>
+              </div>
+              <div className="flex items-center text-yellow-400">
+                <Star className="w-4 h-4 fill-current mr-1" />
+                <span className="text-sm">High ROI</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* CTA */}
+          <div className="flex items-center justify-between">
+            <button className="flex items-center text-red-400 hover:text-red-300 font-semibold group-hover:translate-x-2 transition-transform">
+              Learn More
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </button>
+            <div className="flex items-center text-sm text-gray-500">
+              <Clock className="w-4 h-4 mr-1" />
+              Quick setup
+            </div>
+          </div>
+        </div>
+        
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+      </motion.div>
+    );
+  };
+  
   return (
     <PageTransition>
-      <div className="min-h-screen bg-black">
-        {/* Hero Section */}
-        <section className="relative py-24 overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center max-w-3xl mx-auto"
-            >
-              <h1 className="text-5xl font-bold mb-6 text-gradient">
-                Enterprise Solutions
-              </h1>
-              <p className="text-xl text-gray-300 leading-relaxed">
-                Transformative digital solutions tailored to your industry needs
-              </p>
-            </motion.div>
+      <MetaTags 
+        title="Digital Solutions - Complete Business Transformation | Ingenious Digital"
+        description="Choose from our comprehensive digital solutions designed to transform your business. From growth packages to enterprise automation - find the perfect solution for your needs."
+        keywords={['digital solutions', 'business transformation', 'growth packages', 'automation solutions', 'enterprise solutions']}
+      />
+      
+      {/* Hero Section */}
+      <section className="relative min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black">
+        <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-orange-500/10 opacity-50"></div>
+        
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
+              Digital Solutions That Drive
+              <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent block">
+                Real Results
+              </span>
+            </h1>
+            
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+              Choose from our comprehensive suite of digital solutions designed to transform your business, 
+              streamline operations, and accelerate growth. Each solution is proven to deliver measurable results.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => navigate('/contact')}
+                className="px-8 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold rounded-xl hover:from-red-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105"
+              >
+                Get a Custom Recommendation
+              </button>
+              <button
+                onClick={() => navigate('/case-studies')}
+                className="px-8 py-4 border-2 border-gray-600 text-white font-semibold rounded-xl hover:border-red-500 hover:bg-red-500/10 transition-all duration-300"
+              >
+                View Success Stories
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+      
+      {/* Filters Section */}
+      <ScrollReveal>
+        <section className="py-12 bg-gray-900">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+              {/* Category Filter */}
+              <div className="flex items-center space-x-2">
+                <Filter className="w-5 h-5 text-gray-400" />
+                <span className="text-gray-400 font-medium">Filter by:</span>
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((category) => {
+                    const CategoryIcon = category.icon;
+                    return (
+                      <button
+                        key={category.id}
+                        onClick={() => setSelectedCategory(category.id)}
+                        className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center space-x-2 ${
+                          selectedCategory === category.id
+                            ? 'bg-red-500 text-white'
+                            : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                        }`}
+                      >
+                        <CategoryIcon className="w-4 h-4" />
+                        <span>{category.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              {/* Business Size Filter */}
+              <div className="flex items-center space-x-2">
+                <span className="text-gray-400 font-medium">Business Size:</span>
+                <select
+                  value={selectedBusinessSize}
+                  onChange={(e) => setSelectedBusinessSize(e.target.value)}
+                  className="px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-red-500 focus:outline-none"
+                >
+                  {businessSizes.map((size) => (
+                    <option key={size.id} value={size.id}>
+                      {size.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
         </section>
-
-        {/* Solutions Grid */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {solutions.map((solution, index) => (
-                <motion.div
-                  key={solution.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-xl"
-                >
-                  <div className="absolute inset-0">
-                    <img
-                      src={solution.image}
-                      alt={solution.title}
-                      className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-                  </div>
-                  
-                  <div className="relative p-8">
-                    <solution.icon className="w-12 h-12 text-red-500 mb-4" />
-                    <h3 className="text-2xl font-semibold text-white mb-4">{solution.title}</h3>
-                    <p className="text-gray-300 mb-6">{solution.description}</p>
-                    
-                    <ul className="space-y-2">
-                      {solution.features.map((feature) => (
-                        <li key={feature} className="flex items-center text-gray-300">
-                          <div className="w-1.5 h-1.5 bg-red-500 rounded-full mr-2" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
+      </ScrollReveal>
+      
+      {/* Solutions Grid */}
+      <ScrollReveal>
+        <section className="py-20 bg-black">
+          <div className="container mx-auto px-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {getFilteredSolutions().map((solution, index) => (
+                <SolutionCard 
+                  key={solution.id} 
+                  solution={solution} 
+                  index={index}
+                />
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Industries Section */}
-        <section className="py-20 bg-black/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gradient mb-4">Industries We Serve</h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                Specialized solutions for various industry sectors
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {industries.map((industry, index) => (
-                <motion.div
-                  key={industry.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-xl aspect-square"
+            
+            {getFilteredSolutions().length === 0 && (
+              <div className="text-center py-16">
+                <div className="text-gray-400 text-lg mb-4">
+                  No solutions found for the selected filters.
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedCategory('all');
+                    setSelectedBusinessSize('all');
+                  }}
+                  className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
                 >
-                  <img
-                    src={industry.image}
-                    alt={industry.name}
-                    className="absolute inset-0 w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                  
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                    <h3 className="text-2xl font-semibold text-white mb-2">{industry.name}</h3>
-                    <p className="text-gray-300">{industry.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                  Clear Filters
+                </button>
+              </div>
+            )}
           </div>
         </section>
-      </div>
+      </ScrollReveal>
+      
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-red-500 to-orange-500">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl font-bold text-white mb-6">
+              Not Sure Which Solution Is Right for You?
+            </h2>
+            <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+              Our experts will analyze your business needs and recommend the perfect solution 
+              to drive your growth and success.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => navigate('/contact?type=solution-consultation')}
+                className="px-8 py-4 bg-black text-white font-semibold rounded-xl hover:bg-gray-900 transition-all duration-300 transform hover:scale-105"
+              >
+                Get Free Solution Analysis
+              </button>
+              <button
+                onClick={() => navigate('/process')}
+                className="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-red-500 transition-all duration-300"
+              >
+                Learn About Our Process
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </PageTransition>
   );
 };

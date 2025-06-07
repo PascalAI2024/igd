@@ -30,7 +30,12 @@ declare global {
 // Helper to determine page type from path
 const _getPageTypeFromPath = (path: string): string => {
   if (path === '/' || path === '/home') return 'home';
+  if (path.startsWith('/solutions/')) return 'solution';
+  if (path === '/solutions') return 'solutions_index';
   if (path.startsWith('/services/')) return 'service';
+  if (path === '/services') return 'services_index';
+  if (path.startsWith('/industries/')) return 'industry';
+  if (path === '/industries') return 'industries_index';
   if (path.startsWith('/blog/')) return 'blog_post';
   if (path === '/blog') return 'blog_index';
   if (path.startsWith('/locations/')) return 'location';
@@ -54,6 +59,17 @@ const ServiceDetail = React.lazy(() => import('./pages/ServiceDetail'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const Landing = React.lazy(() => import('./pages/Landing'));
 
+// Lazy load solution pages
+const Solutions = React.lazy(() => import('./pages/Solutions'));
+const DigitalGrowth = React.lazy(() => import('./pages/solutions/DigitalGrowth'));
+const Automation = React.lazy(() => import('./pages/solutions/Automation'));
+const LocalBusiness = React.lazy(() => import('./pages/solutions/LocalBusiness'));
+const Enterprise = React.lazy(() => import('./pages/solutions/Enterprise'));
+
+// Lazy load index pages
+const Services = React.lazy(() => import('./pages/Services'));
+const Industries = React.lazy(() => import('./pages/Industries'));
+
 // Lazy load legal pages
 const Privacy = React.lazy(() => import('./pages/Privacy'));
 const Terms = React.lazy(() => import('./pages/Terms'));
@@ -71,6 +87,7 @@ const Videography = React.lazy(() => import('./pages/services/Videography'));
 const AdManagement = React.lazy(() => import('./pages/services/AdManagement'));
 const BusinessAutomation = React.lazy(() => import('./pages/services/BusinessAutomation'));
 const AiMachineLearning = React.lazy(() => import('./pages/services/AiMachineLearning'));
+const SystemIntegration = React.lazy(() => import('./pages/services/SystemIntegration'));
 
 // Lazy load industry pages - Local Business Focused
 const LocalRetail = React.lazy(() => import('./pages/industries/LocalRetail'));
@@ -338,6 +355,17 @@ const App = () => {
               <Route path="/case-studies" element={<SimpleCaseStudies />} />
               <Route path="/case-studies/:id" element={<SimpleCaseStudyDetail />} />
 
+              {/* Solution Routes */}
+              <Route path="/solutions" element={<Solutions />} />
+              <Route path="/solutions/digital-growth" element={<DigitalGrowth />} />
+              <Route path="/solutions/automation" element={<Automation />} />
+              <Route path="/solutions/local-business" element={<LocalBusiness />} />
+              <Route path="/solutions/enterprise" element={<Enterprise />} />
+
+              {/* Index Pages */}
+              <Route path="/services" element={<Services />} />
+              <Route path="/industries" element={<Industries />} />
+
               {/* Service Routes - SMB Focused */}
               <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
               <Route path="/services/lead-generation" element={<LeadGeneration />} />
@@ -349,6 +377,7 @@ const App = () => {
               <Route path="/services/ad-management" element={<AdManagement />} />
               <Route path="/services/business-automation" element={<BusinessAutomation />} />
               <Route path="/services/ai-machine-learning" element={<AiMachineLearning />} />
+              <Route path="/services/system-integration" element={<SystemIntegration />} />
 
               {/* Industry Routes - Local Business Focused */}
               <Route path="/industries/local-retail" element={<LocalRetail />} />

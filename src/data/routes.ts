@@ -4,6 +4,7 @@ export interface RouteItem {
   description?: string;
   icon?: string;
   keywords?: string[];
+  featured?: boolean;
 }
 
 export interface RouteGroup {
@@ -160,6 +161,12 @@ export const serviceRoutes: RouteGroup = {
       path: '/services/business-automation',
       description: 'Process automation and efficiency',
       keywords: ['automation', 'process', 'efficiency', 'workflow']
+    },
+    { 
+      name: 'System Integration', 
+      path: '/services/system-integration',
+      description: 'Enterprise system integration and connectivity',
+      keywords: ['integration', 'systems', 'API', 'connectivity', 'enterprise']
     }
   ]
 };
@@ -224,4 +231,41 @@ export const searchRoutes = (query: string): RouteItem[] => {
     route.description?.toLowerCase().includes(normalizedQuery) ||
     route.keywords?.some(keyword => keyword.toLowerCase().includes(normalizedQuery))
   );
+};
+
+// Solutions routes for mega menu
+export const solutionsRoutes: RouteGroup = {
+  name: 'Solutions',
+  description: 'Business solution packages',
+  items: [
+    { 
+      name: 'Digital Growth Package', 
+      path: '/solutions/digital-growth',
+      description: 'Complete digital presence solution',
+      featured: true
+    },
+    { 
+      name: 'Business Automation Suite', 
+      path: '/solutions/business-automation',
+      description: 'AI-powered process automation'
+    },
+    { 
+      name: 'Local Business Accelerator', 
+      path: '/solutions/local-business',
+      description: 'Local market domination strategy',
+      featured: true
+    },
+    { 
+      name: 'Enterprise Transformation', 
+      path: '/solutions/enterprise',
+      description: 'Large-scale digital transformation'
+    }
+  ]
+};
+
+// Mega menu structure
+export const megaMenu = {
+  services: serviceRoutes,
+  solutions: solutionsRoutes,
+  industries: industryRoutes
 };
