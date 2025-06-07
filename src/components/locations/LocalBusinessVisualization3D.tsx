@@ -1,6 +1,6 @@
 import React, { useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Text, Html, Sky, Cloud, useTexture } from '@react-three/drei';
+import { Text, Html, Sky, Cloud } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Coffee, Utensils, Home, Building, Users, Map, CheckSquare, TrendingUp, Target } from 'lucide-react';
@@ -63,8 +63,7 @@ const Building3D = ({
     }
   });
   
-  // Use texture for the building facade
-  const buildingTexture = useTexture('/images/building_texture.jpg');
+  // No texture used for building facade to avoid missing file issues
   
   // Random window pattern
   const windowPattern = useMemo(() => {
@@ -177,11 +176,7 @@ const BusinessDistrict = ({
     }
   });
   
-  // Ground plane
-  const groundTexture = useTexture('/images/ground_texture.jpg');
-  groundTexture.wrapS = THREE.RepeatWrapping;
-  groundTexture.wrapT = THREE.RepeatWrapping;
-  groundTexture.repeat.set(10, 10);
+  // No ground texture to avoid missing file issues
   
   return (
     <>
@@ -219,7 +214,6 @@ const BusinessDistrict = ({
         <planeGeometry args={[100, 100]} />
         <meshStandardMaterial 
           color="#444444" 
-          map={groundTexture}
           roughness={0.8}
         />
       </mesh>

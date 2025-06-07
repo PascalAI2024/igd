@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-import OptimizedImage from '../../OptimizedImage';
+import TestimonialIcon from '../../TestimonialIcon';
 
 interface Testimonial {
   quote: string;
@@ -111,22 +111,19 @@ const TestimonialShowcase: React.FC<TestimonialShowcaseProps> = ({
               className="bg-black/30 rounded-xl p-6 border border-white/10"
             >
               <div className="flex flex-col md:flex-row gap-6">
-                {/* Author image */}
-                {testimonials[activeIndex].image && (
-                  <div className="md:w-1/4 flex-shrink-0">
-                    <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full overflow-hidden border-2 border-red-500/30">
-                      <OptimizedImage
-                        src={testimonials[activeIndex].image}
-                        alt={testimonials[activeIndex].author}
-                        className="w-full h-full object-cover"
-                        fallbackClassName="bg-gradient-to-br from-red-900/20 to-purple-900/20 w-full h-full flex items-center justify-center"
-                      />
-                    </div>
+                {/* Author icon */}
+                <div className="md:w-1/4 flex-shrink-0">
+                  <div className="flex justify-center">
+                    <TestimonialIcon 
+                      name={testimonials[activeIndex].author}
+                      industry={testimonials[activeIndex].industry}
+                      size="lg"
+                    />
                   </div>
-                )}
+                </div>
                 
                 {/* Quote */}
-                <div className={testimonials[activeIndex].image ? "md:w-3/4" : "w-full"}>
+                <div className="md:w-3/4">
                   <div className="relative">
                     <Quote className="absolute -top-2 -left-2 w-8 h-8 text-red-500/30" />
                     <p className="text-gray-300 italic text-lg pl-6 mb-4">

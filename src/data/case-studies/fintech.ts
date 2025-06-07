@@ -75,7 +75,6 @@ export const fintech: CaseStudy = {
     quote: "The payment platform has been transformative for our business. We've been able to streamline our payment processes, reduce costs, and provide a better experience for our customers. The security and reliability give us peace of mind, and the integrations with our existing systems made adoption seamless.",
     author: "Sarah Johnson",
     role: "CEO, PayLocal",
-    image: "/team/pascal.jpg"
   },
   timeline: {
     planning: '8 weeks',

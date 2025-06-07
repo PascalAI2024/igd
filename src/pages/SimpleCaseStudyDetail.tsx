@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useNavigateWithTransition } from '../hooks/useNavigateWithTransition';
 import PageTransition from '../components/PageTransition';
+import TestimonialIcon from '../components/TestimonialIcon';
 
 // Simple case studies data with all required properties inline
 export const caseStudies = [
@@ -257,9 +258,12 @@ const SimpleCaseStudyDetail: React.FC = () => {
                 <blockquote>
                   <p className="text-gray-300 italic mb-4">"{study.testimonial.quote}"</p>
                   <footer className="flex items-center">
-                    <div className="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center mr-3 text-red-400 font-bold">
-                      {study.testimonial.author.charAt(0)}
-                    </div>
+                    <TestimonialIcon 
+                      name={study.testimonial.author} 
+                      industry={study.industry}
+                      size="sm"
+                      className="mr-3"
+                    />
                     <div>
                       <div className="font-semibold text-white">{study.testimonial.author}</div>
                       <div className="text-sm text-gray-400">{study.testimonial.role}</div>

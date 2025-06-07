@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import animationSystem from '../../styles/animation-system';
 
 /**
  * Type of CTA button - controls visual styling
@@ -89,19 +90,19 @@ const CTAButton: React.FC<CTAButtonProps> = ({
   const getBaseClasses = (): string => {
     switch (buttonType) {
       case 'primary':
-        return 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:shadow-lg hover:shadow-red-500/25';
+        return 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:shadow-lg hover:shadow-red-500/25 transition-shadow duration-300';
       
       case 'secondary':
-        return 'bg-white/10 text-white backdrop-blur-sm border border-white/20 hover:bg-white/15 hover:border-white/30';
+        return 'bg-white/10 text-white backdrop-blur-sm border border-white/20 hover:bg-white/15 hover:border-white/30 transition-colors duration-300';
       
       case 'tertiary':
-        return 'bg-transparent text-red-500 hover:text-red-400 underline-offset-4 hover:underline';
+        return 'bg-transparent text-red-500 hover:text-red-400 underline-offset-4 hover:underline transition-colors duration-200';
       
       case 'ghost':
-        return 'bg-transparent text-white hover:bg-white/5 border border-white/10 hover:border-white/20';
+        return 'bg-transparent text-white hover:bg-white/5 border border-white/10 hover:border-white/20 transition-colors duration-300';
       
       default:
-        return 'bg-gradient-to-r from-red-600 to-red-700 text-white';
+        return 'bg-gradient-to-r from-red-600 to-red-700 text-white transition-shadow duration-300';
     }
   };
 
@@ -126,7 +127,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
   const buttonClasses = `
     ${getBaseClasses()}
     ${getSizeClasses()}
-    rounded-lg transition-all duration-300
+    rounded-lg
     inline-flex items-center justify-center
     font-medium
     ${disabled || isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
@@ -157,8 +158,10 @@ const CTAButton: React.FC<CTAButtonProps> = ({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
-        whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
+        whileHover={disabled || isLoading ? {} : animationSystem.states.hover.scale.whileHover}
+        whileTap={disabled || isLoading ? {} : animationSystem.states.tap.press.whileTap}
+        transition={{ duration: animationSystem.duration.fast }}
+        style={{ willChange: 'transform' }}
         {...commonProps}
       >
         {content}
@@ -170,8 +173,10 @@ const CTAButton: React.FC<CTAButtonProps> = ({
   if (to) {
     return (
       <motion.div
-        whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
-        whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
+        whileHover={disabled || isLoading ? {} : animationSystem.states.hover.scale.whileHover}
+        whileTap={disabled || isLoading ? {} : animationSystem.states.tap.press.whileTap}
+        transition={{ duration: animationSystem.duration.fast }}
+        style={{ willChange: 'transform' }}
       >
         <Link 
           to={to}
@@ -196,8 +201,10 @@ const CTAButton: React.FC<CTAButtonProps> = ({
       type="button"
       onClick={onClick}
       disabled={disabled || isLoading}
-      whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
-      whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
+      whileHover={disabled || isLoading ? {} : animationSystem.states.hover.scale.whileHover}
+      whileTap={disabled || isLoading ? {} : animationSystem.states.tap.press.whileTap}
+      transition={{ duration: animationSystem.duration.fast }}
+      style={{ willChange: 'transform' }}
       {...commonProps}
     >
       {content}

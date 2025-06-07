@@ -73,7 +73,6 @@ export const realestate: CaseStudy = {
     quote: "The digital platform transformed how we operate. We're now able to showcase properties more effectively, communicate with clients seamlessly, and track our performance in real-time. Our agents love the efficiency, and our clients appreciate the modern experience.",
     author: "Robert Chen",
     role: "Managing Broker, Coastal Properties",
-    image: "/team/realestate-broker.webp"
   },
   timeline: {
     planning: '5 weeks',

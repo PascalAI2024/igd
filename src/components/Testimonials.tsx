@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ChevronLeft, ChevronRight, Star, MessageSquare, Award, TrendingUp, Building } from 'lucide-react';
 import { testimonials, Testimonial } from '../data/testimonials';
 import OptimizedImage from './OptimizedImage';
+import { RevealOnScroll, InteractiveWrapper, SlideIn } from './AnimationWrappers';
 
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -27,14 +28,20 @@ const Testimonials = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.05),transparent_70%)]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-gradient">
-            Local Success Stories
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            See how we've helped local businesses transform and grow
-          </p>
-        </div>
+        <RevealOnScroll>
+          <div className="text-center mb-12">
+            <SlideIn direction="up">
+              <h2 className="text-4xl font-bold mb-4 text-gradient">
+                Local Success Stories
+              </h2>
+            </SlideIn>
+            <SlideIn direction="up" delay={0.1}>
+              <p className="text-gray-400 max-w-2xl mx-auto">
+                See how we've helped local businesses transform and grow
+              </p>
+            </SlideIn>
+          </div>
+        </RevealOnScroll>
 
         <div className="relative">
           <div className="overflow-hidden">

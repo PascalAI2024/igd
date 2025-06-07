@@ -73,7 +73,6 @@ export const manufacturing: CaseStudy = {
     quote: "The transformation to a smart factory has revolutionized our operations. We've moved from reactive to predictive operations, achieving unprecedented levels of efficiency and quality. The real-time insights have empowered our team to make data-driven decisions that directly impact our bottom line.",
     author: "David Chang",
     role: "VP of Operations, Industrial Innovations Corp",
-    image: "/team/manufacturing-vp.webp"
   },
   timeline: {
     planning: '8 weeks',

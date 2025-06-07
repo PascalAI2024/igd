@@ -73,7 +73,6 @@ export const ecommerce: CaseStudy = {
     quote: "The e-commerce optimization project completely transformed our business. Our online store is now our primary revenue channel, and the improved user experience has resulted in significantly higher customer satisfaction and loyalty. The ROI has far exceeded our expectations.",
     author: "James Wilson",
     role: "CEO, Artisan Goods Co.",
-    image: "/team/ecommerce-ceo.webp"
   },
   timeline: {
     planning: '6 weeks',

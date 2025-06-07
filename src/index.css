@@ -115,8 +115,9 @@ body {
 }
 
 .nav-dropdown-item {
-  @apply relative block px-4 py-2.5 text-sm text-gray-300 transition-all duration-200;
+  @apply relative block px-4 py-2.5 text-sm text-gray-300 transition-colors duration-200;
   border-left: 2px solid transparent;
+  transition: color 200ms, background-color 200ms, padding-left 200ms, border-color 200ms;
 }
 
 .nav-dropdown-item:hover {

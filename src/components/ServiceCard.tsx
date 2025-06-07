@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, LucideIcon } from 'lucide-react';
 import NavigationButton from './NavigationButton';
 import { trackServiceView, trackInteraction } from '../utils/analytics';
+import { InteractiveWrapper, RevealOnScroll } from './AnimationWrappers';
+import animationSystem from '../styles/animation-system';
 
 interface ServiceCardProps {
   icon: LucideIcon;
@@ -62,14 +64,18 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   };
 
   return (
-    <motion.div
-      id={`service-card-${title.toLowerCase().replace(/\s+/g, '-')}`}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -5 }}
-      className="bg-white/5 rounded-xl overflow-hidden backdrop-blur-sm border border-white/10"
-    >
+    <RevealOnScroll>
+      <InteractiveWrapper
+        hoverType="lift"
+        tapType="press"
+        className="bg-white/5 rounded-xl overflow-hidden backdrop-blur-sm border border-white/10 transition-shadow duration-300 will-change-transform"
+      >
+        <div
+          id={`service-card-${title.toLowerCase().replace(/\s+/g, '-')}`}
+          style={{
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+          }}
+        >
       {/* Header */}
       <div className={`bg-gradient-to-r ${color} p-6`}>
         <div className="flex items-center">
@@ -86,15 +92,18 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         {/* Metrics */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {metrics.map((metric) => (
-            <motion.div
-              key={metric.label}
-              className="text-center cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              onClick={() => handleMetricClick(metric)}
-            >
-              <div className="text-xl font-bold text-white">{metric.value}</div>
-              <div className="text-xs text-gray-400">{metric.label}</div>
-            </motion.div>
+            <div key={metric.label}>
+              <InteractiveWrapper
+                hoverType="scale"
+                tapType="scale"
+                className="text-center cursor-pointer"
+              >
+                <div onClick={() => handleMetricClick(metric)}>
+                  <div className="text-xl font-bold text-white">{metric.value}</div>
+                  <div className="text-xs text-gray-400">{metric.label}</div>
+                </div>
+              </InteractiveWrapper>
+            </div>
           ))}
         </div>
 
@@ -103,9 +112,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           {features.slice(0, 4).map((feature) => (
             <motion.div
               key={feature}
-              className="flex items-center text-sm text-gray-300 cursor-pointer"
+              className="flex items-center text-sm text-gray-300 cursor-pointer transition-transform duration-200"
               whileHover={{ x: 5 }}
               onClick={() => handleFeatureClick(feature)}
+              style={{ willChange: 'transform' }}
             >
               <div className="w-1.5 h-1.5 rounded-full bg-red-500 mr-2" />
               {feature}
@@ -116,13 +126,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         {/* CTA */}
         <NavigationButton
           to={path}
-          className="inline-flex items-center text-red-500 hover:text-red-400"
+          className="inline-flex items-center text-red-500 hover:text-red-400 transition-colors duration-200"
         >
           Learn More
           <ArrowRight className="w-4 h-4 ml-1" />
         </NavigationButton>
-      </div>
-    </motion.div>
+        </div>
+        </div>
+      </InteractiveWrapper>
+    </RevealOnScroll>
   );
 };
 

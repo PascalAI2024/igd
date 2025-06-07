@@ -74,7 +74,6 @@ export const education: CaseStudy = {
     quote: "The digital learning platform has revolutionized how we teach and how our students learn. We've seen remarkable improvements in engagement, performance, and satisfaction from students, parents, and teachers alike. The platform has enabled us to provide a truly modern educational experience.",
     author: "Dr. Michelle Taylor",
     role: "Principal, Horizon Academy",
-    image: "/team/education-principal.webp"
   },
   timeline: {
     planning: '6 weeks',

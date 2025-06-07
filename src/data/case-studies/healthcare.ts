@@ -73,7 +73,6 @@ export const healthcare: CaseStudy = {
     quote: "We were drowning in administrative complexity, struggling to provide quality patient care. Ingenious Digital didn't just upgrade our technology—they reimagined our entire healthcare delivery model. Our clinicians now spend more time with patients and less time fighting with systems.",
     author: "Dr. Elena Rodriguez",
     role: "Chief Executive Officer, St. Mary's Regional Health System",
-    image: "/team/pascal.jpg"
   },
   timeline: {
     planning: '8 weeks',

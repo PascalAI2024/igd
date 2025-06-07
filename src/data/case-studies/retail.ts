@@ -47,6 +47,5 @@ export const retail: CaseStudy = {
     quote: "The digital transformation has revolutionized our business. We're now able to compete effectively with larger retailers while maintaining our local charm.",
     author: "Sarah Thompson",
     position: "Store Owner",
-    image: "/team/retail-owner.webp"
   }
 };

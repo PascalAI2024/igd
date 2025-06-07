@@ -69,7 +69,6 @@ export const restaurant: CaseStudy = {
     quote: "The digital transformation completely revolutionized our business. We're not just surviving in a competitive market—we're thriving. The online ordering system alone paid for itself within the first month, and our customer loyalty program has created a community around our restaurant.",
     author: "Maria Sanchez",
     role: "Owner, Seaside Bistro",
-    image: "/team/restaurant-owner.webp"
   },
   timeline: {
     planning: '4 weeks',

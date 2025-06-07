@@ -97,10 +97,10 @@ const FormField: React.FC<FormFieldProps> = ({
   const { formData, errors, handleChange } = formContext;
   const hasError = !!errors[name];
   
-  // Default class names
+  // Default class names with improved focus states
   const defaultLabelClass = "block text-sm font-medium text-gray-300 mb-2";
-  const defaultInputClass = "w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400";
-  const errorInputClass = "w-full px-4 py-3 bg-white/5 border border-red-500 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400";
+  const defaultInputClass = "w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 text-white placeholder-gray-400 transition-colors duration-200";
+  const errorInputClass = "w-full px-4 py-3 bg-white/5 border border-red-500 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-500/30 text-white placeholder-gray-400 transition-colors duration-200";
   const defaultErrorClass = "mt-1 text-sm text-red-500";
   const defaultOptionClass = "bg-gray-900";
   
@@ -140,7 +140,7 @@ const FormField: React.FC<FormFieldProps> = ({
         return (
           <div className="relative">
             {icon && (
-              <div className="absolute left-3 top-3 pointer-events-none">
+              <div className="absolute left-3 top-3 pointer-events-none transition-colors duration-200">
                 {icon}
               </div>
             )}
@@ -157,7 +157,7 @@ const FormField: React.FC<FormFieldProps> = ({
         return (
           <div className="relative">
             {icon && (
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none transition-colors duration-200">
                 {icon}
               </div>
             )}
@@ -179,7 +179,7 @@ const FormField: React.FC<FormFieldProps> = ({
         return (
           <div className="relative">
             {icon && (
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none transition-colors duration-200">
                 {icon}
               </div>
             )}

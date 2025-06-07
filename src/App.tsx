@@ -83,6 +83,10 @@ const Manufacturing = React.lazy(() => import('./pages/industries/Manufacturing'
 const Locations = React.lazy(() => import('./pages/Locations'));
 const Location = React.lazy(() => import('./pages/Location'));
 
+// Lazy load animation showcase pages (development only)
+const AnimationPlayground = React.lazy(() => import('./components/AnimationPlayground'));
+const AnimationShowcase = React.lazy(() => import('./components/AnimationShowcase'));
+
 const App = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(() => {
@@ -358,6 +362,14 @@ const App = () => {
 
               {/* Generic service route should come after specific service routes */}
               <Route path="/services/:id" element={<ServiceDetail />} />
+
+              {/* Animation Showcase Routes (Development Only) */}
+              {import.meta.env.DEV && (
+                <>
+                  <Route path="/animation-playground" element={<AnimationPlayground />} />
+                  <Route path="/animation-showcase" element={<AnimationShowcase />} />
+                </>
+              )}
 
               <Route path="*" element={<NotFound />} />
             </Routes>

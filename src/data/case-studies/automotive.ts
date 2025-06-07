@@ -46,6 +46,5 @@ export const automotive: CaseStudy = {
     quote: "The digital transformation has completely changed how we do business. We're booking more appointments than ever and our customers love the convenience.",
     author: "Mike Johnson",
     position: "Owner",
-    image: "/team/auto-owner.webp"
   }
 };

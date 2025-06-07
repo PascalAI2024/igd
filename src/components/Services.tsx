@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, ChevronRight, BarChart2, Target, Layers, Code, Cpu } from 'lucide-react';
 import ServiceCardEnhanced from './ServiceCardEnhanced';
 import { services } from '../data/services/serviceData';
+import { RevealOnScroll, StaggerContainer, SlideIn } from './AnimationWrappers';
 
 const Services = () => {
   const [activeCategory, setActiveCategory] = useState('marketing');
@@ -57,25 +58,18 @@ const Services = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center bg-gradient-to-r from-red-500/10 to-red-500/5 rounded-full px-4 py-2 mb-4 border border-red-500/10"
-          >
-            <Zap className="w-5 h-5 text-red-500 mr-2" />
-            <span className="text-red-500 font-semibold">Strategic Solutions, Measurable Results</span>
-          </motion.div>
+          <RevealOnScroll>
+            <div className="inline-flex items-center bg-gradient-to-r from-red-500/10 to-red-500/5 rounded-full px-4 py-2 mb-4 border border-red-500/10">
+              <Zap className="w-5 h-5 text-red-500 mr-2" />
+              <span className="text-red-500 font-semibold">Strategic Solutions, Measurable Results</span>
+            </div>
+          </RevealOnScroll>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl font-bold text-gradient mb-4"
-          >
-            Transform Your Digital Presence
-          </motion.h2>
+          <SlideIn direction="up" delay={0.1}>
+            <h2 className="text-4xl font-bold text-gradient mb-4">
+              Transform Your Digital Presence
+            </h2>
+          </SlideIn>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}

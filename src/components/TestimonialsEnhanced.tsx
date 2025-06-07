@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ChevronLeft, ChevronRight, Star, MessageSquare, Award, TrendingUp, Building } from 'lucide-react';
 import { testimonials, Testimonial } from '../data/testimonials';
-import OptimizedImage from './OptimizedImage';
+import TestimonialIcon from './TestimonialIcon';
 
 const TestimonialsEnhanced = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -140,13 +140,11 @@ const TestimonialsEnhanced = () => {
                       <div className="p-8">
                         <div className="flex items-start mb-6">
                           <div className="flex-shrink-0 mr-4 relative">
-                            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/10">
-                              <OptimizedImage
-                                src={testimonial.image}
-                                alt={testimonial.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
+                            <TestimonialIcon 
+                              name={testimonial.name} 
+                              industry={testimonial.industry}
+                              size="md"
+                            />
                             <div className="absolute -bottom-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center border-2 border-black">
                               {testimonial.rating}
                             </div>

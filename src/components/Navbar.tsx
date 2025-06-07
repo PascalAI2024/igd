@@ -3,6 +3,8 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo';
 import NavigationButton from './NavigationButton';
+import { InteractiveWrapper } from './AnimationWrappers';
+import animationSystem from '../styles/animation-system';
 
 interface NavbarProps {
   isOpen: boolean;
@@ -70,7 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
 
   const NavLink: React.FC<{ to: string; className?: string; children: React.ReactNode }> = ({
     to,
-    className = "text-gray-300 hover:text-white px-3 py-2 text-sm font-medium relative group",
+    className = "text-gray-300 hover:text-white px-3 py-2 text-sm font-medium relative group transition-colors duration-200",
     children
   }) => (
     <NavigationButton
