@@ -44,7 +44,7 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
 
         setTimeout(() => {
           onComplete();
-        }, 800);
+        }, 2000); // Give 2 seconds to read the final message
         return;
       }
 
@@ -52,13 +52,13 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
       if (currentCharIndex < currentMessage.length) {
         textElement.textContent = currentMessage.substring(0, currentCharIndex + 1);
         currentCharIndex++;
-        setTimeout(typeMessage, 30 + Math.random() * 40);
+        setTimeout(typeMessage, 50 + Math.random() * 60); // Slower typing: 50-110ms per character
       } else {
         setTimeout(() => {
           currentMessageIndex++;
           currentCharIndex = 0;
           typeMessage();
-        }, 800);
+        }, 1800); // Longer pause between messages: 1.8 seconds
       }
     };
 
