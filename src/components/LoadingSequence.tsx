@@ -44,7 +44,7 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
 
         setTimeout(() => {
           onComplete();
-        }, 5500); // Extended timing to properly read "Digital Excellence" punchline
+        }, 11000); // 5 messages × 1800ms + 2000ms pause = proper timing for punchline
         return;
       }
 
