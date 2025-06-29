@@ -14,7 +14,7 @@ const LightweightLoadingSequence = ({ onComplete }: { onComplete: () => void }) 
 
   useEffect(() => {
     let messageIndex = 0;
-    const totalDuration = 4000; // 4 seconds total for better readability
+    const totalDuration = 6000; // 6 seconds total for much better readability
     const messageInterval = totalDuration / messages.length;
     
     const interval = setInterval(() => {
