@@ -2,8 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Code2, Lightbulb, Users, Target } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
-import TeamMemberIcon from '../components/TeamMemberIcon';
-import { team } from '../data/team';
+import InteractiveTimeline from '../components/about/InteractiveTimeline';
+import LiveAchievementCounter from '../components/about/LiveAchievementCounter';
+import InteractiveTeamShowcase from '../components/about/InteractiveTeamShowcase';
 
 const values = [
   {
@@ -54,8 +55,29 @@ const About = () => {
           </div>
         </section>
 
-        {/* Values Section */}
+        {/* Interactive Timeline Section */}
         <section className="py-16 sm:py-20 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <InteractiveTimeline />
+          </div>
+        </section>
+
+        {/* Live Achievement Counter */}
+        <section className="py-16 sm:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <LiveAchievementCounter />
+          </div>
+        </section>
+
+        {/* Interactive Team Showcase */}
+        <section className="py-16 sm:py-20 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <InteractiveTeamShowcase />
+          </div>
+        </section>
+
+        {/* Values Section */}
+        <section className="py-16 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12 sm:mb-16">
               <h2 className="text-2xl sm:text-3xl font-bold text-gradient mb-4">Our Values</h2>
@@ -77,24 +99,6 @@ const About = () => {
                   <h3 className="text-xl font-semibold text-white mb-2">{value.title}</h3>
                   <p className="text-gray-400">{value.description}</p>
                 </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Team Section */}
-        <section className="py-16 sm:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gradient mb-4">Our Team</h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                Meet the innovators and problem solvers behind Ingenious Digital
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              {team.map((member, index) => (
-                <TeamMemberIcon key={member.name} member={member} index={index} />
               ))}
             </div>
           </div>
