@@ -9,6 +9,7 @@ import ContactOptions from '../components/ContactOptions';
 import PageTransition from '../components/PageTransition';
 import InteractiveBackground from '../components/backgrounds/InteractiveBackground';
 import ScrollReveal, { StaggerReveal } from '../components/effects/ScrollReveal';
+import LiveMetricsDashboard from '../components/homepage/LiveMetricsDashboard';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -71,15 +72,29 @@ const Home = () => {
         </section>
         
         {/* Services section with scroll animations */}
-        <ScrollReveal 
-          animation="fade" 
+        <ScrollReveal
+          animation="fade"
           className="section relative"
           threshold={0.1}
           duration={0.7}
         >
           <Services />
         </ScrollReveal>
-        
+
+        {/* Live Metrics Dashboard */}
+        <ScrollReveal
+          animation="slide-up"
+          className="section relative"
+          threshold={0.2}
+          duration={0.8}
+        >
+          <section className="py-16 bg-black/50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <LiveMetricsDashboard />
+            </div>
+          </section>
+        </ScrollReveal>
+
         {/* Projects with staggered reveal */}
         <StaggerReveal 
           className="section relative"
