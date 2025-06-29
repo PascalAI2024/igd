@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import { caseStudies } from '../data/case-studies';
 import OptimizedImage from '../components/OptimizedImage';
+import InteractiveCaseStudyShowcase from '../components/case-studies/InteractiveCaseStudyShowcase';
+import ProjectROICalculator from '../components/case-studies/ProjectROICalculator';
 
 const CaseStudies = () => {
   const [selectedIndustry, setSelectedIndustry] = useState('All');
@@ -63,9 +65,29 @@ const CaseStudies = () => {
           </div>
         </section>
 
-        {/* Case Studies Grid */}
+        {/* Interactive Case Study Showcase */}
+        <section className="py-12 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <InteractiveCaseStudyShowcase />
+          </div>
+        </section>
+
+        {/* ROI Calculator */}
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ProjectROICalculator />
+          </div>
+        </section>
+
+        {/* Traditional Case Studies Grid */}
+        <section className="py-12 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gradient mb-4">More Case Studies</h2>
+              <p className="text-gray-400 max-w-2xl mx-auto">
+                Explore additional projects and success stories from our portfolio
+              </p>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredStudies.map((study, index) => (
                 <Link
