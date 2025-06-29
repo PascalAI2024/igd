@@ -9,6 +9,7 @@ import FeatureShowcase from '../../components/services/crm/FeatureShowcase';
 import OptimizedCRMProcessFlow from '../../components/services/crm/OptimizedCRMProcessFlow';
 import OptimizedTechStack from '../../components/services/crm/OptimizedTechStack';
 import LiveDataFlowVisualization from '../../components/services/crm/LiveDataFlowVisualization';
+import LiveCRMDashboard from '../../components/services/crm/LiveCRMDashboard';
 import NavigationButton from '../../components/NavigationButton';
 import { lazy3D } from '../../utils/lazyLoad3D';
 
@@ -220,67 +221,10 @@ const CRM = () => {
           </div>
         </section>
 
-        {/* Interactive Dashboard */}
+        {/* Live CRM Dashboard Demo */}
         <section className="py-20 bg-gradient-to-b from-black/90 to-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <motion.span 
-                className="inline-block text-red-500 text-lg font-medium mb-2"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-              >
-                Interactive Experience
-              </motion.span>
-              <h2 className="text-4xl font-bold text-white mb-4">
-                Unified <span className="text-gradient">CRM Platform</span>
-              </h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                Everything you need to manage customer relationships in one intuitive interface
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-red-500/5"
-            >
-              <lazy3D.CRMDashboard3D />
-            </motion.div>
-
-            {/* Key Benefits */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              {clientBenefits.map((benefit, index) => (
-                <motion.div
-                  key={benefit.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + (index * 0.1) }}
-                  className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:border-red-500/20 transition-all duration-300"
-                >
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-red-600 mr-4">
-                      <PieChart className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-white">{benefit.value}</div>
-                      <div className="text-gray-400">{benefit.label}</div>
-                    </div>
-                  </div>
-                  <p className="text-gray-400">{benefit.description}</p>
-                </motion.div>
-              ))}
-            </div>
+            <LiveCRMDashboard />
           </div>
         </section>
 

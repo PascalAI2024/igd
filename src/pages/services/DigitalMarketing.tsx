@@ -8,6 +8,7 @@ import ServiceSchema from '../../components/ServiceSchema';
 import FAQSchema from '../../components/FAQSchema';
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import FeatureShowcase from '../../components/services/digital-marketing/FeatureShowcase';
+import LiveMarketingDashboard from '../../components/services/digital-marketing/LiveMarketingDashboard';
 import OptimizedDigitalMarketingFlow from '../../components/services/digital-marketing/OptimizedDigitalMarketingFlow';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
@@ -196,6 +197,13 @@ const DigitalMarketing = () => {
               </p>
             </motion.div>
             <FeatureShowcase />
+          </div>
+        </section>
+
+        {/* Live Marketing Dashboard Demo */}
+        <section className="py-20 bg-gradient-to-b from-black to-black/90">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <LiveMarketingDashboard />
           </div>
         </section>
 

@@ -5,6 +5,7 @@ import PageTransition from '../../components/PageTransition';
 import FeatureShowcase from '../../components/services/business-automation/FeatureShowcase';
 import TechnologyStack from '../../components/services/business-automation/TechnologyStack';
 import InteractiveWorkflowBuilder from '../../components/services/business-automation/InteractiveWorkflowBuilder';
+import LiveWorkflowBuilder from '../../components/services/business-automation/LiveWorkflowBuilder';
 import { lazy3D } from '../../utils/lazyLoad3D';
 
 const BusinessAutomation = () => {
@@ -139,10 +140,10 @@ const BusinessAutomation = () => {
           </div>
         </section>
 
-        {/* Interactive Workflow Builder Section */}
+        {/* Live Workflow Builder Demo */}
         <section className="py-20 bg-black/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <InteractiveWorkflowBuilder />
+            <LiveWorkflowBuilder />
           </div>
         </section>
 
