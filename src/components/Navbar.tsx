@@ -94,15 +94,21 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute left-0 mt-2 w-64 bg-black/95 backdrop-blur-md rounded-lg shadow-2xl border border-red-500/20 z-50"
+                      className="absolute left-0 mt-2 w-64 bg-black/95 backdrop-blur-md rounded-lg shadow-2xl border border-red-500/20 z-50 overflow-hidden"
+                      style={{
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 61, 61, 0.1)'
+                      }}
                     >
                       <div className="py-2">
-                        {serviceRoutes.items.map((item: RouteItem) => (
+                        {serviceRoutes.items.map((item: RouteItem, index) => (
                           <NavigationButton
                             key={item.path}
                             to={item.path}
                             onClick={closeMenu}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition-colors duration-200"
+                            className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:text-red-400 hover:bg-gradient-to-r hover:from-red-500/10 hover:to-red-500/5 transition-all duration-200 border-b border-white/5 last:border-b-0"
+                            style={{
+                              animationDelay: `${index * 50}ms`
+                            }}
                           >
                             {item.name}
                           </NavigationButton>
@@ -131,15 +137,21 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute left-0 mt-2 w-64 bg-black/95 backdrop-blur-md rounded-lg shadow-2xl border border-red-500/20 z-50"
+                      className="absolute left-0 mt-2 w-64 bg-black/95 backdrop-blur-md rounded-lg shadow-2xl border border-red-500/20 z-50 overflow-hidden"
+                      style={{
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 61, 61, 0.1)'
+                      }}
                     >
                       <div className="py-2">
-                        {industryRoutes.items.map((item: RouteItem) => (
+                        {industryRoutes.items.map((item: RouteItem, index) => (
                           <NavigationButton
                             key={item.path}
                             to={item.path}
                             onClick={closeMenu}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition-colors duration-200"
+                            className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:text-red-400 hover:bg-gradient-to-r hover:from-red-500/10 hover:to-red-500/5 transition-all duration-200 border-b border-white/5 last:border-b-0"
+                            style={{
+                              animationDelay: `${index * 50}ms`
+                            }}
                           >
                             {item.name}
                           </NavigationButton>

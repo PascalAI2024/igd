@@ -148,7 +148,7 @@ const Contact = () => {
                 </div>
                 <div className="ml-6 overflow-hidden w-full">
                   <p className="text-sm text-gray-400 mb-1">Email Us</p>
-                  <p className="text-base md:text-lg font-semibold text-white group-hover:text-red-500 transition-colors whitespace-nowrap overflow-hidden text-ellipsis">
+                  <p className="text-sm sm:text-base md:text-lg font-semibold text-white group-hover:text-red-500 transition-colors whitespace-nowrap overflow-hidden text-ellipsis min-w-0">
                     pascal@ingeniousdigital.com
                   </p>
                   <p className="text-gray-400 mt-2">We typically respond within 24 hours</p>
