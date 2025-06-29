@@ -10,6 +10,7 @@ import FeatureShowcase from '../../components/services/web-development/FeatureSh
 import WebsiteVisualizer from '../../components/services/web-development/WebsiteVisualizer';
 import OptimizedWebDevelopmentProcess from '../../components/services/web-development/OptimizedWebDevelopmentProcess';
 import CodeShowcase from '../../components/services/web-development/CodeShowcase';
+import LiveCodeEditor from '../../components/services/web-development/LiveCodeEditor';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
 
@@ -401,6 +402,16 @@ const WebDevelopment = () => {
             <CodeShowcase
               title="Our Development Approach"
               description="See examples of the clean, efficient code we use to build your website"
+            />
+          </div>
+        </section>
+
+        {/* Live Code Editor - Interactive Demo */}
+        <section className="py-20 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <LiveCodeEditor
+              title="🚀 Interactive Development Demo"
+              description="This is what sets us apart - try editing the code below and watch it update in real-time! This demonstrates our expertise in creating interactive, responsive websites."
             />
           </div>
         </section>
