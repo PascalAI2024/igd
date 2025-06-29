@@ -44,7 +44,7 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
 
         setTimeout(() => {
           onComplete();
-        }, 4000); // Give 4 seconds to read the final message
+        }, 2500); // Perfect timing to read "Digital Excellence" punchline
         return;
       }
 
@@ -52,13 +52,13 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
       if (currentCharIndex < currentMessage.length) {
         textElement.textContent = currentMessage.substring(0, currentCharIndex + 1);
         currentCharIndex++;
-        setTimeout(typeMessage, 80 + Math.random() * 80); // Much slower typing: 80-160ms per character
+        setTimeout(typeMessage, 40 + Math.random() * 30); // Intriguing typing: 40-70ms per character
       } else {
         setTimeout(() => {
           currentMessageIndex++;
           currentCharIndex = 0;
           typeMessage();
-        }, 3000); // Much longer pause between messages: 3 seconds
+        }, 900); // Intriguing pace - builds to "Digital Excellence" punchline
       }
     };
 
