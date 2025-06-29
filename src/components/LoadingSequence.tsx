@@ -38,13 +38,14 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
         // Set the final message without glitches before completing
         textElement.textContent = messages[messages.length - 1];
         isCompleting = true;
-
+        
         // Clear the glitch interval to prevent text corruption
         clearInterval(glitchInterval);
 
+        // Wait for a moment on the final message before completing
         setTimeout(() => {
           onComplete();
-        }, 11000); // 5 messages × 1800ms + 2000ms pause = proper timing for punchline
+        }, 2000); // Hold on the punchline for 2s
         return;
       }
 
