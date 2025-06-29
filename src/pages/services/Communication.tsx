@@ -7,6 +7,7 @@ import {
 import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
 import { lazy3D } from '../../utils/lazyLoad3D';
+import LiveCommunicationDemo from '../../components/services/communication/LiveCommunicationDemo';
 
 const stats = [
   { label: 'Response Time', value: '-65%', icon: Clock, trend: 'Faster' },
@@ -158,23 +159,10 @@ const Communication = () => {
           </div>
         </section>
 
-        {/* Network Visualization */}
+        {/* Live Communication Demo */}
         <section className="py-20 bg-black/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-3xl font-bold text-gradient mb-4">
-                Communication Network
-              </h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                See how our communication solutions connect your business with customers
-              </p>
-            </motion.div>
-            <lazy3D.CommunicationNetwork3D />
+            <LiveCommunicationDemo />
           </div>
         </section>
 
