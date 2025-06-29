@@ -44,7 +44,7 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
 
         setTimeout(() => {
           onComplete();
-        }, 2500); // Perfect timing to read "Digital Excellence" punchline
+        }, 5500); // Extended timing to properly read "Digital Excellence" punchline
         return;
       }
 
@@ -58,7 +58,7 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
           currentMessageIndex++;
           currentCharIndex = 0;
           typeMessage();
-        }, 900); // Intriguing pace - builds to "Digital Excellence" punchline
+        }, 1800); // Slower pace - gives time to read "Digital Excellence" punchline
       }
     };
 
@@ -269,9 +269,9 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
             </div>
 
             <div className="space-y-6">
-              <div className="h-6">
+              <div className="min-h-[2rem] flex items-center justify-center">
                 <span
-                  className="loading-text text-red-500 font-mono text-sm sm:text-base"
+                  className="loading-text text-red-500 font-mono text-sm sm:text-base text-center leading-relaxed"
                 >
                   Initializing Neural Network
                 </span>
