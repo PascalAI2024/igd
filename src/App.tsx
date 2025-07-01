@@ -258,7 +258,7 @@ const App = () => {
       const fallbackTimeout = setTimeout(() => {
         console.warn('Loading sequence timeout - forcing completion');
         handleLoadingComplete();
-      }, 5000); // 5 second max loading time
+      }, 20000); // 20 second max loading time - allows full message sequence
 
       return () => clearTimeout(fallbackTimeout);
     }
