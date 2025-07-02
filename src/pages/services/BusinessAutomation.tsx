@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, Settings, Bot } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
+import MetaTags from '../../components/MetaTags';
+import ServiceSchema from '../../components/ServiceSchema';
 import FeatureShowcase from '../../components/services/business-automation/FeatureShowcase';
 import TechnologyStack from '../../components/services/business-automation/TechnologyStack';
 import InteractiveWorkflowBuilder from '../../components/services/business-automation/InteractiveWorkflowBuilder';
@@ -32,6 +34,17 @@ const BusinessAutomation = () => {
 
   return (
     <PageTransition>
+      <MetaTags 
+        title="Business Automation Services Fort Lauderdale | Ingenious Digital"
+        description="Automate your business processes and save 80% time with our intelligent automation solutions in Fort Lauderdale. Workflow automation, process optimization, and 3X efficiency improvements."
+        keywords={['business automation Fort Lauderdale', 'workflow automation', 'process automation', 'business efficiency', 'automated workflows', 'robotic process automation']}
+      />
+      <ServiceSchema 
+        serviceName="Business Automation Services"
+        description="Intelligent business automation solutions that save 80% time and increase accuracy to 95%. Transform manual processes into automated workflows for 3X efficiency improvements."
+        url="https://ingeniousdigital.com/services/business-automation"
+        serviceType="Business Automation"
+      />
       <div className="min-h-screen bg-black">
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">

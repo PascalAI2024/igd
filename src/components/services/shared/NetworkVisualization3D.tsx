@@ -108,13 +108,17 @@ const Node = ({
   // Load texture for icon
   const texture = useTexture(iconUrl);
   
-  // Track mounted state
+  // Track mounted state and clean up texture
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
+      // Dispose texture if loaded
+      if (texture) {
+        texture.dispose();
+      }
     };
-  }, []);
+  }, [texture]);
   
   // Animation
   useFrame((state) => {
@@ -268,6 +272,10 @@ const Link = ({
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
+      // Clean up particle positions
+      if (particlePositionsRef.current) {
+        particlePositionsRef.current = null;
+      }
     };
   }, []);
   
@@ -359,8 +367,11 @@ const Link = ({
   }, [sourcePos, targetPos, curveRef.current]);
   
   // Prepare particle positions
+  const particlePositionsRef = useRef<Float32Array | null>(null);
   const particlePositions = useMemo(() => {
-    return new Float32Array(particles.current.length * 3);
+    const positions = new Float32Array(particles.current.length * 3);
+    particlePositionsRef.current = positions;
+    return positions;
   }, []);
 
   return (
@@ -786,8 +797,8 @@ const NetworkVisualization3D: React.FC<NetworkVisualization3DProps> = ({
     };
     
     // Handle bfcache restoration
-    const handlePageShow = (event: PageTransitionEvent) => {
-      if (event.persisted) {
+    const handlePageShow = (event: Event) => {
+      if ('persisted' in event && event.persisted) {
         console.log('NetworkVisualization3D: Page restored from bfcache');
       }
     };

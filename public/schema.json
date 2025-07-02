@@ -3,7 +3,7 @@
   "@type": "Organization",
   "name": "Ingenious Digital",
   "url": "https://ingeniousdigital.com",
-  "logo": "https://ingeniousdigital.com/ingenious-digital-logo.svg",
+  "logo": "https://ingeniousdigital.com/social-preview.jpg",
   "description": "AI-powered digital marketing, web development, and business automation solutions for local businesses.",
   "address": {
     "@type": "PostalAddress",
@@ -11,7 +11,7 @@
     "addressRegion": "FL",
     "postalCode": "33304",
     "addressCountry": "US",
-    "streetAddress": "1234 Digital Avenue, Suite 100"
+    "streetAddress": "1201 NE 38th St Suite 100"
   },
   "geo": {
     "@type": "GeoCoordinates",
@@ -43,7 +43,7 @@
     "@type": "Person",
     "name": "Pascal Ledesma",
     "jobTitle": "CEO",
-    "image": "https://ingeniousdigital.com/team/pascal-ledesma.jpg"
+    "image": "https://ingeniousdigital.com/team/pascal.jpg"
   },
   "foundingDate": "2023",
   "knowsAbout": [

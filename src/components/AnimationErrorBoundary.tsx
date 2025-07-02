@@ -62,6 +62,9 @@ export class AnimationErrorBoundary extends Component<Props, State> {
         (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
       );
       
+      // Clean up the test canvas
+      canvas.remove();
+      
       if (!hasWebGL) {
         this.setState({ 
           hasError: true, 

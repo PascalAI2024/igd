@@ -12,6 +12,7 @@ import ContactOptions from '../components/ContactOptions';
 import PageTransition from '../components/PageTransition';
 import InteractiveBackground from '../components/backgrounds/InteractiveBackground';
 import { MagneticCursor, createStaggerAnimation, createParallaxEffect } from '../utils/gsapAnimations';
+import MetaTags from '../components/MetaTags';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -442,6 +443,11 @@ const HomeEnhanced = () => {
 
   return (
     <PageTransition>
+      <MetaTags 
+        title="AI-Powered Digital Solutions for Local Businesses"
+        description="Transform your business with Ingenious Digital's AI-powered digital marketing, web development, and automation solutions. Get more customers and increase revenue with our expert team in Fort Lauderdale."
+        keywords={['digital marketing', 'AI solutions', 'web development', 'business automation', 'SEO', 'Fort Lauderdale', 'local business', 'lead generation']}
+      />
       <main className="relative z-10 overflow-hidden">
         {/* Hero section with enhanced animations */}
         <section ref={heroRef} className="section relative min-h-screen">

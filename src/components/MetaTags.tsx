@@ -78,7 +78,7 @@ const MetaTags: React.FC<MetaTagsProps> = ({
 
       {/* Viewport and other technical tags */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <link rel="canonical" href={absoluteUrl} />
 
       {/* Open Graph Meta Tags */}

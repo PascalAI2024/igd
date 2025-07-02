@@ -10,9 +10,9 @@ const Services: React.FC = () => {
   return (
     <PageTransition>
       <MetaTags 
-        title="Digital Services - Ingenious Digital"
-        description="Comprehensive digital solutions for small businesses. Web development, digital marketing, CRM, automation, and more to grow your business."
-        keywords={["digital services", "web development", "digital marketing", "CRM", "business automation", "small business solutions"]}
+        title="Digital Services Fort Lauderdale | Ingenious Digital"
+        description="Full-service digital agency in Fort Lauderdale offering web development, AI solutions, digital marketing, CRM, and business automation. Transform your business with our comprehensive services."
+        keywords={["digital services Fort Lauderdale", "web development", "digital marketing", "CRM", "business automation", "AI solutions", "local digital agency", "small business solutions"]}
       />
       
       <div className="min-h-screen bg-black pt-20">
