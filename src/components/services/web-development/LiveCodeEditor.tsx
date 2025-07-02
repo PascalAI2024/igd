@@ -212,7 +212,45 @@ body {
     }
 }`,
     js: `function showAlert() {
-    alert('Welcome! This is a live demo of our web development capabilities.');
+    // Create a modern toast notification instead of alert
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = 'Welcome! This is a live demo of our web development capabilities.';
+    toast.style.cssText = [
+        'position: fixed',
+        'bottom: 20px',
+        'right: 20px',
+        'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        'color: white',
+        'padding: 16px 24px',
+        'border-radius: 8px',
+        'box-shadow: 0 4px 20px rgba(0,0,0,0.2)',
+        'font-weight: 500',
+        'z-index: 1000',
+        'animation: slideIn 0.3s ease-out'
+    ].join('; ');
+    
+    // Add animation
+    const style = document.createElement('style');
+    style.textContent = [
+        '@keyframes slideIn {',
+        '  from { transform: translateX(100%); opacity: 0; }',
+        '  to { transform: translateX(0); opacity: 1; }',
+        '}',
+        '@keyframes slideOut {',
+        '  from { transform: translateX(0); opacity: 1; }',
+        '  to { transform: translateX(100%); opacity: 0; }',
+        '}'
+    ].join('\n');
+    document.head.appendChild(style);
+    
+    document.body.appendChild(toast);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 }
 
 // Smooth scrolling for navigation links
@@ -229,9 +267,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = 'scale(1)';
             }, 150);
             
-            // Show a demo message
+            // Show a demo message with toast notification
             setTimeout(() => {
-                alert('Navigation clicked! In a real site, this would scroll to the ' + this.textContent + ' section.');
+                const toast = document.createElement('div');
+                toast.className = 'toast-notification';
+                toast.textContent = 'Navigation clicked! In a real site, this would scroll to the ' + this.textContent + ' section.';
+                toast.style.cssText = [
+                    'position: fixed',
+                    'bottom: 20px',
+                    'right: 20px',
+                    'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    'color: white',
+                    'padding: 16px 24px',
+                    'border-radius: 8px',
+                    'box-shadow: 0 4px 20px rgba(0,0,0,0.2)',
+                    'font-weight: 500',
+                    'z-index: 1000',
+                    'animation: slideIn 0.3s ease-out'
+                ].join('; ');
+                
+                document.body.appendChild(toast);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
             }, 200);
         });
     });

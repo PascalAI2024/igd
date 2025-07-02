@@ -370,7 +370,7 @@ const Hero = () => {
               className="mb-8"
             >
               <div className="relative">
-                <h1 className="text-5xl md:text-8xl font-bold mb-5 relative z-10">
+                <h1 className="text-4xl sm:text-5xl md:text-8xl font-bold mb-5 relative z-10">
                   <span className="text-gradient drop-shadow-lg">Building Digital Excellence</span>
                 </h1>
                 {/* Enhanced glow effect */}

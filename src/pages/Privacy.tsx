@@ -1,11 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield } from 'lucide-react';
+import { Shield, ArrowUp } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import ExpandableSection from '../components/ExpandableSection';
+import ReadingProgress from '../components/ReadingProgress';
 
 const Privacy = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <PageTransition>
+      <ReadingProgress />
       <div className="min-h-screen bg-black py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -29,13 +36,12 @@ const Privacy = () => {
 
           {/* Content */}
           <div className="prose prose-invert max-w-none">
-            <section className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-4">Introduction</h2>
+            <ExpandableSection title="Introduction" defaultOpen={true}>
               <p className="text-gray-400">
                 At Ingenious Digital, we take your privacy seriously. This Privacy Policy explains how we collect, use, 
                 disclose, and safeguard your information when you visit our website or use our services.
               </p>
-            </section>
+            </ExpandableSection>
 
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-white mb-4">Information We Collect</h2>

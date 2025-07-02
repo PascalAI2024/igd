@@ -1,11 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Lock } from 'lucide-react';
+import { Lock, ArrowUp } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import ExpandableSection from '../components/ExpandableSection';
+import ReadingProgress from '../components/ReadingProgress';
 
 const GDPR = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <PageTransition>
+      <ReadingProgress />
       <div className="min-h-screen bg-black py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}

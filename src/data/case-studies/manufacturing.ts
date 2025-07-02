@@ -10,10 +10,10 @@ export const manufacturing: CaseStudy = {
   industry: 'Manufacturing',
   challenge: `
     Industrial Innovations Corp, a leading manufacturer with 5 production facilities, faced significant operational hurdles:
-    - Manual production tracking resulting in 40% data accuracy issues
-    - Quality control defects costing $3M annually
-    - Equipment downtime averaging 120 hours monthly
-    - Resource allocation inefficiencies causing 25% waste
+    - Manual production tracking suffered from 40% data inaccuracy rate
+    - Quality control defects were costing $3M annually
+    - Equipment downtime was averaging 120 hours monthly
+    - Resource allocation inefficiencies were causing 25% waste
     - Limited visibility into real-time production metrics
     - Rising energy costs and sustainability concerns
   `,

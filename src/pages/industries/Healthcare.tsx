@@ -1,9 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Stethoscope, Calendar, Users, TrendingUp, Target, MessageSquare } from 'lucide-react';
+import { Stethoscope, Calendar, Users, TrendingUp, Target, MessageSquare, Activity, Clock, Shield } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
+import { useAnimatedCounter } from '../../hooks/useAnimatedCounter';
 
 const Healthcare = () => {
+  // Animated counter hooks
+  const patientGrowth = useAnimatedCounter({ end: 87, suffix: '%', duration: 2500 });
+  const timeReduction = useAnimatedCounter({ end: 65, suffix: '%', duration: 2500 });
+  const ratingIncrease = useAnimatedCounter({ end: 4.8, decimals: 1, duration: 2500 });
+  const revenueBoost = useAnimatedCounter({ end: 42, suffix: '%', duration: 2500 });
+
   return (
     <PageTransition>
       <div className="min-h-screen bg-black">
@@ -28,6 +35,68 @@ const Healthcare = () => {
           </div>
         </section>
 
+        {/* Stats Section */}
+        <section className="py-16 border-y border-white/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center"
+              >
+                <Activity className="w-8 h-8 text-red-500 mx-auto mb-3" />
+                <div ref={patientGrowth.ref} className="text-3xl font-bold text-white mb-1">
+                  {patientGrowth.displayValue}
+                </div>
+                <p className="text-gray-400 text-sm">Patient Growth</p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-center"
+              >
+                <Clock className="w-8 h-8 text-red-500 mx-auto mb-3" />
+                <div ref={timeReduction.ref} className="text-3xl font-bold text-white mb-1">
+                  {timeReduction.displayValue}
+                </div>
+                <p className="text-gray-400 text-sm">Time Saved</p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-center"
+              >
+                <Users className="w-8 h-8 text-red-500 mx-auto mb-3" />
+                <div ref={ratingIncrease.ref} className="text-3xl font-bold text-white mb-1">
+                  {ratingIncrease.displayValue}
+                </div>
+                <p className="text-gray-400 text-sm">Patient Rating</p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="text-center"
+              >
+                <TrendingUp className="w-8 h-8 text-red-500 mx-auto mb-3" />
+                <div ref={revenueBoost.ref} className="text-3xl font-bold text-white mb-1">
+                  {revenueBoost.displayValue}
+                </div>
+                <p className="text-gray-400 text-sm">Revenue Increase</p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* Features Grid */}
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,15 +108,30 @@ const Healthcare = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white/5 rounded-xl p-6 backdrop-blur-sm border border-white/10"
+                  whileHover={{ 
+                    scale: 1.02,
+                    borderColor: 'rgba(239, 68, 68, 0.3)'
+                  }}
+                  className="bg-white/5 rounded-xl p-6 backdrop-blur-sm border border-white/10 cursor-pointer transition-all duration-300 hover:bg-white/[0.07] group"
                 >
-                  <feature.icon className="w-8 h-8 text-red-500 mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                  <motion.div
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <feature.icon className="w-8 h-8 text-red-500 mb-4 group-hover:text-red-400 transition-colors" />
+                  </motion.div>
+                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-gradient transition-all">{feature.title}</h3>
                   <p className="text-gray-400">{feature.description}</p>
                   <ul className="mt-4 space-y-2">
                     {feature.benefits.map((benefit, i) => (
                       <li key={i} className="flex items-start">
-                        <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 mr-3 flex-shrink-0" />
+                        <motion.div 
+                          initial={{ scale: 0 }}
+                          whileInView={{ scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 + i * 0.05 }}
+                          className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 mr-3 flex-shrink-0" 
+                        />
                         <span className="text-gray-300 text-sm">{benefit}</span>
                       </li>
                     ))}
@@ -78,12 +162,19 @@ const Healthcare = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="relative pl-8 pb-8 last:pb-0"
+                  whileHover={{ x: 10 }}
+                  className="relative pl-8 pb-8 last:pb-0 cursor-pointer group"
                 >
                   <div className="absolute left-0 top-0 w-1.5 h-full bg-red-500/20">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-red-500" />
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1, type: "spring" }}
+                      className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-red-500 group-hover:bg-red-400 transition-colors" 
+                    />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{phase.title}</h3>
+                  <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-gradient transition-all">{phase.title}</h3>
                   <p className="text-gray-400">{phase.description}</p>
                 </motion.div>
               ))}

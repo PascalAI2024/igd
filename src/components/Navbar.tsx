@@ -208,7 +208,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className="fixed top-16 right-0 w-80 h-[calc(100vh-4rem)] bg-black/95 backdrop-blur-md border-l border-red-500/20 z-50 overflow-y-auto"
+              className="fixed top-16 right-0 w-72 h-[calc(100vh-4rem)] bg-black/95 backdrop-blur-md border-l border-red-500/20 z-50 overflow-y-auto"
             >
               <div className="px-6 py-6 space-y-6">
                 {/* Services Section */}

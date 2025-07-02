@@ -80,7 +80,7 @@ const ServicePageTemplate: React.FC<ServicePageTemplateProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-5xl font-bold text-gradient mb-6"
+                className="text-4xl md:text-5xl font-bold text-gradient mb-6"
               >
                 Transform Your Business
               </motion.h1>

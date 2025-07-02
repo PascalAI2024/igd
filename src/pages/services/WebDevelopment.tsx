@@ -118,7 +118,7 @@ const WebDevelopment = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-5xl font-bold mb-6 text-gradient"
+                className="text-4xl md:text-5xl font-bold mb-6 text-gradient"
               >
                 Local Business Websites
               </motion.h1>

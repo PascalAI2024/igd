@@ -3,7 +3,7 @@
   "@type": "Organization",
   "name": "Ingenious Digital",
   "url": "https://ingeniousdigital.com",
-  "logo": "https://ingeniousdigital.com/social-preview.jpg",
+  "logo": "https://ingeniousdigital.com/ingenious-digital-logo.svg",
   "description": "AI-powered digital marketing, web development, and business automation solutions for local businesses.",
   "address": {
     "@type": "PostalAddress",

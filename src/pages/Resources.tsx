@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Book, FileText, ChevronRight, Download, Search, Brain, Shield, Cloud, Code2, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
@@ -75,6 +75,7 @@ const resources = {
 const Resources = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [isLoading, setIsLoading] = useState(false);
 
   const categories = [
     'All',
@@ -92,6 +93,15 @@ const Resources = () => {
        item.description.toLowerCase().includes(query.toLowerCase()))
     );
   };
+
+  // Simulate loading when filters change
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery, selectedCategory]);
 
   const filteredWhitepapers = filterResources(resources.whitepapers, selectedCategory, searchQuery);
   const filteredCaseStudies = filterResources(resources.caseStudies, selectedCategory, searchQuery);
@@ -111,7 +121,7 @@ const Resources = () => {
               className="text-center max-w-3xl mx-auto"
             >
               <Book className="w-16 h-16 text-red-500 mx-auto mb-6" />
-              <h1 className="text-5xl font-bold mb-6 text-gradient">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
                 Resources & Insights
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed">
@@ -132,23 +142,25 @@ const Resources = () => {
                   placeholder="Search resources..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-red-500 text-white placeholder-gray-400 transition-all duration-300 hover:bg-white/[0.07]"
                 />
               </div>
               
               <div className="flex flex-wrap gap-2">
                 {categories.map((category) => (
-                  <button
+                  <motion.button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-full text-sm transition-all ${
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`px-4 py-2 rounded-full text-sm transition-all duration-300 ${
                       selectedCategory === category
                         ? 'bg-red-500 text-white'
                         : 'bg-white/5 text-gray-400 hover:bg-white/10'
                     }`}
                   >
                     {category}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
@@ -159,25 +171,54 @@ const Resources = () => {
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gradient mb-8">Industry Research & Guides</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredWhitepapers.map((paper) => (
+            <AnimatePresence mode="wait">
+              {isLoading ? (
                 <motion.div
-                  key={paper.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="group bg-white/5 rounded-xl p-6 backdrop-blur-sm border border-white/10 hover:border-red-500/20 transition-all duration-300"
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex justify-center items-center h-64"
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-3">
-                      <paper.icon className="w-6 h-6 text-red-500" />
-                      <div>
-                        <h3 className="text-xl font-semibold text-white group-hover:text-gradient">
-                          {paper.title}
-                        </h3>
-                        <span className="text-sm text-gray-400">{paper.readTime}</span>
+                  <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="content"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                >
+                  {filteredWhitepapers.map((paper, index) => (
+                    <motion.div
+                      key={paper.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ 
+                        y: -5,
+                        borderColor: 'rgba(239, 68, 68, 0.3)'
+                      }}
+                      className="group bg-white/5 rounded-xl p-6 backdrop-blur-sm border border-white/10 transition-all duration-300 hover:bg-white/[0.07] cursor-pointer"
+                    >
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex items-center gap-3">
+                          <motion.div
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.5 }}
+                          >
+                            <paper.icon className="w-6 h-6 text-red-500 group-hover:text-red-400 transition-colors" />
+                          </motion.div>
+                          <div>
+                            <h3 className="text-xl font-semibold text-white group-hover:text-gradient transition-all">
+                              {paper.title}
+                            </h3>
+                            <span className="text-sm text-gray-400">{paper.readTime}</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
                   
                   <p className="text-gray-300 mb-6">{paper.description}</p>
                   
@@ -185,17 +226,21 @@ const Resources = () => {
                     <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-gray-300">
                       {paper.category}
                     </span>
-                    <a
-                      href={paper.downloadUrl}
-                      className="inline-flex items-center text-red-500 hover:text-red-400 transition-colors"
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      Download PDF
-                    </a>
-                  </div>
+                        <motion.a
+                          href={paper.downloadUrl}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="inline-flex items-center text-red-500 hover:text-red-400 transition-colors"
+                        >
+                          <Download className="w-4 h-4 mr-2" />
+                          Download PDF
+                        </motion.a>
+                      </div>
+                    </motion.div>
+                  ))}
                 </motion.div>
-              ))}
-            </div>
+              )}
+            </AnimatePresence>
           </div>
         </section>
 

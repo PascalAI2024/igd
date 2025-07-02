@@ -1,11 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Cookie as CookieIcon } from 'lucide-react';
+import { Cookie as CookieIcon, ArrowUp } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
+import ExpandableSection from '../components/ExpandableSection';
+import ReadingProgress from '../components/ReadingProgress';
 
 const Cookie = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <PageTransition>
+      <ReadingProgress />
       <div className="min-h-screen bg-black py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}

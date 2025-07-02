@@ -186,7 +186,7 @@ const Solutions: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               Digital Solutions That Drive
               <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent block">
                 Real Results

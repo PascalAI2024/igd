@@ -16,6 +16,8 @@ import {
   Send,
   Star
 } from 'lucide-react';
+import PlaceholderWidget from '../ui/PlaceholderWidget';
+import { useToast, ToastContainer } from '../ui/Toast';
 
 interface ContactMethod {
   id: string;
@@ -38,6 +40,8 @@ interface LiveStats {
 
 const InteractiveContactHub: React.FC = () => {
   const [selectedMethod, setSelectedMethod] = useState<string>('live-chat');
+  const [showWidget, setShowWidget] = useState<'calendar' | 'chat' | 'video' | null>(null);
+  const { toasts, addToast, removeToast } = useToast();
   const [liveStats, setLiveStats] = useState<LiveStats>({
     activeAgents: 3,
     avgResponseTime: '2.3 min',
@@ -122,19 +126,49 @@ const InteractiveContactHub: React.FC = () => {
   const handleContactAction = (methodId: string) => {
     switch (methodId) {
       case 'live-chat':
-        // In a real app, this would open a chat widget
-        alert('Live chat would open here!');
+        setShowWidget('chat');
+        addToast({
+          type: 'info',
+          title: 'Opening Live Chat',
+          message: 'Connecting you with our support team...',
+          duration: 3000
+        });
         break;
       case 'phone-call':
         window.open('tel:+1234567890');
+        addToast({
+          type: 'success',
+          title: 'Initiating Call',
+          message: 'Redirecting to your phone app...',
+          duration: 3000
+        });
         break;
       case 'email':
-        window.open('mailto:contact@ingeniousdigital.com');
+        window.open('mailto:hello@ingeniousdigital.com');
+        addToast({
+          type: 'success',
+          title: 'Opening Email Client',
+          message: 'Redirecting to your default email app...',
+          duration: 3000
+        });
         break;
       case 'video-call':
+        setShowWidget('video');
+        addToast({
+          type: 'info',
+          title: 'Video Meeting Setup',
+          message: 'Preparing your video meeting options...',
+          duration: 3000
+        });
+        break;
       case 'calendar':
-        // In a real app, this would open a booking widget
-        alert('Booking calendar would open here!');
+        setShowWidget('calendar');
+        addToast({
+          type: 'info',
+          title: 'Opening Calendar',
+          message: 'Loading available time slots...',
+          duration: 3000
+        });
         break;
     }
   };
@@ -332,6 +366,19 @@ const InteractiveContactHub: React.FC = () => {
           availability. Our team is ready to help with your project needs!
         </p>
       </div>
+
+      {/* Placeholder Widgets */}
+      <AnimatePresence>
+        {showWidget && (
+          <PlaceholderWidget
+            type={showWidget}
+            onClose={() => setShowWidget(null)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Toast Container */}
+      <ToastContainer toasts={toasts} onDismiss={removeToast} />
     </motion.div>
   );
 };

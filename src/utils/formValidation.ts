@@ -169,3 +169,98 @@ export const isTokenValid = (token: string, formId: string): boolean => {
     return false;
   }
 };
+
+/**
+ * Enhanced validation rules for form fields
+ */
+export interface ValidationRule {
+  required?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  pattern?: RegExp;
+  custom?: (value: any) => string | null;
+}
+
+export interface ValidationRules {
+  [key: string]: ValidationRule;
+}
+
+export interface ValidationErrors {
+  [key: string]: string;
+}
+
+export const commonValidationRules: ValidationRules = {
+  name: {
+    required: true,
+    minLength: 2,
+    maxLength: 50,
+    pattern: /^[a-zA-Z\s'-]+$/,
+  },
+  email: {
+    required: true,
+    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  },
+  phone: {
+    required: true,
+    pattern: /^[\d\s()+-]+$/,
+    minLength: 10,
+  },
+  message: {
+    required: true,
+    minLength: 10,
+    maxLength: 1000,
+  },
+};
+
+export const validateField = (
+  name: string,
+  value: any,
+  rules: ValidationRule
+): string | null => {
+  if (rules.required && (!value || value.toString().trim() === '')) {
+    return 'This field is required';
+  }
+
+  if (rules.minLength && value && value.length < rules.minLength) {
+    return `Must be at least ${rules.minLength} characters`;
+  }
+
+  if (rules.maxLength && value && value.length > rules.maxLength) {
+    return `Must be no more than ${rules.maxLength} characters`;
+  }
+
+  if (rules.pattern && value && !rules.pattern.test(value)) {
+    switch (name) {
+      case 'email':
+        return 'Please enter a valid email address';
+      case 'phone':
+        return 'Please enter a valid phone number';
+      case 'name':
+        return 'Please enter a valid name (letters only)';
+      default:
+        return 'Invalid format';
+    }
+  }
+
+  if (rules.custom) {
+    return rules.custom(value);
+  }
+
+  return null;
+};
+
+export const validateForm = (
+  formData: Record<string, any>,
+  rules: ValidationRules
+): ValidationErrors => {
+  const errors: ValidationErrors = {};
+
+  Object.keys(rules).forEach((fieldName) => {
+    const error = validateField(fieldName, formData[fieldName], rules[fieldName]);
+    if (error) {
+      errors[fieldName] = error;
+    }
+  });
+
+  return errors;
+};
