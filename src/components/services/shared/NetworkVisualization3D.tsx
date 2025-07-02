@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Text, Html, OrbitControls, Billboard, useTexture } from '@react-three/drei';
+import { Text, Html, OrbitControls, Billboard } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 import { EffectComposer, Bloom, Noise } from '@react-three/postprocessing';
@@ -105,8 +105,28 @@ const Node = ({
   const nodeSize = node.size || (node.type === 'server' ? 0.7 : 0.5);
   const iconUrl = node.icon || NODE_ICON_MAP[node.type];
   
-  // Load texture for icon
-  const texture = useTexture(iconUrl);
+  // Load texture for icon with error handling
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+  
+  useEffect(() => {
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      iconUrl,
+      (loadedTexture) => {
+        if (isMountedRef.current) {
+          setTexture(loadedTexture);
+        }
+      },
+      undefined,
+      (error) => {
+        console.warn(`Failed to load icon texture: ${iconUrl}`, error);
+        // Fallback texture or no texture
+        if (isMountedRef.current) {
+          setTexture(null);
+        }
+      }
+    );
+  }, [iconUrl]);
   
   // Track mounted state and clean up texture
   useEffect(() => {
@@ -182,17 +202,19 @@ const Node = ({
       </mesh>
       
       {/* Icon */}
-      <Billboard position={[0, 0, nodeSize * 1.01]}>
-        <mesh>
-          <planeGeometry args={[nodeSize, nodeSize]} />
-          <meshBasicMaterial 
-            map={texture} 
-            transparent 
-            alphaTest={0.1}
-            color="white"
-          />
-        </mesh>
-      </Billboard>
+      {texture && (
+        <Billboard position={[0, 0, nodeSize * 1.01]}>
+          <mesh>
+            <planeGeometry args={[nodeSize, nodeSize]} />
+            <meshBasicMaterial 
+              map={texture} 
+              transparent 
+              alphaTest={0.1}
+              color="white"
+            />
+          </mesh>
+        </Billboard>
+      )}
       
       {/* Label */}
       <Billboard position={[0, -nodeSize * 1.5, 0]}>
@@ -797,8 +819,8 @@ const NetworkVisualization3D: React.FC<NetworkVisualization3DProps> = ({
     };
     
     // Handle bfcache restoration
-    const handlePageShow = (event: Event) => {
-      if ('persisted' in event && event.persisted) {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
         console.log('NetworkVisualization3D: Page restored from bfcache');
       }
     };
@@ -809,7 +831,7 @@ const NetworkVisualization3D: React.FC<NetworkVisualization3DProps> = ({
     return () => {
       isMountedRef.current = false;
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('pageshow', handlePageShow);
+      window.removeEventListener('pageshow', handlePageShow as EventListener);
     };
   }, []);
   return (

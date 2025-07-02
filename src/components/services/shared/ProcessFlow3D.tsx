@@ -48,6 +48,16 @@ const StepConnector = ({
     }));
   }, []);
   
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      // Clean up particle positions array
+      if (particlePositionsRef.current) {
+        particlePositionsRef.current = null;
+      }
+    };
+  }, []);
+  
   // Create line geometry
   const linePoints = useMemo(() => {
     const points = [];

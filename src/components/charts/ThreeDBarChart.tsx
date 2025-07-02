@@ -96,6 +96,11 @@ const Bar = ({
 
   // Create gradient material
   const gradientMaterial = useMemo(() => {
+    // Dispose old material if it exists
+    if (materialRef.current) {
+      materialRef.current.dispose();
+    }
+    
     const material = new THREE.ShaderMaterial({
       uniforms: {
         color1: { value: new THREE.Color(color) },

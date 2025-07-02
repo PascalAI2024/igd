@@ -374,19 +374,19 @@ const ThreeDPieChart: React.FC<ThreeDPieChartProps> = ({
     };
     
     // Handle bfcache restoration
-    const handlePageShow = (event: Event) => {
-      if ('persisted' in event && event.persisted) {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
         console.log('ThreeDPieChart: Page restored from bfcache');
       }
     };
     
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('pageshow', handlePageShow as EventListener);
+    window.addEventListener('pageshow', handlePageShow);
     
     return () => {
       isMountedRef.current = false;
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('pageshow', handlePageShow);
+      window.removeEventListener('pageshow', handlePageShow as EventListener);
     };
   }, []);
   return (
