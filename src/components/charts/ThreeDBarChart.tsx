@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text } from '@react-three/drei';
 import { motion } from 'framer-motion';
@@ -40,6 +40,7 @@ const Bar = ({
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const isMountedRef = useRef(true);
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
   
   // Clean up on unmount
   useEffect(() => {
@@ -47,6 +48,11 @@ const Bar = ({
     
     return () => {
       isMountedRef.current = false;
+      // Dispose of shader material
+      if (materialRef.current) {
+        materialRef.current.dispose();
+        materialRef.current = null;
+      }
     };
   }, []);
 
@@ -89,32 +95,43 @@ const Bar = ({
   });
 
   // Create gradient material
-  const gradientMaterial = new THREE.ShaderMaterial({
-    uniforms: {
-      color1: { value: new THREE.Color(color) },
-      color2: { value: new THREE.Color('#000000') },
-      hovered: { value: hovered ? 1.0 : 0.0 }
-    },
-    vertexShader: `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      uniform vec3 color1;
-      uniform vec3 color2;
-      uniform float hovered;
-      varying vec2 vUv;
-      void main() {
-        vec3 color = mix(color1, color2, vUv.y);
-        // Add glow when hovered
-        color = mix(color, color1 * 1.5, hovered * 0.3);
-        gl_FragColor = vec4(color, 1.0);
-      }
-    `
-  });
+  const gradientMaterial = useMemo(() => {
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        color1: { value: new THREE.Color(color) },
+        color2: { value: new THREE.Color('#000000') },
+        hovered: { value: hovered ? 1.0 : 0.0 }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 color1;
+        uniform vec3 color2;
+        uniform float hovered;
+        varying vec2 vUv;
+        void main() {
+          vec3 color = mix(color1, color2, vUv.y);
+          // Add glow when hovered
+          color = mix(color, color1 * 1.5, hovered * 0.3);
+          gl_FragColor = vec4(color, 1.0);
+        }
+      `
+    });
+    materialRef.current = material;
+    return material;
+  }, [color]);
+  
+  // Update hovered uniform
+  useEffect(() => {
+    if (gradientMaterial) {
+      gradientMaterial.uniforms.hovered.value = hovered ? 1.0 : 0.0;
+    }
+  }, [hovered, gradientMaterial]);
 
   return (
     <group position={[position[0], 0, position[2]]}>

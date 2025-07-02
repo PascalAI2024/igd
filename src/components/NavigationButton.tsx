@@ -14,6 +14,7 @@ interface NavigationButtonProps {
   disabled?: boolean;
   'aria-label'?: string;
   role?: string;
+  style?: React.CSSProperties;
 }
 
 const NavigationButton: React.FC<NavigationButtonProps> = ({ 
@@ -24,7 +25,8 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
   prefetch = false,
   disabled = false,
   'aria-label': ariaLabel,
-  role = 'link'
+  role = 'link',
+  style
 }) => {
   const location = useLocation();
   const linkRef = useRef<HTMLAnchorElement>(null);
@@ -113,7 +115,8 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
       whileTap={animationSystem.states.tap.scale.whileTap}
       transition={{ duration: animationSystem.duration.fast }}
       style={{
-        willChange: 'transform'
+        willChange: 'transform',
+        ...style
       }}
     >
       <Link

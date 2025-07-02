@@ -5,6 +5,7 @@ import PageTransition from '../components/PageTransition';
 import InteractiveTimeline from '../components/about/InteractiveTimeline';
 import LiveAchievementCounter from '../components/about/LiveAchievementCounter';
 import InteractiveTeamShowcase from '../components/about/InteractiveTeamShowcase';
+import MetaTags from '../components/MetaTags';
 
 const values = [
   {
@@ -32,6 +33,11 @@ const values = [
 const About = () => {
   return (
     <PageTransition>
+      <MetaTags 
+        title="About Ingenious Digital - Your AI Technology Partner"
+        description="Learn about Ingenious Digital's mission to transform local businesses with cutting-edge AI solutions, digital marketing expertise, and innovative web development. Meet our passionate team led by Pascal Ledesma."
+        keywords={['about Ingenious Digital', 'Pascal Ledesma', 'Fort Lauderdale digital agency', 'AI technology partner', 'digital transformation', 'web development team']}
+      />
       <div className="min-h-screen bg-black">
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">

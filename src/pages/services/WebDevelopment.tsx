@@ -13,6 +13,8 @@ import CodeShowcase from '../../components/services/web-development/CodeShowcase
 import LiveCodeEditor from '../../components/services/web-development/LiveCodeEditor';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
+import MetaTags from '../../components/MetaTags';
+import ServiceSchema from '../../components/ServiceSchema';
 
 const stats = [
   { label: 'Page Speed', value: '< 3s', icon: Zap, trend: '-40%' },
@@ -69,6 +71,17 @@ const WebDevelopment = () => {
 
   return (
     <PageTransition>
+      <MetaTags 
+        title="Web Development Services Fort Lauderdale | Ingenious Digital"
+        description="Professional web development services in Fort Lauderdale. Custom websites, e-commerce solutions, and mobile-responsive designs that convert visitors into customers. Get a free consultation today."
+        keywords={['web development Fort Lauderdale', 'website design', 'custom web development', 'responsive design', 'e-commerce development', 'local web developer']}
+      />
+      <ServiceSchema 
+        serviceName="Web Development Services"
+        description="Professional web development services including custom websites, e-commerce solutions, and mobile-responsive designs that convert visitors into customers."
+        url="https://ingeniousdigital.com/services/web-development"
+        serviceType="Web Development"
+      />
       <div className="min-h-screen bg-black">
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">

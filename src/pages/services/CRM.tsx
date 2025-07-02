@@ -5,6 +5,8 @@ import {
   Settings, BarChart2, Cloud, CreditCard, PieChart, DollarSign
 } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
+import MetaTags from '../../components/MetaTags';
+import ServiceSchema from '../../components/ServiceSchema';
 import FeatureShowcase from '../../components/services/crm/FeatureShowcase';
 import OptimizedCRMProcessFlow from '../../components/services/crm/OptimizedCRMProcessFlow';
 import OptimizedTechStack from '../../components/services/crm/OptimizedTechStack';
@@ -80,6 +82,17 @@ const clientBenefits = [
 const CRM = () => {
   return (
     <PageTransition>
+      <MetaTags 
+        title="CRM Solutions Fort Lauderdale | Customer Relationship Management"
+        description="Powerful CRM solutions for Fort Lauderdale businesses. Centralize customer data, automate sales processes, and increase retention by 27%. Get your free CRM consultation today."
+        keywords={['CRM Fort Lauderdale', 'customer relationship management', 'sales automation', 'customer retention', 'CRM software', 'business CRM']}
+      />
+      <ServiceSchema 
+        serviceName="CRM Solutions"
+        description="Enterprise-grade CRM solutions to centralize customer data, automate sales processes, and improve customer retention. Increase ROI by 105% with our intelligent CRM systems."
+        url="https://ingeniousdigital.com/services/crm"
+        serviceType="Customer Relationship Management"
+      />
       <div className="min-h-screen bg-black">
         {/* Hero Section */}
         <section className="relative py-24 overflow-hidden">

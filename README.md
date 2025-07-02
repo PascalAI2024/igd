@@ -80,6 +80,43 @@ The project includes several interactive 3D visualizations built with Three.js:
    npm run build
    ```
 
+## Deployment
+
+### Build Commands
+
+- `npm run build` - Full build with TypeScript checks (recommended)
+- `npm run build-force` - Build without TypeScript checks (emergency use only)
+- `npm run validate` - Run all pre-deployment checks including TypeScript, linting, and bundle size analysis
+
+### Deployment Process
+
+1. **Local Validation**:
+   ```bash
+   npm run validate
+   ```
+   This runs TypeScript checks, linting, builds the project, and checks bundle sizes.
+
+2. **Deployment to Netlify**:
+   - Push changes to the main branch
+   - Netlify automatically deploys on push
+   - Build command: `npm run build` (with TypeScript checks)
+   - Publish directory: `dist`
+
+### Environment Variables
+
+The following environment variables can be configured:
+
+- `VITE_GA_MEASUREMENT_ID` - Google Analytics measurement ID (defaults to 'G-VEDZ17M6MH')
+- `VITE_BUILD_VERSION` - Build version for tracking
+- `VITE_BUILD_DATE` - Build date for tracking
+
+### Build Scripts
+
+- **apply-patches.sh** - Applies necessary patches to node_modules
+- **fix-images.sh** - Optimizes images after build
+- **validate-build.sh** - Comprehensive build validation
+- **generate-case-studies.sh** - Generates case study content
+
 ## Navigation System
 
 The application uses a custom navigation system that provides:

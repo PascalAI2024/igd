@@ -39,6 +39,7 @@ const StepConnector = ({
 }) => {
   const lineRef = useRef<THREE.Line>(null);
   const particlesRef = useRef<THREE.Points>(null);
+  const particlePositionsRef = useRef<Float32Array | null>(null);
   const particles = useMemo(() => {
     return Array.from({ length: 20 }, () => ({
       position: Math.random(),
@@ -74,6 +75,7 @@ const StepConnector = ({
 
   const particlePositions = useMemo(() => {
     const positions = new Float32Array(particles.length * 3);
+    particlePositionsRef.current = positions;
     return positions;
   }, [particles]);
 
@@ -275,7 +277,7 @@ const Step = ({
           color="white"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/Inter-Bold.woff"
+          font={`${import.meta.env.BASE_URL || '/'}fonts/Inter-Bold.woff`}
         >
           {index + 1}
         </Text>
@@ -288,7 +290,7 @@ const Step = ({
           color="white"
           anchorX="center"
           anchorY="top"
-          font="/fonts/Inter-Medium.woff"
+          font={`${import.meta.env.BASE_URL || '/'}fonts/Inter-Medium.woff`}
         >
           {step.title}
         </Text>
@@ -361,11 +363,20 @@ const ProcessFlowScene = ({
   setExpandedStep: (step: number | null) => void;
 }) => {
   const { camera } = useThree();
+  const controlsRef = useRef<any>(null);
   
-  // Set initial camera position
+  // Set initial camera position and cleanup
   React.useEffect(() => {
     camera.position.set(0, 0, 5);
     camera.lookAt(0, 0, 0);
+    
+    return () => {
+      // Clean up controls to prevent memory leaks
+      if (controlsRef.current) {
+        controlsRef.current.dispose();
+        controlsRef.current = null;
+      }
+    };
   }, [camera]);
   
   // Calculate positions for steps

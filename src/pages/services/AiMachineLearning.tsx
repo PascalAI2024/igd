@@ -4,6 +4,7 @@ import { Brain, Cpu, Network, Database, LineChart, Bot, BarChart, PieChart, Tren
 import PageTransition from '../../components/PageTransition';
 import MetaTags from '../../components/MetaTags';
 import ServiceCTA from '../../services/components/ServiceCTA';
+import ServiceSchema from '../../components/ServiceSchema';
 import OptimizedImage from '../../components/OptimizedImage';
 import DataVisualization from '../../components/services/ai-ml/DataVisualization';
 import NeuralNetworkAnimation from '../../components/services/ai-ml/NeuralNetworkAnimation';
@@ -41,8 +42,15 @@ const AiMachineLearning = () => {
   return (
     <PageTransition>
       <MetaTags
-        title="AI & Machine Learning Solutions"
-        description="Transform your business with our cutting-edge AI and machine learning solutions. Harness the power of artificial intelligence for automation, insights, and innovation."
+        title="AI & Machine Learning Solutions Fort Lauderdale | Ingenious Digital"
+        description="Transform your business with AI and machine learning solutions in Fort Lauderdale. Custom AI development, predictive analytics, and intelligent automation. Get 10x efficiency improvements."
+        keywords={['AI solutions Fort Lauderdale', 'machine learning', 'artificial intelligence', 'predictive analytics', 'business automation', 'custom AI development']}
+      />
+      <ServiceSchema 
+        serviceName="AI & Machine Learning Solutions"
+        description="Custom AI and machine learning solutions for business automation, predictive analytics, and intelligent decision-making. Transform your operations with cutting-edge artificial intelligence."
+        url="https://ingeniousdigital.com/services/ai-machine-learning"
+        serviceType="AI Development"
       />
 
       {/* Hero Section */}

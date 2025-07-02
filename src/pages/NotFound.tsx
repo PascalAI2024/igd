@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Home, ArrowLeft, Code2, Binary } from 'lucide-react';
 import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
+import MetaTags from '../components/MetaTags';
 
 const NotFound = () => {
   const glitchVariants = {
@@ -21,6 +22,11 @@ const NotFound = () => {
 
   return (
     <PageTransition>
+      <MetaTags 
+        title="404 - Page Not Found"
+        description="The page you're looking for doesn't exist. Let's get you back on track with Ingenious Digital's AI-powered solutions."
+        noIndex={true}
+      />
       <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />

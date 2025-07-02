@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "rm -rf dist && npm install --legacy-peer-deps && chmod +x ./patches/apply-patches.sh && chmod +x ./scripts/fix-images.sh && chmod +x ./scripts/generate-case-studies.sh && ./patches/apply-patches.sh && npm run build-force && ./scripts/fix-images.sh"
+  command = "rm -rf dist && npm install --legacy-peer-deps && chmod +x ./patches/apply-patches.sh && chmod +x ./scripts/fix-images.sh && chmod +x ./scripts/generate-case-studies.sh && ./patches/apply-patches.sh && npm run build && ./scripts/fix-images.sh"
 
 [build.environment]
   NODE_VERSION = "18"

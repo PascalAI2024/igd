@@ -10,6 +10,7 @@ import PageTransition from '../components/PageTransition';
 import InteractiveBackground from '../components/backgrounds/InteractiveBackground';
 import ScrollReveal, { StaggerReveal } from '../components/effects/ScrollReveal';
 import LiveMetricsDashboard from '../components/homepage/LiveMetricsDashboard';
+import MetaTags from '../components/MetaTags';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -60,6 +61,11 @@ const Home = () => {
 
   return (
     <PageTransition>
+      <MetaTags 
+        title="AI-Powered Digital Solutions for Local Businesses"
+        description="Transform your business with Ingenious Digital's AI-powered digital marketing, web development, and automation solutions. Get more customers and increase revenue with our expert team in Fort Lauderdale."
+        keywords={['digital marketing', 'AI solutions', 'web development', 'business automation', 'SEO', 'Fort Lauderdale', 'local business', 'lead generation']}
+      />
       
       <main className="relative z-10">
         {/* Hero section with 3D interactive background */}

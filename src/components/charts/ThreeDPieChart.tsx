@@ -142,11 +142,22 @@ const PieSegment = ({
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const isMountedRef = useRef(true);
+  const geometryRef = useRef<THREE.BufferGeometry | null>(null);
+  const materialRef = useRef<THREE.MeshStandardMaterial | null>(null);
 
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
       isMountedRef.current = false;
+      // Dispose of geometry and material
+      if (geometryRef.current) {
+        geometryRef.current.dispose();
+        geometryRef.current = null;
+      }
+      if (materialRef.current) {
+        materialRef.current.dispose();
+        materialRef.current = null;
+      }
     };
   }, []);
   
@@ -165,7 +176,9 @@ const PieSegment = ({
 
   // Create geometry
   const geometry = useMemo(() => {
-    return createArcGeometry(innerRadius, outerRadius, startAngle, endAngle, height);
+    const geo = createArcGeometry(innerRadius, outerRadius, startAngle, endAngle, height);
+    geometryRef.current = geo;
+    return geo;
   }, [innerRadius, outerRadius, startAngle, endAngle, height]);
 
   // Animation
@@ -205,13 +218,15 @@ const PieSegment = ({
 
   // Create material with gradient and glow
   const material = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
+    const mat = new THREE.MeshStandardMaterial({
       color: new THREE.Color(color),
       metalness: 0.2,
       roughness: 0.5,
       emissive: new THREE.Color(color).multiplyScalar(0.2),
       emissiveIntensity: hovered ? 1 : 0.2
     });
+    materialRef.current = mat;
+    return mat;
   }, [color, hovered]);
 
   return (
@@ -359,14 +374,14 @@ const ThreeDPieChart: React.FC<ThreeDPieChartProps> = ({
     };
     
     // Handle bfcache restoration
-    const handlePageShow = (event: PageTransitionEvent) => {
-      if (event.persisted) {
+    const handlePageShow = (event: Event) => {
+      if ('persisted' in event && event.persisted) {
         console.log('ThreeDPieChart: Page restored from bfcache');
       }
     };
     
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('pageshow', handlePageShow);
+    window.addEventListener('pageshow', handlePageShow as EventListener);
     
     return () => {
       isMountedRef.current = false;

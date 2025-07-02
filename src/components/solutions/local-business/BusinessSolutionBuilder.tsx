@@ -14,7 +14,8 @@ import {
   Target,
   ArrowRight,
   Plus,
-  Minus
+  Minus,
+  Star
 } from 'lucide-react';
 
 interface SolutionComponent {

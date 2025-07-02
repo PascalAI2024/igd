@@ -4,10 +4,16 @@ import { Phone, Mail, MessageSquare, MapPin, Clock, Zap, Globe, Award, Users, Br
 import PageTransition from '../components/PageTransition';
 import InteractiveContactHub from '../components/contact/InteractiveContactHub';
 import LiveResponseDemo from '../components/contact/LiveResponseDemo';
+import MetaTags from '../components/MetaTags';
 
 const Contact = () => {
   return (
     <PageTransition>
+      <MetaTags 
+        title="Contact Ingenious Digital - Get Your Free Consultation"
+        description="Ready to transform your business? Contact Ingenious Digital for a free consultation. Call (954) 515-8586 or email pascal@ingeniousdigital.com. Located in Fort Lauderdale, serving all of South Florida."
+        keywords={['contact Ingenious Digital', 'free consultation', 'Fort Lauderdale digital agency', 'web development quote', 'digital marketing consultation', 'Pascal Ledesma']}
+      />
       <div className="min-h-screen bg-black">
         {/* Hero Section */}
         <section className="relative py-32 overflow-hidden">
