@@ -5,7 +5,7 @@ export const education: CaseStudy = {
   id: 'education-learning-platform',
   title: 'Digital Learning Platform',
   subtitle: 'Transforming Education Through Technology',
-  description: 'How we helped a local educational institution increase student engagement by 85% with a comprehensive digital learning platform.',
+  description: 'How we helped a local educational institution modernize their learning environment through phased digital transformation.',
   client: 'Horizon Academy',
   industry: 'Education',
   challenge: `
@@ -29,14 +29,14 @@ export const education: CaseStudy = {
     - Content creation tools for teachers to develop custom materials
   `,
   results: [
-    '85% increase in student engagement',
-    '32% improvement in average test scores',
-    '75% reduction in administrative workload for teachers',
-    '90% parent adoption rate of the platform',
-    'Student retention rate improved by 25%',
-    'Successful transition to hybrid learning model',
-    'Curriculum development time reduced by 40%',
-    'Expanded enrollment by 35% through digital offerings'
+    'Student participation increased from 65% to 78%',
+    'Test scores improved by 12% on average',
+    'Teachers save 5-8 hours/week on admin tasks',
+    '72% of parents actively use the portal',
+    'Retention improved from 82% to 88%',
+    'Successfully offering 30% of classes hybrid',
+    'Course prep time reduced by 3-4 hours/week',
+    'Enrollment up 18% after 2 years'
   ],
   technologies: [
     'React',
@@ -71,9 +71,9 @@ export const education: CaseStudy = {
   imageUrl: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1200',
   icon: GraduationCap,
   testimonial: {
-    quote: "The digital learning platform has revolutionized how we teach and how our students learn. We've seen remarkable improvements in engagement, performance, and satisfaction from students, parents, and teachers alike. The platform has enabled us to provide a truly modern educational experience.",
+    quote: "Rolling out new technology in education is never easy. We faced teacher resistance, technical hiccups, and parent concerns. But after a year of gradual implementation and extensive training, we're seeing real benefits. Students are more engaged, teachers spend less time on paperwork, and parents appreciate the transparency. It's been a journey, but we're heading in the right direction.",
     author: "Dr. Michelle Taylor",
-    role: "Principal, Horizon Academy",
+    role: "Principal, Horizon Academy (450 students, K-8)",
   },
   timeline: {
     planning: '6 weeks',

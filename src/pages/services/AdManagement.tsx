@@ -11,21 +11,21 @@ import AdMetrics3D from '../../components/services/ad-management/AdMetrics3D';
 const AdManagement = () => {
   const showcaseMetrics = [
     { 
-      value: '3X',
-      label: 'ROAS',
-      trend: 'Average',
+      value: '2.5X',
+      label: 'Avg ROAS',
+      trend: 'After 90 days',
       icon: DollarSign
     },
     { 
-      value: '85%',
-      label: 'Target Reach',
-      trend: 'Precision',
+      value: '75%',
+      label: 'Target Accuracy',
+      trend: 'Local audience',
       icon: Target
     },
     { 
-      value: '2X',
-      label: 'Conversion',
-      trend: 'Improvement',
+      value: '35%',
+      label: 'Conv. Increase',
+      trend: 'Within 6 months',
       icon: Megaphone
     }
   ];
@@ -54,7 +54,7 @@ const AdManagement = () => {
                 transition={{ delay: 0.1 }}
                 className="text-5xl font-bold text-gradient mb-6"
               >
-                Transform Your Business
+                Strategic Ad Management
               </motion.h1>
               
               <motion.p
@@ -63,7 +63,7 @@ const AdManagement = () => {
                 transition={{ delay: 0.2 }}
                 className="text-xl text-gray-300 leading-relaxed mb-12"
               >
-                Strategic advertising campaigns that deliver measurable results and maximize your return on investment.
+                Data-driven advertising campaigns designed to generate leads and maximize ROI. Results typically improve over 3-6 months of optimization.
               </motion.p>
 
               {/* Stats */}
@@ -165,10 +165,10 @@ const AdManagement = () => {
             >
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-3xl font-bold text-gradient mb-6">
-                  Ready to Maximize Your Ad Performance?
+                  Ready to Improve Your Ad Performance?
                 </h2>
                 <p className="text-xl text-gray-300 mb-8">
-                  Let's create strategic ad campaigns that deliver measurable results for your business.
+                  Let's build data-driven ad campaigns that generate quality leads within your budget. Most clients see positive ROI within 90 days.
                 </p>
                 <a
                   href="/contact"

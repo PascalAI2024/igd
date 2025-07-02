@@ -12,9 +12,9 @@ import TechnologyStack from '../../components/services/lead-generation/Technolog
 import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
-  { label: 'Lead Growth', value: '75%', icon: TrendingUp },
-  { label: 'Client Success', value: '95%', icon: Star },
-  { label: 'Response Time', value: '2hrs', icon: Clock }
+  { label: 'Lead Growth', value: '35-65%', icon: TrendingUp },
+  { label: 'Client Satisfaction', value: '89%', icon: Star },
+  { label: 'Avg Response', value: '4-6hrs', icon: Clock }
 ];
 
 const timelineSteps = [
@@ -98,7 +98,7 @@ const LeadGeneration = () => {
                 transition={{ delay: 0.1 }}
                 className="text-4xl md:text-5xl font-bold text-gradient mb-6"
               >
-                Generate Quality Local Leads
+                Build Your Lead Generation System
               </motion.h1>
               
               <motion.p
@@ -107,7 +107,7 @@ const LeadGeneration = () => {
                 transition={{ delay: 0.2 }}
                 className="text-gray-400 max-w-2xl mx-auto mb-8 text-lg"
               >
-                Convert more website visitors into qualified leads with strategies proven across 40+ client campaigns.
+                Create a systematic approach to generating and nurturing leads. Most businesses see initial results within 30-60 days with proper implementation.
               </motion.p>
 
               {/* Stats */}
@@ -146,7 +146,7 @@ const LeadGeneration = () => {
                   <Clock className="w-8 h-8 text-red-500 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
                   <h3 className="text-white font-semibold mb-2">Quick Setup</h3>
                   <p className="text-gray-400 text-sm">
-                    System setup and automation within 24 hours
+                    Initial system setup within 3-5 business days
                   </p>
                 </motion.div>
 
@@ -160,7 +160,7 @@ const LeadGeneration = () => {
                   <Users className="w-8 h-8 text-red-500 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
                   <h3 className="text-white font-semibold mb-2">First Leads</h3>
                   <p className="text-gray-400 text-sm">
-                    Initial leads start coming in within 7-14 days
+                    First qualified leads typically within 2-4 weeks
                   </p>
                 </motion.div>
 
@@ -174,7 +174,7 @@ const LeadGeneration = () => {
                   <LineChart className="w-8 h-8 text-red-500 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
                   <h3 className="text-white font-semibold mb-2">Optimization</h3>
                   <p className="text-gray-400 text-sm">
-                    Continuous improvement and scaling over 30-60 days
+                    Optimization and scaling based on 60-90 days of data
                   </p>
                 </motion.div>
               </div>
