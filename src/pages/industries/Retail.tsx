@@ -6,24 +6,24 @@ const Retail = () => {
   const solutions = [
     {
       title: 'E-commerce Solutions',
-      description: 'Scalable online retail platforms with seamless customer experiences.',
+      description: 'Boost conversion rates to industry-leading 2-4% with optimized platforms.',
       icon: ShoppingCart,
       features: [
-        'Custom Shopping Platforms',
-        'Inventory Management',
-        'Payment Integration',
-        'Order Processing'
+        'Conversion optimization (target 2-4% rate)',
+        'Real-time inventory sync across channels',
+        'Cart abandonment recovery (save 15-25%)',
+        'Mobile-first design (60% of traffic)'
       ]
     },
     {
       title: 'Analytics & Insights',
-      description: 'Data-driven retail analytics for better decision making.',
+      description: 'Make data-driven decisions to improve margins by 12-20%.',
       icon: BarChart2,
       features: [
-        'Customer Behavior Analysis',
-        'Sales Analytics',
-        'Inventory Optimization',
-        'Performance Tracking'
+        'Customer lifetime value tracking',
+        'Seasonal trend analysis and forecasting',
+        'Inventory turnover optimization (25% improvement)',
+        'Product performance heat mapping'
       ]
     },
     {
@@ -52,20 +52,20 @@ const Retail = () => {
 
   const stats = [
     {
-      value: '200%',
-      label: 'Sales Growth'
+      value: '2-4%',
+      label: 'Conversion Rate'
     },
     {
-      value: '99.9%',
-      label: 'Uptime'
+      value: '22%',
+      label: 'AOV Increase'
     },
     {
-      value: '<1s',
-      label: 'Page Load'
+      value: '25%',
+      label: 'Inventory Efficiency'
     },
     {
-      value: '24/7',
-      label: 'Support'
+      value: '18%',
+      label: 'Cost Reduction'
     }
   ];
 
@@ -90,13 +90,13 @@ const Retail = () => {
   return (
     <IndustryPageTemplate
       title="Retail Solutions"
-      description="Transform your retail business with innovative digital solutions."
+      description="Navigate the challenges of thin margins, inventory management, and seasonal fluctuations with data-driven retail solutions."
       icon={ShoppingCart}
       solutions={solutions}
       stats={stats}
       features={features}
-      ctaTitle="Ready to Transform Your Retail Business?"
-      ctaDescription="Let's discuss how our retail solutions can help you grow your business."
+      ctaTitle="Ready to Improve Your Retail Metrics?"
+      ctaDescription="Let's create a phased approach that delivers measurable improvements in conversion, AOV, and inventory efficiency."
     />
   );
 };

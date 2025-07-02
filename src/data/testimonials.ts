@@ -15,72 +15,72 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: 'Robert',
+    name: 'Robert Chen',
     role: 'Owner',
-    company: 'Wellness Medical Center',
-    quote: "They modernized our entire practice management system. They understood our budget constraints and delivered a solution that increased our patient capacity by 40% while reducing administrative work. The custom scheduling system has been a game-changer for our staff.",
+    company: 'Wellness Medical Center (12 staff)',
+    quote: "After struggling with outdated systems for years, Ingenious Digital helped us modernize gradually. It took about 6 months to fully implement, but now we can see 40% more patients daily. The initial learning curve was challenging, but their training and ongoing support made the transition manageable for our small team.",
     rating: 5,
     industry: 'Healthcare',
     results: [
-      { label: 'Patient Capacity', value: '+40%' },
-      { label: 'Administrative Time', value: '-25%' },
-      { label: 'Patient Satisfaction', value: '+35%' }
+      { label: 'Patient Capacity', value: '+40% over 6 months' },
+      { label: 'Administrative Time', value: '-25% after training' },
+      { label: 'Patient Satisfaction', value: '+35% (survey-based)' }
     ]
   },
   {
     id: 2,
-    name: 'Maria',
+    name: 'Maria Gonzalez',
     role: 'Director',
-    company: 'Family Treasures Retail',
-    quote: "Working with this team transformed our local retail business. They built us a custom inventory and POS system that helped us compete with larger chains. Our online sales increased by 150% in just three months, and the integrated marketing automation has been invaluable.",
+    company: 'Family Treasures Retail (Local boutique, 3 locations)',
+    quote: "As a small retailer, we were losing ground to big box stores. Ingenious Digital started with a basic e-commerce site, then gradually added inventory management features. After 8 months, our online sales grew from almost nothing to 35% of total revenue. The journey had bumps - especially integrating with our existing POS - but their patient support got us through.",
     rating: 5,
     industry: 'Retail',
     results: [
-      { label: 'Online Sales', value: '+150%' },
-      { label: 'Inventory Turnover', value: '+60%' },
-      { label: 'Customer Retention', value: '+45%' }
+      { label: 'Online Sales', value: '0% to 35% of revenue' },
+      { label: 'Inventory Accuracy', value: '+60% improvement' },
+      { label: 'Repeat Customers', value: '+45% year-over-year' }
     ]
   },
   {
     id: 3,
-    name: 'David',
+    name: 'David Thompson',
     role: 'Owner',
-    company: 'Premier Properties',
-    quote: "Their team developed a property management platform that revolutionized how we operate. The automated systems they built save us 20 hours per week in administrative tasks. Their personal attention to our needs was outstanding, and the custom CRM integration has streamlined our client communications.",
+    company: 'Premier Properties (Independent brokerage, 8 agents)',
+    quote: "We were drowning in paperwork and missing leads. Ingenious Digital didn't promise overnight miracles - they started by organizing our client data, then built automated follow-ups over 4 months. Now we save about 20 hours weekly on admin work. The first month was rough as we adjusted, but now I can't imagine working without these systems.",
     rating: 5,
     industry: 'Real Estate',
     results: [
-      { label: 'Time Saved Weekly', value: '20 hrs' },
-      { label: 'Lead Conversion', value: '+75%' },
-      { label: 'Property Listings', value: '+120%' }
+      { label: 'Admin Time Saved', value: '20 hrs/week after 4 months' },
+      { label: 'Lead Response Time', value: '24hrs to 2hrs average' },
+      { label: 'Active Listings', value: '+55% capacity increase' }
     ]
   },
   {
     id: 4,
-    name: 'Lisa',
-    role: 'Manager',
-    company: 'Urban Eats Restaurant Group',
-    quote: "The restaurant management system they developed streamlined our operations across all five locations. Their solution helped us reduce food waste by 30% and improve our delivery times significantly. The integrated online ordering system has increased our takeout revenue by 85%.",
+    name: 'Lisa Chang',
+    role: 'Operations Manager',
+    company: 'Urban Eats Restaurant Group (5 locations, family-owned)',
+    quote: "Managing inventory across 5 locations was a nightmare. Ingenious Digital implemented their system one location at a time over 3 months. We had some resistance from staff initially, and the first few weeks were chaotic. But once everyone was trained, we started seeing real improvements. Food waste is down 30% and our online orders have grown steadily to about 40% of revenue.",
     rating: 5,
     industry: 'Food & Beverage',
     results: [
-      { label: 'Food Waste Reduction', value: '-30%' },
-      { label: 'Delivery Time', value: '-40%' },
-      { label: 'Takeout Revenue', value: '+85%' }
+      { label: 'Food Waste', value: '-30% after full rollout' },
+      { label: 'Order Accuracy', value: '92% to 98%' },
+      { label: 'Online Orders', value: '40% of total revenue' }
     ]
   },
   {
     id: 5,
-    name: 'Thomas',
+    name: 'Thomas Williams',
     role: 'Founder',
-    company: 'Guardian Insurance Agency',
-    quote: "They understood exactly what our small agency needed. Their team built a custom CRM that automated our client communications and claims processing. We've doubled our client base without adding staff, and the analytics dashboard gives us insights we never had before.",
+    company: 'Guardian Insurance Agency (Local independent, 4 employees)',
+    quote: "As a small agency, we were losing clients to bigger firms with better tech. Ingenious Digital took time to understand our workflow, then built a CRM that actually fits how we work. Implementation took 5 months with plenty of tweaks along the way. We've grown our client base by 75% over 18 months - not overnight, but sustainable growth we can handle.",
     rating: 5,
     industry: 'Insurance',
     results: [
-      { label: 'Client Base Growth', value: '+100%' },
-      { label: 'Claims Processing Time', value: '-65%' },
-      { label: 'Client Satisfaction', value: '+50%' }
+      { label: 'Client Growth', value: '+75% over 18 months' },
+      { label: 'Quote Turnaround', value: '3 days to same-day' },
+      { label: 'Client Retention', value: '78% to 89%' }
     ]
   }
 ];

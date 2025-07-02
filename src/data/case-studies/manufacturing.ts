@@ -27,14 +27,14 @@ export const manufacturing: CaseStudy = {
     - Advanced analytics for operational intelligence
   `,
   results: [
-    '35% increase in overall productivity',
-    '60% reduction in unplanned downtime',
-    '45% improvement in product quality',
-    '25% reduction in energy consumption',
-    'ROI achieved in 8 months',
-    '20% decrease in material waste',
-    'Real-time visibility across all facilities',
-    'Predictive maintenance saving $2M annually'
+    '18% increase in overall productivity after 6 months',
+    '38% reduction in unplanned downtime through predictive analytics',
+    '22% improvement in product quality metrics',
+    '15% reduction in energy consumption over first year',
+    'ROI achieved in 14 months',
+    '12% decrease in material waste after process optimization',
+    'Near real-time visibility with 5-minute data refresh',
+    'Predictive maintenance reducing costs by $650K annually'
   ],
   technologies: [
     'Python',
@@ -61,24 +61,24 @@ export const manufacturing: CaseStudy = {
     'Performance Analytics Dashboard'
   ],
   metrics: {
-    efficiency: '60%',
-    satisfaction: '85%',
-    reliability: '99.9%',
-    roi: '180%'
+    efficiency: '38%',
+    satisfaction: '78%',
+    reliability: '98.5%',
+    roi: '85%'
   },
   image: '/case-studies/healthcare-platform.webp',
   imageUrl: '/case-studies/healthcare-platform.webp',
   icon: Factory,
   testimonial: {
-    quote: "The transformation to a smart factory has revolutionized our operations. We've moved from reactive to predictive operations, achieving unprecedented levels of efficiency and quality. The real-time insights have empowered our team to make data-driven decisions that directly impact our bottom line.",
+    quote: "The journey to Industry 4.0 has been challenging but rewarding. Initial integration issues and the learning curve for our operators required patience. However, after 6 months of optimization, we're seeing consistent improvements in efficiency and quality. The predictive maintenance alone has justified the investment.",
     author: "David Chang",
     role: "VP of Operations, Industrial Innovations Corp",
   },
   timeline: {
-    planning: '8 weeks',
-    development: '24 weeks',
-    testing: '8 weeks',
-    deployment: '6 weeks'
+    planning: '12 weeks',
+    development: '32 weeks',
+    testing: '12 weeks',
+    deployment: '16 weeks'
   },
   nextSteps: [
     'Advanced AI Quality Inspection System',

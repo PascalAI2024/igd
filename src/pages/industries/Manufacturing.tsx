@@ -22,7 +22,8 @@ const Manufacturing = () => {
                 Small Manufacturing Solutions
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed">
-                Digital tools to help small manufacturers streamline operations and grow their business
+                Digital tools to help small manufacturers tackle challenges like supply chain volatility, 
+                quality control, and cost pressures while improving efficiency by 15-25%
               </p>
             </motion.div>
           </div>
@@ -66,7 +67,7 @@ const Manufacturing = () => {
                 Implementation Timeline
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Get your manufacturing business digitally equipped in weeks, not months
+                Phased implementation that minimizes production disruption and delivers measurable ROI
               </p>
             </div>
 
@@ -123,12 +124,12 @@ const features = [
   {
     icon: BarChart,
     title: 'Production Management',
-    description: 'Streamline your manufacturing operations.',
+    description: 'Achieve 15-25% efficiency improvement with real-time tracking.',
     benefits: [
-      'Production tracking',
-      'Inventory management',
-      'Quality control',
-      'Cost tracking'
+      'Real-time production monitoring and OEE tracking',
+      'Predictive maintenance reduces downtime 20-30%',
+      'Quality tracking reduces defects by 10-15%',
+      'Cost per unit analysis and optimization'
     ]
   },
   {
@@ -145,12 +146,12 @@ const features = [
   {
     icon: TrendingUp,
     title: 'Business Growth',
-    description: 'Tools to help your manufacturing business grow.',
+    description: 'Data-driven growth with 12-25% cost reduction potential.',
     benefits: [
-      'Performance tracking',
-      'Revenue analytics',
-      'Process optimization',
-      'Team management'
+      'Benchmark against industry KPIs',
+      'Identify profit margin opportunities (12-20%)',
+      'Lean manufacturing implementation',
+      'Capacity planning and optimization'
     ]
   },
   {
@@ -167,32 +168,32 @@ const features = [
   {
     icon: Truck,
     title: 'Supply Chain',
-    description: 'Manage your supply chain effectively.',
+    description: 'Reduce lead times by 20-30% with better visibility.',
     benefits: [
-      'Supplier management',
-      'Order tracking',
-      'Delivery scheduling',
-      'Inventory alerts'
+      'Multi-tier supplier visibility',
+      'Lead time reduction (20-30% typical)',
+      'Safety stock optimization',
+      'Supply chain risk monitoring'
     ]
   }
 ];
 
 const timeline = [
   {
-    title: 'Week 1: Digital Foundation',
-    description: 'Setup your online presence and basic systems.'
+    title: 'Week 1-2: Production Tracking',
+    description: 'Deploy real-time production monitoring for 15-20% efficiency gains.'
   },
   {
-    title: 'Week 2: Operations Setup',
-    description: 'Implement production and inventory management tools.'
+    title: 'Week 3-4: Quality Systems',
+    description: 'Implement quality tracking to reduce defects by 10-15% and minimize rework.'
   },
   {
-    title: 'Week 3: Marketing Launch',
-    description: 'Begin local marketing campaigns and customer outreach.'
+    title: 'Month 2: Supply Chain Integration',
+    description: 'Connect supplier systems to reduce lead times by 20-30% and optimize inventory.'
   },
   {
-    title: 'Week 4: Optimization',
-    description: 'Fine-tune systems and scale successful strategies.'
+    title: 'Month 3+: Continuous Improvement',
+    description: 'Use data analytics to identify bottlenecks and achieve 12-25% cost reduction.'
   }
 ];
 

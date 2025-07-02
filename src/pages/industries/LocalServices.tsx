@@ -22,7 +22,8 @@ const LocalServices = () => {
                 Local Service Business Solutions
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed">
-                Digital tools to help service businesses attract clients and streamline operations
+                Digital tools to help service businesses overcome common challenges like scheduling conflicts, 
+                no-shows, and seasonal demand fluctuations while improving utilization by 20-35%
               </p>
             </motion.div>
           </div>
@@ -66,7 +67,7 @@ const LocalServices = () => {
                 Implementation Timeline
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Get your service business digitally equipped in weeks, not months
+                Gradual implementation that works with your service schedule and busy seasons
               </p>
             </div>
 
@@ -123,34 +124,34 @@ const features = [
   {
     icon: Calendar,
     title: 'Appointment Booking',
-    description: 'Make it easy for clients to book your services.',
+    description: 'Reduce no-shows by 15-25% with smart scheduling.',
     benefits: [
-      'Online scheduling',
-      'Automated reminders',
-      'Calendar management',
-      'Client portal'
+      '24/7 online booking increases appointments 30%',
+      'SMS reminders reduce no-shows 15-25%',
+      'Route optimization saves 2-3 hours daily',
+      'Real-time schedule updates'
     ]
   },
   {
     icon: Users,
     title: 'Client Management',
-    description: 'Build stronger relationships with your clients.',
+    description: 'Increase lifetime value by 25-40% with better retention.',
     benefits: [
-      'Client database',
-      'Service history',
-      'Follow-up automation',
-      'Client feedback'
+      'Complete service history per client',
+      'Automated maintenance reminders',
+      'Win-back campaigns (20% success rate)',
+      'Net Promoter Score tracking'
     ]
   },
   {
     icon: TrendingUp,
     title: 'Business Growth',
-    description: 'Tools to help your service business grow.',
+    description: 'Data-driven insights for 20-35% revenue improvement.',
     benefits: [
-      'Performance tracking',
-      'Revenue analytics',
-      'Service optimization',
-      'Team management'
+      'Service profitability analysis',
+      'Technician utilization tracking (target 75-85%)',
+      'Seasonal demand forecasting',
+      'Average job value optimization'
     ]
   },
   {
@@ -179,20 +180,20 @@ const features = [
 
 const timeline = [
   {
-    title: 'Week 1: Digital Foundation',
-    description: 'Setup your online presence and booking system.'
+    title: 'Week 1-2: Smart Scheduling',
+    description: 'Deploy online booking to reduce no-shows by 15-25% and improve utilization.'
   },
   {
-    title: 'Week 2: Client Systems',
-    description: 'Implement client management and communication tools.'
+    title: 'Week 3-4: Client Communication',
+    description: 'Automated reminders and follow-ups increase repeat business by 20-30%.'
   },
   {
-    title: 'Week 3: Marketing Launch',
-    description: 'Begin local marketing campaigns and client outreach.'
+    title: 'Month 2: Revenue Optimization',
+    description: 'Service bundling and upselling strategies increase average job value by 15-25%.'
   },
   {
-    title: 'Week 4: Optimization',
-    description: 'Fine-tune systems and scale successful strategies.'
+    title: 'Month 3+: Seasonal Planning',
+    description: 'Use data to plan for seasonal demand and optimize resource allocation.'
   }
 ];
 

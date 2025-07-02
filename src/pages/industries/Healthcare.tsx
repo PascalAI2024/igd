@@ -5,11 +5,11 @@ import PageTransition from '../../components/PageTransition';
 import { useAnimatedCounter } from '../../hooks/useAnimatedCounter';
 
 const Healthcare = () => {
-  // Animated counter hooks
-  const patientGrowth = useAnimatedCounter({ end: 87, suffix: '%', duration: 2500 });
-  const timeReduction = useAnimatedCounter({ end: 65, suffix: '%', duration: 2500 });
-  const ratingIncrease = useAnimatedCounter({ end: 4.8, decimals: 1, duration: 2500 });
-  const revenueBoost = useAnimatedCounter({ end: 42, suffix: '%', duration: 2500 });
+  // Animated counter hooks - realistic healthcare metrics
+  const patientSatisfaction = useAnimatedCounter({ end: 89, suffix: '%', duration: 2500 });
+  const appointmentEfficiency = useAnimatedCounter({ end: 28, suffix: '%', duration: 2500 });
+  const ratingIncrease = useAnimatedCounter({ end: 4.3, decimals: 1, duration: 2500 });
+  const revenueCycleImprovement = useAnimatedCounter({ end: 22, suffix: '%', duration: 2500 });
 
   return (
     <PageTransition>
@@ -29,7 +29,8 @@ const Healthcare = () => {
                 Small Healthcare Practice Solutions
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed">
-                Digital tools to help local healthcare practices attract patients and improve care delivery
+                Digital tools to help local healthcare practices navigate industry challenges like patient 
+                no-shows, administrative burden, and revenue cycle management
               </p>
             </motion.div>
           </div>
@@ -46,10 +47,10 @@ const Healthcare = () => {
                 className="text-center"
               >
                 <Activity className="w-8 h-8 text-red-500 mx-auto mb-3" />
-                <div ref={patientGrowth.ref} className="text-3xl font-bold text-white mb-1">
-                  {patientGrowth.displayValue}
+                <div ref={patientSatisfaction.ref} className="text-3xl font-bold text-white mb-1">
+                  {patientSatisfaction.displayValue}
                 </div>
-                <p className="text-gray-400 text-sm">Patient Growth</p>
+                <p className="text-gray-400 text-sm">Patient Satisfaction</p>
               </motion.div>
               
               <motion.div
@@ -60,10 +61,10 @@ const Healthcare = () => {
                 className="text-center"
               >
                 <Clock className="w-8 h-8 text-red-500 mx-auto mb-3" />
-                <div ref={timeReduction.ref} className="text-3xl font-bold text-white mb-1">
-                  {timeReduction.displayValue}
+                <div ref={appointmentEfficiency.ref} className="text-3xl font-bold text-white mb-1">
+                  {appointmentEfficiency.displayValue}
                 </div>
-                <p className="text-gray-400 text-sm">Time Saved</p>
+                <p className="text-gray-400 text-sm">Appointment Efficiency</p>
               </motion.div>
               
               <motion.div
@@ -88,10 +89,10 @@ const Healthcare = () => {
                 className="text-center"
               >
                 <TrendingUp className="w-8 h-8 text-red-500 mx-auto mb-3" />
-                <div ref={revenueBoost.ref} className="text-3xl font-bold text-white mb-1">
-                  {revenueBoost.displayValue}
+                <div ref={revenueCycleImprovement.ref} className="text-3xl font-bold text-white mb-1">
+                  {revenueCycleImprovement.displayValue}
                 </div>
-                <p className="text-gray-400 text-sm">Revenue Increase</p>
+                <p className="text-gray-400 text-sm">Revenue Cycle Improvement</p>
               </motion.div>
             </div>
           </div>
@@ -150,7 +151,7 @@ const Healthcare = () => {
                 Implementation Timeline
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Get your healthcare practice digitally equipped in weeks, not months
+                Gradual implementation designed to work with your practice's schedule and patient flow patterns
               </p>
             </div>
 
@@ -214,12 +215,12 @@ const features = [
   {
     icon: Calendar,
     title: 'Patient Scheduling',
-    description: 'Make it easy for patients to book appointments.',
+    description: 'Reduce no-shows by 15-20% with smart scheduling.',
     benefits: [
-      'Online scheduling',
-      'Appointment reminders',
-      'Calendar management',
-      'Patient portal'
+      'Online scheduling with real-time availability',
+      'Automated reminders reducing no-shows',
+      'Waitlist management for cancellations',
+      'Integration with existing EMR systems'
     ]
   },
   {
@@ -236,12 +237,12 @@ const features = [
   {
     icon: TrendingUp,
     title: 'Practice Growth',
-    description: 'Tools to help your healthcare practice grow.',
+    description: 'Sustainable growth with industry benchmarks.',
     benefits: [
-      'Performance tracking',
-      'Revenue analytics',
-      'Care optimization',
-      'Team management'
+      'Track key metrics vs industry standards',
+      'Revenue cycle optimization (15-25% improvement)',
+      'Patient flow analysis and optimization',
+      'Seasonal trend analysis and planning'
     ]
   },
   {
@@ -270,20 +271,20 @@ const features = [
 
 const timeline = [
   {
-    title: 'Week 1: Digital Foundation',
-    description: 'Setup your online presence and scheduling system.'
+    title: 'Week 1-2: Digital Foundation',
+    description: 'Setup online scheduling with automated reminders to reduce no-show rates by 15-20%.'
   },
   {
-    title: 'Week 2: Patient Systems',
-    description: 'Implement patient management and communication tools.'
+    title: 'Week 3-4: Patient Communication',
+    description: 'Deploy secure patient portal meeting HIPAA compliance standards for better engagement.'
   },
   {
-    title: 'Week 3: Marketing Launch',
-    description: 'Begin local marketing campaigns and patient outreach.'
+    title: 'Month 2: Revenue Cycle Enhancement',
+    description: 'Streamline billing processes to reduce claim denials and improve collections by 10-15%.'
   },
   {
-    title: 'Week 4: Optimization',
-    description: 'Fine-tune systems and scale successful strategies.'
+    title: 'Month 3+: Continuous Improvement',
+    description: 'Monitor metrics, adjust for seasonal patient patterns, and optimize based on data.'
   }
 ];
 

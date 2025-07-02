@@ -60,9 +60,9 @@ const RestaurantROICalculator: React.FC = () => {
     // Current monthly revenue
     const currentMonthlyRevenue = inputs.avgOrderValue * inputs.dailyOrders * 30;
     
-    // Projected improvements with digital solutions
-    const onlineOrderIncrease = inputs.currentOnlineOrders * 2.5; // 150% increase in online orders
-    const avgOrderValueIncrease = inputs.avgOrderValue * 1.25; // 25% higher online orders
+    // Projected improvements with digital solutions - REALISTIC MULTIPLIERS
+    const onlineOrderIncrease = inputs.currentOnlineOrders * 0.45; // 45% increase in online orders (industry average)
+    const avgOrderValueIncrease = inputs.avgOrderValue * 1.20; // 20% higher for online orders (upselling works)
     const newDailyOrders = inputs.dailyOrders + onlineOrderIncrease;
     
     // New revenue calculation
@@ -70,7 +70,7 @@ const RestaurantROICalculator: React.FC = () => {
     const monthlyIncrease = projectedMonthlyRevenue - currentMonthlyRevenue;
     
     // Time savings from automation
-    const timeSaved = inputs.staffHours * 0.3; // 30% time savings from automation
+    const timeSaved = inputs.staffHours * 0.2; // 20% time savings from automation (realistic)
     const timeSavingsValue = timeSaved * 15 * 4; // $15/hour * 4 weeks
     
     // Marketing ROI improvement
@@ -129,7 +129,7 @@ const RestaurantROICalculator: React.FC = () => {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-2xl font-bold text-white mb-2">🍽️ Restaurant ROI Calculator</h3>
-            <p className="text-gray-400">Calculate potential returns from digital transformation for your restaurant</p>
+            <p className="text-gray-400">Calculate realistic returns based on industry benchmarks for independent restaurants</p>
           </div>
           <button
             onClick={resetCalculator}
@@ -323,11 +323,11 @@ const RestaurantROICalculator: React.FC = () => {
           <div className="space-y-2">
             <h5 className="text-white font-semibold">Key Benefits</h5>
             {[
-              'Online ordering system with delivery integration',
-              'Mobile-optimized website for better visibility',
-              'Automated order management and notifications',
-              'Customer loyalty program integration',
-              'Real-time analytics and reporting'
+              'Commission-free online ordering (save 15-30% vs third-party apps)',
+              'Table turnover optimization (15-20% improvement during peak hours)',
+              'Customer retention program (20-35% increase in repeat visits)',
+              'Seasonal menu engineering based on profitability data',
+              'Real-time food cost tracking and waste reduction'
             ].map((benefit, index) => (
               <div key={index} className="flex items-center gap-2">
                 <UtensilsCrossed className="w-3 h-3 text-red-400" />
@@ -343,6 +343,12 @@ const RestaurantROICalculator: React.FC = () => {
           <strong className="text-red-400">🍽️ Restaurant Calculator:</strong> Adjust your restaurant's current metrics 
           to see potential returns from our digital solutions. Based on real client results in the restaurant industry.
         </p>
+        <div className="mt-3 space-y-1 text-xs text-gray-400">
+          <p>• Results vary by industry and market conditions</p>
+          <p>• Based on average client data with consistent implementation</p>
+          <p>• Month 1-3: Foundation building | Month 4-6: Initial results | Month 7-12: Scaling results</p>
+          <p>• Long-term success requires ongoing optimization and management</p>
+        </div>
       </div>
     </motion.div>
   );

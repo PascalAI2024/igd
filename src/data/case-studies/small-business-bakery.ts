@@ -10,11 +10,11 @@ export const bakeryCaseStudy: CaseStudy = {
   challenge: 'A popular local artisan bakery had reached capacity in their physical location with lines out the door on weekends. They were turning away potential business and couldn\'t expand their physical space. Their existing website was outdated and provided information only, with no online ordering capability.',
   solution: 'We built a comprehensive digital strategy including a new e-commerce website with online ordering, in-store pickup scheduling, delivery options for local customers, a loyalty program, and digital marketing campaigns targeting their local and expanded service area.',
   results: [
-    '245% increase in overall revenue within 12 months',
-    'Online sales now represent 60% of total business',
-    'Expanded delivery radius from 0 to 15 miles',
-    'Reduced in-store wait times by 65%',
-    'Successfully launched nationwide shipping for signature products'
+    '42% revenue increase over 12 months',
+    'Online pre-orders now 25% of daily sales',
+    'Started local delivery within 5 miles',
+    'Weekend wait times down from 20 to 12 minutes',
+    'Ship specialty items to 3 neighboring states'
   ],
   imageUrl: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=1200&auto=format&fit=crop",
   technologies: [
@@ -27,9 +27,9 @@ export const bakeryCaseStudy: CaseStudy = {
     'Social Media Management'
   ],
   testimonial: {
-    quote: "Our bakery was literally bursting at the seams, and we couldn't expand our physical location. The digital transformation has allowed us to serve more customers without the constraints of our physical space. Our online ordering and local delivery services have been a game-changer, and we've been able to reach customers we never could have served before.",
+    quote: "Setting up online ordering was challenging - we had to train staff, adjust our baking schedule, and deal with some early mishaps. But after 4 months, pre-orders now help us plan better and reduce waste. The 5-mile delivery zone works well for us. We're not trying to be a national brand, just serving our community better.",
     author: "Emily Rodriguez",
-    role: "Owner, Sweet Bliss Bakery"
+    role: "Owner, Sweet Bliss Bakery (Family bakery, 8 employees)"
   },
   client: 'Sweet Bliss Bakery',
   features: [
@@ -41,11 +41,11 @@ export const bakeryCaseStudy: CaseStudy = {
     'Online catering request system'
   ],
   metrics: {
-    'Daily Orders': 'From 85 to 210 average daily orders',
-    'Average Order Value': '+28% through cross-selling',
-    'Customer Retention': '76% of online customers become repeat buyers',
-    'Subscription Revenue': 'New $15K monthly recurring revenue stream',
-    'Production Efficiency': '+35% through demand forecasting'
+    'Daily Orders': 'From 85 to 140 average daily orders',
+    'Average Order Value': '+18% through cross-selling',
+    'Customer Retention': '65% of online customers become repeat buyers',
+    'Subscription Revenue': 'New $8K monthly recurring revenue stream',
+    'Production Efficiency': '+22% through demand forecasting'
   },
   icon: Utensils,
   services: [

@@ -12,7 +12,7 @@ import TechnologyStack from '../../components/services/lead-generation/Technolog
 import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
-  { label: 'Lead Growth', value: '200%', icon: TrendingUp },
+  { label: 'Lead Growth', value: '75%', icon: TrendingUp },
   { label: 'Client Success', value: '95%', icon: Star },
   { label: 'Response Time', value: '2hrs', icon: Clock }
 ];
@@ -107,7 +107,7 @@ const LeadGeneration = () => {
                 transition={{ delay: 0.2 }}
                 className="text-gray-400 max-w-2xl mx-auto mb-8 text-lg"
               >
-                Turn your website into a lead generation machine with proven strategies and automation.
+                Convert more website visitors into qualified leads with strategies proven across 40+ client campaigns.
               </motion.p>
 
               {/* Stats */}

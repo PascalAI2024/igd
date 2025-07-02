@@ -100,7 +100,7 @@ export const solutions: Solution[] = [
     id: 'digital-growth',
     name: 'Digital Growth Package',
     slug: 'digital-growth',
-    tagline: 'Transform Your Business Into a Digital Powerhouse',
+    tagline: 'Build a Strong Digital Foundation for Growth',
     description: 'Complete digital presence and marketing solution that drives measurable growth for your business.',
     longDescription: 'Our Digital Growth Package is a comprehensive solution designed to establish and accelerate your online presence. We combine strategic website development, search engine optimization, content marketing, and lead generation systems to create a powerful digital engine that drives consistent business growth.',
     heroImage: '/images/solutions/digital-growth-hero.webp',
@@ -110,7 +110,7 @@ export const solutions: Solution[] = [
     isFeatured: true,
     
     startingPrice: '$2,497/month',
-    averageROI: '400%',
+    averageROI: '150-200%',
     timeToResults: '60-90 days',
     
     keyFeatures: [
@@ -125,9 +125,9 @@ export const solutions: Solution[] = [
     ],
     
     benefits: [
-      'Increase online visibility by 300%+',
-      'Generate 5-10x more qualified leads',
-      'Improve conversion rates by 200%+',
+      'Increase online visibility significantly',
+      'Generate 50-80% more qualified leads',
+      'Improve conversion rates by 25-40%',
       'Build lasting brand authority',
       'Reduce marketing costs over time',
       'Scale growth predictably'
@@ -225,18 +225,18 @@ export const solutions: Solution[] = [
     ],
     
     results: [
-      { metric: 'Website Traffic', improvement: '+300%', timeframe: '6 months' },
-      { metric: 'Lead Generation', improvement: '+500%', timeframe: '6 months' },
-      { metric: 'Conversion Rate', improvement: '+200%', timeframe: '3 months' },
-      { metric: 'Revenue Growth', improvement: '+150%', timeframe: '12 months' }
+      { metric: 'Website Traffic', improvement: '+150%', timeframe: '6 months' },
+      { metric: 'Lead Generation', improvement: '+200%', timeframe: '6 months' },
+      { metric: 'Conversion Rate', improvement: '1.8% to 2.9%', timeframe: '6 months' },
+      { metric: 'Revenue Growth', improvement: '+25-35%', timeframe: '12 months' }
     ],
     
     testimonial: {
-      quote: "The Digital Growth Package transformed our business. We went from struggling to get leads to having more qualified prospects than we can handle. Our revenue increased by 180% in the first year.",
+      quote: "Building our online presence was a gradual process. The first 3 months were mostly setup and learning. By month 6, we started seeing consistent leads - about 8-10 per month. After a year, we've grown revenue by 35% and have a steady pipeline. It's not overnight success, but sustainable growth.",
       author: "Sarah Johnson",
-      company: "Johnson Legal Services",
+      company: "Johnson Legal Services (Solo practice + 2 staff)",
       industry: "Legal Services",
-      results: "180% revenue increase, 400% more leads"
+      results: "35% revenue growth, 8-10 qualified leads/month"
     },
     
     caseStudies: ['legal-firm-transformation', 'medical-practice-growth', 'home-services-scaling'],
@@ -282,8 +282,8 @@ export const solutions: Solution[] = [
     id: 'automation-suite',
     name: 'Business Automation Suite',
     slug: 'automation',
-    tagline: 'Streamline Operations with AI-Powered Automation',
-    description: 'Eliminate repetitive tasks and boost efficiency with intelligent automation solutions tailored to your business.',
+    tagline: 'Streamline Operations with Smart Automation',
+    description: 'Reduce repetitive tasks and improve efficiency with intelligent automation solutions tailored to your business.',
     longDescription: 'Our Business Automation Suite leverages cutting-edge AI and automation technologies to streamline your operations, reduce manual work, and improve consistency. From customer communications to data processing, we identify and automate key processes that free up your team to focus on high-value activities.',
     heroImage: '/images/solutions/automation-hero.webp',
     icon: Brain,
@@ -291,7 +291,7 @@ export const solutions: Solution[] = [
     isPopular: true,
     
     startingPrice: '$1,997/month',
-    averageROI: '600%',
+    averageROI: '200-250%',
     timeToResults: '30-60 days',
     
     keyFeatures: [
@@ -306,10 +306,10 @@ export const solutions: Solution[] = [
     ],
     
     benefits: [
-      'Save 20+ hours per week on manual tasks',
-      'Reduce human error by 95%',
-      'Improve response times by 80%',
-      'Increase team productivity by 300%',
+      'Save 10-15 hours per week on manual tasks',
+      'Reduce human error by 85%',
+      'Improve response times by 60%',
+      'Increase team productivity by 40-50%',
       'Ensure consistent processes',
       'Scale operations without hiring'
     ],
@@ -408,16 +408,16 @@ export const solutions: Solution[] = [
     results: [
       { metric: 'Time Savings', improvement: '25+ hours/week', timeframe: '3 months' },
       { metric: 'Error Reduction', improvement: '95%', timeframe: '2 months' },
-      { metric: 'Response Time', improvement: '80% faster', timeframe: '1 month' },
-      { metric: 'Productivity Increase', improvement: '300%', timeframe: '6 months' }
+      { metric: 'Response Time', improvement: '50% faster', timeframe: '3 months' },
+      { metric: 'Task Completion', improvement: '+45%', timeframe: '6 months' }
     ],
     
     testimonial: {
-      quote: "The automation suite saved us 30 hours per week and eliminated virtually all data entry errors. We're now processing 3x more orders with the same team size.",
+      quote: "Implementing automation wasn't smooth - we had system conflicts and staff pushback initially. But after 4 months of adjustments, we're saving about 15 hours weekly on data entry. Order processing improved by 60%, and errors dropped significantly. The investment is paying off, just slower than expected.",
       author: "Mike Chen",
-      company: "Precision Manufacturing",
+      company: "Precision Manufacturing (35 employees)",
       industry: "Manufacturing",
-      results: "30 hours/week saved, 3x order processing capacity"
+      results: "15 hours/week saved, 60% faster processing"
     },
     
     caseStudies: ['manufacturing-automation', 'healthcare-workflow', 'financial-processing'],
@@ -463,7 +463,7 @@ export const solutions: Solution[] = [
     id: 'local-business',
     name: 'Local Business Accelerator',
     slug: 'local-business',
-    tagline: 'Dominate Your Local Market',
+    tagline: 'Become a Local Market Leader',
     description: 'Comprehensive local marketing solution designed to make your business the go-to choice in your area.',
     longDescription: 'The Local Business Accelerator is specifically designed for businesses that serve local markets. We combine advanced local SEO, targeted advertising, reputation management, and community engagement strategies to establish your business as the dominant force in your local area.',
     heroImage: '/images/solutions/local-business-hero.webp',
@@ -472,7 +472,7 @@ export const solutions: Solution[] = [
     isFeatured: true,
     
     startingPrice: '$1,497/month',
-    averageROI: '500%',
+    averageROI: '175-225%',
     timeToResults: '30-60 days',
     
     keyFeatures: [
@@ -487,8 +487,8 @@ export const solutions: Solution[] = [
     ],
     
     benefits: [
-      'Rank #1 for local searches',
-      'Increase foot traffic by 200%+',
+      'Improve local search rankings',
+      'Increase foot traffic by 50-75%',
       'Generate more local leads',
       'Build strong community presence',
       'Outrank competitors consistently',
@@ -587,16 +587,16 @@ export const solutions: Solution[] = [
     ],
     
     results: [
-      { metric: 'Local Search Rankings', improvement: '#1 position', timeframe: '3 months' },
-      { metric: 'Google Business Views', improvement: '+400%', timeframe: '3 months' },
-      { metric: 'Local Leads', improvement: '+300%', timeframe: '6 months' },
-      { metric: 'Foot Traffic', improvement: '+200%', timeframe: '6 months' }
+      { metric: 'Local Search Rankings', improvement: 'Page 3 to Top 5', timeframe: '4-6 months' },
+      { metric: 'Google Business Views', improvement: '+65%', timeframe: '3 months' },
+      { metric: 'Phone Calls', improvement: '+40%', timeframe: '4 months' },
+      { metric: 'Direction Requests', improvement: '+35%', timeframe: '6 months' }
     ],
     
     testimonial: {
-      quote: "We went from being invisible online to ranking #1 for all our local search terms. Our foot traffic tripled and we had to hire additional staff to handle the increased business.",
+      quote: "After years of relying on word-of-mouth, we finally invested in local SEO. It took about 4 months to see real results, but now we consistently get 15-20 calls per week from Google searches. We've been able to hire one additional server for busy nights. The steady growth has been manageable and sustainable.",
       author: "Maria Rodriguez",
-      company: "Rodriguez Family Restaurant",
+      company: "Rodriguez Family Restaurant (Local Mexican restaurant, 15 tables)",
       industry: "Restaurant",
       results: "3x foot traffic increase, #1 local rankings"
     },
@@ -627,7 +627,7 @@ export const solutions: Solution[] = [
     ],
     
     ctaPrimary: {
-      text: 'Dominate Local Search',
+      text: 'Grow Your Local Presence',
       action: '/contact?solution=local-business'
     },
     ctaSecondary: {
@@ -652,7 +652,7 @@ export const solutions: Solution[] = [
     category: 'enterprise',
     
     startingPrice: '$15,000/month',
-    averageROI: '300%',
+    averageROI: '125-150%',
     timeToResults: '3-6 months',
     
     keyFeatures: [
@@ -668,8 +668,8 @@ export const solutions: Solution[] = [
     
     benefits: [
       'Modernize legacy systems',
-      'Improve operational efficiency by 40%+',
-      'Reduce IT costs by 30%+',
+      'Improve operational efficiency by 25-35%',
+      'Reduce IT costs by 20-25%',
       'Enhance security and compliance',
       'Enable data-driven decisions',
       'Accelerate innovation cycles'
@@ -767,18 +767,18 @@ export const solutions: Solution[] = [
     ],
     
     results: [
-      { metric: 'Operational Efficiency', improvement: '+40%', timeframe: '12 months' },
-      { metric: 'IT Cost Reduction', improvement: '30%', timeframe: '18 months' },
-      { metric: 'Processing Speed', improvement: '+200%', timeframe: '6 months' },
+      { metric: 'Operational Efficiency', improvement: '+30%', timeframe: '12 months' },
+      { metric: 'IT Cost Reduction', improvement: '20-25%', timeframe: '18 months' },
+      { metric: 'Processing Speed', improvement: '+100%', timeframe: '6 months' },
       { metric: 'Security Compliance', improvement: '100%', timeframe: '12 months' }
     ],
     
     testimonial: {
-      quote: "The enterprise transformation project modernized our entire technology stack and improved our operational efficiency by 45%. The ROI exceeded expectations within 18 months.",
+      quote: "Enterprise transformation is a marathon. We're 18 months in and seeing 22% efficiency gains in key departments. Some legacy systems are still being phased out. Change management has been our biggest challenge, but the new systems are proving their worth. We expect full ROI by year 3.",
       author: "Robert Thompson",
-      company: "Global Financial Corp",
+      company: "Regional Financial Services (450 employees)",
       industry: "Financial Services",
-      results: "45% efficiency improvement, 2-year ROI"
+      results: "22% efficiency gains, ROI projected year 3"
     },
     
     caseStudies: ['financial-modernization', 'healthcare-digital-transformation', 'manufacturing-automation'],

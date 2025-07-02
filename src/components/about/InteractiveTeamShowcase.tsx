@@ -35,6 +35,19 @@ const InteractiveTeamShowcase: React.FC = () => {
 
   const teamMembers: TeamMember[] = [
     {
+      id: 'ceo-founder',
+      name: 'Pascal Ledesma',
+      role: 'CEO & Founder',
+      icon: Rocket,
+      color: 'bg-red-500',
+      skills: ['Digital Strategy', 'Web Development', 'Digital Marketing', 'SEO', 'Business Development'],
+      experience: '15+ years',
+      projects: 300,
+      specialty: 'Digital Transformation & Strategic Leadership',
+      quote: 'Technology should empower businesses, not complicate them.',
+      achievements: ['Founded Ingenious Digital', 'Transformed 100+ businesses', 'Digital innovation leader']
+    },
+    {
       id: 'lead-dev',
       name: 'Alex Chen',
       role: 'Lead Developer',
@@ -190,9 +203,9 @@ const InteractiveTeamShowcase: React.FC = () => {
           {/* Team Stats */}
           <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: 'Team Members', value: '6+', icon: Users },
-              { label: 'Combined Experience', value: '40+ years', icon: Award },
-              { label: 'Projects Delivered', value: '830+', icon: Rocket },
+              { label: 'Team Members', value: '7+', icon: Users },
+              { label: 'Combined Experience', value: '55+ years', icon: Award },
+              { label: 'Projects Delivered', value: '1130+', icon: Rocket },
               { label: 'Client Satisfaction', value: '98%', icon: Heart }
             ].map((stat, index) => (
               <motion.div

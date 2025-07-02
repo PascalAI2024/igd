@@ -22,7 +22,8 @@ const AutoServices = () => {
                 Auto Service Solutions
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed">
-                Digital tools to help auto service businesses attract customers and improve operations
+                Digital tools to help auto service shops overcome challenges like price competition, 
+                customer retention, and seasonal demand while improving bay utilization by 20-30%
               </p>
             </motion.div>
           </div>
@@ -66,7 +67,7 @@ const AutoServices = () => {
                 Implementation Timeline
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Get your auto service business digitally equipped in weeks, not months
+                Implementation designed around your service schedule with measurable efficiency gains
               </p>
             </div>
 
@@ -123,34 +124,34 @@ const features = [
   {
     icon: Calendar,
     title: 'Service Scheduling',
-    description: 'Make it easy for customers to book service appointments.',
+    description: 'Improve bay utilization by 20-30% with smart scheduling.',
     benefits: [
-      'Online scheduling',
-      'Service reminders',
-      'Calendar management',
-      'Customer portal'
+      'Online booking reduces phone time 40%',
+      'Automated service reminders (90% open rate)',
+      'Bay optimization for 20-30% efficiency gain',
+      'Real-time availability updates'
     ]
   },
   {
     icon: Users,
     title: 'Customer Management',
-    description: 'Build stronger relationships with your customers.',
+    description: 'Increase retention by 25-35% with proactive service tracking.',
     benefits: [
-      'Customer database',
-      'Service history',
-      'Follow-up automation',
-      'Customer feedback'
+      'Complete service history per vehicle',
+      'Predictive maintenance alerts',
+      'Win-back campaigns (15% success rate)',
+      'Review management (4.5+ star average)'
     ]
   },
   {
     icon: TrendingUp,
     title: 'Business Growth',
-    description: 'Tools to help your auto service business grow.',
+    description: 'Data-driven insights for 15-25% revenue improvement.',
     benefits: [
-      'Performance tracking',
-      'Revenue analytics',
-      'Service optimization',
-      'Team management'
+      'Average repair order increase of 20%',
+      'Service package optimization',
+      'Technician productivity tracking',
+      'Seasonal demand forecasting'
     ]
   },
   {
@@ -179,20 +180,20 @@ const features = [
 
 const timeline = [
   {
-    title: 'Week 1: Digital Foundation',
-    description: 'Setup your online presence and booking system.'
+    title: 'Week 1-2: Online Scheduling',
+    description: 'Deploy scheduling system to improve bay utilization by 20-25% and reduce no-shows.'
   },
   {
-    title: 'Week 2: Customer Systems',
-    description: 'Implement customer management and communication tools.'
+    title: 'Week 3-4: Service Reminders',
+    description: 'Automated maintenance reminders increase repeat business by 25-35%.'
   },
   {
-    title: 'Week 3: Marketing Launch',
-    description: 'Begin local marketing campaigns and customer outreach.'
+    title: 'Month 2: Customer Retention',
+    description: 'Launch loyalty program targeting 30% improvement in customer lifetime value.'
   },
   {
-    title: 'Week 4: Optimization',
-    description: 'Fine-tune systems and scale successful strategies.'
+    title: 'Month 3+: Performance Optimization',
+    description: 'Track service times, optimize workflow, and adapt to seasonal patterns.'
   }
 ];
 

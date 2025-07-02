@@ -29,8 +29,8 @@ const Automation: React.FC = () => {
                   <span className="text-gradient">Business Process</span> Automation
                 </h1>
                 <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
-                  Eliminate repetitive tasks and streamline your operations with intelligent automation solutions.
-                  Save time, reduce errors, and focus on what matters most.
+                  Reduce repetitive tasks and improve your operations with intelligent automation solutions.
+                  Save valuable time, minimize errors, and focus on strategic priorities.
                 </p>
               </motion.div>
 
@@ -41,8 +41,8 @@ const Automation: React.FC = () => {
                 className="flex flex-wrap justify-center gap-4 mb-12"
               >
                 {[
-                  { icon: Clock, text: 'Save 20+ Hours/Week' },
-                  { icon: BarChart3, text: 'Reduce Errors by 95%' },
+                  { icon: Clock, text: 'Save 10-15 Hours/Week' },
+                  { icon: BarChart3, text: 'Reduce Errors by 85%' },
                   { icon: Target, text: 'Improve Efficiency' },
                   { icon: TrendingUp, text: 'Scale Operations' }
                 ].map((feature, index) => (
@@ -91,14 +91,14 @@ const Automation: React.FC = () => {
                 {
                   icon: Target,
                   title: 'Error Reduction',
-                  description: 'Eliminate human errors with precise, consistent automated processes.',
-                  metric: '95% fewer errors'
+                  description: 'Significantly reduce human errors with consistent automated processes.',
+                  metric: '85% fewer errors'
                 },
                 {
                   icon: TrendingUp,
                   title: 'Scalability',
-                  description: 'Scale your operations without proportionally increasing your workforce.',
-                  metric: '300% capacity increase'
+                  description: 'Scale your operations efficiently without proportionally increasing workforce.',
+                  metric: '50% capacity increase'
                 },
                 {
                   icon: BarChart3,

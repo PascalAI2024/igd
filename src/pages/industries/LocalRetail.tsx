@@ -23,7 +23,8 @@ const LocalRetail = () => {
                 Local Retail Solutions
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                Digital solutions designed to help local retail stores compete and thrive in today's market
+                Digital solutions to help local retailers overcome challenges like online competition, 
+                foot traffic decline, and seasonal variations while improving conversion rates by 15-30%
               </p>
 
               {/* Retail Visualization */}
@@ -77,7 +78,7 @@ const LocalRetail = () => {
                 Implementation Timeline
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Get your retail business online and growing in weeks, not months
+                Gradual implementation that works with your peak seasons and delivers measurable improvements
               </p>
             </div>
 
@@ -134,34 +135,34 @@ const features = [
   {
     icon: ShoppingBag,
     title: 'Digital Storefront',
-    description: 'Create a powerful online presence for your retail store.',
+    description: 'Capture 15-25% more revenue with 24/7 online sales.',
     benefits: [
-      'Mobile-friendly website',
-      'Online product catalog',
-      'Easy ordering system',
-      'Local SEO optimization'
+      'Mobile-first design (65% of local searches)',
+      'Click-and-collect increases foot traffic 30%',
+      'Product search and filtering',
+      'Google Shopping integration'
     ]
   },
   {
     icon: Users,
     title: 'Customer Management',
-    description: 'Build stronger relationships with your customers.',
+    description: 'Increase repeat purchases by 20-30% with smart CRM.',
     benefits: [
-      'Customer database',
-      'Loyalty program',
-      'Automated follow-ups',
-      'Customer insights'
+      'Purchase history and preferences',
+      'Points-based loyalty (20-30% retention boost)',
+      'Win-back campaigns for lapsed customers',
+      'VIP tier management'
     ]
   },
   {
     icon: TrendingUp,
     title: 'Growth Tools',
-    description: 'Tools and strategies to grow your retail business.',
+    description: 'Data-driven insights to improve margins by 10-20%.',
     benefits: [
-      'Marketing automation',
-      'Sales analytics',
-      'Inventory tracking',
-      'Performance reports'
+      'Basket analysis to increase AOV 15-25%',
+      'Inventory turnover optimization',
+      'Seasonal trend forecasting',
+      'Customer segment performance'
     ]
   },
   {
@@ -190,20 +191,20 @@ const features = [
 
 const timeline = [
   {
-    title: 'Week 1: Digital Foundation',
-    description: 'Setup your digital presence with a website and basic online systems.'
+    title: 'Week 1-2: Online Presence',
+    description: 'Launch e-commerce to capture 15-25% additional revenue from existing customers.'
   },
   {
-    title: 'Week 2: Customer Systems',
-    description: 'Implement customer management and loyalty programs.'
+    title: 'Week 3-4: Customer Retention',
+    description: 'Deploy loyalty program targeting 20-30% increase in repeat purchases.'
   },
   {
-    title: 'Week 3: Marketing Launch',
-    description: 'Begin local marketing campaigns and customer outreach.'
+    title: 'Month 2: Inventory Optimization',
+    description: 'Sync online/offline inventory to reduce stockouts by 20% and improve turns.'
   },
   {
-    title: 'Week 4: Optimization',
-    description: 'Fine-tune systems and scale successful strategies.'
+    title: 'Month 3+: Seasonal Planning',
+    description: 'Use data analytics to plan for seasonal trends and optimize product mix.'
   }
 ];
 

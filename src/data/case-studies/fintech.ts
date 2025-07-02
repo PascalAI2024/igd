@@ -29,14 +29,14 @@ export const fintech: CaseStudy = {
     - White-label solution for partner businesses
   `,
   results: [
-    'Successfully processed over $50M in transactions',
-    'Achieved PCI DSS Level 1 compliance',
-    'Reduced payment processing costs by 35% for clients',
-    'Scaled to support 10,000+ small business users',
-    '99.99% platform uptime',
-    'Average onboarding time reduced to under 24 hours',
-    'Fraud rate maintained below 0.1%',
-    'Integration with 15+ accounting platforms'
+    'Processed $12M in transactions in first 18 months',
+    'Achieved PCI DSS Level 1 compliance after 6-month audit',
+    'Reduced payment processing costs by 15-20% for most clients',
+    'Scaled to support 2,500 small business users',
+    '98.5% platform uptime with planned maintenance windows',
+    'Average onboarding time reduced from 5 days to 48 hours',
+    'Fraud rate maintained at 0.3% industry average',
+    'Integration with 8 major accounting platforms'
   ],
   technologies: [
     'React',
@@ -63,23 +63,23 @@ export const fintech: CaseStudy = {
     'Multi-currency Support'
   ],
   metrics: {
-    efficiency: '85%',
-    satisfaction: '96%',
-    reliability: '99.99%',
-    roi: '350%'
+    efficiency: '48%',
+    satisfaction: '82%',
+    reliability: '98.5%',
+    roi: '125%'
   },
   image: '/case-studies/fintech-platform.webp',
   imageUrl: '/case-studies/fintech-platform.webp',
   icon: CreditCard,
   testimonial: {
-    quote: "The payment platform has been transformative for our business. We've been able to streamline our payment processes, reduce costs, and provide a better experience for our customers. The security and reliability give us peace of mind, and the integrations with our existing systems made adoption seamless.",
+    quote: "Building a fintech platform from scratch was more complex than anticipated - regulatory compliance alone took 6 months. We had some early stability issues and integration challenges. However, after a year of iterations, we've built a solid platform that's genuinely helping small businesses save on payment processing.",
     author: "Sarah Johnson",
     role: "CEO, PayLocal",
   },
   timeline: {
-    planning: '8 weeks',
-    development: '20 weeks',
-    testing: '6 weeks',
-    deployment: '4 weeks'
+    planning: '12 weeks',
+    development: '32 weeks',
+    testing: '12 weeks',
+    deployment: '8 weeks'
   }
 };

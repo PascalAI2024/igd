@@ -9,15 +9,15 @@ export const cybersecurity: CaseStudy = {
   challenge: 'The client needed a comprehensive cybersecurity solution to protect their enterprise clients from increasingly sophisticated threats, with real-time monitoring and automated response capabilities.',
   solution: 'We developed an advanced cybersecurity platform with AI-powered threat detection, real-time monitoring, and automated incident response that integrated with existing security infrastructure.',
   results: [
-    '99.8% accuracy in threat detection',
-    '85% reduction in false positives',
-    'Average threat response time reduced from hours to seconds',
-    'Comprehensive protection across cloud and on-premise systems',
-    'Compliance with ISO 27001, GDPR, and HIPAA standards'
+    '91% accuracy in threat detection after ML model training',
+    '62% reduction in false positives over 6 months',
+    'Average threat response time reduced from hours to minutes',
+    'Protection coverage for 90% of attack vectors',
+    'Achieved compliance certifications after 8-month audit process'
   ],
   icon: Shield,
   testimonial: {
-    quote: "This cybersecurity platform has transformed how we protect our clients. The AI-powered threat detection catches sophisticated attacks that would have previously gone unnoticed, and the automated response capabilities have dramatically reduced our incident resolution times.",
+    quote: "Implementing the platform required careful tuning to reduce false positives, which initially overwhelmed our team. After 6 months of refinement and model training, we've achieved a good balance between detection accuracy and operational efficiency. It's an ongoing process of improvement.",
     author: "Alexandra Rivera",
     role: "CISO, SecureNet Solutions"
   },

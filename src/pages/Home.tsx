@@ -63,7 +63,7 @@ const Home = () => {
     <PageTransition>
       <MetaTags 
         title="AI-Powered Digital Solutions for Local Businesses"
-        description="Transform your business with Ingenious Digital's AI-powered digital marketing, web development, and automation solutions. Get more customers and increase revenue with our expert team in Fort Lauderdale."
+        description="Grow your business with Ingenious Digital's proven digital marketing, web development, and automation strategies. Based on 50+ successful client partnerships in Fort Lauderdale."
         keywords={['digital marketing', 'AI solutions', 'web development', 'business automation', 'SEO', 'Fort Lauderdale', 'local business', 'lead generation']}
       />
       

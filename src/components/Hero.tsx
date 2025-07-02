@@ -270,19 +270,19 @@ const Hero = () => {
     {
       icon: <Globe className="w-8 h-8" />,
       title: "Web Development",
-      description: "Stunning, high-performance websites that convert visitors into customers",
+      description: "Professional websites built to enhance your online presence and user experience",
       image: "/images/web-dev/desktop.webp"
     },
     {
       icon: <Brain className="w-8 h-8" />,
       title: "AI & Machine Learning",
-      description: "Harness the power of artificial intelligence to automate and optimize your business",
+      description: "Practical AI solutions to improve efficiency and data-driven decision making",
       image: "/ai-ml-hero.webp"
     },
     {
       icon: <BarChart2 className="w-8 h-8" />,
       title: "Digital Marketing",
-      description: "Data-driven strategies to increase your online visibility and drive more leads",
+      description: "Targeted marketing strategies to grow your online visibility and customer base",
       image: "/images/digital-marketing/analytics.webp"
     }
   ];
@@ -371,13 +371,13 @@ const Hero = () => {
             >
               <div className="relative">
                 <h1 className="text-4xl sm:text-5xl md:text-8xl font-bold mb-5 relative z-10">
-                  <span className="text-gradient drop-shadow-lg">Building Digital Excellence</span>
+                  <span className="text-gradient drop-shadow-lg">Strategic Digital Solutions</span>
                 </h1>
                 {/* Enhanced glow effect */}
                 <div className="absolute -inset-1 bg-red-500/20 blur-3xl rounded-full z-0 opacity-80"></div>
               </div>
               <h2 className="text-2xl md:text-4xl text-gray-200 font-light tracking-wide">
-                Where Innovation Meets Results
+                Proven Strategies for Local Business Growth
               </h2>
             </motion.div>
 

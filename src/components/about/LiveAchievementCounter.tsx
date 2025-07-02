@@ -93,12 +93,12 @@ const LiveAchievementCounter: React.FC = () => {
   ]);
 
   const targetValues = {
-    projects: 250,
-    clients: 150,
-    satisfaction: 98.5,
-    response: 2,
-    uptime: 99.9,
-    awards: 12
+    projects: 87,
+    clients: 52,
+    satisfaction: 91.5,
+    response: 4,
+    uptime: 98.7,
+    awards: 6
   };
 
   // Animate counters when in view
@@ -141,7 +141,7 @@ const LiveAchievementCounter: React.FC = () => {
         
         const variation = (Math.random() - 0.5) * 2; // ±1 variation
         const baseValue = targetValues[achievement.id as keyof typeof targetValues];
-        const newValue = Math.max(0, baseValue + variation);
+        const newValue = Math.max(0, Math.min(baseValue * 1.05, baseValue + variation));
         
         return { ...achievement, value: newValue };
       }));

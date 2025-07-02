@@ -58,12 +58,12 @@ const LocalBusinessSuccessCalculator: React.FC = () => {
   });
 
   const businessTypes = [
-    { id: 'restaurant', name: 'Restaurant', multiplier: 1.8 },
-    { id: 'retail', name: 'Retail Store', multiplier: 2.2 },
-    { id: 'services', name: 'Professional Services', multiplier: 2.5 },
-    { id: 'healthcare', name: 'Healthcare', multiplier: 1.9 },
-    { id: 'beauty', name: 'Beauty/Salon', multiplier: 2.1 },
-    { id: 'fitness', name: 'Fitness/Gym', multiplier: 2.0 }
+    { id: 'restaurant', name: 'Restaurant', multiplier: 1.3 },
+    { id: 'retail', name: 'Retail Store', multiplier: 1.5 },
+    { id: 'services', name: 'Professional Services', multiplier: 1.6 },
+    { id: 'healthcare', name: 'Healthcare', multiplier: 1.4 },
+    { id: 'beauty', name: 'Beauty/Salon', multiplier: 1.5 },
+    { id: 'fitness', name: 'Fitness/Gym', multiplier: 1.4 }
   ];
 
   // Calculate projections in real-time
@@ -71,20 +71,20 @@ const LocalBusinessSuccessCalculator: React.FC = () => {
     const businessType = businessTypes.find(bt => bt.id === inputs.businessType);
     const multiplier = businessType?.multiplier || 2.0;
 
-    // Website impact calculations
-    const websiteImpact = inputs.hasWebsite ? 1.2 : 2.5; // 150% more impact if no website
+    // Website impact calculations - REALISTIC PROJECTIONS
+    const websiteImpact = inputs.hasWebsite ? 1.1 : 1.8; // 80% more impact if no website (realistic)
     
     // New customers from digital presence
-    const newCustomers = Math.floor(inputs.currentCustomers * 0.3 * websiteImpact);
+    const newCustomers = Math.floor(inputs.currentCustomers * 0.15 * websiteImpact); // 15% increase (realistic)
     
     // Revenue increase calculation
     const revenueIncrease = newCustomers * inputs.avgTransactionValue * multiplier;
     
     // Online visibility improvement
-    const onlineVisibility = inputs.hasWebsite ? 65 : 85; // % improvement
+    const onlineVisibility = inputs.hasWebsite ? 35 : 55; // % improvement (realistic)
     
     // Customer retention improvement
-    const customerRetention = 25; // % improvement from better engagement
+    const customerRetention = 15; // % improvement from better engagement (realistic)
     
     // Marketing ROI improvement
     const marketingROI = (revenueIncrease / inputs.marketingBudget) * 100;
@@ -397,6 +397,12 @@ const LocalBusinessSuccessCalculator: React.FC = () => {
           <strong className="text-red-400">📈 Success Calculator:</strong> Adjust your business metrics to see potential 
           growth with our digital solutions. Calculations based on real client results and industry averages.
         </p>
+        <div className="mt-3 space-y-1 text-xs text-gray-400">
+          <p>• Results vary by industry, market conditions, and implementation quality</p>
+          <p>• Based on average client data with consistent effort</p>
+          <p>• SEO ROI: 1.5x-2.5x over 12 months | PPC ROI: 1.3x-2x with proper management</p>
+          <p>• Month 1-3: Foundation | Month 4-6: Initial results | Month 7-12: Growth scaling</p>
+        </div>
       </div>
     </motion.div>
   );

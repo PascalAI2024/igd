@@ -26,9 +26,9 @@ const AiMachineLearning = () => {
       icon: Brain
     },
     {
-      value: '10x',
+      value: '40%',
       label: 'Efficiency',
-      trend: 'Improvement',
+      trend: 'Average Improvement',
       icon: Cpu
     },
     {
@@ -43,7 +43,7 @@ const AiMachineLearning = () => {
     <PageTransition>
       <MetaTags
         title="AI & Machine Learning Solutions Fort Lauderdale | Ingenious Digital"
-        description="Transform your business with AI and machine learning solutions in Fort Lauderdale. Custom AI development, predictive analytics, and intelligent automation. Get 10x efficiency improvements."
+        description="Enhance your business with AI and machine learning solutions in Fort Lauderdale. Custom AI development, predictive analytics, and intelligent automation for measurable improvements."
         keywords={['AI solutions Fort Lauderdale', 'machine learning', 'artificial intelligence', 'predictive analytics', 'business automation', 'custom AI development']}
       />
       <ServiceSchema 
@@ -69,7 +69,7 @@ const AiMachineLearning = () => {
                   <span className="text-gradient">AI & Machine Learning</span> Solutions
                 </h1>
                 <p className="text-xl text-gray-300 mb-8">
-                  Harness the power of artificial intelligence to transform your business with data-driven insights, automation, and innovation.
+                  Leverage artificial intelligence to improve your business operations through data-driven insights, automation, and strategic innovation.
                 </p>
 
                 <div className="flex flex-wrap gap-4 mb-8">

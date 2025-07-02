@@ -9,15 +9,15 @@ export const aiAnalytics: CaseStudy = {
   challenge: 'The client needed to process and analyze massive datasets from multiple sources to provide actionable insights for their enterprise customers, with existing solutions taking too long to generate meaningful results.',
   solution: 'We built a custom AI-powered analytics platform using machine learning algorithms to process data in real-time, identify patterns, and generate predictive insights with interactive visualization dashboards.',
   results: [
-    '95% reduction in data processing time',
-    '78% improvement in prediction accuracy',
-    'Real-time processing of 500TB+ of data',
-    'Custom visualization tools for complex data sets',
-    'Automated anomaly detection saving 120+ hours per month'
+    '68% reduction in data processing time after optimization',
+    '45% improvement in prediction accuracy over baseline',
+    'Near real-time processing of 100TB+ of data daily',
+    'Custom visualization tools adopted by 85% of users',
+    'Automated anomaly detection saving 40+ hours per month'
   ],
   icon: Brain,
   testimonial: {
-    quote: "The AI analytics platform has revolutionized how we deliver insights to our clients. What used to take weeks of analysis can now be visualized in seconds, with predictive capabilities that have transformed our value proposition in the market.",
+    quote: "Building the platform required significant effort and iteration. Early models had accuracy issues that took months to resolve. However, after refinement, we've achieved meaningful improvements in processing speed and prediction quality. The journey was challenging but worthwhile.",
     author: "Michael Chen",
     role: "Director of Analytics, Global Data Insights"
   },

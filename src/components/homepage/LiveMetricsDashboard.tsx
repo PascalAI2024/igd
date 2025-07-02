@@ -29,7 +29,7 @@ const LiveMetricsDashboard: React.FC = () => {
     {
       id: 'projects',
       label: 'Projects Completed',
-      value: 250,
+      value: 87,
       suffix: '+',
       icon: Code,
       color: 'text-blue-400',
@@ -39,17 +39,17 @@ const LiveMetricsDashboard: React.FC = () => {
     {
       id: 'clients',
       label: 'Happy Clients',
-      value: 150,
+      value: 52,
       suffix: '+',
       icon: Users,
       color: 'text-green-400',
       trend: 'up',
-      description: 'Satisfied customers worldwide'
+      description: 'Satisfied customers'
     },
     {
       id: 'satisfaction',
       label: 'Client Satisfaction',
-      value: 98.5,
+      value: 91.5,
       suffix: '%',
       icon: Star,
       color: 'text-yellow-400',
@@ -59,7 +59,7 @@ const LiveMetricsDashboard: React.FC = () => {
     {
       id: 'response',
       label: 'Avg Response Time',
-      value: 2.3,
+      value: 4.2,
       suffix: ' hrs',
       icon: Clock,
       color: 'text-purple-400',
@@ -69,7 +69,7 @@ const LiveMetricsDashboard: React.FC = () => {
     {
       id: 'uptime',
       label: 'System Uptime',
-      value: 99.9,
+      value: 98.7,
       suffix: '%',
       icon: TrendingUp,
       color: 'text-red-400',
@@ -79,7 +79,7 @@ const LiveMetricsDashboard: React.FC = () => {
     {
       id: 'roi',
       label: 'Average ROI',
-      value: 340,
+      value: 185,
       suffix: '%',
       icon: Target,
       color: 'text-orange-400',
@@ -103,16 +103,16 @@ const LiveMetricsDashboard: React.FC = () => {
             newValue = Math.floor(metric.value + (Math.random() > 0.9 ? 1 : 0));
             break;
           case 'satisfaction':
-            newValue = Math.max(95, Math.min(100, metric.value + variation * 10));
+            newValue = Math.max(88, Math.min(94, metric.value + variation * 10));
             break;
           case 'response':
-            newValue = Math.max(1, Math.min(5, metric.value + variation * 5));
+            newValue = Math.max(3, Math.min(6, metric.value + variation * 5));
             break;
           case 'uptime':
-            newValue = Math.max(99, Math.min(100, metric.value + variation));
+            newValue = Math.max(97, Math.min(99.5, metric.value + variation));
             break;
           case 'roi':
-            newValue = Math.max(250, Math.min(400, metric.value + variation * 50));
+            newValue = Math.max(150, Math.min(220, metric.value + variation * 50));
             break;
         }
         
@@ -209,7 +209,7 @@ const LiveMetricsDashboard: React.FC = () => {
                       className={`h-1 rounded-full bg-gradient-to-r from-red-500 to-purple-500`}
                       initial={{ width: 0 }}
                       animate={{ 
-                        width: `${Math.min(100, (metric.value / (metric.id === 'projects' ? 300 : metric.id === 'clients' ? 200 : 100)) * 100)}%` 
+                        width: `${Math.min(100, (metric.value / (metric.id === 'projects' ? 120 : metric.id === 'clients' ? 80 : 100)) * 100)}%` 
                       }}
                       transition={{ duration: 0.5 }}
                     />

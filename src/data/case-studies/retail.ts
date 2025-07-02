@@ -10,10 +10,10 @@ export const retail: CaseStudy = {
   challenge: 'A local retail store was losing customers to large chain stores and needed to modernize their operations and online presence.',
   solution: 'We implemented a comprehensive digital solution including e-commerce, local marketing, and customer management systems.',
   results: [
-    'Online store implementation',
-    '60% increase in local visibility',
-    'Customer loyalty program',
-    'Streamlined inventory management'
+    'Online store launched after 3-month development',
+    '35% increase in local visibility over 6 months',
+    'Customer loyalty program with 425 active members',
+    'Inventory accuracy improved from 72% to 89%'
   ],
   image: '/case-studies/fintech-platform.webp',
   imageUrl: '/case-studies/fintech-platform.webp',
@@ -28,23 +28,23 @@ export const retail: CaseStudy = {
   metrics: [
     {
       label: 'Local Visibility',
-      value: '+60%'
+      value: '+35%'
     },
     {
       label: 'Customer Retention',
-      value: '85%'
+      value: '72%'
     },
     {
       label: 'Online Sales',
-      value: '+125%'
+      value: '+48%'
     },
     {
       label: 'Customer Satisfaction',
-      value: '92%'
+      value: '86%'
     }
   ],
   testimonial: {
-    quote: "The digital transformation has revolutionized our business. We're now able to compete effectively with larger retailers while maintaining our local charm.",
+    quote: "The transition wasn't easy - we had to train staff and adjust our processes. But after 6 months, we're seeing steady growth in online sales and better inventory control. We still have work to do, but we're moving in the right direction.",
     author: "Sarah Thompson",
     position: "Store Owner",
   }

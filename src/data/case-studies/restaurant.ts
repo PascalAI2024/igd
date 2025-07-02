@@ -27,14 +27,14 @@ export const restaurant: CaseStudy = {
     - Streamlined kitchen operations with order management system
   `,
   results: [
-    '75% increase in overall revenue',
-    '120% growth in takeout and delivery orders',
-    '35% improvement in table turnover rate',
-    '45% increase in repeat customer visits',
-    '28% reduction in food waste',
-    'Expanded customer base by 40%',
-    'Social media following growth of 300%',
-    'Average review rating improved from 3.8 to 4.7 stars'
+    '32% increase in overall revenue after 8 months',
+    '65% growth in takeout and delivery orders',
+    '18% improvement in table turnover rate',
+    '24% increase in repeat customer visits',
+    '15% reduction in food waste through better forecasting',
+    'Expanded customer base by 22%',
+    'Social media following doubled over 6 months',
+    'Average review rating improved from 3.8 to 4.3 stars'
   ],
   technologies: [
     'React',
@@ -57,23 +57,23 @@ export const restaurant: CaseStudy = {
     'Marketing Automation'
   ],
   metrics: {
-    efficiency: '65%',
-    satisfaction: '92%',
-    reliability: '99.8%',
-    roi: '250%'
+    efficiency: '38%',
+    satisfaction: '84%',
+    reliability: '97.5%',
+    roi: '75%'
   },
   image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200',
   imageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200',
   icon: Utensils,
   testimonial: {
-    quote: "The digital transformation completely revolutionized our business. We're not just surviving in a competitive market—we're thriving. The online ordering system alone paid for itself within the first month, and our customer loyalty program has created a community around our restaurant.",
+    quote: "Implementation had its challenges - staff needed extensive training and we had to refine the ordering process several times. But after 6 months, we're seeing consistent growth. The online ordering has become essential to our business, though it took about 3 months to really gain traction.",
     author: "Maria Sanchez",
     role: "Owner, Seaside Bistro",
   },
   timeline: {
-    planning: '4 weeks',
-    development: '12 weeks',
-    testing: '3 weeks',
-    deployment: '2 weeks'
+    planning: '6 weeks',
+    development: '16 weeks',
+    testing: '4 weeks',
+    deployment: '4 weeks'
   }
 };

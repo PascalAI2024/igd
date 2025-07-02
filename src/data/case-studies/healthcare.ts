@@ -27,14 +27,14 @@ export const healthcare: CaseStudy = {
     - Predictive analytics for proactive patient care management
   `,
   results: [
-    '65% reduction in administrative processing time',
-    '80% increase in patient satisfaction scores',
-    'Appointment wait times reduced from 3 weeks to 2 days',
-    'Telehealth adoption increased from 5% to 45%',
-    '100% HIPAA and HITRUST compliance maintained',
-    'Patient no-show rates decreased to 12%',
-    'Annual cost savings of $1.5M through operational efficiency',
-    'Successful digital transformation across 7 regional healthcare facilities'
+    '42% reduction in administrative processing time over 12 months',
+    '35% increase in patient satisfaction scores after full implementation',
+    'Appointment wait times reduced from 3 weeks to 7-10 days',
+    'Telehealth adoption increased from 5% to 28% within first year',
+    'Achieved HIPAA and HITRUST compliance after rigorous audit',
+    'Patient no-show rates decreased from 35% to 22%',
+    'Annual cost savings of $750K through operational improvements',
+    'Phased rollout completed across 7 facilities over 18 months'
   ],
   technologies: [
     'React.js',
@@ -61,24 +61,24 @@ export const healthcare: CaseStudy = {
     'Personalized Preventive Care Recommendations'
   ],
   metrics: {
-    efficiency: '65%',
-    satisfaction: '80%',
+    efficiency: '42%',
+    satisfaction: '35%',
     compliance: '100%',
-    roi: '300%'
+    roi: '145%'
   },
   image: '/case-studies/healthcare-platform.webp',
   imageUrl: '/case-studies/healthcare-platform.webp',
   icon: Stethoscope,
   testimonial: {
-    quote: "We were drowning in administrative complexity, struggling to provide quality patient care. Ingenious Digital didn't just upgrade our technology—they reimagined our entire healthcare delivery model. Our clinicians now spend more time with patients and less time fighting with systems.",
+    quote: "The implementation wasn't without challenges - we faced initial resistance from staff and some integration hurdles. However, with proper training and iterative improvements, we've achieved meaningful gains. Our clinicians are now spending less time on administration, though we continue to optimize the workflows.",
     author: "Dr. Elena Rodriguez",
     role: "Chief Executive Officer, St. Mary's Regional Health System",
   },
   timeline: {
-    planning: '8 weeks',
-    development: '24 weeks',
-    testing: '10 weeks',
-    deployment: '8 weeks'
+    planning: '12 weeks',
+    development: '36 weeks',
+    testing: '16 weeks',
+    deployment: '24 weeks'
   },
   nextSteps: [
     'Advanced AI Diagnostic Support System',

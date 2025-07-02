@@ -49,12 +49,12 @@ const ProjectROICalculator: React.FC = () => {
   });
 
   const projectTypes = [
-    { id: 'web-development', name: 'Web Development', multiplier: 2.5, cost: 15000 },
-    { id: 'crm-system', name: 'CRM System', multiplier: 3.2, cost: 25000 },
-    { id: 'automation', name: 'Business Automation', multiplier: 4.0, cost: 20000 },
-    { id: 'ecommerce', name: 'E-commerce Platform', multiplier: 3.8, cost: 30000 },
-    { id: 'mobile-app', name: 'Mobile Application', multiplier: 2.8, cost: 35000 },
-    { id: 'analytics', name: 'Analytics Dashboard', multiplier: 3.5, cost: 18000 }
+    { id: 'web-development', name: 'Web Development', multiplier: 1.25, cost: 15000 },
+    { id: 'crm-system', name: 'CRM System', multiplier: 1.35, cost: 25000 },
+    { id: 'automation', name: 'Business Automation', multiplier: 1.45, cost: 20000 },
+    { id: 'ecommerce', name: 'E-commerce Platform', multiplier: 1.40, cost: 30000 },
+    { id: 'mobile-app', name: 'Mobile Application', multiplier: 1.30, cost: 35000 },
+    { id: 'analytics', name: 'Analytics Dashboard', multiplier: 1.35, cost: 18000 }
   ];
 
   const selectedProject = projectTypes.find(p => p.id === inputs.projectType);
@@ -70,8 +70,8 @@ const ProjectROICalculator: React.FC = () => {
     const projectedRevenue = inputs.currentRevenue * revenueMultiplier;
     const revenueIncrease = projectedRevenue - inputs.currentRevenue;
     
-    // Time savings calculation (automation and efficiency)
-    const timeSaved = inputs.timeSpent * 0.6; // 60% time savings on average
+    // Time savings calculation (automation and efficiency) - REALISTIC
+    const timeSaved = inputs.timeSpent * 0.35; // 35% time savings on average (realistic)
     const hourlyCost = 75; // Average hourly cost
     const timeSavingsValue = timeSaved * hourlyCost * 52; // Weekly savings * 52 weeks
     
@@ -329,6 +329,13 @@ const ProjectROICalculator: React.FC = () => {
           <strong className="text-red-400">🧮 ROI Calculator:</strong> Adjust the inputs above to see how our solutions 
           can impact your business. These calculations are based on real client results and industry averages.
         </p>
+        <div className="mt-3 space-y-1 text-xs text-gray-400">
+          <p>• Results vary by industry, market conditions, and implementation quality</p>
+          <p>• Based on average client data with consistent implementation</p>
+          <p>• Email ROI: 1.2x-1.8x | Automation ROI: 1.4x-2.2x from efficiency gains</p>
+          <p>• Year 1: Foundation & optimization | Year 2+: Compound growth</p>
+          <p>• Success requires ongoing management and optimization</p>
+        </div>
       </div>
     </motion.div>
   );

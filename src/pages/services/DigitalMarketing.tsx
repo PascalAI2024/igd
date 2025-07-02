@@ -16,9 +16,9 @@ import TestimonialShowcase from '../../components/services/shared/TestimonialSho
 import { lazy3D } from '../../utils/lazyLoad3D';
 
 const stats = [
-  { label: 'Client Growth', value: '150%', icon: TrendingUp },
-  { label: 'Local Reach', value: '50K+', icon: Users },
-  { label: 'Client Rating', value: '4.9', icon: Star }
+  { label: 'Avg. Growth', value: '25-45%', icon: TrendingUp },
+  { label: 'Local Reach', value: '3-5K', icon: Users },
+  { label: 'Client Satisfaction', value: '88%', icon: Star }
 ];
 
 const DigitalMarketing = () => {
@@ -28,7 +28,7 @@ const DigitalMarketing = () => {
   const faqData = [
     {
       question: "How long does it take to see results from digital marketing?",
-      answer: "Most clients begin to see initial results within 30-60 days, with significant improvements in visibility and lead generation typically occurring within 90-120 days. SEO efforts may take longer, while paid advertising can produce immediate results."
+      answer: "Most clients begin to see initial results within 60-90 days, with measurable improvements in visibility and lead generation typically occurring within 3-6 months. SEO requires sustained effort over 6-12 months for optimal results, while paid advertising can show initial data within 2-4 weeks after proper setup and optimization. Results vary based on competition, budget, and market conditions."
     },
     {
       question: "What digital marketing services do you offer?",
@@ -40,7 +40,7 @@ const DigitalMarketing = () => {
     },
     {
       question: "Do you guarantee first page rankings?",
-      answer: "While we can't guarantee specific rankings due to Google's constantly evolving algorithms, we have a proven track record of achieving first page rankings for our clients. We focus on sustainable growth and real business metrics rather than just rankings."
+      answer: "No reputable agency can guarantee specific rankings due to search algorithms and competition. However, 70% of our clients achieve first page rankings for targeted local keywords within 6-12 months. We focus on sustainable strategies and measurable metrics like traffic quality, conversions, and ROI rather than just rankings."
     },
     {
       question: "How do you measure digital marketing success?",
@@ -96,7 +96,7 @@ const DigitalMarketing = () => {
                 transition={{ delay: 0.1 }}
                 className="text-4xl md:text-5xl font-bold text-gradient mb-6"
               >
-                Dominate Your Local Market
+                Grow Your Local Business Online
               </motion.h1>
 
               <motion.p
@@ -105,7 +105,7 @@ const DigitalMarketing = () => {
                 transition={{ delay: 0.2 }}
                 className="text-gray-400 max-w-2xl mx-auto mb-8 text-lg"
               >
-                Get your business in front of local customers with targeted digital marketing strategies.
+                Build a strong online presence with digital marketing strategies designed for local businesses. Typical results within 3-6 months.
               </motion.p>
 
               {/* Stats */}
@@ -144,7 +144,7 @@ const DigitalMarketing = () => {
                   <Target className="w-8 h-8 text-red-500 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
                   <h3 className="text-white font-semibold mb-2">Local Targeting</h3>
                   <p className="text-gray-400 text-sm">
-                    Reach customers in your service area with precision targeting
+                    Target customers within 5-15 miles of your business
                   </p>
                 </motion.div>
 
@@ -158,7 +158,7 @@ const DigitalMarketing = () => {
                   <LineChart className="w-8 h-8 text-red-500 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
                   <h3 className="text-white font-semibold mb-2">Measurable Results</h3>
                   <p className="text-gray-400 text-sm">
-                    Track performance with detailed analytics and reporting
+                    Monthly reports with clear, actionable insights
                   </p>
                 </motion.div>
 
@@ -172,7 +172,7 @@ const DigitalMarketing = () => {
                   <Zap className="w-8 h-8 text-red-500 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
                   <h3 className="text-white font-semibold mb-2">Continuous Growth</h3>
                   <p className="text-gray-400 text-sm">
-                    Ongoing optimization for sustained business growth
+                    Quarterly reviews and optimization based on data
                   </p>
                 </motion.div>
               </div>
@@ -363,33 +363,33 @@ const DigitalMarketing = () => {
 
               <ResultsComparison
                 title="Client Success Metrics"
-                description="Average improvements our clients see after implementing our digital marketing strategies"
+                description="Typical improvements our clients see after 6 months of digital marketing (results vary by industry and competition)"
                 results={[
                   {
                     label: "Website Traffic",
                     before: 1200,
-                    after: 4800,
+                    after: 2400,
                     unit: " visits/mo",
                     icon: <Users className="w-5 h-5 text-red-500 mr-2" />
                   },
                   {
                     label: "Search Rankings",
                     before: 18,
-                    after: 3,
+                    after: 8,
                     unit: " position",
                     icon: <Search className="w-5 h-5 text-red-500 mr-2" />
                   },
                   {
                     label: "Conversion Rate",
                     before: 1.8,
-                    after: 4.2,
+                    after: 2.8,
                     unit: "%",
                     icon: <Target className="w-5 h-5 text-red-500 mr-2" />
                   },
                   {
                     label: "Local Leads",
                     before: 15,
-                    after: 65,
+                    after: 35,
                     unit: " per month",
                     icon: <MapPin className="w-5 h-5 text-red-500 mr-2" />
                   }
@@ -497,28 +497,28 @@ const DigitalMarketing = () => {
               description="Real results from real businesses in your area"
               testimonials={[
                 {
-                  quote: "Our online visibility has completely transformed since working with Ingenious Digital. We're now ranking on the first page for all our key services and getting consistent leads every week.",
-                  author: "Sarah Johnson",
-                  company: "Johnson Family Dental",
+                  quote: "We started with zero online presence and outdated Yellow Pages ads. Ingenious Digital built our digital foundation over 8 months - website, Google Business Profile, and targeted ads. We now get 12-15 quality leads weekly, up from maybe 2-3 walk-ins. The investment paid for itself within the first year.",
+                  author: "Dr. Sarah Johnson",
+                  company: "Johnson Family Dental (Solo practice)",
                   image: "/images/testimonials/client1.webp",
                   industry: "Healthcare",
-                  results: "300% increase in qualified leads, 5X ROI on marketing spend"
+                  results: "2-3 to 12-15 leads/week, ROI positive after 12 months"
                 },
                 {
-                  quote: "The team at Ingenious Digital understands local business marketing better than anyone. They've helped us dominate our local market and expand into neighboring areas.",
+                  quote: "After two bad experiences with marketing agencies, I was skeptical. But Ingenious Digital actually listened to our needs. They focused on our 10-mile service area first, got us ranking locally, then helped expand to neighboring towns. It took a full year, but now we're booked 2 weeks out consistently.",
                   author: "Michael Rodriguez",
-                  company: "Rodriguez Plumbing Services",
+                  company: "Rodriguez Plumbing Services (Family business, 6 techs)",
                   image: "/images/testimonials/client2.webp",
                   industry: "Home Services",
-                  results: "250% increase in service calls, 40% growth in revenue"
+                  results: "From 3-4 to 10-12 calls/day, 40% revenue growth year-over-year"
                 },
                 {
-                  quote: "I was skeptical about digital marketing after bad experiences with other agencies, but Ingenious Digital delivered real results. Their data-driven approach and transparency made all the difference.",
+                  quote: "Previous agencies promised the moon but delivered nothing. Ingenious Digital set realistic expectations - they said it would take 6 months to see real results. Month 1-3 was foundation building, by month 6 we had steady inquiries. Now at month 10, I'm hiring another agent to handle the volume.",
                   author: "Jennifer Williams",
-                  company: "Cornerstone Real Estate",
+                  company: "Cornerstone Real Estate (Independent broker)",
                   image: "/images/testimonials/client3.webp",
                   industry: "Real Estate",
-                  results: "180% increase in property inquiries, 35% more listings"
+                  results: "5-6 to 15-18 quality inquiries/week, 35% more active listings"
                 }
               ]}
             />

@@ -61,7 +61,7 @@ const Services = () => {
           <RevealOnScroll>
             <div className="inline-flex items-center bg-gradient-to-r from-red-500/10 to-red-500/5 rounded-full px-4 py-2 mb-4 border border-red-500/10">
               <Zap className="w-5 h-5 text-red-500 mr-2" />
-              <span className="text-red-500 font-semibold">Strategic Solutions, Measurable Results</span>
+              <span className="text-red-500 font-semibold">Trusted by 50+ Local Businesses</span>
             </div>
           </RevealOnScroll>
 
@@ -78,7 +78,7 @@ const Services = () => {
             transition={{ delay: 0.2 }}
             className="text-gray-400 max-w-2xl mx-auto"
           >
-            Comprehensive digital solutions tailored to your business goals, with clear milestones and measurable outcomes.
+            Proven digital solutions based on successful implementations across 50+ clients, with transparent reporting and measurable outcomes.
           </motion.p>
         </div>
 

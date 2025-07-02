@@ -25,8 +25,8 @@ const BusinessAutomation = () => {
       icon: Bot
     },
     { 
-      value: '3X',
-      label: 'Efficiency',
+      value: '35%',
+      label: 'Productivity',
       trend: 'Improvement',
       icon: Zap
     }
@@ -36,12 +36,12 @@ const BusinessAutomation = () => {
     <PageTransition>
       <MetaTags 
         title="Business Automation Services Fort Lauderdale | Ingenious Digital"
-        description="Automate your business processes and save 80% time with our intelligent automation solutions in Fort Lauderdale. Workflow automation, process optimization, and 3X efficiency improvements."
+        description="Streamline your business processes with our intelligent automation solutions in Fort Lauderdale. Workflow automation and process optimization for measurable efficiency gains."
         keywords={['business automation Fort Lauderdale', 'workflow automation', 'process automation', 'business efficiency', 'automated workflows', 'robotic process automation']}
       />
       <ServiceSchema 
         serviceName="Business Automation Services"
-        description="Intelligent business automation solutions that save 80% time and increase accuracy to 95%. Transform manual processes into automated workflows for 3X efficiency improvements."
+        description="Intelligent business automation solutions designed to reduce manual work and improve accuracy. Transform repetitive processes into efficient automated workflows."
         url="https://ingeniousdigital.com/services/business-automation"
         serviceType="Business Automation"
       />
@@ -67,7 +67,7 @@ const BusinessAutomation = () => {
                 transition={{ delay: 0.1 }}
                 className="text-4xl md:text-5xl font-bold text-gradient mb-6"
               >
-                Transform Your Business
+                Streamline Your Operations
               </motion.h1>
               
               <motion.p

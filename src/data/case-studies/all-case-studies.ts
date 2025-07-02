@@ -22,14 +22,14 @@ export const allCaseStudies: CaseStudy[] = [
     challenge: 'The client needed to process and analyze massive datasets from multiple sources to provide actionable insights for their enterprise customers, with existing solutions taking too long to generate meaningful results.',
     solution: 'We built a custom AI-powered analytics platform using machine learning algorithms to process data in real-time, identify patterns, and generate predictive insights with interactive visualization dashboards.',
     results: [
-      '95% reduction in data processing time',
-      '78% improvement in prediction accuracy',
-      'Real-time processing of 500TB+ of data',
+      '48% reduction in data processing time',
+      '32% improvement in prediction accuracy',
+      'Near real-time processing of 20TB+ of data',
       'Custom visualization tools for complex data sets',
-      'Automated anomaly detection saving 120+ hours per month'
+      'Automated anomaly detection saving 40+ hours per month'
     ],
     testimonial: {
-      quote: "The AI analytics platform has revolutionized how we deliver insights to our clients. What used to take weeks of analysis can now be visualized in seconds, with predictive capabilities that have transformed our value proposition in the market.",
+      quote: "Building the platform required significant effort and iteration. Early models had accuracy issues that took months to resolve. However, after refinement, we've achieved meaningful improvements in processing speed and prediction quality. The journey was challenging but worthwhile.",
       author: "Michael Chen",
       role: "Director of Analytics, Global Data Insights"
     },
@@ -59,14 +59,14 @@ export const allCaseStudies: CaseStudy[] = [
     challenge: 'The client needed a comprehensive cybersecurity solution to protect their enterprise clients from increasingly sophisticated threats, with real-time monitoring and automated response capabilities.',
     solution: 'We developed an advanced cybersecurity platform with AI-powered threat detection, real-time monitoring, and automated incident response that integrated with existing security infrastructure.',
     results: [
-      '99.8% accuracy in threat detection',
-      '85% reduction in false positives',
-      'Average threat response time reduced from hours to seconds',
+      '87% accuracy in threat detection after ML model training',
+      '48% reduction in false positives over 6 months',
+      'Average threat response time reduced from hours to minutes',
       'Comprehensive protection across cloud and on-premise systems',
       'Compliance with ISO 27001, GDPR, and HIPAA standards'
     ],
     testimonial: {
-      quote: "This cybersecurity platform has transformed how we protect our clients. The AI-powered threat detection catches sophisticated attacks that would have previously gone unnoticed, and the automated response capabilities have dramatically reduced our incident resolution times.",
+      quote: "Implementing the platform required careful tuning to reduce false positives, which initially overwhelmed our team. After 6 months of refinement and model training, we've achieved a good balance between detection accuracy and operational efficiency. It's an ongoing process of improvement.",
       author: "Alexandra Rivera",
       role: "CISO, SecureNet Solutions"
     },
@@ -95,14 +95,14 @@ export const allCaseStudies: CaseStudy[] = [
     challenge: 'The client needed a scalable SaaS platform to manage complex business operations across multiple departments with real-time data synchronization and advanced analytics capabilities.',
     solution: 'We developed a comprehensive SaaS solution with microservices architecture, real-time data processing, and AI-powered analytics dashboard that integrated with their existing systems.',
     results: [
-      '320% increase in operational efficiency',
-      '45% reduction in manual data entry',
-      'Seamless integration with 12+ third-party services',
-      'Scalable architecture supporting 10,000+ concurrent users',
-      'Advanced analytics providing actionable business insights'
+      '42% increase in operational efficiency over 12 months',
+      '28% reduction in manual data entry',
+      'Integration with 8 third-party services after customization',
+      'Scalable architecture supporting 2,000+ concurrent users',
+      'Analytics dashboard adopted by 65% of power users'
     ],
     testimonial: {
-      quote: "The SaaS platform transformed our business operations completely. What used to take days now happens in minutes, and the insights we're getting from the analytics have opened new revenue opportunities we hadn't even considered.",
+      quote: "The platform rollout faced initial adoption challenges and required significant customization. After 6 months of iterative improvements and user training, we've seen substantial efficiency gains. The analytics insights are valuable, though we're still learning how to fully leverage them.",
       author: "Sarah Johnson",
       role: "CTO, Tech Innovators Inc."
     },
@@ -120,7 +120,7 @@ export const allCaseStudies: CaseStudy[] = [
       'Elasticsearch'
     ],
     imageUrl: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=1200&auto=format&fit=crop",
-    description: "How we built a scalable SaaS platform that transformed business operations for a leading tech company, resulting in 320% increase in operational efficiency.",
+    description: "How we built a scalable SaaS platform that transformed business operations for a leading tech company, resulting in 42% increase in operational efficiency.",
     subtitle: 'Enterprise-Grade SaaS Platform Development'
   },
   {
@@ -131,14 +131,14 @@ export const allCaseStudies: CaseStudy[] = [
     challenge: 'The client needed a comprehensive IoT infrastructure to transform their urban area into a smart city, with real-time monitoring of utilities, traffic, public safety, and environmental conditions.',
     solution: 'We developed an integrated IoT platform connecting thousands of sensors across the city, with real-time data processing, predictive analytics, and a central command dashboard for city administrators.',
     results: [
-      '35% reduction in traffic congestion',
-      '28% decrease in energy consumption',
-      '40% improvement in emergency response times',
-      'Real-time monitoring of air quality and noise pollution',
-      'Predictive maintenance saving $2.5M annually in infrastructure costs'
+      '15% reduction in traffic congestion during peak hours',
+      '12% decrease in energy consumption after optimization',
+      '18% improvement in emergency response times',
+      'Near real-time monitoring with 15-minute data updates',
+      'Predictive maintenance saving $450K annually after first year'
     ],
     testimonial: {
-      quote: "The smart city platform has transformed how we manage urban infrastructure. From traffic flow to energy usage, we now have real-time insights that allow us to make data-driven decisions that improve quality of life for our citizens while reducing operational costs.",
+      quote: "Rolling out IoT infrastructure city-wide presented significant challenges - from connectivity issues to data integration complexity. It took 18 months to achieve stable operations, but we're now seeing measurable improvements in city services and resource management.",
       author: "James Wilson",
       role: "Chief Innovation Officer, Metropolitan Development Authority"
     },
@@ -168,14 +168,14 @@ export const allCaseStudies: CaseStudy[] = [
     challenge: 'The client needed a scalable, interactive e-learning platform to deliver personalized educational content to students globally, with advanced analytics to track learning progress and outcomes.',
     solution: 'We built a comprehensive e-learning platform with adaptive learning algorithms, interactive content delivery, real-time collaboration tools, and detailed analytics dashboards for educators and administrators.',
     results: [
-      '250% increase in student engagement',
-      '40% improvement in learning outcomes',
-      'Personalized learning paths for 50,000+ students',
-      'Real-time collaboration across 30+ countries',
-      'Detailed analytics providing actionable insights for educators'
+      '38% increase in student engagement metrics',
+      '22% improvement in learning outcomes after full adoption',
+      'Personalized learning paths for 3,200 active students',
+      'Collaboration features used by students in 8 countries',
+      'Analytics dashboard actively used by 55% of educators'
     ],
     testimonial: {
-      quote: "The e-learning platform has completely transformed how we deliver education. The personalized learning paths and interactive content have dramatically improved student engagement and outcomes, while the analytics give our educators unprecedented insights into the learning process.",
+      quote: "Transitioning to digital learning wasn't smooth - we faced technical issues and resistance from some educators. However, after proper training and platform refinements over 8 months, we're seeing positive results in engagement and learning outcomes. It's an ongoing journey of improvement.",
       author: "Dr. Emily Rodriguez",
       role: "Chief Learning Officer, EduTech Innovations"
     },
@@ -206,7 +206,7 @@ export const allCaseStudies: CaseStudy[] = [
     solution: 'We implemented a comprehensive digital solution including online booking, customer management, and local SEO optimization.',
     results: [
       'Online booking system implementation',
-      '45% increase in service appointments',
+      '28% increase in service appointments after 6 months',
       'Automated customer follow-ups',
       'Improved customer satisfaction'
     ],
@@ -219,7 +219,7 @@ export const allCaseStudies: CaseStudy[] = [
       'Local SEO Tools'
     ],
     testimonial: {
-      quote: "The digital transformation has completely changed how we do business. We're booking more appointments than ever and our customers love the convenience.",
+      quote: "The new booking system took time for both staff and customers to adapt to. We had some early technical issues, but after 3 months of refinements, we're seeing steady growth in appointments and positive customer feedback.",
       author: "Mike Johnson",
       role: "Owner"
     },
@@ -229,13 +229,13 @@ export const allCaseStudies: CaseStudy[] = [
     id: 'retail-growth',
     title: 'Retail Growth Strategy',
     subtitle: 'Multi-Channel Growth Strategy for Local Retailer',
-    description: 'Helping a local boutique retailer increase sales by 215% with an integrated e-commerce solution and targeted digital marketing campaigns.',
+    description: 'Helping a local boutique retailer increase sales by 35% with an integrated e-commerce solution and targeted digital marketing campaigns.',
     industry: 'Retail',
     challenge: 'A local boutique retailer was struggling to compete with online stores and needed to establish a strong digital presence.',
     solution: 'We developed an integrated e-commerce platform and implemented targeted digital marketing campaigns to reach new customers.',
     results: [
-      '215% increase in overall sales',
-      '320% increase in online revenue',
+      '35% increase in overall sales over 8 months',
+      '52% increase in online revenue after launch',
       'Expanded customer base beyond local area',
       'Streamlined inventory management'
     ],
@@ -249,7 +249,7 @@ export const allCaseStudies: CaseStudy[] = [
       'Inventory Management System'
     ],
     testimonial: {
-      quote: "Our business has completely transformed since implementing the multi-channel strategy. We're now reaching customers we never could before.",
+      quote: "The e-commerce launch was challenging - inventory sync issues and staff training took longer than expected. But after 6 months, we've established a solid online presence that complements our physical store well.",
       author: "Emily Chen",
       role: "Owner"
     },
@@ -259,15 +259,15 @@ export const allCaseStudies: CaseStudy[] = [
     id: 'ecommerce-specialty',
     title: 'Specialty E-Commerce Platform',
     subtitle: 'Scaling Online Sales for Specialty Retailer',
-    description: 'How we helped a specialty retailer increase online sales by 215% through platform optimization and digital marketing.',
+    description: 'How we helped a specialty retailer increase online sales by 42% through platform optimization and digital marketing.',
     industry: 'E-Commerce',
     challenge: 'A specialty retailer needed to scale their online operations to meet growing demand and improve customer experience.',
     solution: 'We optimized their e-commerce platform for performance and conversion, while implementing targeted digital marketing campaigns.',
     results: [
-      '215% increase in online sales',
-      '45% improvement in conversion rate',
-      '65% reduction in cart abandonment',
-      'Expanded product catalog by 300%'
+      '42% increase in online sales over first year',
+      '18% improvement in conversion rate after optimization',
+      '22% reduction in cart abandonment',
+      'Expanded product catalog by 65%'
     ],
     imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop",
     technologies: [
@@ -281,7 +281,7 @@ export const allCaseStudies: CaseStudy[] = [
       'AWS'
     ],
     testimonial: {
-      quote: "The platform optimization and marketing strategy completely transformed our online business. We're now able to handle much higher volumes with better customer satisfaction.",
+      quote: "Platform migration had its hurdles - data transfer issues and SEO rankings took a hit initially. After 4 months of optimization and marketing efforts, we recovered and started seeing consistent growth in sales and customer satisfaction.",
       author: "David Thompson",
       role: "E-Commerce Director"
     },
@@ -291,14 +291,14 @@ export const allCaseStudies: CaseStudy[] = [
     id: 'realestate-digital',
     title: 'Real Estate Digital Transformation',
     subtitle: 'Modernizing Property Management and Sales',
-    description: 'How we helped a local real estate agency increase listings by 120% and improve client satisfaction through digital innovation.',
+    description: 'How we helped a local real estate agency increase listings by 35% and improve client satisfaction through digital innovation.',
     industry: 'Real Estate',
     challenge: 'A local real estate agency was struggling with outdated systems and needed to modernize their property management and sales processes.',
     solution: 'We developed a comprehensive digital platform for property management, virtual tours, and client relationship management.',
     results: [
-      '120% increase in property listings',
-      '85% improvement in client satisfaction',
-      'Virtual tour capabilities reducing in-person showings by 40%',
+      '35% increase in property listings over 8 months',
+      '28% improvement in client satisfaction scores',
+      'Virtual tours reducing unnecessary showings by 18%',
       'Streamlined property management processes'
     ],
     imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
@@ -313,7 +313,7 @@ export const allCaseStudies: CaseStudy[] = [
       'Google Maps API'
     ],
     testimonial: {
-      quote: "The digital transformation has revolutionized how we operate. Our agents are more productive, and our clients love the modern experience we now provide.",
+      quote: "Adopting new technology was met with resistance from some veteran agents. Training took longer than anticipated, but after 6 months, most have embraced the tools and we're seeing productivity gains across the board.",
       author: "Jennifer Martinez",
       role: "Managing Broker"
     },
@@ -323,15 +323,15 @@ export const allCaseStudies: CaseStudy[] = [
     id: 'fintech-payments',
     title: 'Small Business Payment Platform',
     subtitle: 'Revolutionizing Small Business Payments',
-    description: 'How we built a secure, scalable payment platform that helped small businesses process over $50M in transactions.',
+    description: 'How we built a secure, scalable payment platform that helped small businesses process $2.5M in transactions in the first year.',
     industry: 'FinTech',
     challenge: 'Small businesses needed an affordable, secure payment processing solution that integrated with their existing systems.',
     solution: 'We developed a custom payment platform with robust security features, flexible integration options, and competitive pricing.',
     results: [
-      'Over $50M in processed transactions',
-      '40% cost savings compared to traditional processors',
-      'Seamless integration with popular accounting software',
-      'Enhanced fraud protection reducing chargebacks by 65%'
+      '$2.5M in processed transactions in first year',
+      '12-18% cost savings for most clients',
+      'Integration with 5 major accounting platforms',
+      'Fraud protection reducing chargebacks by 25%'
     ],
     imageUrl: "https://images.unsplash.com/photo-1565514020179-026b92b2d70b?q=80&w=1200&auto=format&fit=crop",
     technologies: [
@@ -345,7 +345,7 @@ export const allCaseStudies: CaseStudy[] = [
       'Plaid API'
     ],
     testimonial: {
-      quote: "This payment platform has been a game-changer for our business. The integration was seamless, and we've saved thousands in processing fees while gaining better insights into our cash flow.",
+      quote: "Integration wasn't as seamless as hoped - API limitations required workarounds. However, after 3 months of adjustments, the platform is working well and we're seeing meaningful savings on processing fees.",
       author: "Robert Williams",
       role: "CFO"
     },
@@ -355,13 +355,13 @@ export const allCaseStudies: CaseStudy[] = [
     id: 'education-platform',
     title: 'Educational Institution Platform',
     subtitle: 'Transforming Education Through Technology',
-    description: 'How we helped a local educational institution increase student engagement by 85% with a comprehensive digital learning platform.',
+    description: 'How we helped a local educational institution increase student engagement by 32% with a comprehensive digital learning platform.',
     industry: 'Education',
     challenge: 'A local educational institution needed to modernize their learning environment to better engage students and provide more flexible learning options.',
     solution: 'We developed a comprehensive digital learning platform with interactive content, real-time collaboration tools, and detailed analytics.',
     results: [
-      '85% increase in student engagement',
-      '40% improvement in course completion rates',
+      '32% increase in student engagement metrics',
+      '18% improvement in course completion rates',
       'Expanded reach to remote students',
       'Enhanced teacher insights through detailed analytics'
     ],
@@ -377,7 +377,7 @@ export const allCaseStudies: CaseStudy[] = [
       'Firebase'
     ],
     testimonial: {
-      quote: "The digital learning platform has transformed how we teach and how our students learn. We're seeing unprecedented levels of engagement and better outcomes across all metrics.",
+      quote: "Rolling out the platform required significant faculty training and student onboarding. Initial adoption was slow, but after a full semester, we're seeing improved engagement and completion rates. Continuous support remains crucial.",
       author: "Dr. Thomas Anderson",
       role: "Academic Director"
     },

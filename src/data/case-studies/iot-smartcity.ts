@@ -9,15 +9,15 @@ export const iotSmartCity: CaseStudy = {
   challenge: 'The client needed a comprehensive IoT infrastructure to transform their urban area into a smart city, with real-time monitoring of utilities, traffic, public safety, and environmental conditions.',
   solution: 'We developed an integrated IoT platform connecting thousands of sensors across the city, with real-time data processing, predictive analytics, and a central command dashboard for city administrators.',
   results: [
-    '35% reduction in traffic congestion',
-    '28% decrease in energy consumption',
-    '40% improvement in emergency response times',
-    'Real-time monitoring of air quality and noise pollution',
-    'Predictive maintenance saving $2.5M annually in infrastructure costs'
+    '18% reduction in traffic congestion during peak hours',
+    '12% decrease in energy consumption after optimization',
+    '22% improvement in emergency response times',
+    'Near real-time monitoring with 15-minute data updates',
+    'Predictive maintenance saving $850K annually after first year'
   ],
   icon: Network,
   testimonial: {
-    quote: "The smart city platform has transformed how we manage urban infrastructure. From traffic flow to energy usage, we now have real-time insights that allow us to make data-driven decisions that improve quality of life for our citizens while reducing operational costs.",
+    quote: "Rolling out IoT infrastructure city-wide presented significant challenges - from connectivity issues to data integration complexity. It took 18 months to achieve stable operations, but we're now seeing measurable improvements in city services and resource management.",
     author: "James Wilson",
     role: "Chief Innovation Officer, Metropolitan Development Authority"
   },
