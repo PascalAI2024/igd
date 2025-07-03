@@ -59,6 +59,7 @@ const SimpleCaseStudyDetail = React.lazy(() => import('./pages/SimpleCaseStudyDe
 const ServiceDetail = React.lazy(() => import('./pages/ServiceDetail'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const Landing = React.lazy(() => import('./pages/Landing'));
+const Tools = React.lazy(() => import('./pages/Tools'));
 
 // Lazy load solution pages
 const Solutions = React.lazy(() => import('./pages/Solutions'));
