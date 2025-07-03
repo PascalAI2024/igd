@@ -22,6 +22,13 @@ export const mainRoutes: RouteItem[] = [
     keywords: ['company', 'about', 'team', 'mission']
   },
   { 
+    name: 'Tools', 
+    path: '/tools',
+    description: 'Free marketing tools and resources',
+    keywords: ['tools', 'calculator', 'analyzer', 'audit', 'resources', 'free'],
+    featured: true
+  },
+  { 
     name: 'Case Studies', 
     path: '/case-studies',
     description: 'Success stories and client outcomes',
