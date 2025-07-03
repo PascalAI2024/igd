@@ -13,6 +13,8 @@ import LiveMetricsDashboard from '../components/homepage/LiveMetricsDashboard';
 import MetaTags from '../components/MetaTags';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { PartnerLogos } from '../components/ui/TrustSignals';
+import { RecentActivityFeed, ROIIndicator } from '../components/ui/SocialProof';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -96,7 +98,15 @@ const Home = () => {
         >
           <section className="py-16 bg-black/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <LiveMetricsDashboard />
+              <div className="grid lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2">
+                  <LiveMetricsDashboard />
+                </div>
+                <div className="space-y-6">
+                  <RecentActivityFeed />
+                  <ROIIndicator percentage={185} label="Average Client ROI" />
+                </div>
+              </div>
             </div>
           </section>
         </ScrollReveal>
@@ -118,6 +128,9 @@ const Home = () => {
           duration={0.8}
         >
           <TechStack />
+          <div className="mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <PartnerLogos className="py-8" />
+          </div>
         </ScrollReveal>
         
         {/* Blog with slide-in animation */}

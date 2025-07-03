@@ -19,8 +19,8 @@ const stats = [
 
 const timelineSteps = [
   {
-    title: 'Day 1',
-    description: 'System setup, automation configuration, and initial campaign setup',
+    title: 'Days 1-5',
+    description: 'Discovery, planning, and initial system setup',
     details: [
       'Lead capture forms setup',
       'CRM integration',
@@ -29,8 +29,8 @@ const timelineSteps = [
     ]
   },
   {
-    title: 'Days 2-7',
-    description: 'Campaign launch, tracking implementation, initial data collection',
+    title: 'Days 6-14',
+    description: 'Campaign setup, tracking implementation, and testing',
     details: [
       'Campaign activation',
       'Analytics setup',
@@ -39,8 +39,8 @@ const timelineSteps = [
     ]
   },
   {
-    title: 'Days 7-14',
-    description: 'First leads start coming in, initial optimization based on data',
+    title: 'Days 15-30',
+    description: 'Campaign launch and initial lead generation',
     details: [
       'Lead qualification',
       'Score refinement',
@@ -49,8 +49,8 @@ const timelineSteps = [
     ]
   },
   {
-    title: 'Days 15-30',
-    description: 'Campaign refinement, audience targeting optimization',
+    title: 'Days 30-60',
+    description: 'Data analysis and campaign optimization',
     details: [
       'Targeting improvement',
       'Conversion optimization',
@@ -59,8 +59,8 @@ const timelineSteps = [
     ]
   },
   {
-    title: 'Days 30-60',
-    description: 'Full optimization, scaling successful campaigns, advanced automation',
+    title: 'Days 60-90',
+    description: 'Scaling and advanced optimization based on results',
     details: [
       'Campaign scaling',
       'Advanced automation',

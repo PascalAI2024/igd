@@ -11,6 +11,7 @@ import LightweightLoadingSequence from './components/LightweightLoadingSequence'
 import BreadcrumbSchema from './components/BreadcrumbSchema';
 import CustomCursor from './components/effects/CustomCursor';
 import CookieConsent from './components/CookieConsent';
+import StickyCTA from './components/ui/StickyCTA';
 import { PerformanceProvider } from './contexts/PerformanceContext';
 import { 
   initializeAnalytics, 
@@ -105,6 +106,7 @@ const Location = React.lazy(() => import('./pages/Location'));
 // Lazy load animation showcase pages (development only)
 const AnimationPlayground = React.lazy(() => import('./components/AnimationPlayground'));
 const AnimationShowcase = React.lazy(() => import('./components/AnimationShowcase'));
+const UIShowcase = React.lazy(() => import('./pages/UIShowcase'));
 
 const App = () => {
   const location = useLocation();
@@ -418,6 +420,7 @@ const App = () => {
                 <>
                   <Route path="/animation-playground" element={<AnimationPlayground />} />
                   <Route path="/animation-showcase" element={<AnimationShowcase />} />
+                  <Route path="/ui-showcase" element={<UIShowcase />} />
                 </>
               )}
 
@@ -428,6 +431,17 @@ const App = () => {
       </AnimatePresence>
 
       {showNavigation && <Footer />}
+      
+      {/* Sticky CTA - appears after scroll */}
+      <StickyCTA 
+        text="Ready to transform your business?"
+        buttonText="Get Started"
+        onButtonClick={() => window.location.href = '/contact'}
+        showAfter={800}
+        position="bottom"
+        dismissible={true}
+        background="gradient"
+      />
     </div>
     </PerformanceProvider>
   );

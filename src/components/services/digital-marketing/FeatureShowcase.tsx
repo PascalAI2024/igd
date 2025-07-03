@@ -8,9 +8,9 @@ const features = [
     title: 'Local SEO',
     description: 'Get found by customers in your service area',
     metrics: [
-      { label: 'Local Visibility', value: '+200%', icon: TrendingUp },
-      { label: 'Map Rankings', value: 'Top 3', icon: MapPin },
-      { label: 'Reviews', value: '+85%', icon: Star }
+      { label: 'Local Visibility', value: '+40-80%', icon: TrendingUp },
+      { label: 'Map Rankings', value: 'Page 1', icon: MapPin },
+      { label: 'Reviews', value: '+25-40%', icon: Star }
     ],
     details: [
       'Local keyword optimization',
@@ -24,9 +24,9 @@ const features = [
     title: 'Google Business',
     description: 'Optimize your Google Business Profile for maximum impact',
     metrics: [
-      { label: 'Profile Views', value: '+150%', icon: Users },
-      { label: 'Directions', value: '+120%', icon: MapPin },
-      { label: 'Calls', value: '+90%', icon: TrendingUp }
+      { label: 'Profile Views', value: '+50-70%', icon: Users },
+      { label: 'Directions', value: '+30-50%', icon: MapPin },
+      { label: 'Calls', value: '+20-40%', icon: TrendingUp }
     ],
     details: [
       'Profile optimization',
@@ -40,9 +40,9 @@ const features = [
     title: 'Local Ads',
     description: 'Targeted advertising to reach your ideal customers',
     metrics: [
-      { label: 'Local Reach', value: '95%', icon: Users },
-      { label: 'Click Rate', value: '+60%', icon: TrendingUp },
-      { label: 'Leads', value: '+85%', icon: Target }
+      { label: 'Local Reach', value: '5-10mi', icon: Users },
+      { label: 'Click Rate', value: '3-5%', icon: TrendingUp },
+      { label: 'Leads', value: '+25-45%', icon: Target }
     ],
     details: [
       'Geographic targeting',
@@ -56,9 +56,9 @@ const features = [
     title: 'Performance',
     description: 'Track and measure your marketing success',
     metrics: [
-      { label: 'ROI', value: '300%', icon: TrendingUp },
-      { label: 'Growth', value: '+75%', icon: BarChart },
-      { label: 'Retention', value: '90%', icon: Users }
+      { label: 'ROI', value: '150-250%', icon: TrendingUp },
+      { label: 'Growth', value: '+25-45%', icon: BarChart },
+      { label: 'Retention', value: '75-85%', icon: Users }
     ],
     details: [
       'Real-time analytics',

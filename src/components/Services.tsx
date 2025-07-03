@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, ChevronRight, BarChart2, Target, Layers, Code, Cpu } from 'lucide-react';
+import { Zap, ChevronRight, BarChart2, Target, Layers, Code, Cpu, Info } from 'lucide-react';
 import ServiceCardEnhanced from './ServiceCardEnhanced';
 import { services } from '../data/services/serviceData';
 import { RevealOnScroll, StaggerContainer, SlideIn } from './AnimationWrappers';
+import Tooltip from './ui/Tooltip';
+import TrustSignals from './ui/TrustSignals';
+import { BeforeAfterComparison } from './ui/ComparisonTable';
 
 const Services = () => {
   const [activeCategory, setActiveCategory] = useState('marketing');
@@ -62,6 +65,9 @@ const Services = () => {
             <div className="inline-flex items-center bg-gradient-to-r from-red-500/10 to-red-500/5 rounded-full px-4 py-2 mb-4 border border-red-500/10">
               <Zap className="w-5 h-5 text-red-500 mr-2" />
               <span className="text-red-500 font-semibold">Trusted by 50+ Local Businesses</span>
+              <Tooltip content="Verified client count based on active partnerships since 2017" variant="info">
+                <Info className="w-4 h-4 text-red-400 ml-2 cursor-help" />
+              </Tooltip>
             </div>
           </RevealOnScroll>
 
@@ -76,10 +82,13 @@ const Services = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto"
+            className="text-gray-400 max-w-2xl mx-auto mb-8"
           >
             Proven digital solutions based on successful implementations across 50+ clients, with transparent reporting and measurable outcomes.
           </motion.p>
+          
+          {/* Trust Signals */}
+          <TrustSignals variant="inline" className="justify-center" />
         </div>
 
         {/* Category Tabs */}
@@ -103,6 +112,11 @@ const Services = () => {
                   {category.icon}
                 </div>
                 <span>{category.name}</span>
+                {category.id === 'marketing' && (
+                  <Tooltip content="Drive 2-3x more leads with data-driven strategies" variant="success">
+                    <span className="ml-2 text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">Popular</span>
+                  </Tooltip>
+                )}
 
                 {activeCategory === category.id && (
                   <motion.div
@@ -242,6 +256,32 @@ const Services = () => {
             </div>
           </div>
         </motion.div>
+
+        {/* Before/After Comparison */}
+        <BeforeAfterComparison
+          title="What Our Clients Experience"
+          before={{
+            title: "Before Ingenious Digital",
+            items: [
+              "Struggling to get found online",
+              "Manual, time-consuming processes",
+              "Inconsistent lead generation",
+              "Limited customer insights",
+              "Reactive business decisions"
+            ]
+          }}
+          after={{
+            title: "After Ingenious Digital",
+            items: [
+              "Top rankings in local search results",
+              "Automated workflows saving 80% time",
+              "Steady stream of qualified leads",
+              "Real-time analytics dashboard",
+              "Data-driven growth strategies"
+            ]
+          }}
+          className="mt-12"
+        />
       </div>
     </section>
   );

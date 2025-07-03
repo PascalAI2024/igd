@@ -21,9 +21,9 @@ const features: Feature[] = [
     title: 'Lightning Fast',
     description: 'Optimized for maximum performance with sub-3-second load times',
     metrics: [
-      { label: 'Page Load', value: '<3s', trend: '-40%', icon: Zap },
-      { label: 'First Paint', value: '<1s', trend: '-30%', icon: TrendingUp },
-      { label: 'TTI', value: '<5s', trend: '-25%', icon: Star }
+      { label: 'Page Load', value: '<3s', trend: 'Target', icon: Zap },
+      { label: 'First Paint', value: '<1.5s', trend: 'Goal', icon: TrendingUp },
+      { label: 'TTI', value: '<5s', trend: 'Standard', icon: Star }
     ],
     details: [
       'Advanced caching',
@@ -37,9 +37,9 @@ const features: Feature[] = [
     title: 'SEO Optimized',
     description: 'Built for maximum search engine visibility and ranking',
     metrics: [
-      { label: 'SEO Score', value: '95+', trend: '+15%', icon: TrendingUp },
-      { label: 'Core Web Vitals', value: 'Pass', trend: '+100%', icon: Star },
-      { label: 'Mobile Score', value: '90+', trend: '+20%', icon: Smartphone }
+      { label: 'SEO Score', value: '85+', trend: 'Target', icon: TrendingUp },
+      { label: 'Core Web Vitals', value: 'Pass', trend: 'Google', icon: Star },
+      { label: 'Mobile Score', value: '85+', trend: 'Target', icon: Smartphone }
     ],
     details: [
       'Schema markup',
@@ -53,9 +53,9 @@ const features: Feature[] = [
     title: 'Mobile First',
     description: 'Responsive design that works perfectly on all devices',
     metrics: [
-      { label: 'Mobile Traffic', value: '60%', trend: '+40%', icon: TrendingUp },
-      { label: 'Conversion Rate', value: '+40%', trend: '+25%', icon: Star },
-      { label: 'Engagement', value: '+55%', trend: '+35%', icon: Globe }
+      { label: 'Mobile Traffic', value: '50-70%', trend: 'Average', icon: TrendingUp },
+      { label: 'Responsive', value: '100%', trend: 'All devices', icon: Star },
+      { label: 'Touch Optimized', value: 'Yes', trend: 'Standard', icon: Globe }
     ],
     details: [
       'Responsive layouts',
@@ -69,9 +69,9 @@ const features: Feature[] = [
     title: 'Secure & Reliable',
     description: 'Enterprise-grade security and 99.9% uptime guarantee',
     metrics: [
-      { label: 'Uptime', value: '99.9%', trend: '+0.5%', icon: TrendingUp },
-      { label: 'SSL/TLS', value: 'A+', trend: '+Grade', icon: Shield },
-      { label: 'Security Score', value: '95+', trend: '+10%', icon: Star }
+      { label: 'Uptime', value: '99.5%+', trend: 'SLA', icon: TrendingUp },
+      { label: 'SSL/TLS', value: 'Included', trend: 'Free', icon: Shield },
+      { label: 'Backups', value: 'Daily', trend: 'Automated', icon: Star }
     ],
     details: [
       'SSL encryption',

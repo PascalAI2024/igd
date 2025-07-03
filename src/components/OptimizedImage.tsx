@@ -13,6 +13,8 @@ interface OptimizedImageProps {
   onError?: () => void;
   priority?: boolean; // Add priority loading option
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+  blurDataURL?: string; // Base64 encoded blur placeholder
+  quality?: number; // Image quality (1-100)
 }
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
@@ -26,7 +28,9 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   onLoad,
   onError,
   priority = false,
-  objectFit = 'cover'
+  objectFit = 'cover',
+  blurDataURL,
+  quality = 85
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -101,38 +105,72 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   if (isLoading) {
     return (
       <div
-        className={`animate-pulse bg-gradient-to-br from-gray-800 to-gray-900 ${className}`}
-        style={{ width: width ? `${width}px` : '100%', height: height ? `${height}px` : '100%' }}
+        className={`relative overflow-hidden ${className}`}
+        style={{ 
+          width: width ? `${width}px` : '100%', 
+          height: height ? `${height}px` : '100%',
+          backgroundColor: blurDataURL ? 'transparent' : '#1f2937'
+        }}
         role="img"
         aria-label={`Loading ${alt}`}
-      />
+      >
+        {blurDataURL ? (
+          <>
+            <img
+              src={blurDataURL}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover filter blur-xl scale-110"
+              style={{ objectFit }}
+            />
+            <div className="absolute inset-0 animate-pulse bg-gray-900/20" />
+          </>
+        ) : (
+          <div className="w-full h-full animate-pulse bg-gradient-to-br from-gray-800 to-gray-900" />
+        )}
+      </div>
     );
   }
 
   return (
-    <img
-      ref={imgRef}
-      src={imageSrc || ''}
-      alt={alt}
-      className={className}
-      width={width}
-      height={height}
-      loading={priority ? 'eager' : 'lazy'}
-      style={{ objectFit }}
-      onError={(e) => {
-        // Add additional error handling for runtime errors
-        if (retryCount.current < maxRetries) {
-          retryCount.current += 1;
-          // Try reloading with a cache-busting parameter
-          const target = e.target as HTMLImageElement;
-          const newSrc = `${src}?retry=${retryCount.current}&t=${Date.now()}`;
-          target.src = newSrc;
-        } else {
-          setHasError(true);
-          onError?.();
-        }
-      }}
-    />
+    <div className={`relative overflow-hidden ${className}`} style={{ width: width ? `${width}px` : '100%', height: height ? `${height}px` : '100%' }}>
+      {blurDataURL && (
+        <img
+          src={blurDataURL}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover filter blur-xl scale-110 transition-opacity duration-300"
+          style={{ 
+            objectFit,
+            opacity: isLoading ? 1 : 0
+          }}
+        />
+      )}
+      <img
+        ref={imgRef}
+        src={imageSrc || ''}
+        alt={alt}
+        className={`relative z-10 w-full h-full transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        width={width}
+        height={height}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding={priority ? 'sync' : 'async'}
+        style={{ objectFit }}
+        onError={(e) => {
+          // Add additional error handling for runtime errors
+          if (retryCount.current < maxRetries) {
+            retryCount.current += 1;
+            // Try reloading with a cache-busting parameter
+            const target = e.target as HTMLImageElement;
+            const newSrc = `${src}?retry=${retryCount.current}&t=${Date.now()}`;
+            target.src = newSrc;
+          } else {
+            setHasError(true);
+            onError?.();
+          }
+        }}
+      />
+    </div>
   );
 };
 

@@ -8,9 +8,9 @@ const features = [
     title: 'B2B Lead Generation',
     description: 'Strategic targeting of high-value business prospects',
     metrics: [
-      { label: 'Lead Quality', value: '95%' },
-      { label: 'Conversion', value: '+45%' },
-      { label: 'Deal Size', value: '+80%' }
+      { label: 'Lead Quality', value: '75-85%' },
+      { label: 'Conversion', value: '+20-35%' },
+      { label: 'Deal Size', value: '+25-40%' }
     ]
   },
   {
@@ -18,9 +18,9 @@ const features = [
     title: 'Local Lead Gen',
     description: 'Targeted local market lead generation strategies',
     metrics: [
-      { label: 'Local Reach', value: '90%' },
-      { label: 'Response Rate', value: '+65%' },
-      { label: 'Cost per Lead', value: '-40%' }
+      { label: 'Local Reach', value: '5-10mi' },
+      { label: 'Response Rate', value: '+15-30%' },
+      { label: 'Cost per Lead', value: '-15-25%' }
     ]
   },
   {
@@ -28,9 +28,9 @@ const features = [
     title: 'Lead Nurturing',
     description: 'Automated systems to convert leads into customers',
     metrics: [
-      { label: 'Engagement', value: '+75%' },
-      { label: 'Follow-ups', value: '100%' },
-      { label: 'Close Rate', value: '+55%' }
+      { label: 'Engagement', value: '+25-40%' },
+      { label: 'Follow-ups', value: 'Automated' },
+      { label: 'Close Rate', value: '+15-25%' }
     ]
   },
   {
@@ -38,9 +38,9 @@ const features = [
     title: 'Marketing Automation',
     description: 'Streamlined processes for consistent lead generation',
     metrics: [
-      { label: 'Efficiency', value: '+200%' },
+      { label: 'Efficiency', value: '+40-60%' },
       { label: 'Lead Flow', value: '24/7' },
-      { label: 'Response Time', value: '-70%' }
+      { label: 'Response Time', value: '2-4hrs' }
     ]
   }
 ];

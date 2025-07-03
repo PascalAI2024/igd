@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Code2, Zap, Brain, Globe, BarChart2 } from 'lucide-react';
+import { ArrowRight, Code2, Zap, Brain, Globe, BarChart2, Info } from 'lucide-react';
 import TypeWriter from './TypeWriter';
 import { trackInteraction, trackEngagement } from '../utils/analytics';
 import OptimizedImage from './OptimizedImage';
+import EnhancedCTAButton from './ui/EnhancedCTAButton';
+import TrustSignals from './TrustSignals';
+import Tooltip from './ui/Tooltip';
 
 const Hero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -405,64 +408,42 @@ const Hero = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="flex flex-col sm:flex-row gap-6 mt-2"
             >
-              {/* Primary CTA - Start Project */}
-              <div className="relative group">
-                {/* Animated background glow */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-red-600 via-red-500 to-purple-600 rounded-xl blur-lg opacity-70 group-hover:opacity-100 transition-all duration-500 group-hover:duration-200 animate-gradient"></div>
-
-                <motion.a
-                  href="#contact"
-                  onClick={handleStartProjectClick}
-                  whileHover={{ scale: 1.02, y: -5 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative flex items-center justify-center px-8 py-4 bg-black rounded-lg text-white text-lg font-medium overflow-hidden shadow-xl border border-white/10 backdrop-blur-sm"
-                >
-                  {/* Subtle particle effect */}
-                  <div className="absolute inset-0 overflow-hidden opacity-20">
-                    <div className="absolute top-0 left-[10%] w-2 h-2 bg-white rounded-full animate-float" style={{ animationDuration: '3s' }}></div>
-                    <div className="absolute top-[40%] left-[80%] w-1.5 h-1.5 bg-white rounded-full animate-float" style={{ animationDuration: '7s', animationDelay: '1s' }}></div>
-                    <div className="absolute top-[80%] left-[30%] w-1 h-1 bg-white rounded-full animate-float" style={{ animationDuration: '5s', animationDelay: '2s' }}></div>
-                  </div>
-
-                  {/* Button content with enhanced animation */}
-                  <span className="relative z-10 flex items-center">
-                    <span className="mr-2">✨</span>
-                    <span className="relative">
-                      <span className="block">Start Your Project</span>
-                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-                    </span>
-                    <span className="relative ml-3 w-6 h-6 flex items-center justify-center overflow-hidden">
-                      <ArrowRight className="w-6 h-6 absolute group-hover:translate-x-8 group-hover:opacity-0 transition-all duration-300" />
-                      <ArrowRight className="w-6 h-6 absolute -translate-x-8 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" />
-                    </span>
-                  </span>
-                </motion.a>
-              </div>
-
-              {/* Secondary CTA - Explore Solutions */}
-              <motion.a
-                href="#services"
-                onClick={handleExploreSolutionsClick}
-                whileHover={{ scale: 1.02, y: -5 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative inline-flex items-center px-8 py-4 border border-red-500/20 rounded-lg text-white text-lg font-medium overflow-hidden bg-black/40 backdrop-blur-sm shadow-lg"
+              {/* Primary CTA - Start Project with urgency */}
+              <EnhancedCTAButton
+                variant="urgent"
+                size="large"
+                to="/contact"
+                onClick={handleStartProjectClick}
+                urgencyText="Limited spots this month"
+                socialProof={{ count: 23, text: "businesses started this week" }}
+                trustBadges={['secure', 'guarantee']}
+                pulseAnimation={true}
+                testVariant="A"
               >
-                {/* Animated gradient border */}
-                <div className="absolute inset-0 rounded-lg p-[1px] overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-500/30 via-purple-500/30 to-red-500/30 animate-gradient rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </div>
+                Start Your Project Today
+              </EnhancedCTAButton>
 
-                {/* Button content */}
-                <span className="relative z-10 flex items-center">
-                  <span className="relative">
-                    <span className="block">Explore Solutions</span>
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-                  </span>
-                </span>
+              {/* Secondary CTA - Explore Solutions with value prop */}
+              <EnhancedCTAButton
+                variant="value"
+                size="large"
+                to="#services"
+                onClick={handleExploreSolutionsClick}
+                showArrow={false}
+                className="!bg-transparent !border !border-red-500/30 hover:!bg-red-500/10"
+              >
+                Explore Free Resources
+              </EnhancedCTAButton>
+            </motion.div>
 
-                {/* Hover effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-purple-500/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
-              </motion.a>
+            {/* Trust signals */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="mt-8"
+            >
+              <TrustSignals variant="inline" showLiveData={true} />
             </motion.div>
           </motion.div>
 

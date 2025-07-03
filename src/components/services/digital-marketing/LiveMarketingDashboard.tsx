@@ -50,24 +50,24 @@ const LiveMarketingDashboard: React.FC = () => {
   const [timeRange, setTimeRange] = useState<'24h' | '7d' | '30d' | '90d'>('7d');
 
   const [metrics, setMetrics] = useState<MetricData[]>([
-    { label: 'Total Impressions', value: '2.4M', change: 12.5, icon: Eye, color: 'text-blue-400' },
-    { label: 'Click-Through Rate', value: '3.2%', change: 8.3, icon: MousePointer, color: 'text-green-400' },
-    { label: 'Conversions', value: '1,247', change: 15.7, icon: Target, color: 'text-purple-400' },
-    { label: 'ROAS', value: '4.2x', change: 22.1, icon: DollarSign, color: 'text-yellow-400' }
+    { label: 'Total Impressions', value: '45.2K', change: 8.5, icon: Eye, color: 'text-blue-400' },
+    { label: 'Click-Through Rate', value: '2.3%', change: 3.2, icon: MousePointer, color: 'text-green-400' },
+    { label: 'Conversions', value: '127', change: 5.7, icon: Target, color: 'text-purple-400' },
+    { label: 'ROAS', value: '2.4x', change: 4.1, icon: DollarSign, color: 'text-yellow-400' }
   ]);
 
   const [campaigns, setCampaigns] = useState<CampaignData[]>([
-    { id: 1, name: 'Holiday Sale Campaign', platform: 'google', impressions: 125000, clicks: 4200, conversions: 89, spend: 2500, ctr: 3.36, cpc: 0.60, roas: 4.2, status: 'active' },
-    { id: 2, name: 'Brand Awareness Drive', platform: 'facebook', impressions: 89000, clicks: 2800, conversions: 45, spend: 1800, ctr: 3.15, cpc: 0.64, roas: 3.8, status: 'active' },
-    { id: 3, name: 'Product Launch', platform: 'instagram', impressions: 67000, clicks: 2100, conversions: 67, spend: 1200, ctr: 3.13, cpc: 0.57, roas: 5.1, status: 'active' },
-    { id: 4, name: 'B2B Lead Generation', platform: 'linkedin', impressions: 34000, clicks: 890, conversions: 23, spend: 1500, ctr: 2.62, cpc: 1.69, roas: 2.9, status: 'paused' }
+    { id: 1, name: 'Local Service Campaign', platform: 'google', impressions: 12500, clicks: 280, conversions: 18, spend: 450, ctr: 2.24, cpc: 1.61, roas: 2.2, status: 'active' },
+    { id: 2, name: 'Social Engagement', platform: 'facebook', impressions: 8900, clicks: 180, conversions: 12, spend: 320, ctr: 2.02, cpc: 1.78, roas: 1.9, status: 'active' },
+    { id: 3, name: 'Brand Awareness', platform: 'instagram', impressions: 6700, clicks: 134, conversions: 8, spend: 280, ctr: 2.00, cpc: 2.09, roas: 1.8, status: 'active' },
+    { id: 4, name: 'Professional Network', platform: 'linkedin', impressions: 3400, clicks: 68, conversions: 5, spend: 250, ctr: 2.00, cpc: 3.68, roas: 1.6, status: 'paused' }
   ]);
 
   const [realtimeData, setRealtimeData] = useState({
-    activeUsers: 1247,
-    pageViews: 3456,
-    bounceRate: 32.4,
-    avgSessionDuration: '2:34'
+    activeUsers: 47,
+    pageViews: 156,
+    bounceRate: 48.4,
+    avgSessionDuration: '1:45'
   });
 
   // Simulate real-time updates

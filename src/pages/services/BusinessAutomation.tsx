@@ -13,21 +13,21 @@ import { lazy3D } from '../../utils/lazyLoad3D';
 const BusinessAutomation = () => {
   const showcaseMetrics = [
     { 
-      value: '80%',
+      value: '30-50%',
       label: 'Time Saved',
-      trend: 'Efficiency',
+      trend: 'On repetitive tasks',
       icon: Settings
     },
     { 
-      value: '95%',
-      label: 'Accuracy',
-      trend: 'Precision',
+      value: '85%',
+      label: 'Error Reduction',
+      trend: 'In manual processes',
       icon: Bot
     },
     { 
-      value: '35%',
+      value: '25-40%',
       label: 'Productivity',
-      trend: 'Improvement',
+      trend: 'Within 6 months',
       icon: Zap
     }
   ];
@@ -36,12 +36,12 @@ const BusinessAutomation = () => {
     <PageTransition>
       <MetaTags 
         title="Business Automation Services Fort Lauderdale | Ingenious Digital"
-        description="Streamline your business processes with our intelligent automation solutions in Fort Lauderdale. Workflow automation and process optimization for measurable efficiency gains."
+        description="Automate your business processes and save 30-50% time on repetitive tasks. Professional workflow automation and process optimization services in Fort Lauderdale with proven ROI."
         keywords={['business automation Fort Lauderdale', 'workflow automation', 'process automation', 'business efficiency', 'automated workflows', 'robotic process automation']}
       />
       <ServiceSchema 
         serviceName="Business Automation Services"
-        description="Intelligent business automation solutions designed to reduce manual work and improve accuracy. Transform repetitive processes into efficient automated workflows."
+        description="Professional business automation solutions that reduce manual work by 30-50% and improve accuracy by up to 85%. Transform repetitive processes into automated workflows with typical ROI within 6-12 months."
         url="https://ingeniousdigital.com/services/business-automation"
         serviceType="Business Automation"
       />
@@ -67,7 +67,7 @@ const BusinessAutomation = () => {
                 transition={{ delay: 0.1 }}
                 className="text-4xl md:text-5xl font-bold text-gradient mb-6"
               >
-                Streamline Your Operations
+                Automate Your Business Processes
               </motion.h1>
               
               <motion.p
@@ -76,7 +76,7 @@ const BusinessAutomation = () => {
                 transition={{ delay: 0.2 }}
                 className="text-xl text-gray-300 leading-relaxed mb-12"
               >
-                Streamline your operations and boost efficiency with smart automation solutions tailored to your business needs.
+                Reduce manual work and improve accuracy with automation solutions. Most businesses see ROI within 6-12 months of implementation.
               </motion.p>
 
               {/* Stats */}
@@ -185,10 +185,10 @@ const BusinessAutomation = () => {
             >
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-3xl font-bold text-gradient mb-6">
-                  Ready to Automate Your Business?
+                  Ready to Start Automating?
                 </h2>
                 <p className="text-xl text-gray-300 mb-8">
-                  Let's streamline your operations with smart automation solutions that drive efficiency and growth.
+                  Let's identify automation opportunities in your business. Implementation typically takes 4-12 weeks depending on complexity.
                 </p>
                 <a
                   href="/contact"

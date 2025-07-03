@@ -5,6 +5,9 @@ import PageTransition from '../components/PageTransition';
 import InteractiveContactHub from '../components/contact/InteractiveContactHub';
 import LiveResponseDemo from '../components/contact/LiveResponseDemo';
 import MetaTags from '../components/MetaTags';
+import OptimizedLeadCaptureForm from '../components/OptimizedLeadCaptureForm';
+import TrustSignals from '../components/TrustSignals';
+import LeadMagnet from '../components/LeadMagnet';
 
 const Contact = () => {
   return (
@@ -95,15 +98,60 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Interactive Contact Hub */}
+        {/* Trust Signals */}
+        <section className="py-8 bg-black/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <TrustSignals variant="detailed" showLiveData={true} />
+          </div>
+        </section>
+
+        {/* Lead Capture Form with Lead Magnet */}
         <section className="py-16 bg-black/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Optimized Lead Capture Form */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <h2 className="text-3xl font-bold text-white mb-6">
+                  Get Your Free Consultation
+                </h2>
+                <p className="text-gray-300 mb-8">
+                  Fill out the form below and we'll be in touch within 2 hours during business hours.
+                </p>
+                <OptimizedLeadCaptureForm 
+                  variant="multi-step"
+                  showTrustSignals={true}
+                  showValueProps={true}
+                />
+              </motion.div>
+
+              {/* Lead Magnet */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <h2 className="text-3xl font-bold text-white mb-6">
+                  Free Resources While You Wait
+                </h2>
+                <LeadMagnet variant="sidebar" />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Interactive Contact Hub */}
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <InteractiveContactHub />
           </div>
         </section>
 
         {/* Live Response Demo */}
-        <section className="py-16">
+        <section className="py-16 bg-black/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <LiveResponseDemo />
           </div>
