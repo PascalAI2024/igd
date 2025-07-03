@@ -328,6 +328,19 @@ const App = () => {
           </React.Suspense>
         </div>
 
+        {/* Interactive Components - only on certain pages */}
+        {!location.pathname.includes('/landing') && !location.pathname.includes('/tools') && (
+          <>
+            <ExitIntentPopup delay={2000} cookieDuration={7} />
+            <ScrollTriggeredCTA 
+              triggerPercentage={60} 
+              position="bottom-right" 
+              variant={location.pathname === '/' ? 'floating' : 'slide-in'} 
+            />
+            <LiveChatWidget />
+          </>
+        )}
+
         {showNavigation && (
           <>
             <ScrollProgress />
