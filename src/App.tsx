@@ -20,6 +20,7 @@ import {
   trackEngagement 
 } from './utils/analytics';
 import { measurePerformance } from './utils/performance';
+import { ExitIntentPopup, ScrollTriggeredCTA, LiveChatWidget } from './components/interactive-tools';
 
 // Declare missing type for analytics tracking timeout
 declare global {
