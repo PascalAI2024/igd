@@ -11,6 +11,9 @@ export interface DeviceCapabilities {
   canUseHDR: boolean;
   isLowEndDevice: boolean;
   particleMultiplier: number;
+  deviceMemory: number;
+  hardwareConcurrency: number;
+  connectionType: 'slow-2g' | '2g' | '3g' | '4g' | 'unknown';
 }
 
 const checkWebGL2Support = (): boolean => {
@@ -66,6 +69,28 @@ const checkHDRSupport = (): boolean => {
   }
 };
 
+const getConnectionType = (): 'slow-2g' | '2g' | '3g' | '4g' | 'unknown' => {
+  // @ts-ignore - Network Information API
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  
+  if (!connection) return 'unknown';
+  
+  // Check effective type if available
+  if (connection.effectiveType) {
+    return connection.effectiveType as 'slow-2g' | '2g' | '3g' | '4g';
+  }
+  
+  // Fallback to checking downlink speed
+  if (connection.downlink) {
+    if (connection.downlink < 0.25) return 'slow-2g';
+    if (connection.downlink < 0.75) return '2g';
+    if (connection.downlink < 2) return '3g';
+    return '4g';
+  }
+  
+  return 'unknown';
+};
+
 export const useDeviceCapabilities = (): DeviceCapabilities => {
   const [capabilities, setCapabilities] = useState<DeviceCapabilities>({
     performanceLevel: 'medium',
@@ -77,7 +102,10 @@ export const useDeviceCapabilities = (): DeviceCapabilities => {
     canUsePostProcessing: true,
     canUseHDR: false,
     isLowEndDevice: false,
-    particleMultiplier: 1
+    particleMultiplier: 1,
+    deviceMemory: 4,
+    hardwareConcurrency: 4,
+    connectionType: 'unknown'
   });
 
   useEffect(() => {
@@ -88,11 +116,14 @@ export const useDeviceCapabilities = (): DeviceCapabilities => {
     const supportsWebGL2 = checkWebGL2Support();
     const maxTextureSize = getMaxTextureSize();
     const canUseHDR = checkHDRSupport();
+    const deviceMemory = (navigator as any).deviceMemory || 4;
+    const hardwareConcurrency = navigator.hardwareConcurrency || 4;
+    const connectionType = getConnectionType();
     const isLowEndDevice = 
       performanceLevel === 'low' || 
       !supportsWebGL2 || 
-      (navigator as any).deviceMemory < 4 || 
-      navigator.hardwareConcurrency < 4;
+      deviceMemory < 4 || 
+      hardwareConcurrency < 4;
     
     // Calculate particle multiplier based on device capabilities
     let particleMultiplier = 1.0; // default value
@@ -122,7 +153,10 @@ export const useDeviceCapabilities = (): DeviceCapabilities => {
       canUsePostProcessing,
       canUseHDR,
       isLowEndDevice,
-      particleMultiplier
+      particleMultiplier,
+      deviceMemory,
+      hardwareConcurrency,
+      connectionType
     });
   }, []);
 

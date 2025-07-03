@@ -12,7 +12,11 @@ import BreadcrumbSchema from './components/BreadcrumbSchema';
 import CustomCursor from './components/effects/CustomCursor';
 import CookieConsent from './components/CookieConsent';
 import StickyCTA from './components/ui/StickyCTA';
+import MobileCTASection from './components/MobileCTASection';
 import { PerformanceProvider } from './contexts/PerformanceContext';
+import { useDeviceCapabilities } from './hooks/useDeviceCapabilities';
+import { useMobilePerformance } from './hooks/useMobilePerformance';
+import { getViewportDimensions, supportsTouch } from './utils/mobileOptimizations';
 import { 
   initializeAnalytics, 
   trackPageView, 
@@ -21,6 +25,7 @@ import {
 } from './utils/analytics';
 import { measurePerformance } from './utils/performance';
 import { ExitIntentPopup, ScrollTriggeredCTA, LiveChatWidget } from './components/interactive-tools';
+import './styles/mobile.css';
 
 // Declare missing type for analytics tracking timeout
 declare global {
@@ -98,15 +103,15 @@ const Retail = React.lazy(() => import('./pages/industries/Retail'));
 const Restaurants = React.lazy(() => import('./pages/industries/Restaurants'));
 const LocalServices = React.lazy(() => import('./pages/industries/LocalServices'));
 const Healthcare = React.lazy(() => import('./pages/industries/Healthcare'));
-const AutoServices = React.lazy(() => import('./pages/industries/AutoServices'));
-const Manufacturing = React.lazy(() => import('./pages/industries/Manufacturing'));
+// const RealEstate = React.lazy(() => import('./pages/industries/RealEstate'));
+// const Automotive = React.lazy(() => import('./pages/industries/Automotive'));
+// const Hospitality = React.lazy(() => import('./pages/industries/Hospitality'));
 
 // Lazy load location pages
 const Locations = React.lazy(() => import('./pages/Locations'));
-const Location = React.lazy(() => import('./pages/Location'));
+// const BoiseIdaho = React.lazy(() => import('./pages/locations/BoiseIdaho'));
 
-// Lazy load animation showcase pages (development only)
-const AnimationPlayground = React.lazy(() => import('./components/AnimationPlayground'));
+// Lazy load showcase pages
 const AnimationShowcase = React.lazy(() => import('./components/AnimationShowcase'));
 const UIShowcase = React.lazy(() => import('./pages/UIShowcase'));
 
@@ -123,11 +128,24 @@ const App = () => {
     return !skipLoading && !hasLoadedBefore && location.pathname === '/';
   });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isMobile } = useDeviceCapabilities();
+  const { quality, shouldReduceMotion } = useMobilePerformance();
 
-  // Initialize analytics and performance tracking
+  // Initialize analytics and mobile optimizations
   useEffect(() => {
     // Initialize analytics immediately (opt-out approach)
     initializeAnalytics();
+    
+    // Set up viewport dimensions for mobile
+    getViewportDimensions();
+    
+    // Update viewport on resize and orientation change
+    const handleResize = () => {
+      getViewportDimensions();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
     
     const cleanup = measurePerformance();
 
@@ -137,16 +155,17 @@ const App = () => {
     };
     window.addEventListener('error', handleError);
 
-    // Setup unhandled promise rejection tracking
-    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      trackError(`Unhandled Promise Rejection: ${event.reason}`);
-    };
-    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    // Track page load time
+    const loadTime = window.performance?.timing?.loadEventEnd - window.performance?.timing?.navigationStart;
+    if (loadTime && loadTime > 0) {
+      trackEngagement('page_load_time', loadTime);
+    }
 
     return () => {
       cleanup();
       window.removeEventListener('error', handleError);
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
     };
   }, []);
 
@@ -187,8 +206,10 @@ const App = () => {
       
       window.addEventListener('scroll', handleScroll, { passive: true });
       
-      // Set up exit intent tracking
+      // Set up exit intent tracking - Desktop only
       const handleExitIntent = (e: MouseEvent) => {
+        if (isMobile) return;
+        
         // Track when mouse moves to top of page (potential exit)
         if (e.clientY < 20) {
           const pageViewStartTime = parseInt(sessionStorage.getItem('page_view_start_time') || '0', 10);
@@ -207,11 +228,15 @@ const App = () => {
         }
       };
       
-      window.addEventListener('mousemove', handleExitIntent, { passive: true });
+      if (!isMobile) {
+        window.addEventListener('mousemove', handleExitIntent, { passive: true });
+      }
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleExitIntent);
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleExitIntent);
+      }
       clearTimeout(window._scrollTimeout);
     };
     
@@ -221,13 +246,13 @@ const App = () => {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ 
         top: 0, 
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        behavior: (prefersReducedMotion || shouldReduceMotion) ? 'auto' : 'smooth'
       });
     } else {
       // Fallback for browsers without scrollBehavior support
       window.scrollTo(0, 0);
     }
-  }, [location]);
+  }, [location, isMobile, shouldReduceMotion]);
 
   // Handle route changes
   useEffect(() => {
@@ -248,90 +273,67 @@ const App = () => {
     };
   }, [isMobileMenuOpen]);
 
-  // Handle loading sequence completion
-  const handleLoadingComplete = () => {
-    document.body.style.overflow = 'visible';
-    setIsLoading(false);
-    // Set flag in sessionStorage after initial load completes
-    sessionStorage.setItem('has_loaded_before', 'true');
-  };
-
-  // Add a fallback timeout to ensure loading completes
+  // Set a flag after the initial load to skip loading next time
   useEffect(() => {
-    if (isLoading) {
-      const fallbackTimeout = setTimeout(() => {
-        console.warn('Loading sequence timeout - forcing completion');
-        handleLoadingComplete();
-      }, 20000); // 20 second max loading time - allows full message sequence
-
-      return () => clearTimeout(fallbackTimeout);
+    if (!isLoading) {
+      sessionStorage.setItem('has_loaded_before', 'true');
     }
   }, [isLoading]);
 
-  // Hide navigation on landing page
-  const showNavigation = !location.pathname.includes('/landing');
+  const showNavigation = location.pathname !== '/animation-showcase' && 
+                        location.pathname !== '/ui-showcase' &&
+                        location.pathname !== '/landing' &&
+                        location.pathname !== '/tools';
 
-  // Effect to handle loading state based on location and session storage
-  useEffect(() => {
-    const hasLoadedBefore = sessionStorage.getItem('has_loaded_before');
-    if (!hasLoadedBefore && location.pathname === '/') {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [location.pathname]); // Dependency on location.pathname
+  const showBreadcrumbs = location.pathname !== '/' && 
+                         !location.pathname.includes('/blog/') && 
+                         !location.pathname.includes('/case-studies/') &&
+                         !location.pathname.includes('/landing') &&
+                         !location.pathname.includes('/tools');
 
-
-  // Prevent scrolling during loading
-  useEffect(() => {
-    if (isLoading) {
-      document.body.style.overflow = 'hidden';
-    }
-    return () => {
-      document.body.style.overflow = 'visible';
-    };
-  }, [isLoading]);
-
+  // Show loading sequence
   if (isLoading) {
-    // Detect low-end devices or poor network conditions
-    const isLowEndDevice = 
-      (navigator as any).deviceMemory < 4 || 
-      navigator.hardwareConcurrency < 4 ||
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-      (navigator as any).connection?.effectiveType === '2g' ||
-      (navigator as any).connection?.effectiveType === 'slow-2g';
-    
-    // Use lightweight loading for low-end devices
-    if (isLowEndDevice) {
-      return <LightweightLoadingSequence onComplete={handleLoadingComplete} />;
-    }
-    
-    return <LoadingSequence onComplete={handleLoadingComplete} />;
+    return (
+      <div className="relative">
+        <LightweightLoadingSequence 
+          onComplete={() => setIsLoading(false)} 
+        />
+      </div>
+    );
   }
 
   return (
     <PerformanceProvider>
-      <div className="min-h-screen bg-black">
-        {/* Scroll to top on route changes */}
-        <ScrollToTop />
-        
-        {/* Add breadcrumb schema for SEO */}
-        <BreadcrumbSchema />
+    <div className="bg-black min-h-screen text-white">
+        {/* Schema markup for breadcrumbs */}
+        {showBreadcrumbs && <BreadcrumbSchema />}
         
         {/* Cookie Consent Banner */}
         <CookieConsent />
         
         {/* Custom cursor for desktop - with error boundary to prevent cursor loss */}
-        <div className="hidden md:block">
-          <React.Suspense fallback={null}>
-            <CustomCursor color="#e03131" size={24} />
-          </React.Suspense>
-        </div>
+        {!isMobile && !supportsTouch() && (
+          <div className="hidden md:block">
+            <React.Suspense fallback={null}>
+              <CustomCursor color="#e03131" size={24} />
+            </React.Suspense>
+          </div>
+        )}
+
+        {/* Mobile CTA Section */}
+        {isMobile && (
+          <MobileCTASection 
+            position="floating"
+            phoneNumber="(208) 555-0123"
+            showChat={true}
+            showSchedule={true}
+          />
+        )}
 
         {/* Interactive Components - only on certain pages */}
         {!location.pathname.includes('/landing') && !location.pathname.includes('/tools') && (
           <>
-            <ExitIntentPopup delay={2000} cookieDuration={7} />
+            {!isMobile && <ExitIntentPopup delay={2000} cookieDuration={7} />}
             <ScrollTriggeredCTA 
               triggerPercentage={60} 
               position="bottom-right" 
@@ -345,7 +347,7 @@ const App = () => {
           <>
             <ScrollProgress />
             <Navbar isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
-            <FloatingContactIcons isMobileMenuOpen={isMobileMenuOpen} />
+            {!isMobile && <FloatingContactIcons isMobileMenuOpen={isMobileMenuOpen} />}
           </>
         )}
 
@@ -358,44 +360,34 @@ const App = () => {
           <motion.main
             id="main-content"
             key={location.pathname}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{
-              duration: 0.3,
-              ease: [0.22, 1, 0.36, 1]
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ 
+              duration: shouldReduceMotion ? 0.1 : 0.3 
             }}
-            style={{ 
-              willChange: 'opacity, transform',
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden'
-            }}
-            className={isMobileMenuOpen ? 'pointer-events-none' : ''}
+            className="relative"
           >
-            {/* Add breadcrumbs for non-home pages */}
-            
-            <Routes location={location}>
+            <ScrollToTop />
+            <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/landing" element={<Landing />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/case-studies" element={<SimpleCaseStudies />} />
-              <Route path="/case-studies/:id" element={<SimpleCaseStudyDetail />} />
-
-              {/* Solution Routes */}
+              <Route path="/case-studies/:slug" element={<SimpleCaseStudyDetail />} />
+              <Route path="/services/:service" element={<ServiceDetail />} />
+              
+              {/* Solutions Routes */}
               <Route path="/solutions" element={<Solutions />} />
               <Route path="/solutions/digital-growth" element={<DigitalGrowth />} />
               <Route path="/solutions/automation" element={<Automation />} />
               <Route path="/solutions/local-business" element={<LocalBusiness />} />
               <Route path="/solutions/enterprise" element={<Enterprise />} />
-
-              {/* Index Pages */}
+              
+              {/* Services Routes */}
               <Route path="/services" element={<Services />} />
-              <Route path="/industries" element={<Industries />} />
-
-              {/* Service Routes - SMB Focused */}
               <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
               <Route path="/services/lead-generation" element={<LeadGeneration />} />
               <Route path="/services/crm" element={<CRM />} />
@@ -407,37 +399,38 @@ const App = () => {
               <Route path="/services/business-automation" element={<BusinessAutomation />} />
               <Route path="/services/ai-machine-learning" element={<AiMachineLearning />} />
               <Route path="/services/system-integration" element={<SystemIntegration />} />
-
-              {/* Industry Routes - Local Business Focused */}
+              
+              {/* Industries Routes */}
+              <Route path="/industries" element={<Industries />} />
               <Route path="/industries/local-retail" element={<LocalRetail />} />
               <Route path="/industries/retail" element={<Retail />} />
               <Route path="/industries/restaurants" element={<Restaurants />} />
               <Route path="/industries/local-services" element={<LocalServices />} />
               <Route path="/industries/healthcare" element={<Healthcare />} />
-              <Route path="/industries/auto-services" element={<AutoServices />} />
-              <Route path="/industries/manufacturing" element={<Manufacturing />} />
-
-              {/* Location Pages */}
+              {/* <Route path="/industries/real-estate" element={<RealEstate />} />
+              <Route path="/industries/automotive" element={<Automotive />} />
+              <Route path="/industries/hospitality" element={<Hospitality />} /> */}
+              
+              {/* Location Routes */}
               <Route path="/locations" element={<Locations />} />
-              <Route path="/locations/:locationId" element={<Location />} />
-
-              {/* Legal Pages */}
+              {/* <Route path="/locations/boise-idaho" element={<BoiseIdaho />} /> */}
+              
+              {/* Legal Routes */}
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
-              <Route path="/cookie" element={<Cookie />} />
+              <Route path="/cookie-policy" element={<Cookie />} />
               <Route path="/gdpr" element={<GDPR />} />
-
-              {/* Generic service route should come after specific service routes */}
-              <Route path="/services/:id" element={<ServiceDetail />} />
-
-              {/* Animation Showcase Routes (Development Only) */}
-              {import.meta.env.DEV && (
-                <>
-                  <Route path="/animation-playground" element={<AnimationPlayground />} />
-                  <Route path="/animation-showcase" element={<AnimationShowcase />} />
-                  <Route path="/ui-showcase" element={<UIShowcase />} />
-                </>
-              )}
+              
+              {/* Special Routes */}
+              <Route path="/animation-showcase" element={<AnimationShowcase />} />
+              <Route path="/ui-showcase" element={<UIShowcase />} />
+              <Route path="/landing" element={<Landing />} />
+              <Route path="/tools" element={<Tools />} />
+              
+              {/* Dynamic Routes */}
+              {['retail', 'restaurants', 'healthcare', 'real-estate', 'automotive', 'hospitality'].map(industry => (
+                <Route key={industry} path={`/${industry}`} element={<Industries />} />
+              ))}
 
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -447,16 +440,21 @@ const App = () => {
 
       {showNavigation && <Footer />}
       
-      {/* Sticky CTA - appears after scroll */}
-      <StickyCTA 
-        text="Ready to transform your business?"
-        buttonText="Get Started"
-        onButtonClick={() => window.location.href = '/contact'}
-        showAfter={800}
-        position="bottom"
-        dismissible={true}
-        background="gradient"
-      />
+      {/* Sticky CTA - Desktop only, on specific pages */}
+      {!isMobile && (location.pathname.startsWith('/blog/') || 
+        location.pathname.startsWith('/services/') ||
+        location.pathname.startsWith('/industries/')) && 
+       !location.pathname.includes('thank-you') && (
+        <StickyCTA 
+          text="Ready to transform your business?"
+          buttonText="Get Started"
+          onButtonClick={() => window.location.href = '/contact'}
+          showAfter={800}
+          position="bottom"
+          dismissible={true}
+          background="gradient"
+        />
+      )}
     </div>
     </PerformanceProvider>
   );

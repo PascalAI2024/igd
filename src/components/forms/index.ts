@@ -15,6 +15,7 @@ export { default as SubmitButton } from './SubmitButton';
 export { default as SecureLightContactForm } from './SecureLightContactForm';
 export { default as SecureEnhancedContactForm } from './SecureEnhancedContactForm';
 export { default as EnhancedContactForm } from './EnhancedContactForm';
+export { default as MobileOptimizedForm } from './MobileOptimizedForm';
 
 // Import path for README documentation:
 // import { /* component names */ } from '@/components/forms';

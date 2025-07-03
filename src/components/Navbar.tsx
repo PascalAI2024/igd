@@ -4,6 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import Logo from './Logo';
 import NavigationButton from './NavigationButton';
+import MobileNavigation from './MobileNavigation';
+import MobileTouchButton from './ui/MobileTouchButton';
+import { supportsTouch } from '../utils/mobileOptimizations';
 import { 
   mainRoutes, 
   industryRoutes, 
@@ -177,95 +180,112 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen }) => {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-red-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
-              aria-expanded="false"
-              aria-label="Open main menu"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            {supportsTouch() ? (
+              <MobileTouchButton
+                onClick={() => setIsOpen(!isOpen)}
+                variant="ghost"
+                size="medium"
+                className="p-2"
+                ariaLabel={isOpen ? "Close menu" : "Open menu"}
+                hapticFeedback
+              >
+                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </MobileTouchButton>
+            ) : (
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-red-400 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
+                aria-expanded={isOpen}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+              >
+                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            )}
           </div>
         </div>
       </div>
 
       {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-              onClick={closeMenu}
-            />
+      {supportsTouch() ? (
+        <MobileNavigation isOpen={isOpen} onClose={closeMenu} />
+      ) : (
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+                onClick={closeMenu}
+              />
 
-            {/* Mobile Menu */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              className="fixed top-16 right-0 w-72 h-[calc(100vh-4rem)] bg-black/95 backdrop-blur-md border-l border-red-500/20 z-50 overflow-y-auto"
-            >
-              <div className="px-6 py-6 space-y-6">
-                {/* Services Section */}
-                <div>
-                  <h3 className="text-red-400 font-semibold text-lg mb-3">Services</h3>
-                  <div className="space-y-2">
-                    {serviceRoutes.items.map((item: RouteItem) => (
-                      <NavigationButton
-                        key={item.path}
-                        to={item.path}
-                        onClick={closeMenu}
-                        className="block w-full text-left px-3 py-2 text-gray-300 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors duration-200"
-                      >
-                        {item.name}
-                      </NavigationButton>
-                    ))}
+              {/* Mobile Menu */}
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'tween', duration: 0.3 }}
+                className="fixed top-16 right-0 w-72 h-[calc(100vh-4rem)] bg-black/95 backdrop-blur-md border-l border-red-500/20 z-50 overflow-y-auto"
+              >
+                <div className="px-6 py-6 space-y-6">
+                  {/* Services Section */}
+                  <div>
+                    <h3 className="text-red-400 font-semibold text-lg mb-3">Services</h3>
+                    <div className="space-y-2">
+                      {serviceRoutes.items.map((item: RouteItem) => (
+                        <NavigationButton
+                          key={item.path}
+                          to={item.path}
+                          onClick={closeMenu}
+                          className="block w-full text-left px-3 py-2 text-gray-300 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors duration-200"
+                        >
+                          {item.name}
+                        </NavigationButton>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Industries Section */}
+                  <div>
+                    <h3 className="text-red-400 font-semibold text-lg mb-3">Small Business</h3>
+                    <div className="space-y-2">
+                      {industryRoutes.items.map((item: RouteItem) => (
+                        <NavigationButton
+                          key={item.path}
+                          to={item.path}
+                          onClick={closeMenu}
+                          className="block w-full text-left px-3 py-2 text-gray-300 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors duration-200"
+                        >
+                          {item.name}
+                        </NavigationButton>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Main Routes Section */}
+                  <div>
+                    <h3 className="text-red-400 font-semibold text-lg mb-3">Company</h3>
+                    <div className="space-y-2">
+                      {mainRoutes.map((route) => (
+                        <NavigationButton
+                          key={route.path}
+                          to={route.path}
+                          onClick={closeMenu}
+                          className="block w-full text-left px-3 py-2 text-gray-300 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors duration-200"
+                        >
+                          {route.name}
+                        </NavigationButton>
+                      ))}
+                    </div>
                   </div>
                 </div>
-
-                {/* Industries Section */}
-                <div>
-                  <h3 className="text-red-400 font-semibold text-lg mb-3">Small Business</h3>
-                  <div className="space-y-2">
-                    {industryRoutes.items.map((item: RouteItem) => (
-                      <NavigationButton
-                        key={item.path}
-                        to={item.path}
-                        onClick={closeMenu}
-                        className="block w-full text-left px-3 py-2 text-gray-300 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors duration-200"
-                      >
-                        {item.name}
-                      </NavigationButton>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Main Routes Section */}
-                <div>
-                  <h3 className="text-red-400 font-semibold text-lg mb-3">Company</h3>
-                  <div className="space-y-2">
-                    {mainRoutes.map((route) => (
-                      <NavigationButton
-                        key={route.path}
-                        to={route.path}
-                        onClick={closeMenu}
-                        className="block w-full text-left px-3 py-2 text-gray-300 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors duration-200"
-                      >
-                        {route.name}
-                      </NavigationButton>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      )}
     </nav>
   );
 };
