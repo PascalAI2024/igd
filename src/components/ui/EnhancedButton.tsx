@@ -1,204 +1,223 @@
-import React, { useState, useRef } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import animationSystem from '../../styles/animation-system';
+import React, { useRef, useState, useCallback } from 'react';
+import { motion, useSpring, useTransform, useMotionValue } from 'framer-motion';
+import { cn } from '@/utils/cn';
 
-interface RippleProps {
+interface RippleEffect {
   x: number;
   y: number;
   size: number;
+  id: number;
 }
 
-interface EnhancedButtonProps {
-  children: React.ReactNode;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  variant?: 'primary' | 'secondary' | 'ghost';
-  size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
-  loading?: boolean;
-  className?: string;
-  ripple?: boolean;
-  glow?: boolean;
-  magnetic?: boolean;
+interface EnhancedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'ghost' | 'gradient';
+  size?: 'sm' | 'md' | 'lg';
+  glowColor?: string;
   depth?: boolean;
+  magneticStrength?: number;
+  children: React.ReactNode;
 }
 
-/**
- * Enhanced button with sophisticated micro-interactions:
- * - Ripple effect on click
- * - Magnetic hover effect
- * - 3D depth on press
- * - Glow effect
- * - Spring animations
- */
-const EnhancedButton: React.FC<EnhancedButtonProps> = ({
-  children,
-  onClick,
+export const EnhancedButton: React.FC<EnhancedButtonProps> = ({
   variant = 'primary',
-  size = 'medium',
-  disabled = false,
-  loading = false,
-  className = '',
-  ripple = true,
-  glow = true,
-  magnetic = true,
+  size = 'md',
+  glowColor,
   depth = true,
+  magneticStrength = 0.2,
+  children,
+  className,
+  onClick,
+  disabled,
+  ...props
 }) => {
-  const [ripples, setRipples] = useState<RippleProps[]>([]);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  
-  // Motion values for magnetic effect
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  
+  const [ripples, setRipples] = useState<RippleEffect[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Magnetic effect motion values
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
   // Spring animations for smooth movement
-  const springX = useSpring(x, { stiffness: 300, damping: 20 });
-  const springY = useSpring(y, { stiffness: 300, damping: 20 });
-  
+  const springConfig = { damping: 20, stiffness: 300 };
+  const x = useSpring(mouseX, springConfig);
+  const y = useSpring(mouseY, springConfig);
+
   // 3D rotation based on mouse position
-  const rotateX = useTransform(springY, [-30, 30], [5, -5]);
-  const rotateY = useTransform(springX, [-30, 30], [-5, 5]);
-  
+  const rotateX = useTransform(y, [-0.5, 0.5], [5, -5]);
+  const rotateY = useTransform(x, [-0.5, 0.5], [-5, 5]);
+
   // Handle ripple effect
-  const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!ripple || disabled) return;
-    
-    const button = event.currentTarget;
+  const createRipple = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    const button = buttonRef.current;
+    if (!button) return;
+
     const rect = button.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height) * 2;
     const x = event.clientX - rect.left - size / 2;
     const y = event.clientY - rect.top - size / 2;
-    
-    const newRipple = { x, y, size };
-    setRipples([...ripples, newRipple]);
-    
+
+    const newRipple: RippleEffect = {
+      x,
+      y,
+      size,
+      id: Date.now()
+    };
+
+    setRipples(prev => [...prev, newRipple]);
+
     // Remove ripple after animation
     setTimeout(() => {
-      setRipples(prev => prev.filter(r => r !== newRipple));
+      setRipples(prev => prev.filter(ripple => ripple.id !== newRipple.id));
     }, 600);
-  };
-  
+  }, []);
+
   // Handle magnetic hover effect
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!magnetic || disabled) return;
-    
-    const button = e.currentTarget;
-    const rect = button.getBoundingClientRect();
+  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!buttonRef.current || disabled) return;
+
+    const rect = buttonRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
-    const distanceX = e.clientX - centerX;
-    const distanceY = e.clientY - centerY;
-    
-    // Limit the magnetic effect range
-    const maxDistance = 30;
-    const limitedX = Math.max(-maxDistance, Math.min(maxDistance, distanceX * 0.3));
-    const limitedY = Math.max(-maxDistance, Math.min(maxDistance, distanceY * 0.3));
-    
-    x.set(limitedX);
-    y.set(limitedY);
+
+    const distanceX = (event.clientX - centerX) / rect.width;
+    const distanceY = (event.clientY - centerY) / rect.height;
+
+    mouseX.set(distanceX * magneticStrength);
+    mouseY.set(distanceY * magneticStrength);
+  }, [mouseX, mouseY, magneticStrength, disabled]);
+
+  const handleMouseLeave = useCallback(() => {
+    mouseX.set(0);
+    mouseY.set(0);
+    setIsHovered(false);
+  }, [mouseX, mouseY]);
+
+  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    createRipple(event);
+    onClick?.(event);
+  }, [createRipple, onClick]);
+
+  // Variant styles
+  const variantStyles = {
+    primary: 'bg-orange-500 text-white hover:bg-orange-600 shadow-orange-500/25',
+    secondary: 'bg-gray-800 text-white hover:bg-gray-700 shadow-gray-800/25',
+    ghost: 'bg-transparent text-gray-300 hover:bg-gray-800/50 shadow-transparent',
+    gradient: 'bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-orange-500/25'
   };
-  
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-  
-  // Handle click with ripple
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    createRipple(e);
-    onClick?.(e);
-  };
-  
-  // Base styles
-  const baseStyles = {
-    primary: 'bg-gradient-to-r from-red-600 to-red-700 text-white',
-    secondary: 'bg-white/10 text-white backdrop-blur-sm border border-white/20',
-    ghost: 'bg-transparent text-white border border-white/10',
-  };
-  
+
+  // Size styles
   const sizeStyles = {
-    small: 'px-4 py-2 text-sm',
-    medium: 'px-6 py-3',
-    large: 'px-8 py-4 text-lg',
+    sm: 'px-4 py-2 text-sm',
+    md: 'px-6 py-3 text-base',
+    lg: 'px-8 py-4 text-lg'
   };
-  
-  // Glow effect styles
-  const glowStyles = glow && !disabled && variant === 'primary' 
-    ? 'hover:shadow-[0_0_30px_rgba(239,68,68,0.5)] ' 
-    : '';
-  
+
+  // Glow color based on variant
+  const defaultGlowColors = {
+    primary: '#f97316',
+    secondary: '#1f2937',
+    ghost: '#d1d5db',
+    gradient: '#f97316'
+  };
+
+  const actualGlowColor = glowColor || defaultGlowColors[variant];
+
   return (
     <motion.button
       ref={buttonRef}
-      className={`
-        relative overflow-hidden
-        ${baseStyles[variant]}
-        ${sizeStyles[size]}
-        rounded-lg font-medium
-        transition-all duration-300
-        transform-gpu
-        ${depth ? 'shadow-lg hover:shadow-xl' : ''}
-        ${glowStyles}
-        ${disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-        ${className}
-      `}
       style={{
-        x: springX,
-        y: springY,
+        x,
+        y,
         rotateX: depth ? rotateX : 0,
         rotateY: depth ? rotateY : 0,
-        transformPerspective: 1000,
+        transformStyle: 'preserve-3d',
+        transformPerspective: 1000
       }}
-      whileHover={disabled || loading ? {} : { 
-        scale: 1.02,
-        transition: { duration: 0.2 }
-      }}
-      whileTap={disabled || loading ? {} : { 
-        scale: 0.98,
-        transition: { duration: 0.1 }
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      className={cn(
+        'relative overflow-hidden rounded-lg font-medium transition-all duration-300',
+        'transform-gpu will-change-transform',
+        depth && 'shadow-lg hover:shadow-xl',
+        variantStyles[variant],
+        sizeStyles[size],
+        disabled && 'opacity-50 cursor-not-allowed',
+        className
+      )}
       onClick={handleClick}
-      disabled={disabled || loading}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      disabled={disabled}
+      whileHover={{ scale: disabled ? 1 : 1.02 }}
+      whileTap={{ scale: disabled ? 1 : 0.98 }}
+      {...props}
     >
-      {/* Button content */}
-      <span className="relative z-10 flex items-center justify-center gap-2">
-        {loading ? (
-          <motion.div
-            className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          />
-        ) : null}
-        {children}
-      </span>
-      
+      {/* Background gradient effect */}
+      <motion.div
+        className="absolute inset-0 opacity-0"
+        animate={{
+          opacity: isHovered ? 0.15 : 0
+        }}
+        style={{
+          background: `radial-gradient(circle at center, ${actualGlowColor}, transparent)`
+        }}
+      />
+
+      {/* Dynamic glow effect */}
+      {isHovered && !disabled && (
+        <motion.div
+          className="absolute inset-0 -z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          style={{
+            filter: `blur(20px)`,
+            background: actualGlowColor,
+            transform: 'scale(1.2)'
+          }}
+        />
+      )}
+
       {/* Ripple effects */}
-      {ripples.map((ripple, index) => (
+      {ripples.map(ripple => (
         <motion.span
-          key={index}
-          className="absolute bg-white/30 rounded-full pointer-events-none"
+          key={ripple.id}
+          className="absolute rounded-full bg-white/30"
           style={{
             left: ripple.x,
             top: ripple.y,
             width: ripple.size,
-            height: ripple.size,
+            height: ripple.size
           }}
           initial={{ scale: 0, opacity: 1 }}
           animate={{ scale: 1, opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         />
       ))}
-      
-      {/* Hover overlay */}
-      <motion.div
-        className="absolute inset-0 bg-white/5 opacity-0 pointer-events-none"
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
-      />
+
+      {/* Button content with 3D depth */}
+      <span className="relative z-10" style={{ transform: 'translateZ(20px)' }}>
+        {children}
+      </span>
+
+      {/* Shimmer effect for gradient variant */}
+      {variant === 'gradient' && (
+        <motion.div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: 'linear-gradient(105deg, transparent 40%, white 50%, transparent 60%)',
+            backgroundSize: '200% 100%'
+          }}
+          animate={{
+            backgroundPosition: ['200% 0%', '-200% 0%']
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatDelay: 1
+          }}
+        />
+      )}
     </motion.button>
   );
 };
-
-export default EnhancedButton;

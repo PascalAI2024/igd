@@ -132,10 +132,20 @@ const WebDevelopment = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-xl text-gray-300 leading-relaxed mb-12"
+                className="text-xl text-gray-300 leading-relaxed mb-8"
               >
                 Build a professional website that attracts local customers and grows your business. Most projects completed within 4-8 weeks.
               </motion.p>
+
+              {/* Trust Signals */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
+                className="mb-12"
+              >
+                <TrustSignals variant="inline" showAll={false} />
+              </motion.div>
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-8 mb-16">
@@ -485,6 +495,140 @@ const WebDevelopment = () => {
                 }
               ]}
             />
+          </div>
+        </section>
+
+        {/* Pricing Comparison */}
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ComparisonTable
+              title="Choose the Right Web Development Package"
+              description="All packages include mobile-responsive design, SEO optimization, and 6 months of support"
+              features={[
+                { 
+                  name: "Number of Pages", 
+                  tooltip: "The total number of unique pages included in your website"
+                },
+                { 
+                  name: "Custom Design", 
+                  tooltip: "Unique design tailored to your brand, not a template"
+                },
+                { 
+                  name: "Content Management System", 
+                  tooltip: "Easy-to-use system to update your website content without coding"
+                },
+                { 
+                  name: "Contact Forms", 
+                  tooltip: "Forms that allow customers to reach you directly from your website"
+                },
+                {
+                  name: "SEO Optimization",
+                  tooltip: "On-page optimization to help your site rank in local searches"
+                },
+                { 
+                  name: "Google Analytics", 
+                  tooltip: "Track visitor behavior and website performance"
+                },
+                { 
+                  name: "SSL Certificate", 
+                  tooltip: "Secure your website with HTTPS encryption for customer trust"
+                },
+                {
+                  name: "E-commerce Ready",
+                  tooltip: "Ability to sell products or services directly on your website"
+                },
+                {
+                  name: "Blog/News Section",
+                  tooltip: "Regular content updates to improve SEO and engage visitors"
+                },
+                {
+                  name: "Social Media Integration",
+                  tooltip: "Connect your social profiles and enable content sharing"
+                },
+                {
+                  name: "Development Time"
+                },
+                {
+                  name: "Monthly Maintenance"
+                }
+              ]}
+              columns={[
+                {
+                  title: "Starter",
+                  subtitle: "Perfect for new businesses",
+                  price: "$2,500",
+                  priceNote: "One-time payment",
+                  features: [
+                    "Up to 5 pages",
+                    true,
+                    false,
+                    "1 form",
+                    "Basic",
+                    true,
+                    true,
+                    false,
+                    false,
+                    "Basic",
+                    "2-3 weeks",
+                    { value: false, note: "Available as add-on" }
+                  ]
+                },
+                {
+                  title: "Professional",
+                  subtitle: "Most popular for growing businesses",
+                  price: "$4,500",
+                  priceNote: "One-time payment",
+                  popular: true,
+                  highlight: true,
+                  features: [
+                    "Up to 15 pages",
+                    true,
+                    true,
+                    "3 forms",
+                    "Advanced",
+                    true,
+                    true,
+                    { value: true, note: "Basic store" },
+                    true,
+                    "Full integration",
+                    "4-6 weeks",
+                    { value: "$99/mo", note: "Optional" }
+                  ]
+                },
+                {
+                  title: "Enterprise",
+                  subtitle: "For established businesses",
+                  price: "$8,500+",
+                  priceNote: "Custom quote",
+                  features: [
+                    "Unlimited pages",
+                    true,
+                    true,
+                    "Unlimited",
+                    "Enterprise",
+                    true,
+                    true,
+                    { value: true, note: "Full store" },
+                    true,
+                    "Full integration",
+                    "6-8 weeks",
+                    { value: "$199/mo", note: "Included" }
+                  ]
+                }
+              ]}
+              variant="service"
+              className="mb-16"
+            />
+
+            {/* Security Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex justify-center"
+            >
+              <SecurityBadges />
+            </motion.div>
           </div>
         </section>
 

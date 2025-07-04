@@ -1,194 +1,165 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import { cn } from '@/utils/cn';
 
 interface EnhancedLinkProps extends Omit<LinkProps, 'to'> {
   to?: string;
   href?: string;
   external?: boolean;
-  underline?: 'always' | 'hover' | 'none';
-  variant?: 'default' | 'gradient' | 'glow';
-  className?: string;
+  showExternalIcon?: boolean;
+  variant?: 'default' | 'gradient' | 'glow' | 'underline';
+  glowColor?: string;
   children: React.ReactNode;
 }
 
-/**
- * Enhanced link component with sophisticated hover effects:
- * - Gradient underline animation
- * - Text glow on hover
- * - Smooth color transitions
- * - Magnetic hover effect
- * - Focus indicators
- */
-const EnhancedLink: React.FC<EnhancedLinkProps> = ({
+export const EnhancedLink: React.FC<EnhancedLinkProps> = ({
   to,
   href,
-  external = false,
-  underline = 'hover',
+  external,
+  showExternalIcon = true,
   variant = 'default',
-  className = '',
+  glowColor = '#f97316',
   children,
+  className,
   ...props
 }) => {
-  const linkRef = useRef<HTMLAnchorElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  
-  // Motion values for underline
-  const underlineProgress = useMotionValue(0);
-  const underlineSpring = useSpring(underlineProgress, { 
-    stiffness: 400, 
-    damping: 30 
-  });
-  
-  // Transform for gradient position
-  const gradientX = useTransform(
-    underlineSpring,
-    [0, 1],
-    ['0%', '100%']
-  );
-  
-  // Handle hover states
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    underlineProgress.set(1);
-  };
-  
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    underlineProgress.set(0);
-  };
-  
-  // Variant styles
+  const isExternal = external || href?.startsWith('http') || href?.startsWith('//');
+  const linkDestination = to || href || '#';
+
   const variantStyles = {
-    default: 'text-gray-300 hover:text-white',
-    gradient: 'bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent hover:from-red-400 hover:to-orange-400',
-    glow: 'text-red-500 hover:text-red-400 hover:drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]',
+    default: 'text-orange-500 hover:text-orange-400',
+    gradient: 'bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent',
+    glow: 'text-orange-500 hover:text-orange-400',
+    underline: 'text-gray-300 hover:text-white'
   };
-  
-  // Underline styles
-  const underlineStyles = {
-    always: 'underline decoration-2 underline-offset-4',
-    hover: '',
-    none: '',
-  };
-  
-  // Common link props
-  const linkProps = {
-    ref: linkRef,
-    className: `
-      relative inline-flex items-center gap-1
-      transition-all duration-300 ease-out
-      ${variantStyles[variant]}
-      ${underlineStyles[underline]}
-      ${className}
-    `,
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-    ...props,
-  };
-  
+
   const content = (
-    <>
+    <motion.span
+      className={cn(
+        'relative inline-flex items-center gap-1 transition-all duration-300',
+        'transform-gpu will-change-transform',
+        variantStyles[variant],
+        className
+      )}
+      whileHover="hover"
+      initial="initial"
+    >
+      {/* Text content with glow effect */}
       <span className="relative">
-        {children}
-        
-        {/* Animated underline */}
-        {underline === 'hover' && (
+        {variant === 'glow' && (
           <motion.span
-            className="absolute -bottom-1 left-0 right-0 h-0.5 overflow-hidden"
-            style={{ opacity: underlineSpring }}
+            className="absolute inset-0 blur-md opacity-0"
+            style={{ color: glowColor }}
+            variants={{
+              initial: { opacity: 0 },
+              hover: { opacity: 0.7 }
+            }}
+            transition={{ duration: 0.3 }}
           >
-            <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-red-500"
-              style={{
-                x: gradientX,
-                backgroundSize: '200% 100%',
-              }}
-            />
+            {children}
           </motion.span>
         )}
-        
-        {/* Hover glow effect */}
-        {variant === 'glow' && isHovered && (
-          <motion.span
-            className="absolute inset-0 bg-red-500/20 blur-xl pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          />
-        )}
+        <span className="relative z-10">{children}</span>
       </span>
-      
-      {/* External link indicator */}
-      {(external || href) && (
+
+      {/* External link icon */}
+      {isExternal && showExternalIcon && (
         <motion.span
-          animate={{ 
-            x: isHovered ? 2 : 0,
-            y: isHovered ? -2 : 0,
+          variants={{
+            initial: { opacity: 0.5, scale: 0.9 },
+            hover: { opacity: 1, scale: 1 }
           }}
           transition={{ duration: 0.2 }}
         >
-          <ExternalLink className="w-3 h-3 opacity-70" />
+          <ExternalLink className="w-3 h-3" />
         </motion.span>
       )}
-    </>
-  );
-  
-  // External link
-  if (external || href) {
-    return (
-      <motion.a
-        href={href || to}
-        target="_blank"
-        rel="noopener noreferrer"
-        ref={linkRef}
-        className={linkProps.className}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        {content}
-      </motion.a>
-    );
-  }
-  
-  // Internal link
-  if (to) {
-    return (
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="inline-block"
-      >
-        <Link 
-          to={to} 
-          ref={linkRef}
-          className={linkProps.className}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {content}
-        </Link>
-      </motion.div>
-    );
-  }
-  
-  // Fallback to span if no href or to
-  return (
-    <motion.span
-      ref={linkRef}
-      className={linkProps.className}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      {content}
+
+      {/* Gradient underline animation */}
+      {(variant === 'underline' || variant === 'gradient') && (
+        <motion.span
+          className="absolute left-0 bottom-0 h-0.5 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500"
+          style={{
+            transformOrigin: 'left center',
+            backgroundSize: '200% 100%'
+          }}
+          initial={{ scaleX: 0, backgroundPosition: '0% 0%' }}
+          variants={{
+            initial: { scaleX: 0, backgroundPosition: '0% 0%' },
+            hover: { 
+              scaleX: 1, 
+              backgroundPosition: '100% 0%',
+              transition: {
+                scaleX: { duration: 0.3, ease: 'easeOut' },
+                backgroundPosition: { duration: 1.5, ease: 'linear' }
+              }
+            }
+          }}
+        />
+      )}
+
+      {/* Default underline for simple variant */}
+      {variant === 'default' && (
+        <motion.span
+          className="absolute left-0 bottom-0 h-px bg-current opacity-25"
+          initial={{ scaleX: 0 }}
+          variants={{
+            initial: { scaleX: 0 },
+            hover: { scaleX: 1 }
+          }}
+          transition={{ duration: 0.3 }}
+        />
+      )}
+
+      {/* Shimmer effect for gradient variant */}
+      {variant === 'gradient' && (
+        <motion.span
+          className="absolute inset-0 opacity-0"
+          style={{
+            background: 'linear-gradient(105deg, transparent 40%, white 50%, transparent 60%)',
+            backgroundSize: '200% 100%',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}
+          variants={{
+            initial: { opacity: 0, backgroundPosition: '200% 0%' },
+            hover: { 
+              opacity: 0.3,
+              backgroundPosition: '-200% 0%',
+              transition: {
+                backgroundPosition: { duration: 1, ease: 'easeInOut' }
+              }
+            }
+          }}
+        />
+      )}
     </motion.span>
   );
-};
 
-export default EnhancedLink;
+  if (isExternal) {
+    return (
+      <a
+        href={linkDestination}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex"
+        {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      to={linkDestination}
+      className="inline-flex"
+      {...props}
+    >
+      {content}
+    </Link>
+  );
+};

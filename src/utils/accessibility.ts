@@ -1,76 +1,11 @@
-/**
- * Accessibility utilities for better keyboard navigation and screen reader support
- */
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 /**
- * Make an element keyboard accessible
+ * Accessibility utilities for improving user experience
  */
-export const makeKeyboardAccessible = (
-  onClick: () => void,
-  options: {
-    role?: string;
-    ariaLabel?: string;
-    ariaPressed?: boolean;
-    ariaExpanded?: boolean;
-    tabIndex?: number;
-  } = {}
-) => {
-  return {
-    onClick,
-    onKeyDown: (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        onClick();
-      }
-    },
-    role: options.role || 'button',
-    'aria-label': options.ariaLabel,
-    'aria-pressed': options.ariaPressed,
-    'aria-expanded': options.ariaExpanded,
-    tabIndex: options.tabIndex ?? 0,
-    style: { cursor: 'pointer' },
-  };
-};
 
-/**
- * Trap focus within a modal or dialog
- */
-export const trapFocus = (element: HTMLElement) => {
-  const focusableElements = element.querySelectorAll(
-    'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select, [tabindex]:not([tabindex="-1"])'
-  );
-  
-  const firstFocusable = focusableElements[0] as HTMLElement;
-  const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement;
-
-  const handleTabKey = (e: KeyboardEvent) => {
-    if (e.key !== 'Tab') return;
-
-    if (e.shiftKey) {
-      if (document.activeElement === firstFocusable) {
-        e.preventDefault();
-        lastFocusable.focus();
-      }
-    } else {
-      if (document.activeElement === lastFocusable) {
-        e.preventDefault();
-        firstFocusable.focus();
-      }
-    }
-  };
-
-  element.addEventListener('keydown', handleTabKey);
-  firstFocusable?.focus();
-
-  return () => {
-    element.removeEventListener('keydown', handleTabKey);
-  };
-};
-
-/**
- * Announce message to screen readers
- */
-export const announceToScreenReader = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
+// Announce message to screen readers
+export const announce = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
   const announcement = document.createElement('div');
   announcement.setAttribute('role', 'status');
   announcement.setAttribute('aria-live', priority);
@@ -84,82 +19,200 @@ export const announceToScreenReader = (message: string, priority: 'polite' | 'as
   announcement.textContent = message;
   document.body.appendChild(announcement);
   
+  // Remove after announcement
   setTimeout(() => {
     document.body.removeChild(announcement);
   }, 1000);
 };
 
-/**
- * Generate unique ID for accessibility
- */
-export const generateAriaId = (prefix: string): string => {
-  return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
+// Focus management hook
+export const useFocusTrap = (isActive: boolean = true) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    if (!isActive || !containerRef.current) return;
+    
+    const container = containerRef.current;
+    const focusableElements = container.querySelectorAll(
+      'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select, [tabindex]:not([tabindex="-1"])'
+    );
+    
+    const firstFocusable = focusableElements[0] as HTMLElement;
+    const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable?.focus();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable?.focus();
+        }
+      }
+    };
+    
+    container.addEventListener('keydown', handleKeyDown);
+    firstFocusable?.focus();
+    
+    return () => {
+      container.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isActive]);
+  
+  return containerRef;
 };
 
-/**
- * Skip to main content link helper
- */
-export const skipToMainContent = () => {
-  const main = document.querySelector('main') || document.getElementById('main-content');
-  if (main) {
-    (main as HTMLElement).focus();
-    (main as HTMLElement).scrollIntoView();
+// Keyboard navigation hook
+export const useKeyboardNavigation = (
+  items: any[],
+  onSelect: (index: number) => void,
+  isActive: boolean = true
+) => {
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!isActive) return;
+    
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setFocusedIndex((prev) => (prev + 1) % items.length);
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setFocusedIndex((prev) => (prev - 1 + items.length) % items.length);
+        break;
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        onSelect(focusedIndex);
+        break;
+      case 'Home':
+        e.preventDefault();
+        setFocusedIndex(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        setFocusedIndex(items.length - 1);
+        break;
+    }
+  }, [isActive, items.length, focusedIndex, onSelect]);
+  
+  useEffect(() => {
+    if (isActive) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [handleKeyDown, isActive]);
+  
+  return { focusedIndex, setFocusedIndex };
+};
+
+// Skip to content link helper
+export const skipToContent = (contentId: string = 'main-content') => {
+  const element = document.getElementById(contentId);
+  if (element) {
+    element.focus();
+    element.scrollIntoView();
   }
 };
 
-/**
- * Check if user prefers reduced motion
- */
+// ARIA label generator for interactive elements
+export const generateAriaLabel = (
+  action: string,
+  target: string,
+  context?: string
+): string => {
+  if (context) {
+    return `${action} ${target} in ${context}`;
+  }
+  return `${action} ${target}`;
+};
+
+// Focus visible polyfill check
+export const supportsFocusVisible = (): boolean => {
+  try {
+    document.querySelector(':focus-visible');
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+// Reduced motion preference
 export const prefersReducedMotion = (): boolean => {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 };
 
-/**
- * Get appropriate heading level based on context
- */
-export const getHeadingLevel = (currentLevel: number, isNested: boolean = false): number => {
-  if (isNested) {
-    return Math.min(currentLevel + 1, 6);
-  }
-  return currentLevel;
+// High contrast mode detection
+export const prefersHighContrast = (): boolean => {
+  return window.matchMedia('(prefers-contrast: high)').matches;
 };
 
-/**
- * Format time for screen readers
- */
-export const formatTimeForScreenReader = (seconds: number): string => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
+// Color scheme preference
+export const prefersColorScheme = (): 'light' | 'dark' | 'no-preference' => {
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+  if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    return 'light';
+  }
+  return 'no-preference';
+};
+
+// Live region hook for dynamic content
+export const useLiveRegion = (ariaLive: 'polite' | 'assertive' = 'polite') => {
+  const regionRef = useRef<HTMLDivElement>(null);
   
-  if (minutes === 0) {
-    return `${remainingSeconds} seconds`;
-  } else if (remainingSeconds === 0) {
-    return `${minutes} minute${minutes > 1 ? 's' : ''}`;
-  } else {
-    return `${minutes} minute${minutes > 1 ? 's' : ''} and ${remainingSeconds} seconds`;
-  }
-};
-
-/**
- * Create accessible error message
- */
-export const createAccessibleError = (fieldName: string, errorMessage: string): string => {
-  return `Error in ${fieldName}: ${errorMessage}`;
-};
-
-/**
- * Handle escape key to close modals/dialogs
- */
-export const handleEscapeKey = (callback: () => void) => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      callback();
+  const announce = useCallback((message: string) => {
+    if (regionRef.current) {
+      regionRef.current.textContent = message;
+      // Clear after announcement
+      setTimeout(() => {
+        if (regionRef.current) {
+          regionRef.current.textContent = '';
+        }
+      }, 1000);
     }
-  };
-
-  document.addEventListener('keydown', handleKeyDown);
+  }, []);
   
-  return () => {
-    document.removeEventListener('keydown', handleKeyDown);
-  };
+  return { regionRef, announce };
 };
+
+// Focus restoration hook
+export const useFocusRestore = () => {
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  
+  const saveFocus = useCallback(() => {
+    previousFocusRef.current = document.activeElement as HTMLElement;
+  }, []);
+  
+  const restoreFocus = useCallback(() => {
+    if (previousFocusRef.current) {
+      previousFocusRef.current.focus();
+    }
+  }, []);
+  
+  return { saveFocus, restoreFocus };
+};
+
+// Screen reader only text component props
+export interface SROnlyProps {
+  children: React.ReactNode;
+  as?: keyof JSX.IntrinsicElements;
+}
+
+// Visually hidden but accessible to screen readers
+export const visuallyHiddenStyles = {
+  position: 'absolute',
+  left: '-10000px',
+  top: 'auto',
+  width: '1px',
+  height: '1px',
+  overflow: 'hidden',
+} as const;

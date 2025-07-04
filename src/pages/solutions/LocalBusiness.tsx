@@ -4,6 +4,10 @@ import { Building, MapPin, Users, TrendingUp, Target, Star } from 'lucide-react'
 import PageTransition from '../../components/PageTransition';
 import BusinessSolutionBuilder from '../../components/solutions/local-business/BusinessSolutionBuilder';
 import LocalBusinessSuccessCalculator from '../../components/solutions/local-business/LocalBusinessSuccessCalculator';
+import { BeforeAfterComparison } from '../../components/ui/ComparisonTable';
+import TrustSignals from '../../components/ui/TrustSignals';
+import { SocialProofNotification, MetricCounter } from '../../components/ui/SocialProof';
+import Tooltip from '../../components/ui/Tooltip';
 
 const LocalBusiness: React.FC = () => {
   return (
@@ -52,7 +56,55 @@ const LocalBusiness: React.FC = () => {
                   </div>
                 ))}
               </motion.div>
+
+              {/* Trust Signals */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <TrustSignals variant="compact" showAll={false} />
+              </motion.div>
             </div>
+          </div>
+        </section>
+
+        {/* Success Metrics */}
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <MetricCounter
+              metrics={[
+                {
+                  label: "Local Businesses Served",
+                  value: 150,
+                  suffix: "+",
+                  icon: Building,
+                  color: "text-blue-500"
+                },
+                {
+                  label: "Average Revenue Increase",
+                  value: 47,
+                  suffix: "%",
+                  icon: TrendingUp,
+                  color: "text-green-500"
+                },
+                {
+                  label: "Customer Retention",
+                  value: 92,
+                  suffix: "%",
+                  icon: Users,
+                  color: "text-purple-500"
+                },
+                {
+                  label: "ROI Within 6 Months",
+                  value: 3.2,
+                  suffix: "x",
+                  icon: Target,
+                  color: "text-red-500"
+                }
+              ]}
+              animated={true}
+            />
           </div>
         </section>
 
@@ -130,6 +182,35 @@ const LocalBusiness: React.FC = () => {
           </div>
         </section>
 
+        {/* Before/After Comparison */}
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <BeforeAfterComparison
+              title="The Digital Transformation Journey"
+              before={{
+                title: "Before Our Solutions",
+                items: [
+                  "Limited online visibility in local searches",
+                  "Manual appointment scheduling and tracking",
+                  "Inconsistent customer communication",
+                  "No analytics or performance insights",
+                  "Struggling to compete with larger businesses"
+                ]
+              }}
+              after={{
+                title: "After Implementation",
+                items: [
+                  "Top rankings for local search terms",
+                  "Automated booking system with reminders",
+                  "Professional email and SMS campaigns",
+                  "Real-time dashboard with actionable insights",
+                  "Level playing field with enterprise tools"
+                ]
+              }}
+            />
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -155,6 +236,9 @@ const LocalBusiness: React.FC = () => {
           </div>
         </section>
       </div>
+
+      {/* Social Proof Notifications */}
+      <SocialProofNotification position="bottom-right" />
     </PageTransition>
   );
 };

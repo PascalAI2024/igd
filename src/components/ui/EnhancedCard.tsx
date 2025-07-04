@@ -1,221 +1,189 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import React, { useRef, useState, useCallback } from 'react';
+import { motion, useSpring, useTransform, useMotionValue } from 'framer-motion';
+import { cn } from '@/utils/cn';
 
-interface EnhancedCardProps {
+interface EnhancedCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'glass' | 'gradient' | 'spotlight';
+  tiltStrength?: number;
+  spotlightColor?: string;
+  glassOpacity?: number;
   children: React.ReactNode;
-  /**
-   * Card hover effect
-   * @default 'lift'
-   */
-  hoverEffect?: 'lift' | 'tilt' | 'glow' | 'none';
-  
-  /**
-   * Background style
-   * @default 'glass'
-   */
-  background?: 'glass' | 'solid' | 'gradient' | 'mesh';
-  
-  /**
-   * Border style
-   * @default true
-   */
-  border?: boolean;
-  
-  /**
-   * Padding size
-   * @default 'medium'
-   */
-  padding?: 'small' | 'medium' | 'large';
-  
-  /**
-   * Click handler
-   */
-  onClick?: () => void;
-  
-  /**
-   * Additional className
-   */
-  className?: string;
-  
-  /**
-   * Spotlight effect on hover
-   * @default false
-   */
-  spotlight?: boolean;
 }
 
-/**
- * Enhanced card component with sophisticated depth and interaction
- * Features:
- * - 3D tilt effect
- * - Dynamic shadows
- * - Spotlight tracking
- * - Glass morphism
- * - Gradient mesh backgrounds
- */
-const EnhancedCard: React.FC<EnhancedCardProps> = ({
+export const EnhancedCard: React.FC<EnhancedCardProps> = ({
+  variant = 'default',
+  tiltStrength = 15,
+  spotlightColor = '#f97316',
+  glassOpacity = 0.1,
   children,
-  hoverEffect = 'lift',
-  background = 'glass',
-  border = true,
-  padding = 'medium',
-  onClick,
-  className = '',
-  spotlight = false,
+  className,
+  ...props
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
-  
-  // Motion values for 3D tilt
+
+  // Motion values for mouse tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
-  // Spring animations for smooth movement
-  const springConfig = { stiffness: 300, damping: 30 };
-  const x = useSpring(mouseX, springConfig);
-  const y = useSpring(mouseY, springConfig);
-  
-  // Transform mouse position to rotation
-  const rotateX = useTransform(y, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(x, [-0.5, 0.5], [-10, 10]);
-  
+  const mouseXRelative = useMotionValue(0.5);
+  const mouseYRelative = useMotionValue(0.5);
+
+  // Spring configuration for smooth animations
+  const springConfig = { damping: 20, stiffness: 300 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+
+  // 3D tilt transforms
+  const rotateX = useTransform(springY, [-0.5, 0.5], [tiltStrength, -tiltStrength]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-tiltStrength, tiltStrength]);
+
+  // Dynamic shadow transforms
+  const shadowX = useTransform(springX, [-0.5, 0.5], [10, -10]);
+  const shadowY = useTransform(springY, [-0.5, 0.5], [10, -10]);
+
   // Spotlight position
-  const spotlightX = useTransform(x, [-0.5, 0.5], [0, 100]);
-  const spotlightY = useTransform(y, [-0.5, 0.5], [0, 100]);
-  
-  // Handle mouse movement for tilt effect
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (hoverEffect !== 'tilt' || !cardRef.current) return;
-    
+  const spotlightX = useTransform(mouseXRelative, [0, 1], [0, 100]);
+  const spotlightY = useTransform(mouseYRelative, [0, 1], [0, 100]);
+
+  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
-    const x = (e.clientX - centerX) / rect.width;
-    const y = (e.clientY - centerY) / rect.height;
-    
-    mouseX.set(x);
-    mouseY.set(y);
-  };
-  
-  const handleMouseLeave = () => {
-    setIsHovered(false);
+
+    // Normalized coordinates for tilt (-0.5 to 0.5)
+    const normalizedX = (event.clientX - centerX) / rect.width;
+    const normalizedY = (event.clientY - centerY) / rect.height;
+
+    mouseX.set(normalizedX);
+    mouseY.set(normalizedY);
+
+    // Relative coordinates for spotlight (0 to 1)
+    const relativeX = (event.clientX - rect.left) / rect.width;
+    const relativeY = (event.clientY - rect.top) / rect.height;
+
+    mouseXRelative.set(relativeX);
+    mouseYRelative.set(relativeY);
+  }, [mouseX, mouseY, mouseXRelative, mouseYRelative]);
+
+  const handleMouseLeave = useCallback(() => {
     mouseX.set(0);
     mouseY.set(0);
+    mouseXRelative.set(0.5);
+    mouseYRelative.set(0.5);
+    setIsHovered(false);
+  }, [mouseX, mouseY, mouseXRelative, mouseYRelative]);
+
+  // Variant styles
+  const variantStyles = {
+    default: 'bg-gray-800 border border-gray-700',
+    glass: `bg-white/${glassOpacity * 100} backdrop-blur-lg border border-white/20`,
+    gradient: 'bg-gradient-to-br from-gray-800 via-gray-900 to-black border border-gray-700',
+    spotlight: 'bg-gray-900 border border-gray-800'
   };
-  
-  // Background styles
-  const backgroundStyles = {
-    glass: 'bg-white/5 backdrop-blur-md',
-    solid: 'bg-gray-800',
-    gradient: 'bg-gradient-to-br from-gray-800 to-gray-900',
-    mesh: 'bg-gradient-to-br from-red-500/10 via-transparent to-orange-500/10',
-  };
-  
-  // Padding styles
-  const paddingStyles = {
-    small: 'p-4',
-    medium: 'p-6',
-    large: 'p-8',
-  };
-  
-  // Hover effect styles
-  const getHoverStyles = () => {
-    switch (hoverEffect) {
-      case 'lift':
-        return 'hover:-translate-y-2 hover:shadow-2xl';
-      case 'glow':
-        return 'hover:shadow-[0_0_30px_rgba(239,68,68,0.3)]';
-      case 'tilt':
-        return '';
-      default:
-        return '';
-    }
-  };
-  
+
   return (
     <motion.div
       ref={cardRef}
-      className={`
-        relative
-        ${backgroundStyles[background]}
-        ${paddingStyles[padding]}
-        ${border ? 'border border-white/10' : ''}
-        rounded-xl
-        transition-all duration-300
-        ${getHoverStyles()}
-        ${onClick ? 'cursor-pointer' : ''}
-        ${className}
-      `}
-      style={hoverEffect === 'tilt' ? {
+      style={{
         rotateX,
         rotateY,
         transformStyle: 'preserve-3d',
-        transformPerspective: 1000,
-      } : {}}
+        transformPerspective: 1000
+      }}
+      className={cn(
+        'relative rounded-xl p-6 overflow-hidden',
+        'transform-gpu will-change-transform',
+        variantStyles[variant],
+        className
+      )}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ scale: 1 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ scale: { duration: 0.2 } }}
+      {...props}
     >
-      {/* Base shadow */}
-      <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-red-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-lg" />
-      
-      {/* Dynamic shadow for depth */}
-      {hoverEffect === 'lift' && (
-        <motion.div
-          className="absolute inset-0 rounded-xl bg-black/20 -z-10"
-          initial={{ opacity: 0, y: 0 }}
-          animate={{
-            opacity: isHovered ? 0.3 : 0,
-            y: isHovered ? 8 : 0,
-            filter: `blur(${isHovered ? 16 : 0}px)`,
-          }}
-          transition={{ duration: 0.3 }}
-        />
+      {/* Dynamic shadow */}
+      <motion.div
+        className="absolute inset-0 -z-20 rounded-xl bg-black/50 blur-xl"
+        style={{
+          x: shadowX,
+          y: shadowY,
+          opacity: isHovered ? 0.3 : 0.1
+        }}
+      />
+
+      {/* Glass morphism backdrop for glass variant */}
+      {variant === 'glass' && (
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5" />
+        </div>
       )}
-      
+
       {/* Spotlight effect */}
-      {spotlight && isHovered && (
+      {variant === 'spotlight' && isHovered && (
         <motion.div
-          className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none"
+          className="absolute inset-0 -z-10 opacity-0"
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
           style={{
-            background: `radial-gradient(
-              circle at ${spotlightX.get()}% ${spotlightY.get()}%,
-              rgba(255, 255, 255, 0.1) 0%,
-              transparent 50%
-            )`,
+            background: `radial-gradient(circle at ${spotlightX.get()}% ${spotlightY.get()}%, ${spotlightColor}30 0%, transparent 50%)`,
+            filter: 'blur(40px)'
           }}
         />
       )}
-      
-      {/* Inner glow for glass effect */}
-      {background === 'glass' && (
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+
+      {/* Gradient shine effect */}
+      {(variant === 'gradient' || variant === 'glass') && (
+        <motion.div
+          className="absolute inset-0 opacity-0"
+          animate={{ opacity: isHovered ? 0.1 : 0 }}
+          style={{
+            background: 'linear-gradient(105deg, transparent 40%, white 50%, transparent 60%)',
+            backgroundSize: '200% 200%',
+            backgroundPosition: isHovered ? '-100% -100%' : '200% 200%'
+          }}
+          transition={{ duration: 0.6 }}
+        />
       )}
-      
-      {/* Content with transform style preservation */}
+
+      {/* 3D depth layer for content */}
       <div style={{ transform: 'translateZ(50px)' }} className="relative z-10">
         {children}
       </div>
-      
-      {/* Hover indicator */}
-      {hoverEffect === 'glow' && (
+
+      {/* Edge glow effect */}
+      {isHovered && (
         <motion.div
           className="absolute inset-0 rounded-xl"
-          style={{
-            background: 'radial-gradient(circle at center, rgba(239, 68, 68, 0.1) 0%, transparent 70%)',
-          }}
           initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
+          style={{
+            background: `linear-gradient(to bottom, ${spotlightColor}20, transparent)`,
+            boxShadow: `inset 0 0 20px ${spotlightColor}20`
+          }}
+        />
+      )}
+
+      {/* Animated border gradient */}
+      {variant === 'gradient' && (
+        <motion.div
+          className="absolute inset-0 rounded-xl opacity-0"
+          animate={{ opacity: isHovered ? 0.5 : 0 }}
+          style={{
+            background: 'conic-gradient(from 0deg, #f97316, #ec4899, #8b5cf6, #3b82f6, #f97316)',
+            padding: '1px',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude'
+          }}
         />
       )}
     </motion.div>
   );
 };
-
-export default EnhancedCard;

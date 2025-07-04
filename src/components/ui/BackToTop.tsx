@@ -1,198 +1,146 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll } from 'framer-motion';
-import { ArrowUp, ChevronUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUp } from 'lucide-react';
+import { cn } from '@/utils/cn';
 
 interface BackToTopProps {
-  /**
-   * Scroll threshold to show the button (in pixels)
-   * @default 300
-   */
   threshold?: number;
-  
-  /**
-   * Position of the button
-   * @default { bottom: 20, right: 20 }
-   */
-  position?: {
-    bottom?: number;
-    right?: number;
-    left?: number;
-  };
-  
-  /**
-   * Icon variant
-   * @default 'arrow'
-   */
-  icon?: 'arrow' | 'chevron';
-  
-  /**
-   * Show progress ring
-   * @default true
-   */
-  showProgress?: boolean;
-  
-  /**
-   * Custom className
-   */
+  position?: 'left' | 'right';
+  offset?: number;
+  smooth?: boolean;
   className?: string;
-  
-  /**
-   * Z-index
-   * @default 40
-   */
-  zIndex?: number;
 }
 
-/**
- * Back to top button with smooth scroll and animations
- * Features:
- * - Progress ring showing scroll position
- * - Smooth scroll animation
- * - Magnetic hover effect
- * - Entrance/exit animations
- */
-const BackToTop: React.FC<BackToTopProps> = ({
+export const BackToTop: React.FC<BackToTopProps> = ({
   threshold = 300,
-  position = { bottom: 20, right: 20 },
-  icon = 'arrow',
-  showProgress = true,
-  className = '',
-  zIndex = 40,
+  position = 'right',
+  offset = 20,
+  smooth = true,
+  className
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const { scrollYProgress } = useScroll();
   const [scrollProgress, setScrollProgress] = useState(0);
-  
-  // Monitor scroll position
+
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.scrollY > threshold;
-      setIsVisible(scrolled);
+      const scrollTop = window.scrollY;
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / documentHeight) * 100;
+      
+      setIsVisible(scrollTop > threshold);
+      setScrollProgress(progress);
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial position
-    
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial state
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [threshold]);
-  
-  // Update progress
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.onChange((latest) => {
-      setScrollProgress(latest);
-    });
-    
-    return unsubscribe;
-  }, [scrollYProgress]);
-  
-  // Smooth scroll to top
+
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    if (smooth) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      window.scrollTo(0, 0);
+    }
   };
-  
-  const Icon = icon === 'arrow' ? ArrowUp : ChevronUp;
-  
+
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          className={`
-            fixed z-${zIndex}
-            w-12 h-12 md:w-14 md:h-14
-            bg-red-600 hover:bg-red-700
-            text-white
-            rounded-full
-            shadow-lg hover:shadow-xl
-            flex items-center justify-center
-            cursor-pointer
-            group
-            ${className}
-          `}
-          style={{
-            bottom: `${position.bottom}px`,
-            right: position.right ? `${position.right}px` : undefined,
-            left: position.left ? `${position.left}px` : undefined,
-          }}
           onClick={scrollToTop}
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          transition={{
-            type: 'spring',
-            stiffness: 260,
-            damping: 20,
+          className={cn(
+            'fixed bottom-20 z-50 group',
+            position === 'right' ? `right-${offset}` : `left-${offset}`,
+            className
+          )}
+          style={{
+            [position]: `${offset}px`
           }}
+          initial={{ opacity: 0, y: 20, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.8 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: 'spring', damping: 15 }}
         >
-          {/* Progress ring */}
-          {showProgress && (
+          <div className="relative">
+            {/* Progress ring */}
             <svg
-              className="absolute inset-0 w-full h-full -rotate-90"
-              viewBox="0 0 100 100"
+              className="absolute inset-0 -rotate-90 w-12 h-12"
+              viewBox="0 0 48 48"
             >
-              {/* Background circle */}
               <circle
-                cx="50"
-                cy="50"
-                r="45"
+                cx="24"
+                cy="24"
+                r="20"
+                fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                fill="none"
-                opacity="0.2"
+                className="text-gray-700"
               />
-              {/* Progress circle */}
               <motion.circle
-                cx="50"
-                cy="50"
-                r="45"
-                stroke="currentColor"
-                strokeWidth="3"
+                cx="24"
+                cy="24"
+                r="20"
                 fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
                 strokeLinecap="round"
+                className="text-orange-500"
                 style={{
-                  pathLength: scrollProgress,
-                  strokeDasharray: '283',
-                  strokeDashoffset: '0',
+                  pathLength: scrollProgress / 100,
+                  strokeDasharray: '126',
+                  strokeDashoffset: 0
                 }}
               />
             </svg>
-          )}
-          
-          {/* Icon with hover animation */}
+
+            {/* Button content */}
+            <div className="relative w-12 h-12 bg-gray-900/90 backdrop-blur-sm rounded-full border border-gray-800 flex items-center justify-center group-hover:bg-gray-800/90 transition-colors">
+              <ArrowUp className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" />
+              
+              {/* Hover glow effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full bg-orange-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"
+                animate={{
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+              />
+            </div>
+
+            {/* Pulse effect on appear */}
+            <motion.div
+              className="absolute inset-0 rounded-full border border-orange-500/50"
+              initial={{ scale: 1, opacity: 1 }}
+              animate={{ scale: 1.5, opacity: 0 }}
+              transition={{ duration: 1, repeat: Infinity }}
+            />
+          </div>
+
+          {/* Tooltip */}
           <motion.div
-            animate={{
-              y: [0, -3, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
+            className={cn(
+              'absolute top-1/2 -translate-y-1/2 px-2 py-1 bg-gray-900 text-xs text-gray-300 rounded whitespace-nowrap pointer-events-none',
+              position === 'right' ? 'right-full mr-2' : 'left-full ml-2'
+            )}
+            initial={{ opacity: 0, x: position === 'right' ? 10 : -10 }}
+            whileHover={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2 }}
           >
-            <Icon className="w-5 h-5 md:w-6 md:h-6" />
+            Back to top
           </motion.div>
-          
-          {/* Pulse effect on hover */}
-          <motion.div
-            className="absolute inset-0 rounded-full bg-red-600"
-            initial={{ scale: 1, opacity: 0 }}
-            whileHover={{
-              scale: [1, 1.5],
-              opacity: [0, 0.3, 0],
-            }}
-            transition={{
-              duration: 1,
-              repeat: Infinity,
-            }}
-          />
         </motion.button>
       )}
     </AnimatePresence>
   );
 };
-
-export default BackToTop;

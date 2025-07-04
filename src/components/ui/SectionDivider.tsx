@@ -1,244 +1,151 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/utils/cn';
 
 interface SectionDividerProps {
-  /**
-   * Style variant of the divider
-   * @default 'gradient'
-   */
-  variant?: 'gradient' | 'dots' | 'wave' | 'fade' | 'geometric';
-  
-  /**
-   * Spacing around the divider
-   * @default 'medium'
-   */
-  spacing?: 'small' | 'medium' | 'large';
-  
-  /**
-   * Animation on scroll
-   * @default true
-   */
-  animate?: boolean;
-  
-  /**
-   * Custom className
-   */
+  variant?: 'default' | 'gradient' | 'dots' | 'wave' | 'glow';
+  spacing?: 'sm' | 'md' | 'lg' | 'xl';
+  animated?: boolean;
   className?: string;
-  
-  /**
-   * Color theme
-   * @default 'default'
-   */
-  theme?: 'default' | 'subtle' | 'accent';
 }
 
-/**
- * Sophisticated section dividers for visual hierarchy
- * Features:
- * - Multiple style variants
- * - Scroll animations
- * - Responsive sizing
- * - Theme support
- */
-const SectionDivider: React.FC<SectionDividerProps> = ({
-  variant = 'gradient',
-  spacing = 'medium',
-  animate = true,
-  className = '',
-  theme = 'default',
+export const SectionDivider: React.FC<SectionDividerProps> = ({
+  variant = 'default',
+  spacing = 'md',
+  animated = true,
+  className
 }) => {
-  const spacingClasses = {
-    small: 'my-8',
-    medium: 'my-16',
-    large: 'my-24',
+  const spacingStyles = {
+    sm: 'my-8',
+    md: 'my-12',
+    lg: 'my-16',
+    xl: 'my-24'
   };
-  
-  const themeColors = {
-    default: {
-      primary: '#ef4444',
-      secondary: '#f97316',
-      neutral: 'rgba(255, 255, 255, 0.1)',
-    },
-    subtle: {
-      primary: 'rgba(255, 255, 255, 0.1)',
-      secondary: 'rgba(255, 255, 255, 0.05)',
-      neutral: 'rgba(255, 255, 255, 0.03)',
-    },
-    accent: {
-      primary: '#dc2626',
-      secondary: '#ea580c',
-      neutral: 'rgba(239, 68, 68, 0.2)',
-    },
-  };
-  
-  const colors = themeColors[theme];
-  
+
   const renderDivider = () => {
     switch (variant) {
       case 'gradient':
         return (
-          <motion.div
-            className="relative h-px w-full overflow-hidden"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: 'easeOut' }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `linear-gradient(90deg, 
-                  transparent, 
-                  ${colors.primary} 20%, 
-                  ${colors.secondary} 50%, 
-                  ${colors.primary} 80%, 
-                  transparent
-                )`,
-              }}
-            />
-            {/* Glow effect */}
+          <div className="relative h-px w-full overflow-hidden">
             <motion.div
-              className="absolute inset-0 blur-sm"
-              style={{
-                background: `linear-gradient(90deg, 
-                  transparent, 
-                  ${colors.primary} 20%, 
-                  ${colors.secondary} 50%, 
-                  ${colors.primary} 80%, 
-                  transparent
-                )`,
-              }}
-              animate={{
-                opacity: [0.5, 1, 0.5],
-              }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500 to-transparent"
+              animate={animated ? {
+                x: ['-100%', '100%']
+              } : {}}
               transition={{
                 duration: 3,
                 repeat: Infinity,
-                ease: 'easeInOut',
+                ease: 'linear'
               }}
             />
-          </motion.div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-700 to-transparent" />
+          </div>
         );
-      
+
       case 'dots':
         return (
           <div className="flex items-center justify-center gap-2">
             {[...Array(5)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ backgroundColor: colors.primary }}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                className="w-1.5 h-1.5 rounded-full bg-gray-600"
+                animate={animated ? {
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3]
+                } : {}}
                 transition={{
-                  delay: i * 0.1,
-                  duration: 0.5,
-                  type: 'spring',
-                  stiffness: 200,
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.2,
+                  ease: 'easeInOut'
                 }}
               />
             ))}
           </div>
         );
-      
+
       case 'wave':
         return (
-          <motion.svg
-            viewBox="0 0 1200 40"
-            className="w-full h-10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.path
-              d="M0,20 Q300,0 600,20 T1200,20"
-              fill="none"
-              stroke={colors.primary}
-              strokeWidth="2"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.5, ease: 'easeOut' }}
-            />
-          </motion.svg>
-        );
-      
-      case 'fade':
-        return (
-          <motion.div
-            className="relative h-16 w-full"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `radial-gradient(ellipse at center, 
-                  ${colors.primary}20 0%, 
-                  transparent 70%
-                )`,
-              }}
-            />
-          </motion.div>
-        );
-      
-      case 'geometric':
-        return (
-          <div className="flex items-center justify-center gap-4">
-            <motion.div
-              className="h-px flex-1"
-              style={{ backgroundColor: colors.neutral, transformOrigin: 'right' }}
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-            />
-            <motion.div
-              className="relative"
-              initial={{ scale: 0, rotate: 0 }}
-              whileInView={{ scale: 1, rotate: 45 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.5,
-                type: 'spring',
-                stiffness: 200,
-                delay: 0.3,
-              }}
+          <div className="relative h-8 w-full overflow-hidden">
+            <svg
+              viewBox="0 0 1200 40"
+              className="absolute inset-0 w-full h-full"
+              preserveAspectRatio="none"
             >
-              <div
-                className="w-2 h-2"
-                style={{ backgroundColor: colors.primary }}
+              <motion.path
+                d="M0,20 Q300,0 600,20 T1200,20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                className="text-gray-700"
+                animate={animated ? {
+                  d: [
+                    'M0,20 Q300,0 600,20 T1200,20',
+                    'M0,20 Q300,40 600,20 T1200,20',
+                    'M0,20 Q300,0 600,20 T1200,20'
+                  ]
+                } : {}}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
               />
-              <div
-                className="absolute inset-0 w-2 h-2 blur-md"
-                style={{ backgroundColor: colors.primary }}
-              />
-            </motion.div>
-            <motion.div
-              className="h-px flex-1"
-              style={{ backgroundColor: colors.neutral, transformOrigin: 'left' }}
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-            />
+            </svg>
           </div>
         );
-      
+
+      case 'glow':
+        return (
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent" />
+            </div>
+            <motion.div
+              className="relative flex items-center justify-center"
+              animate={animated ? {
+                scale: [1, 1.1, 1]
+              } : {}}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeInOut'
+              }}
+            >
+              <div className="w-24 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
+              <motion.div
+                className="absolute w-32 h-8 bg-orange-500/20 blur-xl"
+                animate={animated ? {
+                  opacity: [0.5, 1, 0.5]
+                } : {}}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+              />
+            </motion.div>
+          </div>
+        );
+
       default:
-        return null;
+        return (
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent" />
+        );
     }
   };
-  
+
   return (
-    <div className={`${spacingClasses[spacing]} ${className}`}>
+    <div
+      className={cn(
+        'relative w-full',
+        spacingStyles[spacing],
+        className
+      )}
+      role="separator"
+      aria-hidden="true"
+    >
       {renderDivider()}
     </div>
   );
 };
-
-export default SectionDivider;
