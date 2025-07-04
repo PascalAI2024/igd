@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import design tokens and button styles */
+@import './styles/tokens.css';
+@import './styles/buttons.css';
+
 :root {
   color-scheme: dark;
 }

@@ -1,140 +1,79 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, Variants } from 'framer-motion';
+import { cn } from '../../utils/cn';
 
 interface StaggerRevealProps {
   children: React.ReactNode;
-  /**
-   * Delay between each child animation
-   * @default 0.1
-   */
+  delay?: number;
   staggerDelay?: number;
-  
-  /**
-   * Initial delay before animations start
-   * @default 0
-   */
-  initialDelay?: number;
-  
-  /**
-   * Animation type
-   * @default 'fadeUp'
-   */
-  animation?: 'fadeUp' | 'fadeDown' | 'fadeLeft' | 'fadeRight' | 'scale' | 'blur';
-  
-  /**
-   * Trigger animation only once
-   * @default true
-   */
-  once?: boolean;
-  
-  /**
-   * Viewport amount before triggering (0-1)
-   * @default 0.2
-   */
+  duration?: number;
+  direction?: 'up' | 'down' | 'left' | 'right' | 'fade';
+  cascade?: boolean;
   threshold?: number;
-  
-  /**
-   * Custom className for container
-   */
+  once?: boolean;
   className?: string;
-  
-  /**
-   * Container element type
-   * @default 'div'
-   */
-  as?: keyof JSX.IntrinsicElements;
 }
 
-/**
- * Staggered reveal component for smooth content appearance
- * Features:
- * - Multiple animation types
- * - Viewport-based triggering
- * - Customizable timing
- * - Smooth spring animations
- */
-const StaggerReveal: React.FC<StaggerRevealProps> = ({
+export const StaggerReveal: React.FC<StaggerRevealProps> = ({
   children,
+  delay = 0,
   staggerDelay = 0.1,
-  initialDelay = 0,
-  animation = 'fadeUp',
+  duration = 0.5,
+  direction = 'up',
+  cascade = false,
+  threshold = 0.1,
   once = true,
-  threshold = 0.2,
-  className = '',
-  as: Component = 'div',
+  className
 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once, amount: threshold });
-  
-  // Animation variants
-  const animationVariants = {
-    fadeUp: {
-      hidden: { opacity: 0, y: 20 },
-      visible: { opacity: 1, y: 0 },
-    },
-    fadeDown: {
-      hidden: { opacity: 0, y: -20 },
-      visible: { opacity: 1, y: 0 },
-    },
-    fadeLeft: {
-      hidden: { opacity: 0, x: 20 },
-      visible: { opacity: 1, x: 0 },
-    },
-    fadeRight: {
-      hidden: { opacity: 0, x: -20 },
-      visible: { opacity: 1, x: 0 },
-    },
-    scale: {
-      hidden: { opacity: 0, scale: 0.9 },
-      visible: { opacity: 1, scale: 1 },
-    },
-    blur: {
-      hidden: { opacity: 0, filter: 'blur(10px)' },
-      visible: { opacity: 1, filter: 'blur(0px)' },
-    },
+  const directionOffset = {
+    up: { y: 50, x: 0 },
+    down: { y: -50, x: 0 },
+    left: { x: 50, y: 0 },
+    right: { x: -50, y: 0 },
+    fade: { x: 0, y: 0 }
   };
-  
-  const containerVariants = {
-    hidden: {},
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
     visible: {
+      opacity: 1,
       transition: {
+        delayChildren: delay,
         staggerChildren: staggerDelay,
-        delayChildren: initialDelay,
-      },
-    },
+        staggerDirection: cascade ? -1 : 1
+      }
+    }
   };
-  
-  const itemVariants = {
-    ...animationVariants[animation],
+
+  const itemVariants: Variants = {
+    hidden: {
+      opacity: 0,
+      ...directionOffset[direction]
+    },
     visible: {
-      ...animationVariants[animation].visible,
+      opacity: 1,
+      x: 0,
+      y: 0,
       transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 15,
-        mass: 1,
-      },
-    },
+        duration,
+        ease: [0.25, 0.1, 0.25, 1]
+      }
+    }
   };
-  
-  // Convert children to array and wrap each in motion.div
-  const childrenArray = React.Children.toArray(children);
-  
+
   return (
     <motion.div
-      ref={ref}
+      className={className}
       variants={containerVariants}
       initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      className={className}
+      whileInView="visible"
+      viewport={{ once, amount: threshold }}
     >
-      {childrenArray.map((child, index) => (
+      {React.Children.map(children, (child, index) => (
         <motion.div
           key={index}
           variants={itemVariants}
-          style={{ willChange: 'transform, opacity' }}
+          className="will-change-transform"
         >
           {child}
         </motion.div>
@@ -143,33 +82,133 @@ const StaggerReveal: React.FC<StaggerRevealProps> = ({
   );
 };
 
-/**
- * Text reveal component with word-by-word animation
- */
+// Specialized variants for common reveal patterns
+
+export const FadeIn: React.FC<{
+  children: React.ReactNode;
+  delay?: number;
+  duration?: number;
+  className?: string;
+}> = ({ children, delay = 0, duration = 0.5, className }) => {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+export const SlideIn: React.FC<{
+  children: React.ReactNode;
+  from?: 'left' | 'right' | 'top' | 'bottom';
+  delay?: number;
+  duration?: number;
+  className?: string;
+}> = ({ children, from = 'bottom', delay = 0, duration = 0.5, className }) => {
+  const variants = {
+    left: { initial: { x: -100, opacity: 0 }, animate: { x: 0, opacity: 1 } },
+    right: { initial: { x: 100, opacity: 0 }, animate: { x: 0, opacity: 1 } },
+    top: { initial: { y: -100, opacity: 0 }, animate: { y: 0, opacity: 1 } },
+    bottom: { initial: { y: 100, opacity: 0 }, animate: { y: 0, opacity: 1 } }
+  };
+
+  return (
+    <motion.div
+      className={className}
+      initial={variants[from].initial}
+      whileInView={variants[from].animate}
+      viewport={{ once: true }}
+      transition={{ delay, duration, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+export const ScaleIn: React.FC<{
+  children: React.ReactNode;
+  delay?: number;
+  duration?: number;
+  scale?: number;
+  className?: string;
+}> = ({ children, delay = 0, duration = 0.5, scale = 0.8, className }) => {
+  return (
+    <motion.div
+      className={className}
+      initial={{ scale, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+export const RotateIn: React.FC<{
+  children: React.ReactNode;
+  delay?: number;
+  duration?: number;
+  rotate?: number;
+  className?: string;
+}> = ({ children, delay = 0, duration = 0.6, rotate = -10, className }) => {
+  return (
+    <motion.div
+      className={className}
+      initial={{ rotate, opacity: 0, scale: 0.9 }}
+      whileInView={{ rotate: 0, opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Text-specific reveal animations
+
 export const TextReveal: React.FC<{
   text: string;
-  className?: string;
   delay?: number;
   staggerDelay?: number;
-  once?: boolean;
-}> = ({ text, className = '', delay = 0, staggerDelay = 0.03, once = true }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once, amount: 0.5 });
-  
+  className?: string;
+}> = ({ text, delay = 0, staggerDelay = 0.03, className }) => {
   const words = text.split(' ');
-  
+
   return (
-    <motion.span ref={ref} className={className}>
-      {words.map((word, index) => (
+    <motion.span
+      className={cn('inline-block', className)}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{
+        visible: {
+          transition: {
+            delayChildren: delay,
+            staggerChildren: staggerDelay
+          }
+        }
+      }}
+    >
+      {words.map((word, i) => (
         <motion.span
-          key={index}
-          className="inline-block mr-1"
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{
-            delay: delay + index * staggerDelay,
-            duration: 0.5,
-            ease: [0.22, 1, 0.36, 1],
+          key={i}
+          className="inline-block mr-[0.25em]"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                duration: 0.5,
+                ease: [0.25, 0.1, 0.25, 1]
+              }
+            }
           }}
         >
           {word}
@@ -179,33 +218,48 @@ export const TextReveal: React.FC<{
   );
 };
 
-/**
- * Line reveal component for heading animations
- */
-export const LineReveal: React.FC<{
-  children: React.ReactNode;
-  className?: string;
+export const CharacterReveal: React.FC<{
+  text: string;
   delay?: number;
-  once?: boolean;
-}> = ({ children, className = '', delay = 0, once = true }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once, amount: 0.5 });
-  
+  staggerDelay?: number;
+  className?: string;
+}> = ({ text, delay = 0, staggerDelay = 0.02, className }) => {
   return (
-    <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.div
-        initial={{ y: '100%' }}
-        animate={isInView ? { y: 0 } : { y: '100%' }}
-        transition={{
-          delay,
-          duration: 0.6,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-        {children}
-      </motion.div>
-    </div>
+    <motion.span
+      className={cn('inline-block', className)}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{
+        visible: {
+          transition: {
+            delayChildren: delay,
+            staggerChildren: staggerDelay
+          }
+        }
+      }}
+    >
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          className="inline-block"
+          style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+          variants={{
+            hidden: { opacity: 0, y: 20, rotateX: -90 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              rotateX: 0,
+              transition: {
+                duration: 0.5,
+                ease: [0.25, 0.1, 0.25, 1]
+              }
+            }
+          }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </motion.span>
   );
 };
-
-export default StaggerReveal;

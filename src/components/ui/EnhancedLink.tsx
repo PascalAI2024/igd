@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 
 interface EnhancedLinkProps extends Omit<LinkProps, 'to'> {
   to?: string;

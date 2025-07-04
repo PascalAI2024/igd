@@ -5,10 +5,11 @@ export const ScreenReaderOnly: React.FC<SROnlyProps> = ({
   children,
   as: Component = 'span',
 }) => {
+  const Element = Component as any;
   return (
-    <Component style={visuallyHiddenStyles}>
+    <Element style={visuallyHiddenStyles}>
       {children}
-    </Component>
+    </Element>
   );
 };
 

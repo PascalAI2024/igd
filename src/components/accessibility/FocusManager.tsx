@@ -49,7 +49,7 @@ export const FocusIndicator: React.FC<FocusIndicatorProps> = ({
   return (
     <div className={`focus-indicator ${className}`}>
       {children}
-      <style jsx>{`
+      <style>{`
         .focus-indicator {
           position: relative;
         }

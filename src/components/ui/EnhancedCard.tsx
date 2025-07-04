@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { motion, useSpring, useTransform, useMotionValue } from 'framer-motion';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 
 interface EnhancedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'glass' | 'gradient' | 'spotlight';

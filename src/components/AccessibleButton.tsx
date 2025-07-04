@@ -1,7 +1,6 @@
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { makeKeyboardAccessible } from '../utils/accessibility';
 
 interface AccessibleButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
@@ -75,7 +74,7 @@ export const AccessibleButton = forwardRef<HTMLButtonElement, AccessibleButtonPr
 
     // Motion variants
     const motionVariants = prefersReducedMotion
-      ? {}
+      ? undefined
       : {
           tap: { scale: 0.95 },
           hover: { scale: 1.05 },
@@ -93,9 +92,8 @@ export const AccessibleButton = forwardRef<HTMLButtonElement, AccessibleButtonPr
         aria-expanded={ariaExpanded}
         aria-busy={isLoading}
         onClick={onClick}
-        variants={motionVariants}
-        whileHover={!disabled && !isLoading ? 'hover' : undefined}
-        whileTap={!disabled && !isLoading ? 'tap' : undefined}
+        whileHover={!disabled && !isLoading && motionVariants ? motionVariants.hover : undefined}
+        whileTap={!disabled && !isLoading && motionVariants ? motionVariants.tap : undefined}
         {...props}
       >
         {isLoading ? (

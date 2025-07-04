@@ -11,7 +11,7 @@ import LightweightLoadingSequence from './components/LightweightLoadingSequence'
 import BreadcrumbSchema from './components/BreadcrumbSchema';
 import CustomCursor from './components/effects/CustomCursor';
 import CookieConsent from './components/CookieConsent';
-import StickyCTA from './components/ui/StickyCTA';
+import { StickyCTA } from './components/ui/StickyCTA';
 import MobileCTASection from './components/MobileCTASection';
 import { PerformanceProvider } from './contexts/PerformanceContext';
 import { useDeviceCapabilities } from './hooks/useDeviceCapabilities';
@@ -446,13 +446,13 @@ const App = () => {
         location.pathname.startsWith('/industries/')) && 
        !location.pathname.includes('thank-you') && (
         <StickyCTA 
-          text="Ready to transform your business?"
+          title="Ready to transform your business?"
           buttonText="Get Started"
           onButtonClick={() => window.location.href = '/contact'}
           showAfter={800}
           position="bottom"
           dismissible={true}
-          background="gradient"
+          variant="gradient"
         />
       )}
     </div>

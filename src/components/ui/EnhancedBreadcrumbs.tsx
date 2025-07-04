@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Home } from 'lucide-react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 
 interface Breadcrumb {
   label: string;

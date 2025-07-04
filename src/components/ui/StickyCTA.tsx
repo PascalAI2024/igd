@@ -1,204 +1,169 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import EnhancedButton from './EnhancedButton';
+import { cn } from '../../utils/cn';
+import { EnhancedButton } from './EnhancedButton';
 
 interface StickyCTAProps {
-  /**
-   * CTA text
-   */
-  text: string;
-  
-  /**
-   * Button text
-   */
+  title: string;
+  description?: string;
   buttonText: string;
-  
-  /**
-   * Button click handler
-   */
   onButtonClick: () => void;
-  
-  /**
-   * Show after scrolling this many pixels
-   * @default 500
-   */
-  showAfter?: number;
-  
-  /**
-   * Position of the CTA
-   * @default 'bottom'
-   */
-  position?: 'top' | 'bottom';
-  
-  /**
-   * Allow dismissing the CTA
-   * @default true
-   */
+  position?: 'bottom' | 'top';
+  showAfter?: number; // Scroll distance in pixels
+  hideOnScroll?: boolean;
   dismissible?: boolean;
-  
-  /**
-   * Background style
-   * @default 'glass'
-   */
-  background?: 'glass' | 'solid' | 'gradient';
-  
-  /**
-   * Additional className
-   */
+  variant?: 'default' | 'minimal' | 'gradient';
   className?: string;
 }
 
-/**
- * Sticky CTA component that appears on scroll
- * Features:
- * - Smooth entrance/exit animations
- * - Dismissible with memory
- * - Multiple background styles
- * - Responsive design
- */
-const StickyCTA: React.FC<StickyCTAProps> = ({
-  text,
+export const StickyCTA: React.FC<StickyCTAProps> = ({
+  title,
+  description,
   buttonText,
   onButtonClick,
-  showAfter = 500,
   position = 'bottom',
+  showAfter = 500,
+  hideOnScroll = false,
   dismissible = true,
-  background = 'glass',
-  className = '',
+  variant = 'default',
+  className
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
-  const { scrollY } = useScroll();
-  
-  // Check localStorage for dismissed state
+  const [lastScrollY, setLastScrollY] = useState(0);
+
   useEffect(() => {
-    const dismissed = localStorage.getItem('stickyCTA_dismissed');
-    if (dismissed === 'true') {
-      setIsDismissed(true);
-    }
-  }, []);
-  
-  // Monitor scroll position
-  useEffect(() => {
-    const unsubscribe = scrollY.onChange((latest) => {
-      if (!isDismissed && latest > showAfter) {
-        setIsVisible(true);
-      } else if (latest <= showAfter) {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Check if we should show the CTA
+      if (currentScrollY > showAfter && !isDismissed) {
+        if (hideOnScroll) {
+          // Hide when scrolling down, show when scrolling up
+          setIsVisible(currentScrollY < lastScrollY);
+        } else {
+          setIsVisible(true);
+        }
+      } else {
         setIsVisible(false);
       }
-    });
-    
-    return unsubscribe;
-  }, [scrollY, showAfter, isDismissed]);
-  
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial state
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [showAfter, hideOnScroll, isDismissed, lastScrollY]);
+
   const handleDismiss = () => {
     setIsDismissed(true);
-    localStorage.setItem('stickyCTA_dismissed', 'true');
+    setIsVisible(false);
   };
-  
-  const backgroundStyles = {
-    glass: 'bg-black/80 backdrop-blur-md border-y border-white/10',
-    solid: 'bg-gray-900 border-y border-gray-800',
-    gradient: 'bg-gradient-to-r from-gray-900 via-red-900/20 to-gray-900',
+
+  const variantStyles = {
+    default: 'bg-gray-900/95 backdrop-blur-lg border-gray-800',
+    minimal: 'bg-gray-900/90 backdrop-blur-md',
+    gradient: 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 backdrop-blur-lg'
   };
-  
-  const positionStyles = {
-    top: 'top-0',
-    bottom: 'bottom-0',
-  };
-  
-  const slideVariants = {
-    hidden: {
-      y: position === 'top' ? -100 : 100,
-      opacity: 0,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 200,
-        damping: 30,
-      },
-    },
-    exit: {
-      y: position === 'top' ? -100 : 100,
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-  
+
   return (
     <AnimatePresence>
-      {isVisible && !isDismissed && (
+      {isVisible && (
         <motion.div
-          className={`
-            fixed left-0 right-0 z-40
-            ${positionStyles[position]}
-            ${backgroundStyles[background]}
-            ${className}
-          `}
-          variants={slideVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
+          className={cn(
+            'fixed left-0 right-0 z-40 border',
+            position === 'bottom' ? 'bottom-0 border-t' : 'top-0 border-b',
+            variantStyles[variant],
+            className
+          )}
+          initial={{ y: position === 'bottom' ? 100 : -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: position === 'bottom' ? 100 : -100, opacity: 0 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         >
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between gap-4">
-              {/* CTA Content */}
-              <motion.div
-                className="flex-1 flex items-center gap-4 flex-wrap"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <p className="text-white font-medium">
-                  {text}
-                </p>
-                
-                <EnhancedButton
-                  onClick={onButtonClick}
-                  variant="primary"
-                  size="small"
-                  className="whitespace-nowrap"
+          <div className="container mx-auto px-4 py-4 md:py-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              {/* Content */}
+              <div className="flex-1 text-center md:text-left">
+                <motion.h3
+                  className="text-lg md:text-xl font-semibold text-white mb-1"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
                 >
-                  {buttonText}
-                </EnhancedButton>
-              </motion.div>
-              
-              {/* Dismiss button */}
-              {dismissible && (
-                <motion.button
-                  onClick={handleDismiss}
-                  className="p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/10"
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  {title}
+                </motion.h3>
+                {description && (
+                  <motion.p
+                    className="text-sm md:text-base text-gray-400"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    {description}
+                  </motion.p>
+                )}
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-3">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.3 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label="Dismiss"
                 >
-                  <X className="w-5 h-5" />
-                </motion.button>
-              )}
+                  <EnhancedButton
+                    onClick={onButtonClick}
+                    variant={variant === 'gradient' ? 'gradient' : 'primary'}
+                    size="md"
+                  >
+                    {buttonText}
+                  </EnhancedButton>
+                </motion.div>
+
+                {dismissible && (
+                  <motion.button
+                    onClick={handleDismiss}
+                    className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label="Dismiss"
+                  >
+                    <X className="w-5 h-5" />
+                  </motion.button>
+                )}
+              </div>
             </div>
           </div>
-          
-          {/* Progress indicator */}
+
+          {/* Progress indicator for gradient variant */}
+          {variant === 'gradient' && (
+            <motion.div
+              className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-orange-500 to-pink-500"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              style={{ transformOrigin: 'left' }}
+            />
+          )}
+
+          {/* Glow effect */}
           <motion.div
-            className="absolute bottom-0 left-0 h-0.5 bg-red-500"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            style={{ transformOrigin: 'left' }}
-          />
+            className="absolute inset-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.5 }}
+            transition={{ delay: 0.6 }}
+          >
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent" />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 };
-
-export default StickyCTA;

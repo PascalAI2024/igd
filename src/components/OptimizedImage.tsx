@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { generateBlurDataURL, OptimizedImageProps } from '../utils/performance';
 import { useLazyLoad } from '../utils/performance';
 
-export const OptimizedImage: React.FC<OptimizedImageProps> = ({
+const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
   alt,
   width,
@@ -78,6 +78,8 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   );
 };
 
+export default OptimizedImage;
+
 // Picture element for responsive images
 interface ResponsiveImageProps extends OptimizedImageProps {
   sources?: Array<{
@@ -117,3 +119,5 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     </div>
   );
 };
+
+export { OptimizedImage, ResponsiveImage };

@@ -32,7 +32,7 @@ export const SkipLinks: React.FC<SkipLinksProps> = ({
           {link.label}
         </a>
       ))}
-      <style jsx>{`
+      <style>{`
         .skip-links {
           position: absolute;
           top: -40px;

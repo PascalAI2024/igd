@@ -1,53 +1,33 @@
-/**
- * UI components package
- * 
- * This package provides a set of reusable UI components with consistent styling.
- */
+// Enhanced UI Components
+export { EnhancedButton } from './EnhancedButton';
+export { EnhancedLink } from './EnhancedLink';
+export { EnhancedCard } from './EnhancedCard';
 
-// Core UI components
-export { default as CTAButton } from './CTAButton';
-export type { CTAButtonType, CTAButtonSize } from './CTAButton';
-export { default as CTAButtonShowcase } from './CTAButtonShowcase';
+// Navigation & Feedback
+export { ScrollProgress } from './ScrollProgress';
+export { BackToTop } from './BackToTop';
+export { EnhancedBreadcrumbs } from './EnhancedBreadcrumbs';
 
-// Advanced Interaction Components
-export { default as EnhancedButton } from './EnhancedButton';
-export { default as EnhancedLink } from './EnhancedLink';
-export { default as EnhancedCard } from './EnhancedCard';
-export { default as EnhancedBreadcrumbs } from './EnhancedBreadcrumbs';
-export { default as EnhancedCTAButton } from './EnhancedCTAButton';
+// Layout & Visual
+export { SectionDivider } from './SectionDivider';
+export { StickyCTA } from './StickyCTA';
 
-// Navigation & Progress Components
-export { default as ScrollProgress } from './ScrollProgress';
-export { default as BackToTop } from './BackToTop';
-export { default as StickyCTA } from './StickyCTA';
-
-// Layout & Content Components
-export { default as SectionDivider } from './SectionDivider';
-export { default as Skeleton, SkeletonList } from './Skeleton';
-export { default as StaggerReveal, TextReveal, LineReveal } from './StaggerReveal';
-
-// Feedback & Trust Components
-export { useToast, ToastContainer } from './Toast';
-export { default as Tooltip, TooltipIcon } from './Tooltip';
+// Loading States
 export { 
-  default as SocialProofNotification,
-  MetricCounter,
-  ClientLogoCarousel,
-  RecentActivityFeed,
-  ROIIndicator
-} from './SocialProof';
+  Skeleton, 
+  SkeletonText, 
+  SkeletonCard, 
+  SkeletonTable, 
+  SkeletonImage 
+} from './Skeleton';
+
+// Animation Components
 export { 
-  default as TrustSignals, 
-  SecurityBadges, 
-  PartnerLogos, 
-  YearsInBusinessBadge 
-} from './TrustSignals';
-
-// Table Components
-export { default as ComparisonTable, BeforeAfterComparison } from './ComparisonTable';
-
-// Widget Components
-export { default as PlaceholderWidget } from './PlaceholderWidget';
-
-// Constants
-export * from './uiConstants';
+  StaggerReveal, 
+  FadeIn, 
+  SlideIn, 
+  ScaleIn, 
+  RotateIn, 
+  TextReveal, 
+  CharacterReveal 
+} from './StaggerReveal';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 
 interface ScrollProgressProps {
   position?: 'top' | 'bottom';
