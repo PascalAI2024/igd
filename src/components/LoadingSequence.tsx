@@ -272,7 +272,7 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
             <div className="space-y-6">
               <div className="min-h-[2rem] flex items-center justify-center">
                 <span
-                  className="loading-text text-red-500 font-mono text-sm sm:text-base text-center leading-relaxed"
+                  className="loading-text text-red-500 font-mono text-lg sm:text-base text-center leading-relaxed"
                 >
                   Initializing Neural Network
                 </span>
@@ -286,11 +286,11 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
                   whileHover={{ scale: 1.05, backgroundColor: 'rgba(239, 68, 68, 0.3)' }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onComplete}
-                  className="mt-8 px-4 py-2 bg-red-500/20 border border-red-500/40 rounded-md text-red-500 text-sm font-medium flex items-center justify-center mx-auto hover:bg-red-500/30 transition-all duration-300 shadow-sm shadow-red-500/20"
+                  className="mt-8 px-6 py-3 sm:px-4 sm:py-2 bg-red-500/20 border border-red-500/40 rounded-md text-red-500 text-base sm:text-sm font-medium flex items-center justify-center mx-auto hover:bg-red-500/30 transition-all duration-300 shadow-sm shadow-red-500/20 min-h-[48px] sm:min-h-[36px]"
                   aria-label="Skip loading animation"
                 >
                   <span>Skip</span>
-                  <SkipForward className="ml-2 w-4 h-4" />
+                  <SkipForward className="ml-2 w-5 h-5 sm:w-4 sm:h-4" />
                 </motion.button>
               )}
             </div>

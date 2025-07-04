@@ -39,8 +39,8 @@ interface LiveStats {
 }
 
 const InteractiveContactHub: React.FC = () => {
-  const [selectedMethod, setSelectedMethod] = useState<string>('live-chat');
-  const [showWidget, setShowWidget] = useState<'calendar' | 'chat' | 'video' | null>(null);
+  const [selectedMethod, setSelectedMethod] = useState<string>('phone-call');
+  const [showWidget, setShowWidget] = useState<'calendar' | 'video' | null>(null);
   const { toasts, addToast, removeToast } = useToast();
   const [liveStats, setLiveStats] = useState<LiveStats>({
     activeAgents: 3,
@@ -50,17 +50,6 @@ const InteractiveContactHub: React.FC = () => {
   });
 
   const contactMethods: ContactMethod[] = [
-    {
-      id: 'live-chat',
-      name: 'Live Chat',
-      icon: MessageSquare,
-      color: 'bg-green-500',
-      availability: 'Online Now',
-      responseTime: '< 30 seconds',
-      description: 'Get instant answers to your questions with our live chat support',
-      isLive: true,
-      preferredFor: ['Quick questions', 'Project inquiries', 'Technical support']
-    },
     {
       id: 'phone-call',
       name: 'Phone Call',
@@ -125,15 +114,6 @@ const InteractiveContactHub: React.FC = () => {
 
   const handleContactAction = (methodId: string) => {
     switch (methodId) {
-      case 'live-chat':
-        setShowWidget('chat');
-        addToast({
-          type: 'info',
-          title: 'Opening Live Chat',
-          message: 'Connecting you with our support team...',
-          duration: 3000
-        });
-        break;
       case 'phone-call':
         window.open('tel:+1234567890');
         addToast({

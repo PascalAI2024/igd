@@ -71,13 +71,13 @@ export const LazyComponents = {
   ),
   
   // Interactive Tools
-  WebsiteSpeedTest: createLazyComponent(() => 
-    import('../components/interactive-tools/WebsiteSpeedTest')
-  ),
+  // WebsiteSpeedTest: createLazyComponent(() => 
+  //   import('../components/interactive-tools/WebsiteSpeedTest')
+  // ),
   
-  SEOKeywordAnalyzer: createLazyComponent(() => 
-    import('../components/interactive-tools/SEOKeywordAnalyzer')
-  ),
+  // SEOKeywordAnalyzer: createLazyComponent(() => 
+  //   import('../components/interactive-tools/SEOKeywordAnalyzer')
+  // ),
   
   // About Page Components
   InteractiveTeamShowcase: createLazyComponent(() => 

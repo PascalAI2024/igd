@@ -67,8 +67,8 @@ const LightweightLoadingSequence = ({ onComplete }: { onComplete: () => void }) 
             />
           </div>
 
-          {/* Loading text */}
-          <h2 className="text-red-500 font-mono text-lg mb-4">
+          {/* Loading text - larger on mobile */}
+          <h2 className="text-red-500 font-mono text-xl sm:text-lg mb-4">
             {currentMessage}
           </h2>
 
@@ -84,18 +84,18 @@ const LightweightLoadingSequence = ({ onComplete }: { onComplete: () => void }) 
             </div>
           </div>
 
-          {/* Skip button - always visible */}
+          {/* Skip button - always visible, larger on mobile */}
           <motion.button
             initial={{ opacity: 0.8 }}
             animate={{ opacity: 1 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onComplete}
-            className="px-6 py-3 bg-red-500/30 border-2 border-red-500 rounded-md text-red-500 font-medium flex items-center justify-center mx-auto hover:bg-red-500/40 transition-all duration-200"
+            className="px-8 py-4 sm:px-6 sm:py-3 bg-red-500/30 border-2 border-red-500 rounded-md text-red-500 text-lg sm:text-base font-medium flex items-center justify-center mx-auto hover:bg-red-500/40 transition-all duration-200 min-h-[56px] sm:min-h-[44px]"
             aria-label="Skip loading"
           >
             <span>Enter Site</span>
-            <SkipForward className="ml-2 w-5 h-5" />
+            <SkipForward className="ml-2 w-6 h-6 sm:w-5 sm:h-5" />
           </motion.button>
         </div>
       </motion.div>

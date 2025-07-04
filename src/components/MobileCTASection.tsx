@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Phone, MessageCircle, Calendar, Clock, MapPin, ChevronUp } from 'lucide-react';
 import { cn } from '../utils/cn';
 import MobileTouchButton from './ui/MobileTouchButton';
-import { getOrientation, onOrientationChange } from '../utils/mobileOptimizations';
+import { getOrientation, onOrientationChange, triggerHapticFeedback } from '../utils/mobileOptimizations';
 
 interface MobileCTASectionProps {
   phoneNumber?: string;
-  showChat?: boolean;
   showSchedule?: boolean;
   className?: string;
   position?: 'bottom' | 'floating';
@@ -15,7 +14,6 @@ interface MobileCTASectionProps {
 
 const MobileCTASection: React.FC<MobileCTASectionProps> = ({
   phoneNumber = '(208) 555-0123',
-  showChat = true,
   showSchedule = true,
   className,
   position = 'floating'
@@ -23,6 +21,19 @@ const MobileCTASection: React.FC<MobileCTASectionProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [orientation, setOrientation] = useState(getOrientation());
   const [businessHours, setBusinessHours] = useState<'open' | 'closed'>('open');
+  const shouldReduceMotion = useReducedMotion();
+
+  // Double-check we're on mobile
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Monitor orientation changes
   useEffect(() => {
@@ -53,23 +64,30 @@ const MobileCTASection: React.FC<MobileCTASectionProps> = ({
     return () => clearInterval(interval);
   }, []);
 
-  const handleCall = () => {
+  const handleCall = useCallback(() => {
+    triggerHapticFeedback('medium');
     window.location.href = `tel:${phoneNumber.replace(/\D/g, '')}`;
-  };
+  }, [phoneNumber]);
 
-  const handleChat = () => {
-    // Implement chat functionality
-    console.log('Opening chat...');
-  };
+  const handleContact = useCallback(() => {
+    triggerHapticFeedback('medium');
+    window.location.href = '/contact';
+  }, []);
 
-  const handleSchedule = () => {
-    // Navigate to scheduling page or open calendar
-    window.location.href = '/schedule';
-  };
+  const handleSchedule = useCallback(() => {
+    triggerHapticFeedback('medium');
+    window.location.href = '/contact#schedule';
+  }, []);
 
-  const handleDirections = () => {
+  const handleDirections = useCallback(() => {
+    triggerHapticFeedback('medium');
     window.open('https://maps.google.com/?q=Ingenious+Digital+Boise+ID', '_blank');
-  };
+  }, []);
+
+  // Don't render on desktop
+  if (!isMobile) {
+    return null;
+  }
 
   if (position === 'floating') {
     return (
@@ -78,9 +96,13 @@ const MobileCTASection: React.FC<MobileCTASectionProps> = ({
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 1, type: 'spring' }}
+          transition={{ 
+            delay: shouldReduceMotion ? 0 : 1, 
+            type: shouldReduceMotion ? 'tween' : 'spring',
+            duration: shouldReduceMotion ? 0.1 : 0.5
+          }}
           className={cn(
-            'fixed bottom-6 right-6 z-40',
+            'fixed bottom-6 right-6 z-50',
             orientation === 'landscape' && 'bottom-4 right-4',
             className
           )}
@@ -89,13 +111,13 @@ const MobileCTASection: React.FC<MobileCTASectionProps> = ({
             onClick={() => setIsExpanded(!isExpanded)}
             variant="primary"
             size="large"
-            className="rounded-full w-14 h-14 p-0 shadow-2xl"
+            className="rounded-full w-14 h-14 p-0 shadow-2xl transform-gpu"
             hapticFeedback
             ariaLabel="Contact options"
           >
             <motion.div
               animate={{ rotate: isExpanded ? 45 : 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
             >
               {isExpanded ? <ChevronUp className="w-6 h-6" /> : <Phone className="w-6 h-6" />}
             </motion.div>
@@ -115,8 +137,12 @@ const MobileCTASection: React.FC<MobileCTASectionProps> = ({
                 initial={{ opacity: 0, y: 20, scale: 0.8 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.8 }}
-                transition={{ type: 'spring', damping: 25 }}
-                className="absolute bottom-16 right-0 space-y-3"
+                transition={{ 
+                  type: shouldReduceMotion ? 'tween' : 'spring', 
+                  damping: 25,
+                  duration: shouldReduceMotion ? 0.1 : undefined
+                }}
+                className="absolute bottom-16 right-0 space-y-3 z-50"
               >
                 {/* Call Button */}
                 <motion.div
@@ -139,28 +165,26 @@ const MobileCTASection: React.FC<MobileCTASectionProps> = ({
                   </MobileTouchButton>
                 </motion.div>
 
-                {/* Chat Button */}
-                {showChat && (
-                  <motion.div
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.15 }}
-                    className="flex items-center gap-3"
+                {/* Contact Button */}
+                <motion.div
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.15 }}
+                  className="flex items-center gap-3"
+                >
+                  <span className="text-white text-sm font-medium bg-black/80 px-3 py-1 rounded-lg whitespace-nowrap">
+                    Contact Us
+                  </span>
+                  <MobileTouchButton
+                    onClick={handleContact}
+                    variant="primary"
+                    size="medium"
+                    className="rounded-full w-12 h-12 p-0 bg-blue-600 hover:bg-blue-700"
+                    hapticFeedback
                   >
-                    <span className="text-white text-sm font-medium bg-black/80 px-3 py-1 rounded-lg whitespace-nowrap">
-                      Live Chat
-                    </span>
-                    <MobileTouchButton
-                      onClick={handleChat}
-                      variant="primary"
-                      size="medium"
-                      className="rounded-full w-12 h-12 p-0 bg-blue-600 hover:bg-blue-700"
-                      hapticFeedback
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                    </MobileTouchButton>
-                  </motion.div>
-                )}
+                    <MessageCircle className="w-5 h-5" />
+                  </MobileTouchButton>
+                </motion.div>
 
                 {/* Schedule Button */}
                 {showSchedule && (
@@ -218,9 +242,13 @@ const MobileCTASection: React.FC<MobileCTASectionProps> = ({
     <motion.div
       initial={{ y: 100 }}
       animate={{ y: 0 }}
-      transition={{ type: 'spring', damping: 30 }}
+      transition={{ 
+        type: shouldReduceMotion ? 'tween' : 'spring', 
+        damping: 30,
+        duration: shouldReduceMotion ? 0.1 : undefined
+      }}
       className={cn(
-        'fixed bottom-0 left-0 right-0 z-40',
+        'fixed bottom-0 left-0 right-0 z-50',
         'bg-black/95 backdrop-blur-md border-t border-white/10',
         'px-4 py-3',
         orientation === 'landscape' && 'py-2',
@@ -241,19 +269,17 @@ const MobileCTASection: React.FC<MobileCTASectionProps> = ({
             <span>Call Now</span>
           </MobileTouchButton>
 
-          {/* Chat Button */}
-          {showChat && (
-            <MobileTouchButton
-              onClick={handleChat}
-              variant="secondary"
-              size="medium"
-              className="flex-1"
-              hapticFeedback
-            >
-              <MessageCircle className="w-5 h-5 mr-2" />
-              <span>Chat</span>
-            </MobileTouchButton>
-          )}
+          {/* Contact Button */}
+          <MobileTouchButton
+            onClick={handleContact}
+            variant="secondary"
+            size="medium"
+            className="flex-1"
+            hapticFeedback
+          >
+            <MessageCircle className="w-5 h-5 mr-2" />
+            <span>Contact</span>
+          </MobileTouchButton>
 
           {/* Schedule Button */}
           {showSchedule && (

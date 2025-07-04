@@ -6,7 +6,6 @@ import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingContactIcons from './components/FloatingContactIcons';
-import LoadingSequence from './components/LoadingSequence';
 import LightweightLoadingSequence from './components/LightweightLoadingSequence';
 import BreadcrumbSchema from './components/BreadcrumbSchema';
 import CustomCursor from './components/effects/CustomCursor';
@@ -24,7 +23,7 @@ import {
   trackEngagement 
 } from './utils/analytics';
 import { measurePerformance } from './utils/performance';
-import { ExitIntentPopup, ScrollTriggeredCTA, LiveChatWidget } from './components/interactive-tools';
+import { ExitIntentPopup, ScrollTriggeredCTA } from './components/interactive-tools';
 import './styles/mobile.css';
 
 // Declare missing type for analytics tracking timeout
@@ -325,7 +324,6 @@ const App = () => {
           <MobileCTASection 
             position="floating"
             phoneNumber="(208) 555-0123"
-            showChat={true}
             showSchedule={true}
           />
         )}
@@ -333,13 +331,17 @@ const App = () => {
         {/* Interactive Components - only on certain pages */}
         {!location.pathname.includes('/landing') && !location.pathname.includes('/tools') && (
           <>
-            {!isMobile && <ExitIntentPopup delay={2000} cookieDuration={7} />}
-            <ScrollTriggeredCTA 
-              triggerPercentage={60} 
-              position="bottom-right" 
-              variant={location.pathname === '/' ? 'floating' : 'slide-in'} 
-            />
-            <LiveChatWidget />
+            {/* Desktop only components - prevent mobile conflicts */}
+            {!isMobile && (
+              <>
+                <ExitIntentPopup delay={2000} cookieDuration={7} />
+                <ScrollTriggeredCTA 
+                  triggerPercentage={60} 
+                  position="bottom-right" 
+                  variant={location.pathname === '/' ? 'floating' : 'slide-in'} 
+                />
+              </>
+            )}
           </>
         )}
 

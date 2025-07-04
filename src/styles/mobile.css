@@ -13,6 +13,7 @@
   .clickable {
     min-height: 44px;
     min-width: 44px;
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* Increase spacing between interactive elements */
@@ -36,11 +37,14 @@
   }
 
   /* Disable hover effects on touch devices */
-  @media (hover: none) {
-    /* Remove hover-specific styles without breaking everything */
-    *:hover {
+  @media (hover: none) and (pointer: coarse) {
+    /* Remove hover-specific styles for touch devices */
+    button:hover,
+    a:hover,
+    .clickable:hover {
       transform: none !important;
       box-shadow: none !important;
+      background-color: inherit !important;
     }
   }
 }
@@ -108,25 +112,20 @@
 }
 
 /* Touch-specific enhancements */
-.touch-device {
-  /* Remove hover states */
-  button:hover,
-  a:hover {
-    background-color: inherit;
-    color: inherit;
-  }
-
-  /* Add active states */
+@media (hover: none) and (pointer: coarse) {
+  /* Add active states for better feedback */
   button:active,
   a:active,
-  .touchable:active {
+  .touchable:active,
+  [role="button"]:active {
     opacity: 0.8;
     transform: scale(0.98);
+    transition: all 0.1s ease;
   }
 }
 
 /* Performance optimizations for low-end devices */
-.reduce-animations {
+@media (prefers-reduced-motion: reduce) {
   /* Disable complex animations */
   *,
   *::before,
@@ -135,11 +134,10 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-.no-parallax {
-  /* Disable parallax scrolling */
-  .parallax {
+  
+  /* Disable parallax and transforms */
+  .parallax,
+  [data-parallax] {
     transform: none !important;
   }
 }
@@ -211,28 +209,32 @@
   }
 }
 
-/* Improve tap feedback */
-.tap-highlight {
-  position: relative;
-  overflow: hidden;
-}
+/* Improve tap feedback with ripple effect */
+@media (max-width: 768px) {
+  .tap-highlight {
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-.tap-highlight::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
+  .tap-highlight::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
 
-.tap-highlight:active::after {
-  width: 300px;
-  height: 300px;
+  .tap-highlight:active::after {
+    width: 100%;
+    height: 100%;
+    transition: width 0.3s ease-out, height 0.3s ease-out;
+  }
 }
 
 /* Mobile modal optimizations */
@@ -251,18 +253,48 @@
   }
 }
 
-/* Thumb-friendly placement */
+/* Thumb-friendly placement and touch optimization */
 @media (max-width: 768px) {
-  .thumb-zone {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1rem;
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  /* Ensure floating elements don't overlap */
+  .fixed-bottom {
+    bottom: max(80px, env(safe-area-inset-bottom));
+  }
+  
+  /* Prevent accidental touches */
+  .interactive-element {
+    margin: 8px;
+    padding: 12px;
+  }
+  
+  /* Optimize scrolling performance */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+/* Fix overlapping mobile elements */
+@media (max-width: 768px) {
+  /* Ensure proper stacking context */
+  .fixed {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
-  .thumb-zone-item {
-    margin-bottom: 0.5rem;
+  /* Prevent multiple fixed elements at same position */
+  .fixed[class*="bottom-"][class*="right-"] + .fixed[class*="bottom-"][class*="right-"] {
+    display: none;
+  }
+
+  /* Clear animation artifacts */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent transform glitches */
+  .motion-safe\:transform {
+    will-change: auto;
   }
 }

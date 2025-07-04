@@ -244,11 +244,11 @@ const ServicePageConversionSection: React.FC<ServicePageConversionSectionProps> 
             <EnhancedCTAButton
               variant="urgent"
               size="large"
-              to="/live-chat"
-              urgencyText="Experts online now"
+              to="/contact"
+              urgencyText="Get in touch now"
               pulseAnimation={true}
             >
-              Start Live Chat
+              Contact Us
             </EnhancedCTAButton>
           </div>
         </motion.div>
