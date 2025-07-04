@@ -83,7 +83,11 @@ const Tools: React.FC = () => {
 
         {/* Tools Grid */}
         {!activeToolId && (
-          <AnimatedSection className="py-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid md:grid-cols-2 gap-8">
                 {tools.map((tool, index) => (
@@ -115,12 +119,16 @@ const Tools: React.FC = () => {
                 ))}
               </div>
             </div>
-          </AnimatedSection>
+          </motion.div>
         )}
 
         {/* Active Tool Section */}
         {activeToolId && activeTool && (
-          <AnimatedSection className="py-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <button
                 onClick={() => setActiveToolId(null)}
@@ -130,12 +138,16 @@ const Tools: React.FC = () => {
               </button>
               <activeTool.component />
             </div>
-          </AnimatedSection>
+          </motion.div>
         )}
 
         {/* Benefits Section */}
         {!activeToolId && (
-          <AnimatedSection className="py-16 bg-white dark:bg-gray-800">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="py-16 bg-white dark:bg-gray-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -181,12 +193,16 @@ const Tools: React.FC = () => {
                 </div>
               </div>
             </div>
-          </AnimatedSection>
+          </motion.div>
         )}
 
         {/* CTA Section */}
         {!activeToolId && (
-          <AnimatedSection className="py-16 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="py-16 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                 Need More Advanced Analysis?

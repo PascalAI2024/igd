@@ -37,8 +37,10 @@
 
   /* Disable hover effects on touch devices */
   @media (hover: none) {
+    /* Remove hover-specific styles without breaking everything */
     *:hover {
-      all: initial !important;
+      transform: none !important;
+      box-shadow: none !important;
     }
   }
 }

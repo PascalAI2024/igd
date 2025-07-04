@@ -89,7 +89,7 @@ interface ResponsiveImageProps extends OptimizedImageProps {
   }>;
 }
 
-export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
+const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   sources = [],
   ...imageProps
 }) => {
