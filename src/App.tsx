@@ -123,8 +123,11 @@ const App = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const skipLoading = urlParams.get('skip_loading') === 'true';
     
+    // Check if we're on the home page
+    const isHomePage = window.location.pathname === '/' || window.location.pathname === '';
+    
     // Only show loading on initial load of the home page, and not if explicitly skipped
-    return !skipLoading && !hasLoadedBefore && location.pathname === '/';
+    return !skipLoading && !hasLoadedBefore && isHomePage;
   });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isMobile } = useDeviceCapabilities();

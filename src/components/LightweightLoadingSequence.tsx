@@ -28,15 +28,23 @@ const LightweightLoadingSequence = ({ onComplete }: { onComplete: () => void }) 
       }
     }, messageInterval);
 
-    // Auto-complete after max time
+    // Auto-complete after max time - FAILSAFE
     const timeout = setTimeout(() => {
       clearInterval(interval);
+      console.warn('Loading sequence timeout - forcing completion');
       onComplete();
     }, totalDuration + 500);
+
+    // Additional failsafe for stuck loading screens
+    const emergencyTimeout = setTimeout(() => {
+      console.error('Emergency loading timeout - forcing completion');
+      onComplete();
+    }, 10000); // 10 seconds max
 
     return () => {
       clearInterval(interval);
       clearTimeout(timeout);
+      clearTimeout(emergencyTimeout);
     };
   }, [onComplete]);
 
