@@ -5,99 +5,19 @@ import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import { useNavigateWithTransition } from '../hooks/useNavigateWithTransition';
 
-// Simple case studies data with all required properties inline
-export const caseStudies = [
-  {
-    id: 'ai-analytics',
-    title: 'AI-Powered Analytics Platform',
-    subtitle: 'Advanced AI Analytics for Enterprise Data',
-    description: 'How we developed an AI-powered analytics platform that processes massive datasets in real-time, providing actionable insights and predictive capabilities.',
-    industry: 'Data Analytics',
-    imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['Python', 'TensorFlow', 'PyTorch', 'React', 'Node.js', 'D3.js']
-  },
-  {
-    id: 'cybersecurity-platform',
-    title: 'Enterprise Cybersecurity Platform',
-    subtitle: 'Enterprise-Grade Cybersecurity Platform',
-    description: 'How we built an advanced cybersecurity platform with AI-powered threat detection and automated incident response for enterprise clients.',
-    industry: 'Cybersecurity',
-    imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['Python', 'TensorFlow', 'React', 'Node.js', 'Elasticsearch', 'Kafka']
-  },
-  {
-    id: 'saas-platform',
-    title: 'Enterprise SaaS Platform',
-    subtitle: 'Enterprise-Grade SaaS Platform Development',
-    description: 'How we built a scalable SaaS platform that transformed business operations for a leading tech company, resulting in 320% increase in operational efficiency.',
-    industry: 'Technology',
-    imageUrl: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['React', 'Node.js', 'TypeScript', 'GraphQL', 'MongoDB', 'Redis']
-  },
-  {
-    id: 'iot-smart-city',
-    title: 'IoT Smart City Infrastructure',
-    subtitle: 'IoT Smart City Infrastructure Development',
-    description: 'How we developed an integrated IoT platform connecting thousands of sensors across a city for real-time monitoring and management of urban infrastructure.',
-    industry: 'Government',
-    imageUrl: "https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['Python', 'React', 'Node.js', 'MQTT', 'LoRaWAN', 'AWS IoT']
-  },
-  {
-    id: 'elearning-platform',
-    title: 'Interactive E-Learning Platform',
-    subtitle: 'Interactive E-Learning Platform Development',
-    description: 'How we created a comprehensive e-learning platform with adaptive learning algorithms and interactive content delivery for global education.',
-    industry: 'Education',
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['React', 'Node.js', 'TypeScript', 'GraphQL', 'MongoDB', 'WebRTC']
-  },
-  {
-    id: 'auto-service-digital',
-    title: 'Local Auto Service Success',
-    subtitle: 'Comprehensive Digital Solutions for Auto Repair',
-    description: 'Complete digital transformation for a leading auto repair shop, boosting online visibility and streamlining operations with custom digital tools.',
-    industry: 'Auto Services',
-    imageUrl: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['React', 'Node.js', 'High Level CRM', 'Google Business Profile']
-  },
-  {
-    id: 'retail-growth',
-    title: 'Retail Growth Strategy',
-    subtitle: 'Multi-Channel Growth Strategy for Local Retailer',
-    description: 'Helping a local boutique retailer increase sales by 215% with an integrated e-commerce solution and targeted digital marketing campaigns.',
-    industry: 'Retail',
-    imageUrl: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['React', 'Node.js', 'High Level CRM', 'Google Business Profile']
-  },
-  {
-    id: 'ecommerce-specialty',
-    title: 'Specialty E-Commerce Platform',
-    subtitle: 'Scaling Online Sales for Specialty Retailer',
-    description: 'How we helped a specialty retailer increase online sales by 215% through platform optimization and digital marketing.',
-    industry: 'E-Commerce',
-    imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['React', 'Next.js', 'Node.js', 'Shopify API', 'Stripe']
-  },
-  {
-    id: 'realestate-digital',
-    title: 'Real Estate Digital Transformation',
-    subtitle: 'Modernizing Property Management and Sales',
-    description: 'How we helped a local real estate agency increase listings by 120% and improve client satisfaction through digital innovation.',
-    industry: 'Real Estate',
-    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['React', 'Node.js', 'MongoDB', 'AWS', 'Matterport Integration']
-  },
-  {
-    id: 'fintech-payments',
-    title: 'Small Business Payment Platform',
-    subtitle: 'Revolutionizing Small Business Payments',
-    description: 'How we built a secure, scalable payment platform that helped small businesses process over $50M in transactions.',
-    industry: 'FinTech',
-    imageUrl: "https://images.unsplash.com/photo-1565514020179-026b92b2d70b?q=80&w=1200&auto=format&fit=crop",
-    technologies: ['React', 'Node.js', 'TypeScript', 'PostgreSQL', 'Redis']
-  }
-];
+// Import case studies from the main data source to avoid duplication
+import { allCaseStudies } from '../data/case-studies/all-case-studies';
+
+// Use the complete case studies from the main data source
+export const caseStudies = allCaseStudies.map(study => ({
+  id: study.id,
+  title: study.title,
+  subtitle: study.subtitle || study.description,
+  description: study.description,
+  industry: study.industry,
+  imageUrl: study.imageUrl,
+  technologies: study.technologies
+}));
 
 const SimpleCaseStudies = () => {
   const navigateWithTransition = useNavigateWithTransition();
@@ -149,30 +69,10 @@ const SimpleCaseStudies = () => {
                     {/* Image Container */}
                     <div className="relative aspect-[16/9] overflow-hidden">
                       <img
-                        src={`/case-studies/${study.id}.webp`}
+                        src={study.imageUrl}
                         alt={study.title}
                         className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
-                        onError={(e) => {
-                          // Try SVG if webp fails, then fallback to unsplash URL
-                          const target = e.target as HTMLImageElement;
-                          const svgPath = `/case-studies/${study.id}.svg`;
-                          
-                          // First try to load the SVG version
-                          fetch(svgPath)
-                            .then(response => {
-                              if (response.ok) {
-                                target.src = svgPath;
-                              } else {
-                                // If SVG also fails, use the fallback URL
-                                target.src = study.imageUrl;
-                              }
-                            })
-                            .catch(() => {
-                              // If fetch fails, use the fallback URL
-                              target.src = study.imageUrl;
-                            });
-                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
 

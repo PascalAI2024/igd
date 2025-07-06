@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Store, ShoppingBag, Users, TrendingUp, Target, Smartphone } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
-import RetailVisualization from '../../components/industries/retail/RetailVisualization';
 
 const LocalRetail = () => {
   return (
@@ -27,15 +26,6 @@ const LocalRetail = () => {
                 foot traffic decline, and seasonal variations while improving conversion rates by 15-30%
               </p>
 
-              {/* Retail Visualization */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
-                className="mt-12 rounded-xl overflow-hidden shadow-2xl border border-white/10"
-              >
-                <RetailVisualization />
-              </motion.div>
             </motion.div>
           </div>
         </section>

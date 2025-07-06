@@ -2,8 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { UtensilsCrossed, ShoppingBag, Users, TrendingUp, Target, Smartphone } from 'lucide-react';
 import PageTransition from '../../components/PageTransition';
-import RestaurantROICalculator from '../../components/industries/restaurants/RestaurantROICalculator';
-import LiveOrderingDemo from '../../components/industries/restaurants/LiveOrderingDemo';
 
 const Restaurants = () => {
   return (
@@ -31,19 +29,6 @@ const Restaurants = () => {
           </div>
         </section>
 
-        {/* Restaurant ROI Calculator */}
-        <section className="py-16 bg-black/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <RestaurantROICalculator />
-          </div>
-        </section>
-
-        {/* Live Ordering System Demo */}
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <LiveOrderingDemo />
-          </div>
-        </section>
 
         {/* Features Grid */}
         <section className="py-20 bg-black/50">

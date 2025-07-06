@@ -260,10 +260,15 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
                       repeat: Infinity,
                       ease: "linear"
                     }}
-                    className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-lg sm:w-24 sm:h-24"
+                    className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-lg sm:w-24 sm:h-24 flex items-center justify-center"
                   >
                     <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-lg" />
                     <div className="absolute inset-1 border border-white/20 rounded-lg" />
+                    <img 
+                      src="/src/assets/igd_logo.png" 
+                      alt="IGD Logo" 
+                      className="w-10 h-10 sm:w-16 sm:h-16 relative z-10 object-contain"
+                    />
                   </motion.div>
                 </div>
               </div>

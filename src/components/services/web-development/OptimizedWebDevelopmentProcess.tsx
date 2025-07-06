@@ -383,8 +383,8 @@ const OptimizedWebDevelopmentProcess = () => {
         >
           <h3 className="text-xl font-medium text-white mb-4">Our Web Development Timeline</h3>
           <p className="text-gray-300 max-w-3xl mx-auto">
-            Our proven development process typically takes 4-8 weeks from start to finish,
-            depending on project complexity. Each phase is carefully executed to ensure
+            Our proven development process typically takes 4-8 weeks from start to finish, 
+            <strong> depending on project complexity</strong>. Each phase is carefully executed to ensure
             your website meets the highest standards of design, functionality, and performance.
             Click on each step above to learn more about our process.
           </p>

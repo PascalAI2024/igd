@@ -178,9 +178,14 @@ const drawBarChart = (
   padding: number,
   progress: number
 ) => {
+  if (!data || data.length === 0) return;
+  
   const barWidth = width / data.length * 0.6;
   const spacing = width / data.length * 0.4;
   const maxValue = Math.max(...data.map(d => d.value));
+  
+  // Prevent division by zero or invalid maxValue
+  if (!isFinite(maxValue) || maxValue <= 0) return;
   
   // Draw axes
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
@@ -239,7 +244,13 @@ const drawLineChart = (
   padding: number,
   progress: number
 ) => {
+  if (!data || data.length === 0) return;
+  
   const maxValue = Math.max(...data.map(d => d.value));
+  
+  // Prevent division by zero or invalid maxValue
+  if (!isFinite(maxValue) || maxValue <= 0) return;
+  
   const pointRadius = 4;
   
   // Draw grid
@@ -330,6 +341,8 @@ const drawRadarChart = (
   radius: number,
   progress: number
 ) => {
+  if (!data || data.length === 0) return;
+  
   const angleStep = (Math.PI * 2) / data.length;
   
   // Draw background circles
@@ -359,6 +372,9 @@ const drawRadarChart = (
   // Draw data polygon
   ctx.beginPath();
   const maxValue = Math.max(...data.map(d => d.value));
+  
+  // Prevent division by zero or invalid maxValue
+  if (!isFinite(maxValue) || maxValue <= 0) return;
   
   data.forEach((point, index) => {
     const angle = -Math.PI / 2 + angleStep * index;

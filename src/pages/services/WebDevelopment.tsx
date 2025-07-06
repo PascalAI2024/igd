@@ -9,8 +9,6 @@ import NavigationButton from '../../components/NavigationButton';
 import FeatureShowcase from '../../components/services/web-development/FeatureShowcase';
 import WebsiteVisualizer from '../../components/services/web-development/WebsiteVisualizer';
 import OptimizedWebDevelopmentProcess from '../../components/services/web-development/OptimizedWebDevelopmentProcess';
-import CodeShowcase from '../../components/services/web-development/CodeShowcase';
-import LiveCodeEditor from '../../components/services/web-development/LiveCodeEditor';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
 import MetaTags from '../../components/MetaTags';
@@ -93,35 +91,37 @@ const WebDevelopment = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center max-w-3xl mx-auto"
             >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                className="relative inline-block"
-              >
-                <Globe className="w-16 h-16 text-red-500 mx-auto mb-6" />
+              <div className="flex items-center justify-center gap-4 mb-6">
                 <motion.div
-                  className="absolute inset-0 rounded-full bg-red-500/20"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [1, 0.5, 1]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </motion.div>
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  className="relative"
+                >
+                  <Globe className="w-16 h-16 text-red-500" />
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-red-500/20"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [1, 0.5, 1]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </motion.div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-4xl md:text-5xl font-bold mb-6 text-gradient"
-              >
-                Local Business Websites
-              </motion.h1>
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-4xl md:text-5xl font-bold text-gradient"
+                >
+                  Local Business Websites
+                </motion.h1>
+              </div>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -395,39 +395,7 @@ const WebDevelopment = () => {
           </div>
         </section>
 
-        {/* Code Showcase */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-3xl font-bold text-gradient mb-4">
-                Clean, Modern Code
-              </h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                We build websites with clean, maintainable code using modern best practices
-              </p>
-            </motion.div>
 
-            <CodeShowcase
-              title="Our Development Approach"
-              description="See examples of the clean, efficient code we use to build your website"
-            />
-          </div>
-        </section>
-
-        {/* Live Code Editor - Interactive Demo */}
-        <section className="py-20 bg-black/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <LiveCodeEditor
-              title="🚀 Interactive Development Demo"
-              description="This is what sets us apart - try editing the code below and watch it update in real-time! This demonstrates our expertise in creating interactive, responsive websites."
-            />
-          </div>
-        </section>
 
         {/* Results Comparison */}
         <section className="py-20 bg-black/50">

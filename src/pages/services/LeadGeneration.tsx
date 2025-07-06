@@ -7,7 +7,6 @@ import {
 import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
 import FeatureShowcase from '../../components/services/lead-generation/FeatureShowcase';
-import LiveFunnelBuilder from '../../components/services/lead-generation/LiveFunnelBuilder';
 import TechnologyStack from '../../components/services/lead-generation/TechnologyStack';
 import { lazy3D } from '../../utils/lazyLoad3D';
 
@@ -202,32 +201,7 @@ const LeadGeneration = () => {
           </div>
         </section>
 
-        {/* Process Section */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl font-bold text-gradient mb-4">
-                Our Lead Generation Process
-              </h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                A systematic approach to generating and nurturing leads.
-              </p>
-            </motion.div>
-            <lazy3D.LeadGenerationProcessFlow3D />
-          </div>
-        </section>
 
-        {/* Live Funnel Builder Demo */}
-        <section className="py-20 bg-black/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <LiveFunnelBuilder />
-          </div>
-        </section>
 
         {/* Technology Stack */}
         <section className="py-20">
