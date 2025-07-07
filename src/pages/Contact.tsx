@@ -1,9 +1,6 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MessageSquare, MapPin, Clock, Zap, Globe, Award, Users, Briefcase } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Zap, Globe, Award, Users, Briefcase } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
-import InteractiveContactHub from '../components/contact/InteractiveContactHub';
-import LiveResponseDemo from '../components/contact/LiveResponseDemo';
 import MetaTags from '../components/MetaTags';
 
 const Contact = () => {
@@ -95,45 +92,10 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Interactive Contact Hub */}
-        <section className="py-16 bg-black/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <InteractiveContactHub />
-          </div>
-        </section>
-
-        {/* Live Response Demo */}
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <LiveResponseDemo />
-          </div>
-        </section>
 
         {/* Traditional Contact Information */}
-        <section className="py-24 relative bg-black/50">
-          {/* Background elements */}
-          <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,0,0,0.05),transparent_70%)]"></div>
-
+        <section className="py-6 relative bg-black/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-            <div className="text-center mb-16">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center bg-red-500/10 rounded-full px-4 py-2 mb-4"
-              >
-                <MessageSquare className="w-5 h-5 text-red-500 mr-2" />
-                <span className="text-red-500 font-semibold">Direct Contact</span>
-              </motion.div>
-
-              <h2 className="text-4xl font-bold text-gradient mb-6">
-                Let's Connect
-              </h2>
-              <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
-                Ready to elevate your business with cutting-edge technology solutions?
-                Reach out directly and let's start the conversation.
-              </p>
-            </div>
 
             {/* Main contact cards with enhanced styling */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">

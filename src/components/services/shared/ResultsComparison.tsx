@@ -80,8 +80,8 @@ const ResultsComparison: React.FC<ResultsComparisonProps> = ({
                   {item.icon || <BarChart2 className="w-5 h-5 text-red-500 mr-2" />}
                   <span className="text-white">{item.label}</span>
                 </div>
-                <div className="text-sm text-green-400">
-                  +{Math.round(improvement * animationProgress)}%
+                <div className={`text-sm ${improvement >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                  {improvement >= 0 ? '+' : ''}{Math.round(improvement * animationProgress)}%
                 </div>
               </div>
               
@@ -98,16 +98,12 @@ const ResultsComparison: React.FC<ResultsComparisonProps> = ({
                 
                 {/* After Bar */}
                 <div 
-                  className="absolute left-0 top-0 h-full bg-gradient-to-r from-red-600 to-red-500 flex items-center justify-end px-2 transition-all duration-500 ease-out"
+                  className="absolute left-0 top-0 h-full bg-gradient-to-r from-red-600 to-red-500 transition-all duration-500 ease-out"
                   style={{ 
                     width: `${afterWidth}%`,
                     clipPath: 'polygon(0 0, 100% 0, 95% 50%, 100% 100%, 0 100%)'
                   }}
-                >
-                  <span className="text-xs text-white font-bold whitespace-nowrap mr-4">
-                    {Math.round(item.before + ((item.after - item.before) * animationProgress))}{item.unit}
-                  </span>
-                </div>
+                />
                 
                 {/* Arrow */}
                 <div className="absolute left-0 top-0 h-full flex items-center transition-all duration-500 ease-out"

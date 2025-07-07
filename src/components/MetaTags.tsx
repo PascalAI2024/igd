@@ -92,17 +92,13 @@ const MetaTags: React.FC<MetaTagsProps> = ({
       <meta property="og:locale" content={locale} />
 
       {/* Add article-specific tags if type is article */}
-      {type === 'article' && (
-        <>
-          {publishedTime && <meta property="article:published_time" content={publishedTime} />}
-          {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
-          {category && <meta property="article:section" content={category} />}
-          {tags.map((tag, index) => (
-            <meta key={index} property="article:tag" content={tag} />
-          ))}
-          <meta property="article:author" content={author} />
-        </>
-      )}
+      {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+      {type === 'article' && category && <meta property="article:section" content={category} />}
+      {type === 'article' && tags.map((tag, index) => (
+        <meta key={index} property="article:tag" content={tag} />
+      ))}
+      {type === 'article' && <meta property="article:author" content={author} />}
 
       {/* Twitter Meta Tags */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -119,23 +115,15 @@ const MetaTags: React.FC<MetaTagsProps> = ({
       ))}
 
       {/* Video content if available */}
-      {videoUrl && (
-        <>
-          <meta property="og:video" content={videoUrl} />
-          <meta property="og:video:secure_url" content={videoUrl} />
-          <meta property="og:video:type" content="video/mp4" />
-          <meta property="og:video:width" content="1280" />
-          <meta property="og:video:height" content="720" />
-        </>
-      )}
+      {videoUrl && <meta property="og:video" content={videoUrl} />}
+      {videoUrl && <meta property="og:video:secure_url" content={videoUrl} />}
+      {videoUrl && <meta property="og:video:type" content="video/mp4" />}
+      {videoUrl && <meta property="og:video:width" content="1280" />}
+      {videoUrl && <meta property="og:video:height" content="720" />}
 
       {/* Geo-targeting if city/region provided */}
-      {locationString && (
-        <>
-          <meta name="geo.placename" content={locationString} />
-          {cityName && <meta name="geo.region" content={`US-${regionName || 'FL'}`} />}
-        </>
-      )}
+      {locationString && <meta name="geo.placename" content={locationString} />}
+      {cityName && <meta name="geo.region" content={`US-${regionName || 'FL'}`} />}
     </Helmet>
   );
 };

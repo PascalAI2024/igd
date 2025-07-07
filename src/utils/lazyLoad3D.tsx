@@ -150,9 +150,6 @@ export const lazy3D = {
   LeadFunnel3D: lazyLoad3DComponent(() => 
     import('../components/services/lead-generation/LeadFunnel3D')
   ),
-  LeadGenerationProcessFlow3D: lazyLoad3DComponent(() => 
-    import('../components/services/lead-generation/LeadGenerationProcessFlow3D')
-  ),
   
   // System Integration
   SystemIntegrationProcessFlow3D: lazyLoad3DComponent(() => 

@@ -7,10 +7,7 @@ import {
 import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
 import FeatureShowcase from '../../components/services/web-development/FeatureShowcase';
-import WebsiteVisualizer from '../../components/services/web-development/WebsiteVisualizer';
 import OptimizedWebDevelopmentProcess from '../../components/services/web-development/OptimizedWebDevelopmentProcess';
-import CodeShowcase from '../../components/services/web-development/CodeShowcase';
-import LiveCodeEditor from '../../components/services/web-development/LiveCodeEditor';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
 import MetaTags from '../../components/MetaTags';
@@ -93,35 +90,37 @@ const WebDevelopment = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center max-w-3xl mx-auto"
             >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                className="relative inline-block"
-              >
-                <Globe className="w-16 h-16 text-red-500 mx-auto mb-6" />
+              <div className="flex items-center justify-center gap-4 mb-6">
                 <motion.div
-                  className="absolute inset-0 rounded-full bg-red-500/20"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [1, 0.5, 1]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </motion.div>
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  className="relative"
+                >
+                  <Globe className="w-16 h-16 text-red-500" />
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-red-500/20"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [1, 0.5, 1]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </motion.div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-4xl md:text-5xl font-bold mb-6 text-gradient"
-              >
-                Local Business Websites
-              </motion.h1>
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-4xl md:text-5xl font-bold text-gradient"
+                >
+                  Local Business Websites
+                </motion.h1>
+              </div>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -220,23 +219,35 @@ const WebDevelopment = () => {
               </p>
             </motion.div>
 
-            <WebsiteVisualizer
-              title="Responsive Web Design"
-              description="See how your website will look across all devices"
-              websiteScreenshots={{
-                desktop: "/images/web-dev/desktop.webp",
-                tablet: "/images/web-dev/tablet.webp",
-                mobile: "/images/web-dev/mobile.webp"
-              }}
-              features={[
-                "Mobile-first responsive design",
-                "Touch-friendly navigation",
-                "Optimized images for all screen sizes",
-                "Fast loading on all devices",
-                "Consistent branding across platforms",
-                "Accessible user interface"
-              ]}
-            />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-4xl mx-auto"
+            >
+              <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-8 mb-8">
+                <img
+                  src="/images/responsive-design-illustration.jpg"
+                  alt="Responsive Web Design - Desktop, Tablet, and Mobile devices"
+                  className="w-full h-auto rounded-lg shadow-2xl"
+                />
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10">
+                  <h3 className="text-lg font-semibold text-white mb-3">Mobile-First Design</h3>
+                  <p className="text-gray-400 text-sm">Optimized for mobile devices with touch-friendly navigation and fast loading times.</p>
+                </div>
+                <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10">
+                  <h3 className="text-lg font-semibold text-white mb-3">Cross-Device Compatibility</h3>
+                  <p className="text-gray-400 text-sm">Consistent user experience across all screen sizes and device types.</p>
+                </div>
+                <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10">
+                  <h3 className="text-lg font-semibold text-white mb-3">Performance Optimized</h3>
+                  <p className="text-gray-400 text-sm">Fast loading images and content optimized for each device resolution.</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -328,7 +339,7 @@ const WebDevelopment = () => {
                   name: "Node.js",
                   description: "Scalable, high-performance backend",
                   icon: <Server className="w-5 h-5" />,
-                  image: "/images/tech/nodejs.webp",
+                  image: "/images/tech/nodejs.jpg",
                   features: [
                     "Fast API development",
                     "Real-time capabilities",
@@ -354,7 +365,7 @@ const WebDevelopment = () => {
                   name: "MongoDB",
                   description: "Flexible, scalable document database",
                   icon: <Database className="w-5 h-5" />,
-                  image: "/images/tech/mongodb.webp",
+                  image: "/images/tech/mongodb.jpg",
                   features: [
                     "Flexible data modeling",
                     "Horizontal scaling",
@@ -367,7 +378,7 @@ const WebDevelopment = () => {
                   name: "AWS",
                   description: "Enterprise-grade cloud infrastructure",
                   icon: <Server className="w-5 h-5" />,
-                  image: "/images/tech/aws.webp",
+                  image: "/images/tech/aws.jpg",
                   features: [
                     "Global content delivery",
                     "Automatic scaling",
@@ -380,7 +391,7 @@ const WebDevelopment = () => {
                   name: "GraphQL",
                   description: "Efficient API query language",
                   icon: <Code className="w-5 h-5" />,
-                  image: "/images/tech/graphql.webp",
+                  image: "/images/tech/graphql.jpg",
                   features: [
                     "Precise data fetching",
                     "Single request resolution",
@@ -395,39 +406,7 @@ const WebDevelopment = () => {
           </div>
         </section>
 
-        {/* Code Showcase */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-3xl font-bold text-gradient mb-4">
-                Clean, Modern Code
-              </h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                We build websites with clean, maintainable code using modern best practices
-              </p>
-            </motion.div>
 
-            <CodeShowcase
-              title="Our Development Approach"
-              description="See examples of the clean, efficient code we use to build your website"
-            />
-          </div>
-        </section>
-
-        {/* Live Code Editor - Interactive Demo */}
-        <section className="py-20 bg-black/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <LiveCodeEditor
-              title="🚀 Interactive Development Demo"
-              description="This is what sets us apart - try editing the code below and watch it update in real-time! This demonstrates our expertise in creating interactive, responsive websites."
-            />
-          </div>
-        </section>
 
         {/* Results Comparison */}
         <section className="py-20 bg-black/50">

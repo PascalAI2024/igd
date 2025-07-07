@@ -7,7 +7,6 @@ import ServiceCTA from '../../services/components/ServiceCTA';
 import ServiceSchema from '../../components/ServiceSchema';
 import OptimizedImage from '../../components/OptimizedImage';
 import DataVisualization from '../../components/services/ai-ml/DataVisualization';
-import NeuralNetworkAnimation from '../../components/services/ai-ml/NeuralNetworkAnimation';
 import MetricsShowcase from '../../components/services/ai-ml/MetricsShowcase';
 import UseCaseShowcase from '../../components/services/ai-ml/UseCaseShowcase';
 import ThreeDBarChart from '../../components/charts/ThreeDBarChart';
@@ -20,7 +19,7 @@ import { RevealOnScroll, StaggerContainer, SlideIn } from '../../components/Anim
 const AiMachineLearning = () => {
   const showcaseMetrics = [
     {
-      value: '99%',
+      value: '92%',
       label: 'Accuracy',
       trend: 'High Precision',
       icon: Brain
@@ -58,7 +57,7 @@ const AiMachineLearning = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,0,0,0.1),transparent_70%)]" />
 
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-4xl mx-auto">
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -92,24 +91,6 @@ const AiMachineLearning = () => {
                 </div>
               </motion.div>
             </div>
-
-            <RevealOnScroll>
-              <Mobile3DWrapper
-                fallbackTitle="Neural Network Visualization"
-                fallbackDescription="See how our AI models process and analyze data in real-time"
-              >
-                <NeuralNetworkAnimation
-                  title="Neural Network Visualization"
-                  description="See how our AI models process and analyze data in real-time"
-                  layers={[4, 8, 6, 2]}
-                  height={400}
-                  animationDelay={0.4}
-                  highlightColor="rgba(255, 0, 0, 0.8)"
-                />
-              </Mobile3DWrapper>
-
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-red-500/20 to-purple-500/20 rounded-full blur-xl" />
-            </RevealOnScroll>
           </div>
         </div>
       </section>
@@ -154,44 +135,27 @@ const AiMachineLearning = () => {
           </div>
 
           {/* 3D Data Visualizations */}
-          <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Mobile3DWrapper
-              fallbackTitle="AI Performance Metrics"
-              fallbackDescription="Our AI solutions consistently outperform traditional approaches across key metrics"
-            >
-              <ThreeDBarChart
-                title="AI Performance Metrics"
-              description="Our AI solutions consistently outperform traditional approaches across key metrics"
-              data={[
-                { label: 'Accuracy', value: 95, color: '#ef4444' },
-                { label: 'Speed', value: 87, color: '#f97316' },
-                { label: 'Efficiency', value: 92, color: '#f59e0b' },
-                { label: 'Scalability', value: 89, color: '#eab308' },
-                { label: 'Cost Savings', value: 78, color: '#84cc16' }
-                ]}
-                height={400}
-                animationDelay={0.3}
-              />
-            </Mobile3DWrapper>
-
-            <Mobile3DWrapper
-              fallbackTitle="AI Adoption by Industry"
-              fallbackDescription="See how different industries are leveraging AI technologies"
-            >
-              <ThreeDPieChart
-                title="AI Adoption by Industry"
-              description="See how different industries are leveraging AI technologies"
-              data={[
-                { label: 'Retail', value: 25, color: '#ef4444' },
-                { label: 'Finance', value: 30, color: '#f97316' },
-                { label: 'Healthcare', value: 15, color: '#f59e0b' },
-                { label: 'Manufacturing', value: 20, color: '#eab308' },
-                { label: 'Logistics', value: 10, color: '#84cc16' }
-                ]}
-                height={400}
-                animationDelay={0.5}
-              />
-            </Mobile3DWrapper>
+          <div className="mt-20 flex justify-center">
+            <div className="max-w-2xl w-full">
+              <Mobile3DWrapper
+                fallbackTitle="AI Performance Metrics"
+                fallbackDescription="Our AI solutions consistently outperform traditional approaches across key metrics"
+              >
+                <ThreeDBarChart
+                  title="AI Performance Metrics"
+                description="Our AI solutions consistently outperform traditional approaches across key metrics"
+                data={[
+                  { label: 'Accuracy', value: 92, color: '#ef4444' },
+                  { label: 'Speed', value: 87, color: '#f97316' },
+                  { label: 'Efficiency', value: 92, color: '#f59e0b' },
+                  { label: 'Scalability', value: 89, color: '#eab308' },
+                  { label: 'Cost Savings', value: 78, color: '#84cc16' }
+                  ]}
+                  height={400}
+                  animationDelay={0.3}
+                />
+              </Mobile3DWrapper>
+            </div>
           </div>
         </div>
       </section>
@@ -229,7 +193,7 @@ const AiMachineLearning = () => {
                   description: "From concept to measurable business impact"
                 },
                 {
-                  value: 85,
+                  value: 92,
                   label: "Model Accuracy",
                   suffix: "%",
                   color: "#FF7043",
@@ -309,8 +273,8 @@ const AiMachineLearning = () => {
                 ]
               }
               ]}
-              title="Our AI Implementation Process"
-              subtitle="A systematic approach to implementing AI solutions for your business"
+              title="Implementation Steps"
+              subtitle="Step-by-step process for successful AI deployment"
               primaryColor="#ef4444"
               secondaryColor="#3b82f6"
             />
@@ -371,7 +335,7 @@ const AiMachineLearning = () => {
                 solution: "We implemented an AI-powered document processing system using OCR and NLP to automatically extract, classify, and validate information from multiple document formats.",
                 results: [
                   "85% reduction in document processing time",
-                  "93% accuracy in information extraction",
+                  "92% accuracy in information extraction",
                   "67% decrease in processing costs",
                   "Staff redeployed to higher-value tasks"
                 ],
@@ -477,27 +441,6 @@ const AiMachineLearning = () => {
               />
             </Mobile3DWrapper>
 
-            {/* Technology Distribution 3D Chart */}
-            <div className="mt-16">
-              <Mobile3DWrapper
-                fallbackTitle="AI Technology Distribution"
-                fallbackDescription="Breakdown of AI technologies used in our solutions"
-              >
-                <ThreeDPieChart
-                  title="AI Technology Distribution"
-                description="Breakdown of AI technologies used in our solutions"
-                data={[
-                  { label: 'Machine Learning', value: 35, color: '#ef4444' },
-                  { label: 'Deep Learning', value: 25, color: '#f97316' },
-                  { label: 'NLP', value: 20, color: '#f59e0b' },
-                  { label: 'Computer Vision', value: 15, color: '#84cc16' },
-                  { label: 'Reinforcement Learning', value: 5, color: '#3b82f6' }
-                ]}
-                  height={500}
-                  animationDelay={0.5}
-                />
-              </Mobile3DWrapper>
-            </div>
           </div>
         </div>
       </section>
