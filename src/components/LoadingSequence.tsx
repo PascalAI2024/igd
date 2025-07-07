@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code2, Cpu, Network, Zap, SkipForward } from 'lucide-react';
+import igdLogo from '../assets/igd_logo.png';
 
 const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -265,7 +266,7 @@ const LoadingSequence = ({ onComplete }: { onComplete: () => void }) => {
                     <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-lg" />
                     <div className="absolute inset-1 border border-white/20 rounded-lg" />
                     <img 
-                      src="/src/assets/igd_logo.png" 
+                      src={igdLogo} 
                       alt="IGD Logo" 
                       className="w-10 h-10 sm:w-16 sm:h-16 relative z-10 object-contain"
                     />
