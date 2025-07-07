@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Code2, Lightbulb, Users, Target } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import InteractiveTimeline from '../components/about/InteractiveTimeline';
-import LiveAchievementCounter from '../components/about/LiveAchievementCounter';
 import InteractiveTeamShowcase from '../components/about/InteractiveTeamShowcase';
 import MetaTags from '../components/MetaTags';
 
@@ -68,12 +67,6 @@ const About = () => {
           </div>
         </section>
 
-        {/* Live Achievement Counter */}
-        <section className="py-16 sm:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <LiveAchievementCounter />
-          </div>
-        </section>
 
         {/* Interactive Team Showcase */}
         <section className="py-16 sm:py-20 bg-black/50">

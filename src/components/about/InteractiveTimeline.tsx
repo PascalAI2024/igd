@@ -150,7 +150,7 @@ const InteractiveTimeline: React.FC = () => {
       className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6"
     >
       <div className="mb-6">
-        <h3 className="text-2xl font-bold text-white mb-2">🚀 Our Journey to Digital Excellence</h3>
+        <h3 className="text-2xl font-bold text-white mb-2">Our Journey to Digital Excellence</h3>
         <p className="text-gray-400">Interactive timeline showcasing our growth and achievements</p>
       </div>
 
@@ -299,13 +299,6 @@ const InteractiveTimeline: React.FC = () => {
             transition={{ duration: 0.3 }}
           />
         </div>
-      </div>
-
-      <div className="mt-6 p-4 bg-gradient-to-r from-red-500/10 to-purple-500/10 rounded-lg border border-red-500/20">
-        <p className="text-sm text-gray-300">
-          <strong className="text-red-400">🚀 Our Story:</strong> From a small startup to industry leaders, 
-          we've consistently delivered digital excellence. Click through our timeline to see our journey!
-        </p>
       </div>
     </motion.div>
   );

@@ -241,10 +241,15 @@ const Step = ({
     }
   });
   
-  // Always face the camera
+  // Always face the camera and scale based on distance
   useFrame(() => {
     if (nodeRef.current) {
       nodeRef.current.quaternion.copy(camera.quaternion);
+      
+      // Scale based on distance to camera for consistent visual size
+      const distance = camera.position.distanceTo(new THREE.Vector3(...position));
+      const scaleFactor = Math.max(0.8, Math.min(1.2, distance / 5));
+      nodeRef.current.scale.setScalar((isActive ? 1.1 : 1) * scaleFactor);
     }
   });
   
@@ -256,7 +261,7 @@ const Step = ({
       onClick={() => onClick(index)}
     >
       {/* Main node */}
-      <group ref={nodeRef} scale={isActive ? 1.1 : 1}>
+      <group ref={nodeRef}>
         {/* Background glow */}
         <mesh ref={glowRef}>
           <sphereGeometry args={[0.25, 16, 16]} />
@@ -327,12 +332,13 @@ const Step = ({
         {/* Detail panel */}
         {isExpanded && (
           <Html
-            position={[0, 0.4, 0]}
+            position={[0, 0.6, 0]}
             center
-            distanceFactor={8}
+            distanceFactor={index==0 ? 2.25 : index ==1 ? 5: index ==5 ? 4 :6}
             className="pointer-events-none"
+            style={{ zIndex: 1000 + index }}
           >
-            <div className="w-64 p-4 bg-black/80 backdrop-blur-md rounded-lg border border-white/20 text-white">
+            <div className="w-64 p-4 bg-black/90 backdrop-blur-md rounded-lg border border-white/20 text-white shadow-2xl">
               <h4 className="text-lg font-semibold mb-2">{step.title}</h4>
               <p className="text-sm text-gray-300 mb-3">{step.description}</p>
               <div className="mb-2 bg-white/10 px-2 py-1 rounded text-xs inline-block">
@@ -393,11 +399,17 @@ const ProcessFlowScene = ({
   const stepPositions = useMemo(() => {
     return steps.map((_, index) => {
       const totalSteps = steps.length;
-      const angle = (index / totalSteps) * Math.PI * 2;
-      const radius = 2;
+      // Add offset to prevent alignment issues and vary heights
+      const angleOffset = Math.PI / 18; // 22.5 degree offset
+      const angle = (index / totalSteps) * Math.PI * 2 + angleOffset;
+      const radius = Math.max(2.5, totalSteps * 0.4);
+      
+      // Vary height slightly to prevent z-axis alignment
+      const heightVariation = Math.sin(angle * 2) * 0.3;
+      
       return [
         Math.sin(angle) * radius,
-        0,
+        heightVariation,
         Math.cos(angle) * radius
       ] as [number, number, number];
     });
@@ -418,7 +430,7 @@ const ProcessFlowScene = ({
       
       {/* Grid */}
       <gridHelper 
-        args={[20, 20, "#444444", "#222222"]} 
+        args={[Math.max(20, steps.length * 2), 20, "#444444", "#222222"]} 
         position={[0, -1, 0]} 
         rotation={[Math.PI / 2, 0, 0]}
       />

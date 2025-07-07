@@ -7,7 +7,6 @@ import {
 import PageTransition from '../../components/PageTransition';
 import NavigationButton from '../../components/NavigationButton';
 import FeatureShowcase from '../../components/services/web-development/FeatureShowcase';
-import WebsiteVisualizer from '../../components/services/web-development/WebsiteVisualizer';
 import OptimizedWebDevelopmentProcess from '../../components/services/web-development/OptimizedWebDevelopmentProcess';
 import ResultsComparison from '../../components/services/shared/ResultsComparison';
 import TechnologyShowcase from '../../components/services/shared/TechnologyShowcase';
@@ -220,23 +219,35 @@ const WebDevelopment = () => {
               </p>
             </motion.div>
 
-            <WebsiteVisualizer
-              title="Responsive Web Design"
-              description="See how your website will look across all devices"
-              websiteScreenshots={{
-                desktop: "/images/web-dev/desktop.webp",
-                tablet: "/images/web-dev/tablet.webp",
-                mobile: "/images/web-dev/mobile.webp"
-              }}
-              features={[
-                "Mobile-first responsive design",
-                "Touch-friendly navigation",
-                "Optimized images for all screen sizes",
-                "Fast loading on all devices",
-                "Consistent branding across platforms",
-                "Accessible user interface"
-              ]}
-            />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-4xl mx-auto"
+            >
+              <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-8 mb-8">
+                <img
+                  src="/images/responsive-design-illustration.jpg"
+                  alt="Responsive Web Design - Desktop, Tablet, and Mobile devices"
+                  className="w-full h-auto rounded-lg shadow-2xl"
+                />
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10">
+                  <h3 className="text-lg font-semibold text-white mb-3">Mobile-First Design</h3>
+                  <p className="text-gray-400 text-sm">Optimized for mobile devices with touch-friendly navigation and fast loading times.</p>
+                </div>
+                <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10">
+                  <h3 className="text-lg font-semibold text-white mb-3">Cross-Device Compatibility</h3>
+                  <p className="text-gray-400 text-sm">Consistent user experience across all screen sizes and device types.</p>
+                </div>
+                <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10">
+                  <h3 className="text-lg font-semibold text-white mb-3">Performance Optimized</h3>
+                  <p className="text-gray-400 text-sm">Fast loading images and content optimized for each device resolution.</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -328,7 +339,7 @@ const WebDevelopment = () => {
                   name: "Node.js",
                   description: "Scalable, high-performance backend",
                   icon: <Server className="w-5 h-5" />,
-                  image: "/images/tech/nodejs.webp",
+                  image: "/images/tech/nodejs.jpg",
                   features: [
                     "Fast API development",
                     "Real-time capabilities",
@@ -354,7 +365,7 @@ const WebDevelopment = () => {
                   name: "MongoDB",
                   description: "Flexible, scalable document database",
                   icon: <Database className="w-5 h-5" />,
-                  image: "/images/tech/mongodb.webp",
+                  image: "/images/tech/mongodb.jpg",
                   features: [
                     "Flexible data modeling",
                     "Horizontal scaling",
@@ -367,7 +378,7 @@ const WebDevelopment = () => {
                   name: "AWS",
                   description: "Enterprise-grade cloud infrastructure",
                   icon: <Server className="w-5 h-5" />,
-                  image: "/images/tech/aws.webp",
+                  image: "/images/tech/aws.jpg",
                   features: [
                     "Global content delivery",
                     "Automatic scaling",
@@ -380,7 +391,7 @@ const WebDevelopment = () => {
                   name: "GraphQL",
                   description: "Efficient API query language",
                   icon: <Code className="w-5 h-5" />,
-                  image: "/images/tech/graphql.webp",
+                  image: "/images/tech/graphql.jpg",
                   features: [
                     "Precise data fetching",
                     "Single request resolution",

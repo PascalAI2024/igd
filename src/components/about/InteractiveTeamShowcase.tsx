@@ -49,16 +49,29 @@ const InteractiveTeamShowcase: React.FC = () => {
     },
     {
       id: 'lead-dev',
-      name: 'Alex Chen',
+      name: 'Mati Ensermu',
       role: 'Lead Developer',
       icon: Code,
       color: 'bg-blue-500',
       skills: ['React', 'Node.js', 'Python', 'AI/ML', 'Cloud Architecture'],
-      experience: '8+ years',
+      experience: '4+ years',
       projects: 150,
       specialty: 'Full-Stack Development & AI Integration',
       quote: 'Code is poetry in motion - every line should tell a story.',
       achievements: ['Led 50+ successful projects', 'AI innovation award', 'Open source contributor']
+    },
+    {
+      id: 'dev',
+      name: 'Eba Adisu',
+      role: 'Full Stack Developer',
+      icon: Code,
+      color: 'bg-purple-500',
+      skills: ['React', 'Node.js', 'Python', 'AI/ML'],
+      experience: '4+ years',
+      projects: 120,
+      specialty: 'Full-Stack Development & AI Integration',
+      quote: 'Great design is invisible - it just works beautifully.',
+      achievements: ['AI innovation award', 'Open source contributor', '95% user satisfaction rate']
     },
     {
       id: 'ui-designer',
@@ -137,7 +150,7 @@ const InteractiveTeamShowcase: React.FC = () => {
       className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6"
     >
       <div className="mb-6">
-        <h3 className="text-2xl font-bold text-white mb-2">👥 Meet Our Expert Team</h3>
+        <h3 className="text-2xl font-bold text-white mb-2">Meet Our Expert Team</h3>
         <p className="text-gray-400">Interactive team showcase - hover and click to learn more about our experts</p>
       </div>
 
@@ -297,13 +310,6 @@ const InteractiveTeamShowcase: React.FC = () => {
             </AnimatePresence>
           </div>
         </div>
-      </div>
-
-      <div className="mt-6 p-4 bg-gradient-to-r from-red-500/10 to-purple-500/10 rounded-lg border border-red-500/20">
-        <p className="text-sm text-gray-300">
-          <strong className="text-red-400">👥 Our Team:</strong> Each member brings unique expertise and passion to deliver 
-          exceptional results. Click on team members to explore their skills and achievements!
-        </p>
       </div>
     </motion.div>
   );
