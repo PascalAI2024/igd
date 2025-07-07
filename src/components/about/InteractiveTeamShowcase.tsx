@@ -62,7 +62,7 @@ const InteractiveTeamShowcase: React.FC = () => {
     },
     {
       id: 'dev',
-      name: 'Eba Adisu',
+      name: 'Eba Kenea',
       role: 'Full Stack Developer',
       icon: Code,
       color: 'bg-purple-500',
